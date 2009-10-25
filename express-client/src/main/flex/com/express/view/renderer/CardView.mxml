@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         height="100" width="100" paddingLeft="10" horizontalAlign="left"
+         horizontalScrollPolicy="off" verticalScrollPolicy="off" dataChange="init(event)"
+         creationComplete="init(event)" doubleClickEnabled="true" backgroundAlpha="1.0"
+         doubleClick="{dispatchEvent(new StoryClickEvent(story,true,true))}">
+   <mx:filters>
+      <mx:DropShadowFilter angle="45" alpha="0.4" hideObject="false"/>
+   </mx:filters>
+   <mx:Script>
+      <![CDATA[
+      import com.express.controller.event.StoryClickEvent;
+      import com.express.model.domain.BacklogItem;
+
+      [Bindable]
+      public var story: BacklogItem;
+
+      private function init(event : Event) : void {
+         if (data) {
+            story = data as BacklogItem;
+         }
+      }
+
+      ]]>
+   </mx:Script>
+   <mx:HBox width="100%" paddingTop="5">
+      <mx:Label text="{story.reference}" styleName="cardHeading" width="100%" paddingTop="3"/>
+   </mx:HBox>
+   <mx:Text id="description" styleName="cardText" width="100%" paddingTop="3" height="45"
+            text="{story.summary}"
+            toolTip="{story.summary}"/>
+   <mx:HBox styleName="unpadded" width="100%" verticalAlign="middle" height="17"
+            horizontalAlign="left">
+      <mx:HBox height="13" width="13" styleName="cardColourDot"
+               borderColor="{story.assignedTo == null ? 0 : story.assignedTo.colour}"
+               backgroundColor="{story.assignedTo == null ? 0 : story.assignedTo.colour}"/>
+      <mx:Label text="{story.assignedTo == null ? 'unassigned' : story.assignedTo.fullName}"
+                styleName="cardText" width="100%"/>
+   </mx:HBox>
+   <mx:Label id="effort" styleName="cardText" text="Effort: {story.effort} hrs" width="100%"
+             height="17"/>
+</mx:VBox>

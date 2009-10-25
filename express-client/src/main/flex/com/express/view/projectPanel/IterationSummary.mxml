@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="com.express.view.components.*"
+         height="100%" width="100%">
+   <mx:Script>
+         <![CDATA[
+      import mx.formatters.DateFormatter;
+
+      private function formatDate(categoryValue:Object, previousCategoryValue:Object, axis:CategoryAxis, categoryItem:Object) : String {
+
+         var formatter : DateFormatter = new DateFormatter();
+         formatter.formatString = "DD/MM/YYYY";
+         return formatter.format(categoryValue);
+      }
+      ]]>
+   </mx:Script>
+   <mx:Stroke id="yellowStroke" color="#ffde44" weight="1" alpha="1"/>
+
+   <mx:HBox styleName="menuBar" width="100%" height="30">
+      <comp:PopUpLabel id="printPopUp" labelText="Print" enabled="false" dataProvider="['Stories','Tasks']"/>
+   </mx:HBox>
+
+   <mx:LineChart id="burndown" width="100%" height="150" useHandCursor="true"
+                 buttonMode="true" mouseChildren="false">
+      <mx:horizontalAxis>
+         <mx:CategoryAxis id="dateAxis" categoryField="date" labelFunction="formatDate"/>
+      </mx:horizontalAxis>
+      <mx:series>
+         <mx:LineSeries displayName="Effort" yField="effort" lineStroke="{yellowStroke}"/>
+      </mx:series>
+   </mx:LineChart>
+
+   <mx:HBox>
+      <mx:Label text="Start date:" fontWeight="bold" width="150"/>
+      <mx:Label id="startDate"/>
+   </mx:HBox>
+
+   <mx:HBox>
+      <mx:Label text="End date:" fontWeight="bold" width="150"/>
+      <mx:Label id="endDate"/>
+   </mx:HBox>
+
+   <mx:HBox>
+      <mx:Label text="Status:" fontWeight="bold" width="150"/>
+      <mx:Label id="iterationStatus"/>
+   </mx:HBox>
+
+   <mx:HBox>
+      <mx:Label text="Total Points:" fontWeight="bold" width="150"/>
+      <mx:Label id="totalPoints"/>
+   </mx:HBox>
+
+   <mx:HBox>
+      <mx:Label text="Task Hrs Remaining:" fontWeight="bold" width="150"/>
+      <mx:Label id="hrsRemaining"/>
+   </mx:HBox>
+
+   <mx:HBox>
+      <mx:Label text="Days remaining:" fontWeight="bold" width="150"/>
+      <mx:Label id="daysRemaining"/>
+   </mx:HBox>
+
+   <mx:HBox styleName="buttonBox" width="100%" height="100%">
+      <mx:Button id="btnEdit" label="Edit" enabled="false"/>
+   </mx:HBox>
+</mx:VBox>

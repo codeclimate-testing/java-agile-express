@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" title="Burndown Chart"
+                showCloseButton="true" close="this.visible=false;">
+   <mx:Script>
+      <![CDATA[
+      import mx.charts.CategoryAxis;
+   import mx.formatters.DateFormatter;
+      import mx.managers.PopUpManager;
+
+      private function formatDate(categoryValue:Object, previousCategoryValue:Object, axis:CategoryAxis, categoryItem:Object) : String
+      {
+         var formatter : DateFormatter = new DateFormatter();
+         formatter.formatString = "DD/MM/YYYY";
+         return formatter.format(categoryValue);
+      }
+      ]]>
+   </mx:Script>
+   <mx:Stroke id="yellowStroke" color="#ffde44" weight="2" alpha="1"/>
+   <mx:VBox backgroundAlpha="1.0" backgroundColor="#ffffff" width="100%" height="100%" paddingTop="5">
+      <mx:LineChart id="burndown">
+         <mx:horizontalAxis>
+            <mx:CategoryAxis categoryField="date" labelFunction="formatDate"/>
+         </mx:horizontalAxis>
+         <mx:series>
+            <mx:LineSeries displayName="Effort" xField="date" yField="effort" lineStroke="{yellowStroke}"/>
+         </mx:series>
+      </mx:LineChart>
+      <mx:Legend dataProvider="{burndown}"/>
+   </mx:VBox>
+
+</mx:TitleWindow>

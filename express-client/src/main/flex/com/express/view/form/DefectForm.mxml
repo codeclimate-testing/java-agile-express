@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml" height="100%">
+   <mx:FormHeading styleName="h2" label="Defect Details"/>
+   <mx:FormItem label="Reference:">
+      <mx:Label id="reference" width="100"/>
+   </mx:FormItem>
+   <mx:FormItem label="Title:">
+      <mx:TextInput id="itemTitle" width="150"/>
+   </mx:FormItem>
+   <mx:FormItem label="Created:">
+      <mx:TextInput id="createdDate" width="40"/>
+   </mx:FormItem>
+   <mx:FormItem label="Created By:">
+      <mx:ComboBox id="createdBy"/>
+   </mx:FormItem>
+   <mx:FormItem label="Status:">
+      <mx:ComboBox id="itemStatus"/>
+   </mx:FormItem>
+   <mx:FormItem label="Assigned To:">
+      <mx:ComboBox id="assignedTo"/>
+   </mx:FormItem>
+   <mx:FormItem label="Description:">
+      <mx:TextArea id="description" width="150" height="150"/>
+   </mx:FormItem>
+   <mx:HBox horizontalAlign="right" width="100%">
+      <mx:Button id="cancelButton" label="Cancel"/>
+      <mx:Button id="saveButton" label="Save"/>
+   </mx:HBox>
+</mx:Form>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HDividedBox xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:form="com.express.view.form.*" xmlns:view="com.express.view.*"
+                xmlns:backlogItem="com.express.view.backlogItem.*"
+                xmlns:component="com.express.view.components.*"
+                xmlns:display="com.express.view.display.*"
+                xmlns:iteration="com.express.view.iteration.*"
+                xmlns:projectPanel="com.express.view.projectPanel.*"
+                width="100%" height="100%" paddingRight="0">
+   <mx:VBox width="30%" height="100%" backgroundAlpha="0.7">
+      <mx:HBox width="100%" verticalAlign="bottom">
+         <mx:Label width="200" text="Product Backlog" styleName="h2"/>
+         <mx:Spacer width="100%"/>
+         <mx:Button id="btnProductCreateItem" label="Create Story" enabled="false"/>
+      </mx:HBox>
+      <mx:AdvancedDataGrid id="grdProductBacklog" width="100%" height="100%"
+                           dragEnabled="true" allowMultipleSelection="true" sortExpertMode="true"
+                           folderClosedIcon="{null}" folderOpenIcon="{null}"
+                           dragMoveEnabled="true" dropEnabled="true" doubleClickEnabled="true"
+                           styleName="storyGrid" headerHeight="30" variableRowHeight="true">
+         <mx:columns>
+            <mx:AdvancedDataGridColumn fontSize="12" color="#3679b0" headerText="Theme" headerStyleName="themeHeader" showDataTips="true" dataField="themesLabel" wordWrap="true"/>
+            <mx:AdvancedDataGridColumn headerText="Title / Ref" showDataTips="true" dataField="titleLabel"/>
+            <mx:AdvancedDataGridColumn headerText="Effort" dataField="effort" width="50" textAlign="center" showDataTips="true"/>
+
+            <mx:AdvancedDataGridColumn headerText="Actions" width="65">
+               <mx:itemRenderer>
+                  <mx:Component>
+                     <mx:HBox horizontalGap="4" horizontalAlign="center"
+                              click="event.stopImmediatePropagation()">
+                        <mx:Script>
+                        <![CDATA[
+                           import com.express.controller.event.GridButtonEvent;
+                        ]]>
+                        </mx:Script>
+                        <mx:LinkButton icon="@Embed('/images/icons/add.png')" width="20"
+                                       toolTip="add task"
+                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_ADD_CHILD));"
+                                       visible="{data.parent == null}"/>
+                        <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20"
+                                       toolTip="remove item"
+                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));"/>
+                     </mx:HBox>
+                  </mx:Component>
+               </mx:itemRenderer>
+            </mx:AdvancedDataGridColumn>
+         </mx:columns>
+      </mx:AdvancedDataGrid>
+   </mx:VBox>
+   <mx:VBox width="45%" height="100%">
+      <mx:HBox width="100%" verticalAlign="bottom">
+         <mx:ComboBox id="cboIterations" prompt="Select an existing Iteration" width="230"
+                      labelField="title" enabled="{cboIterations.dataProvider.length > 0}"/>
+         <mx:LinkButton id="lnkCreateIteration" label="create iteration"
+                        styleName="form" enabled="false" />
+         <mx:Spacer width="100%"/>
+         <mx:Button id="btnCreateItem" label="Create Story" enabled="false"/>
+      </mx:HBox>
+
+      <mx:AdvancedDataGrid id="grdIterationBacklog" width="100%" height="100%"
+                           dragEnabled="true" allowMultipleSelection="true" doubleClickEnabled="true"
+                           dragMoveEnabled="true" dropEnabled="{btnCreateItem.enabled}"
+                           styleName="storyGrid" headerHeight="30" sortExpertMode="true"
+                           folderClosedIcon="{null}" folderOpenIcon="{null}" variableRowHeight="true">
+         <mx:columns>
+            <mx:AdvancedDataGridColumn fontSize="12" color="#3679b0" headerText="Theme" headerStyleName="themeHeader" showDataTips="true" dataField="themesLabel" wordWrap="true"/>
+            <mx:AdvancedDataGridColumn headerText="Title / Ref" showDataTips="true" dataField="titleLabel"/>
+            <mx:AdvancedDataGridColumn headerText="Effort" dataField="effort" width="50" textAlign="center" showDataTips="true"/>
+            <mx:AdvancedDataGridColumn headerText="Status" dataField="status" showDataTips="true" width="130"/>
+            <mx:AdvancedDataGridColumn id="assignedToColumn" headerText="Assigned To"
+                                       dataField="user" showDataTips="true"/>
+            <mx:AdvancedDataGridColumn headerText="Actions" width="65">
+               <mx:itemRenderer>
+                  <mx:Component>
+                     <mx:HBox horizontalGap="4" horizontalAlign="center"
+                              click="event.stopImmediatePropagation()">
+                        <mx:Script>
+                        <![CDATA[
+                           import com.express.controller.event.GridButtonEvent;
+                           import com.express.view.*;
+                        ]]>
+                        </mx:Script>
+                        <mx:LinkButton icon="@Embed('/images/icons/add.png')" width="20"
+                                       toolTip="add task"
+                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_ADD_CHILD));"
+                                       visible="{data.parent == null}"/>
+                        <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20"
+                                       toolTip="remove item"
+                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));"/>
+                     </mx:HBox>
+                  </mx:Component>
+               </mx:itemRenderer>
+            </mx:AdvancedDataGridColumn>
+         </mx:columns>
+      </mx:AdvancedDataGrid>
+   </mx:VBox>
+   <projectPanel:ProjectPanel id="projectPanel" width="25%" height="100%"/>
+   <mx:Script><![CDATA[
+      import com.express.view.*;
+      ]]></mx:Script>
+</mx:HDividedBox>

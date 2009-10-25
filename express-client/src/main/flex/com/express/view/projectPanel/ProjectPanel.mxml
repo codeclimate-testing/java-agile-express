@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:project="com.express.view.projectPanel.*"
+         width="100%">
+
+   <mx:ComboBox id="cboProjects" width="230" labelField="title"
+                prompt=" Open an existing Project "/>
+   <mx:HBox horizontalGap="10" verticalAlign="bottom">
+      <mx:Label styleName="bannerLabel" text="or"/>
+      <mx:LinkButton id="lnkProjectAccess" styleName="form"
+                     label="Create/Access a new Project"/>
+   </mx:HBox>
+   <mx:Accordion height="100%" width="100%" headerHeight="30" headerStyleName="accordianHeader"
+                 creationPolicy="all" backgroundAlpha="0.6">
+      <project:ProjectDisplay id="projectDisplay" label="Project Summary"/>
+      <project:IterationSummary id="iterationSummary" label="Iteration Summary"/>
+   </mx:Accordion>
+</mx:VBox>

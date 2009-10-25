@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" height="100%" width="100%">
+
+   <mx:DataGrid id="grdRequest" width="100%" height="100%" >
+      <mx:columns>
+         <mx:DataGridColumn id="grdColRrequestor" headerText="Requestor Name"
+                            dataField="requestor" width="420"/>
+         <mx:DataGridColumn headerText="Action" width="70">
+            <mx:itemRenderer>
+                  <mx:Component>
+                     <mx:HBox horizontalGap="4" horizontalAlign="center" click="event.stopImmediatePropagation()">
+                        <mx:Script>
+                        <![CDATA[
+                           import com.express.controller.event.GridButtonEvent;
+                        ]]>
+                     </mx:Script>
+                        <mx:LinkButton icon="@Embed('/images/icons/accept.png')" width="20"
+                                       toolTip="accept request"
+                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_ACCEPT));"/>
+                        <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20"
+                                       toolTip="reject request"
+                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REJECT));"/>
+                     </mx:HBox>
+                  </mx:Component>
+               </mx:itemRenderer>
+         </mx:DataGridColumn>
+      </mx:columns>
+   </mx:DataGrid>
+</mx:VBox>

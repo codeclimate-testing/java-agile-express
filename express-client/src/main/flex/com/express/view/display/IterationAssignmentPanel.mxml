@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+          horizontalAlign="center" paddingTop="5">
+   <mx:ComboBox id="iterationAssignmentList" labelField="title" width="75%" height="30"/>
+   <mx:List id="backlogAssignmentList" width="100%" height="100%" borderSides="top" labelField="reference"
+      styleName="{iterationAssignmentList.selectedItem.id == -1 ? 'storyBacklogDropList' : 'storyDropList'}"/>
+   <mx:HBox width="100%" height="30" verticalAlign="bottom" horizontalAlign="right" paddingRight="10">
+      <mx:Button id="cancelButton" label="Cancel"/>
+   </mx:HBox>
+</mx:VBox>

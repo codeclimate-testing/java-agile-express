@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         xmlns:comp="com.express.view.components.*"
+         styleName="unpadded" verticalGap="10" width="100%" minHeight="445">
+   <mx:WipeDown id="wipeDown" duration="200"/>
+   <mx:WipeUp id="wipeUp" duration="200"/>
+   <mx:StringValidator id="summaryValidator" enabled="{!businessValueItem.visible}" required="true"
+                       property="text" source="{summary}" />
+
+   <mx:StringValidator id="asAValidator" enabled="{businessValueItem.visible}" required="true"
+                       property="text" source="{asA}" />
+
+   <mx:StringValidator id="iWantValidator" enabled="{businessValueItem.visible}" required="true"
+                       property="text" source="{iWant}" />
+
+   <mx:StringValidator id="soThatValidator" enabled="{businessValueItem.visible}" required="true"
+                       property="text" source="{soThat}" />
+
+   <mx:NumberValidator id="effortValidator" required="true" property="text" source="{effort}"
+                       minValue="0" />
+
+   <mx:NumberValidator id="valueValidator" enabled="{businessValueItem.visible}" required="true"
+                       property="text" source="{businessValue}" minValue="0"/>
+   
+   <mx:Form id="mainForm" styleName="unpadded" showEffect="{wipeUp}" width="400" height="100%" verticalGap="6">
+      <mx:FormItem id="asItem" required="true" label="As">
+         <comp:AutoCompleteTextInput id="asA" width="280"/>
+      </mx:FormItem>
+      <mx:FormItem id="iWantItem" required="true" label="I want">
+         <mx:TextArea id="iWant" width="280" height="70"/>
+      </mx:FormItem>
+      <mx:FormItem id="soThatItem" required="true" label="So that">
+         <mx:TextArea id="soThat" width="280" height="70"/>
+      </mx:FormItem>
+      <mx:FormItem id="summaryItem" label="Summary:" required="true">
+         <mx:TextArea id="summary" width="280" height="150"/>
+      </mx:FormItem>
+      <mx:FormItem id="titleItem" label="Title">
+         <mx:TextInput id="title" width="280"/>
+      </mx:FormItem>
+      <mx:FormItem id="themeItem" label="Theme(s)">
+         <mx:List id="lstTheme" labelField="title" width="280" height="100" selectable="true"
+                  allowMultipleSelection="true"/>
+      </mx:FormItem>
+      <mx:FormItem id="businessValueItem" label="Business Value:" required="true">
+         <mx:HBox>
+            <mx:TextInput id="businessValue" width="40"/>
+            <mx:Label text="pts"/>
+         </mx:HBox>
+      </mx:FormItem>
+      <mx:FormItem id="effortItem" label="Effort:" required="true">
+         <mx:HBox>
+            <mx:TextInput id="effort" width="40"/>
+            <mx:Label id="effortUnitLabel"/>
+         </mx:HBox>
+      </mx:FormItem>
+      <mx:FormItem id="statusItem" label="Status:">
+         <mx:ComboBox id="itemStatus" prompt="-- Select --"/>
+      </mx:FormItem>
+      <mx:FormItem id="assignedToItem" label="Assigned To:">
+         <mx:ComboBox id="assignedToList" labelField="fullName" prompt="-- Select --"/>
+      </mx:FormItem>
+   </mx:Form>
+   <mx:RichTextEditor id="descriptionEditor" height="100%" width="100%" title="Detailed Description"
+         dropShadowEnabled="false"/>
+</mx:HBox>

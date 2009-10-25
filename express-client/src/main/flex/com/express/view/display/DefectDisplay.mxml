@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Form xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+   <mx:FormHeading styleName="h2" label="Defect Details"/>
+   <mx:FormItem label="Reference:">
+      <mx:Label id="reference"/>
+   </mx:FormItem>
+   <mx:FormItem label="Title:">
+      <mx:Label id="itemTitle"/>
+   </mx:FormItem>
+   <mx:FormItem label="Status:">
+      <mx:Label id="itemStatus"/>
+   </mx:FormItem>
+   <mx:FormItem label="Assigned To:">
+      <mx:Label id="assignedTo"/>
+   </mx:FormItem>
+   <mx:FormItem label="Description:" height="100%">
+      <mx:TextArea id="description" editable="false" wordWrap="true" borderThickness="0"
+                   height="180"/>
+   </mx:FormItem>
+</mx:Form>

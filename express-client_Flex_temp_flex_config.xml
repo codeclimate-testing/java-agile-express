@@ -1,0 +1,33 @@
+<flex-config xmlns="http://www.adobe.com/2006/flex-config">
+  <compiler>
+    <debug>true</debug>
+    <locale>
+      <locale-element>en_US</locale-element>
+    </locale>
+    <source-path>
+      <path-element>express-client/src/main/flex</path-element>
+      <path-element>express-client/src/main/resources</path-element>
+    </source-path>
+    <library-path append="true">
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/applicationupdater_ui/3.3.0.4852/applicationupdater_ui-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/flex/3.3.0.4852/flex-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/playerglobal/9-3.3.0.4852/playerglobal-9-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/utilities/3.3.0.4852/utilities-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/org/puremvc/puremvc/2.0.4/puremvc-2.0.4.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.swc</path-element>
+      <path-element>/Users/adam/.m2/repository/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb.swc</path-element>
+    </library-path>
+    <services>express-server/src/main/webapp/WEB-INF/flex/services-config.xml</services>
+    <context-root></context-root>
+  </compiler>
+  <file-specs>
+    <path-element>express-client/src/main/flex/Express.mxml</path-element>
+  </file-specs>
+  <output>/Users/adam/Projects/express/express-server/target/express-server-0.7.0-SNAPSHOT/express-client-0.7.0-SNAPSHOT.swf</output>
+</flex-config>
