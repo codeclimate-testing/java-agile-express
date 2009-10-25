@@ -38,8 +38,7 @@
       </property>
       <property name="viewResolvers">
          <list>
-            <bean name="xmlViewResolver"
-                  class="org.springframework.web.servlet.view.XmlViewResolver"
+            <bean name="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver"
                   p:location="/WEB-INF/views.xml"/>
             <bean id="viewResolver"
                   class="org.springframework.web.servlet.view.InternalResourceViewResolver"
