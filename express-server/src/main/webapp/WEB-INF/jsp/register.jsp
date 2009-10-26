@@ -24,11 +24,11 @@
       </li>
       <li>
          <img src="${ctx}/images/separator.gif" height="29" alt="separator"/>
-         <a href="${ctx}/pricing.html">Pricing</a>
+         <a href="${ctx}/documentation.html">Pricing</a>
       </li>
       <li>
          <img src="${ctx}/images/separator.gif" height="29" alt="separator"/>
-         <a href="${ctx}/support.html">Support</a>
+         <a href="${ctx}/faq.html">Support</a>
       </li>
       <li>
          <img src="${ctx}/images/separator.gif" height="29" alt="separator"/>
@@ -42,7 +42,7 @@
 </div>
 
 <div id="banner">
-   <img id="logo" src="${ctx}/images/logo.gif" alt="Express"/>
+   <img id="logo" src="${ctx}/images/logo.png" alt="Express"/>
    <div class="message"><c:out value="${msg}"/></div>
 </div>
 
