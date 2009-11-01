@@ -91,6 +91,10 @@
          <a>projectWorkers</a>
          <b>projectWorkers</b>
       </field>
+      <field-exclude>
+         <a>themes</a>
+         <b>themes</b>
+      </field-exclude>
       <field >
          <a is-accessible="true">version</a>
          <b>version</b>

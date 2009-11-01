@@ -47,5 +47,20 @@ public class User
       return firstName + " " + lastName;
    }
 
+   public function copyFrom(user : User) : void {
+      email = user.email;
+      firstName = user.firstName;
+      lastName = user.lastName;
+      colour = user.colour;
+      id = user.id;
+      version = user.version;
+      phone1 = user.phone1;
+      phone2 = user.phone2;
+      password = user.password;
+      passwordHint = user.passwordHint;
+      projects.source = user.projects.source;
+      storyWindowPreference = user.storyWindowPreference;
+   }
+
 }
 }

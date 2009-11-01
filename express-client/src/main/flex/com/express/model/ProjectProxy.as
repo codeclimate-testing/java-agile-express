@@ -235,11 +235,22 @@ public class ProjectProxy extends Proxy
    }
 
    public function set themes(themes : ArrayCollection) : void {
-      _themes.source = themes.source;
+      if(themes) {
+         _themes.source = themes.source;
+      }
    }
 
    public function get themes() : ArrayCollection {
       return _themes;
+   }
+
+   public function updateCurrentUser(user : User) : void {
+      for each(var developer : User in _developers) {
+         if(developer.id == user.id) {
+            developer.copyFrom(user);
+            return;
+         }
+      }
    }
 
 }

@@ -4,6 +4,7 @@ import com.express.ApplicationFacade;
 import com.express.controller.ChangePasswordCommand;
 import com.express.controller.UpdateUserCommand;
 import com.express.model.ProfileProxy;
+import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.domain.User;
 import com.express.model.request.ChangePasswordRequest;
@@ -62,6 +63,7 @@ public class ProfileMediator extends FormMediator
             break;
          case UpdateUserCommand.SUCCESS :
             _secureContext.currentUser = notification.getBody() as User;
+            ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME)).updateCurrentUser(_secureContext.currentUser);
             sendNotification(ApplicationFacade.NOTE_SHOW_SUCCESS_MSG, "Your details have been updated");
             break;
       }

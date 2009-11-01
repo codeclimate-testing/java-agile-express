@@ -69,6 +69,7 @@ ul.mainNav li a:hover {
 #main {
    background: url(../images/main-bg.jpg) no-repeat top left;
    width: 100%;
+	overflow:auto;
 }
 
 #application #main {
@@ -104,8 +105,8 @@ table.front td {
 }
 
 #faqs {
-   padding-left: 20px;
-   width: 800px;
+   padding-left: 10px;
+   width: 600px;
    text-align: left;
 }
 
@@ -121,7 +122,7 @@ table.front td {
 
 #faqs div {
    display: none;
-   border-left: 1em solid #B08136;
+   border-left: 1em solid #FCAD5E;
    padding-left: 1em;
    margin-left: 2em;
 }

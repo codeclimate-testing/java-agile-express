@@ -16,10 +16,6 @@
    </li>
    <li>
       <img src="images/separator.gif" height="29" alt="separator"/>
-      <a href="documentation.html">Documentation</a>
-   </li>
-   <li>
-      <img src="images/separator.gif" height="29" alt="separator"/>
       <a href="faq.html">FAQs</a>
    </li>
    <li>
@@ -35,15 +31,18 @@
 <div id="main">
       <div class="section">
             <h1>Documentation</h1>
-            <div id="left">
 
                <h3>Install</h3>
                <p>
-                  Download the latest war file and deply it to your favouriute servlet container. The latest build
-                  is tested on Tomcat 6.0.20.
+                  Download the latest war file and deply it to your favourite servlet container. The latest build
+                  is tested on Tomcat 6.0.20 but there is no reason why it would have problems on any 2.4 compliant
+                  servlet container.
                </p>
                <p>
-                  The latest build is configured by default for Postgres..
+                  Express requires a relational database. By default is uses postgres and was developed against 8.4.
+                  It will work against most relational databases as persistence is done via JPA and database management
+                  through Liquibase. In order to use a different database, at this stage, you will need to add the 
+                  database driver to the lib directory and change the properties accordingly (see config section below).
                </p>
                <h3>Configure</h3>
                <p>
@@ -53,14 +52,26 @@
                <h3>Use</h3>
                <h4>Register</h4>
                <p>
-                  The fist thing you will need to do is register an user account.
+                  The fist thing you will need to do is register an user account. User registration can be reached from
+                  the link on the login page. An email, password, and password hint is all that is required but additional
+                  details such as the colour you want to see for your stories / tasks, your full name and contact phone
+                  can be added also to help others in your team(s) identify you.
+               </p>
+               <p>
+               	  After registering an email with a confirmation link will be sent to the email address provided. this link
+                    will need to be used in order to activate the account. After this is done you can login.
                </p>
                <h4>Create a project</h4>
                <p>
-                  You will now need to create a project. When you create a project you automatically become it's
-                  manager.
+               	On your first login you will be directed to the project creation / access page. Here you can create a project
+                  or request to join an existing one. Your request will be emailed to the project manager(s) immediately but 
+                  you will not actually get acess to their project until they have acted on the request. If you create a new
+                  project it will be setup immediately and you can go to work on it straight away.
                </p>
-            </div>
+               <p>
+                  When you create a project you automatically become it's manager. This means you recieve all requests to join
+                  the project and can approve or reject them.
+               </p>
          </div>
    </div>
 </div>

@@ -11,29 +11,29 @@
       <property name="resourceLoaderPath" value="classpath:templates"/>
    </bean>
 
-   <!--<bean id="mailer" class="org.springframework.mail.javamail.JavaMailSenderImpl"-->
-   <!--p:host="${mail.host}" p:username="${mail.username}" p:password="${mail.password}"-->
-   <!--p:port="${mail.port}">-->
-   <!--<property name="javaMailProperties">-->
-   <!--<props>-->
-   <!--<prop key="mail.smtp.localhost">localhost</prop>-->
-   <!--</props>-->
-   <!--</property>-->
-   <!--</bean>-->
-
    <bean id="mailer" class="org.springframework.mail.javamail.JavaMailSenderImpl"
-         p:host="${mail.host}" p:username="${mail.username}" p:password="${mail.password}"
-         p:port="${mail.port}">
-      <property name="javaMailProperties">
-         <props>
-            <prop key="mail.smtp.localhost">localhost</prop>
-            <prop key="mail.smtp.auth">true</prop>
-            <prop key="mail.smtp.starttls.enable">true</prop>
-            <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
-            <prop key="mail.smtp.socketFactory.port">${mail.port}</prop>
-         </props>
-      </property>
+   p:host="${mail.host}" p:username="${mail.username}" p:password="${mail.password}"
+   p:port="${mail.port}">
+   <property name="javaMailProperties">
+   <props>
+   <prop key="mail.smtp.localhost">localhost</prop>
+   </props>
+   </property>
    </bean>
+
+   <!--<bean id="mailer" class="org.springframework.mail.javamail.JavaMailSenderImpl"-->
+         <!--p:host="${mail.host}" p:username="${mail.username}" p:password="${mail.password}"-->
+         <!--p:port="${mail.port}">-->
+      <!--<property name="javaMailProperties">-->
+         <!--<props>-->
+            <!--<prop key="mail.smtp.localhost">localhost</prop>-->
+            <!--<prop key="mail.smtp.auth">true</prop>-->
+            <!--<prop key="mail.smtp.starttls.enable">true</prop>-->
+            <!--<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>-->
+            <!--<prop key="mail.smtp.socketFactory.port">${mail.port}</prop>-->
+         <!--</props>-->
+      <!--</property>-->
+   <!--</bean>-->
 
    <bean id="notificationFactory" class="com.express.service.notification.NotificationFactoryImpl"
          p:velocityEngine-ref="velocityEngine" p:from="${mail.from}"
