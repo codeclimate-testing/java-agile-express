@@ -19,12 +19,10 @@
       public var story : BacklogItem;
       ]]>
    </mx:Script>
-   <mx:HBox styleName="unpadded" width="215" verticalAlign="middle">
-      <mx:Label styleName="h3" text="{story.reference}" width="60" textAlign="left"
-                paddingTop="5"/>
+   <mx:HBox styleName="unpadded" width="215" verticalAlign="middle" horizontalGap="0">
+      <mx:Label styleName="h3" text="{story.reference}" width="75" textAlign="left" paddingTop="5"/>
       <mx:Label width="107" textAlign="right" text="{story.status}" paddingTop="5"/>
-      <mx:LinkButton id="addTaskButton" icon="@Embed('/images/icons/add.png')" width="20"
-                     toolTip="Add Task"
+      <mx:LinkButton id="addTaskButton" icon="@Embed('/images/icons/add.png')" width="20" toolTip="Add Task"
                      click="{dispatchEvent(new StoryClickEvent(story,true,true,StoryClickEvent.TASK_ADD))}"/>
    </mx:HBox>
    <mx:Text width="205" height="70" paddingTop="4" fontSize="12" text="{story.summary}"

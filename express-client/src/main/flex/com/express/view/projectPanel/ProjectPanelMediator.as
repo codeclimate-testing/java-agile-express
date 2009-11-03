@@ -135,7 +135,7 @@ public class ProjectPanelMediator extends Mediator{
    }
 
    private function handleDisplayBurndown(event : Event) : void {
-      sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNDOWN);
+      sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNDOWN, _proxy.burndown);
    }
 
    public function get view() : ProjectPanel {

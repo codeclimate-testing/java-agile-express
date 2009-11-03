@@ -4,6 +4,7 @@ import com.express.model.domain.WindowMetrics;
 import com.express.print.BacklogPrintView;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.backlogItem.BacklogItemView;
+import com.express.view.components.BurndownChart;
 import com.express.view.iteration.IterationForm;
 import com.express.view.iteration.IterationMediator;
 import com.express.view.projectDetails.ProjectDetailsForm;
@@ -28,6 +29,7 @@ public class ExpressPopUpManager {
    private var _projectForm : ProjectDetailsForm;
    private var _projectAdminForm : ProjectAdmin;
    private var _themesForm : ThemesForm;
+   private var _burndownChart : BurndownChart;
    private var _lastWindowNotification : INotification;
    
    private var _facade : IFacade;
@@ -63,6 +65,10 @@ public class ExpressPopUpManager {
    private function createProjectForm() : void {
       _projectForm = new ProjectDetailsForm();
       _projectForm.addEventListener(FlexEvent.CREATION_COMPLETE, handleProjectdetailsFormCreated);
+   }
+
+   private function createBurndownChart() : void {
+      _burndownChart = new BurndownChart();
    }
    
    public function handleThemesFormCreated(event : Event) : void {
@@ -131,10 +137,17 @@ public class ExpressPopUpManager {
 
    public function showBurndownWindow(title : String, notification : INotification) : void {
       _lastWindowNotification = notification;
-      _application.burndownWindow.title = title;
-      _application.burndownWindow.x = (_application.width / 2) - (_application.burndownWindow.width / 2);
-      _application.burndownWindow.y = 80;
-      _application.burndownWindow.visible = true;
+      if(!_burndownChart) {
+         createBurndownChart();
+      }
+      _burndownChart.dataProvider = notification.getBody();
+      replaceTitleWindowChildWith(_burndownChart);
+      _application.mainPopup.title = title;
+      _application.mainPopup.width = 600;
+      _application.mainPopup.height = 450;
+      _application.mainPopup.x = (_application.width / 2) - (_application.mainPopup.width / 2);
+      _application.mainPopup.y = 80;
+      _application.mainPopup.visible = true;
    }
 
    public function showBacklogWindow(notification : INotification) : void {

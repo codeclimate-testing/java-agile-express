@@ -74,7 +74,6 @@ public class ApplicationMediator extends Mediator
       facade.registerMediator(new LoginMediator(viewComp.loginView));
 
       viewComp.rptMenu.dataProvider = _secureContext.menu;
-      viewComp.burndownWindow.burndown.dataProvider = _projectProxy.burndown;
 
       // Add listeners for other components on the viewStack with delayed instantiation.
       viewComp.backlogView.addEventListener(FlexEvent.CREATION_COMPLETE, handleBacklogViewCreated);

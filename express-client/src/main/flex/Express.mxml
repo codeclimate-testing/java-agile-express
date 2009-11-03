@@ -69,7 +69,4 @@
                               visible="false" showEffect="{irisOut}" hideEffect="{irisIn}" isPopUp="true"
                               close="{mainPopup.visible = false}" includeInLayout="false"/>
 
-   <comp:BurndownChart id="burndownWindow" styleName="mainPopup" visible="false" includeInLayout="false" isPopUp="false"
-                       width="450" height="500" showEffect="{irisOut}" hideEffect="{irisIn}"/>
-
 </mx:Application>
