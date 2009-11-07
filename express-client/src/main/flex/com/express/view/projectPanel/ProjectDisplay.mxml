@@ -3,7 +3,7 @@
          xmlns:security="com.express.security.*"
          width="100%" height="100%">
    <security:Authorize id="auth" roles="['role.projectAdmin']" behaviour="collapse"
-                       components="{manageMenuBar}" type="hasAny"/>
+                       components="{[manageMenuBar, btnEdit]}" type="hasAny"/>
    <mx:HBox id="manageMenuBar" styleName="menuBar" width="100%" height="30">
       <comp:PopUpLabel id="managePopUp" labelText="Manage" enabled="false"
                        dataProvider="['Workers','Themes']"/>

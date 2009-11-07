@@ -1,5 +1,6 @@
 package com.express.view.backlog
 {
+import com.express.model.SecureContextProxy;
 import com.express.view.*;
 import com.express.ApplicationFacade;
 import com.express.controller.IterationCreateCommand;
@@ -32,12 +33,14 @@ public class BacklogMediator extends Mediator
    public static const NAME : String = "BacklogViewMediator";
 
    private var _proxy : ProjectProxy;
+   private var _secureContext : SecureContextProxy;
    private var _viewOnClick : Boolean;
 
    public function BacklogMediator(viewComp : BacklogView)
    {
       super(NAME, viewComp);
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
+      _secureContext = facade.retrieveProxy(SecureContextProxy.NAME) as SecureContextProxy;
       facade.registerMediator(new ProjectPanelMediator(viewComp.projectPanel));
 
       viewComp.cboIterations.dataProvider = _proxy.iterationList;
@@ -46,6 +49,7 @@ public class BacklogMediator extends Mediator
       viewComp.grdIterationBacklog.dataTipFunction = buildToolTip;
       viewComp.grdProductBacklog.dataTipFunction = buildToolTip;
       viewComp.assignedToColumn.labelFunction = formatAssignedTo;
+      viewComp.auth.userRoles = _secureContext.availableRoles;
 
       viewComp.cboIterations.addEventListener(Event.CHANGE, handleIterationSelected);
       viewComp.lnkCreateIteration.addEventListener(MouseEvent.CLICK, handleCreateIteration);

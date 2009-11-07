@@ -47,6 +47,7 @@ public class ProjectPanelMediator extends Mediator{
       viewComp.lnkProjectAccess.addEventListener(MouseEvent.CLICK, handleNavigateRequest);
       viewComp.lnkProjectAccess.data = new MenuItem(viewComp.lnkProjectAccess.label,ApplicationMediator.ACCESS_VIEW, null);
       viewComp.projectDisplay.auth.userRoles = _secureContext.availableRoles;
+      viewComp.iterationSummary.auth.userRoles = _secureContext.availableRoles;
       viewComp.iterationSummary.printPopUp.addEventListener(ListEvent.ITEM_CLICK, handlePrintMenuSelection);
       viewComp.projectDisplay.managePopUp.addEventListener(ListEvent.ITEM_CLICK, handleManageMenuSelection);
       viewComp.projectDisplay.btnEdit.addEventListener(MouseEvent.CLICK, handleEditProject);
@@ -109,8 +110,6 @@ public class ProjectPanelMediator extends Mediator{
             view.cboProjects.dataProvider.refresh();
             bindDisplay();
             bindIterationDisplay();
-            view.iterationSummary.btnEdit.enabled = false;
-            view.iterationSummary.printPopUp.enabled = false;
             view.projectDisplay.btnEdit.enabled = true;
                view.projectDisplay.managePopUp.enabled = true;
             break;
@@ -161,6 +160,8 @@ public class ProjectPanelMediator extends Mediator{
          view.iterationSummary.totalPoints.text = "" + _proxy.selectedIteration.getPoints();
          view.iterationSummary.hrsRemaining.text = "" + _proxy.selectedIteration.getTaskHoursRemaining();
          view.iterationSummary.daysRemaining.text = "" + _proxy.selectedIteration.getDaysRemaining();
+         view.iterationSummary.btnEdit.enabled = true;
+         view.iterationSummary.printPopUp.enabled = true;
       }
       else {
          view.iterationSummary.startDate.text = "";
@@ -169,6 +170,8 @@ public class ProjectPanelMediator extends Mediator{
          view.iterationSummary.totalPoints.text = "";
          view.iterationSummary.hrsRemaining.text = "";
          view.iterationSummary.daysRemaining.text = "";
+         view.iterationSummary.btnEdit.enabled = false;
+         view.iterationSummary.printPopUp.enabled = false;
       }
    }
 
