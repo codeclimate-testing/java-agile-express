@@ -35,8 +35,6 @@ public class Project
 
    public var startDate : Date;
 
-   public var currentIteration : Iteration;
-
    public var productBacklog : ArrayCollection;
 
    public var iterations : ArrayCollection;
@@ -50,6 +48,16 @@ public class Project
    public var actors : ArrayCollection;
 
    public var themes : ArrayCollection;
+
+   public function get currentIteration() : Iteration {
+      var today : Date = new Date();
+      for each(var iteration : Iteration in iterations) {
+         if(iteration.getDaysRemaining() > 0) {
+            return iteration;
+         }
+      }
+      return null;
+   }
 
    public function addActor(actor : String) : void {
       if(!containsActor(actor)) {

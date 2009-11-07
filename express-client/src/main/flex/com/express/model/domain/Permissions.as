@@ -7,8 +7,10 @@ public class Permissions {
 
    public var version : Number;
 
+   [Bindable]
    public var iterationAdmin : Boolean;
 
+   [Bindable]
    public var projectAdmin : Boolean;
    
 }

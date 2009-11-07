@@ -21,6 +21,7 @@ import com.express.controller.ProjectCreateCommand;
 import com.express.controller.ProjectListLoadCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.controller.ProjectUpdateCommand;
+import com.express.controller.ProjectWorkersUpdateCommand;
 import com.express.controller.RegisterCommand;
 import com.express.controller.RegisterConfirmCommand;
 
@@ -75,6 +76,8 @@ public class ApplicationFacade extends Facade
    public static const NOTE_SECONDARY_NAV : String = "Note.SecondaryNav";
    public static const NOTE_DISPLAY_BURNDOWN : String = "Note.DisplayBurndown";
 
+   public static const NOTE_UPDATE_PROJECT_WORKERS : String = "Note.UpdateProjectWorkers";
+
    public static const NOTE_UPDATE_THEMES : String = "Note.UpdateThemes";
    public static const NOTE_LOAD_THEMES : String = "Note.LoadThemes";
    public static const NOTE_THEMES_MANAGE : String = "Note.ManageThemes";
@@ -118,6 +121,8 @@ public class ApplicationFacade extends Facade
       registerCommand(NOTE_CREATE_DEFECT, DefectCreateCommand);
       registerCommand(NOTE_UPDATE_DEFECT, DefectUpdateCommand);
       registerCommand(NOTE_REMOVE_DEFECT, DefectRemoveCommand);
+
+      registerCommand(NOTE_UPDATE_PROJECT_WORKERS, ProjectWorkersUpdateCommand);
 
       registerCommand(NOTE_UPDATE_THEMES, ThemesUpdateCommand);
       registerCommand(NOTE_LOAD_THEMES, ThemesLoadCommand);

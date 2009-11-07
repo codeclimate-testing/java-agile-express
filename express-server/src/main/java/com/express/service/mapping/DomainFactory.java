@@ -15,4 +15,5 @@ public interface DomainFactory {
 
    Theme createTheme(ThemeDto dto);
 
+   ProjectWorker createProjectWorker(ProjectWorkerDto workerDto);
 }

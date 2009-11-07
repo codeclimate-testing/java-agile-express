@@ -62,7 +62,7 @@
          <a>accessRequests</a>
          <b>accessRequests</b>
       </field>
-      <field map-id="ProjectWorker.deep">
+      <field map-id="ProjectWorker.deep" remove-orphans="true">
          <a>projectWorkers</a>
          <b>projectWorkers</b>
       </field>
@@ -116,6 +116,31 @@
          <a>worker</a>
          <b>worker</b>
       </field>
+      <field map-id="Permissions.deep">
+         <a>permissions</a>
+         <b>permissions</b>
+      </field>
+      <field >
+         <a is-accessible="true">version</a>
+         <b>version</b>
+      </field>
+   </mapping>
+
+   <mapping map-id="ProjectWorker.shallow">
+      <class-a>com.express.domain.ProjectWorker</class-a>
+      <class-b>com.express.service.dto.ProjectWorkerDto</class-b>
+      <field custom-converter="com.express.service.mapping.IdConverter">
+         <a>id</a>
+         <b>id</b>
+      </field>
+      <field-exclude>
+         <a>project</a>
+         <b>project</b>
+      </field-exclude>
+      <field-exclude>
+         <a>worker</a>
+         <b>worker</b>
+      </field-exclude>
       <field map-id="Permissions.deep">
          <a>permissions</a>
          <b>permissions</b>

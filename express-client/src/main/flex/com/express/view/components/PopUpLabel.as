@@ -15,7 +15,6 @@ import mx.controls.List;
 import mx.core.Application;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
-import mx.managers.PopUpManager;
 
 public class PopUpLabel extends HBox{
 

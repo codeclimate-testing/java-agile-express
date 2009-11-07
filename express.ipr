@@ -409,6 +409,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852-javadoc.jar!/" />
@@ -419,6 +421,8 @@
     </library>
     <library name="Maven: com.adobe.flex.framework:applicationupdater_ui:swc:3.3.0.4852">
       <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater_ui/3.3.0.4852/applicationupdater_ui-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater_ui/3.3.0.4852/applicationupdater_ui-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater_ui/3.3.0.4852/applicationupdater_ui-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater_ui/3.3.0.4852/applicationupdater_ui-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/applicationupdater_ui/3.3.0.4852/applicationupdater_ui-3.3.0.4852.swc!/" />
@@ -475,6 +479,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/flex/3.3.0.4852/flex-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/flex/3.3.0.4852/flex-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/flex/3.3.0.4852/flex-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/flex/3.3.0.4852/flex-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/flex/3.3.0.4852/flex-3.3.0.4852.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/flex/3.3.0.4852/flex-3.3.0.4852-javadoc.jar!/" />
@@ -485,6 +491,8 @@
     </library>
     <library name="Maven: com.adobe.flex.framework:framework:swc:3.3.0.4852">
       <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.swc!/" />
@@ -541,6 +549,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/9-3.3.0.4852/playerglobal-9-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/9-3.3.0.4852/playerglobal-9-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/9-3.3.0.4852/playerglobal-9-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/9-3.3.0.4852/playerglobal-9-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/9-3.3.0.4852/playerglobal-9-3.3.0.4852.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/9-3.3.0.4852/playerglobal-9-3.3.0.4852-javadoc.jar!/" />
@@ -551,6 +561,8 @@
     </library>
     <library name="Maven: com.adobe.flex.framework:rpc:swc:3.3.0.4852">
       <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.swc!/" />
@@ -607,6 +619,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/utilities/3.3.0.4852/utilities-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/utilities/3.3.0.4852/utilities-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/utilities/3.3.0.4852/utilities-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/utilities/3.3.0.4852/utilities-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/utilities/3.3.0.4852/utilities-3.3.0.4852.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/utilities/3.3.0.4852/utilities-3.3.0.4852-javadoc.jar!/" />
@@ -640,6 +654,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-javadoc.jar!/" />
@@ -665,8 +681,12 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/rpc/3.3.0.4852/rpc-3.3.0.4852.rb-sources.jar!/" />
@@ -717,6 +737,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-javadoc.jar!/" />
@@ -742,8 +764,12 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/framework/3.3.0.4852/framework-3.3.0.4852.rb-sources.jar!/" />
@@ -794,6 +820,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-javadoc.jar!/" />
@@ -819,8 +847,12 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-9-sources.jar!/" />
@@ -871,6 +903,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/puremvc/puremvc/2.0.4/puremvc-2.0.4.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/org/puremvc/puremvc/2.0.4/puremvc-2.0.4.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/org/puremvc/puremvc/2.0.4/puremvc-2.0.4.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/puremvc/puremvc/2.0.4/puremvc-2.0.4.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/puremvc/puremvc/2.0.4/puremvc-2.0.4.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/puremvc/puremvc/2.0.4/puremvc-2.0.4-javadoc.jar!/" />
@@ -881,6 +915,8 @@
     </library>
     <library name="Maven: com.adobe.flex:datavisualization:swc:3.3.0.4852">
       <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.swc!/" />
@@ -1586,6 +1622,8 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb.swc!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb.swc!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb.swc!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-javadoc.jar!/" />
@@ -1611,8 +1649,12 @@
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-javadoc.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/com/adobe/flex/datavisualization/3.3.0.4852/datavisualization-3.3.0.4852.rb-sources.jar!/" />
@@ -1674,11 +1716,17 @@
     <library name="Maven: org.hibernate:hibernate:3.2.6.GA">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga.jar!/" />
       </CLASSES>
       <JAVADOC>
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate/3.2.6.ga/hibernate-3.2.6.ga-sources.jar!/" />
       </SOURCES>
     </library>

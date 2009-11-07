@@ -1,7 +1,7 @@
 package com.express.domain;
 
-import org.hibernate.annotations.OptimisticLock;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OptimisticLock;
 
 import javax.persistence.*;
 import java.util.*;
@@ -53,6 +53,7 @@ public class Project implements Persistable {
    private String effortUnit;
 
    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+   @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
    @OptimisticLock(excluded = true)
    private Set<ProjectWorker> projectWorkers;
 
@@ -129,15 +130,12 @@ public class Project implements Persistable {
       this.effortUnit = effortUnit;
    }
 
-   public List<ProjectWorker> getProjectWorkers() {
-      List<ProjectWorker> workerList = new ArrayList<ProjectWorker>(projectWorkers);
-      Collections.sort(workerList);
-      return workerList;
+   public Set<ProjectWorker> getProjectWorkers() {
+      return projectWorkers;
    }
 
-   public void setProjectWorkers(List<ProjectWorker> projectWorkers) {
-      this.projectWorkers.clear();
-      this.projectWorkers.addAll(projectWorkers);
+   public void setProjectWorkers(Set<ProjectWorker> projectWorkers) {
+      this.projectWorkers = projectWorkers;
    }
 
    public void addProjectWorker(ProjectWorker projectWorker) {

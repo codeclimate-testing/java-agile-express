@@ -35,6 +35,7 @@ public class ProjectProxy extends Proxy
    private var _productBacklog : HierarchicalData;
 
    private var _developers : ArrayCollection;
+   private var _projectWorkers : ArrayCollection;
    private var _accessRequests: ArrayCollection;
    private var _defectList : ArrayCollection;
    private var _burndown : ArrayCollection;
@@ -55,6 +56,7 @@ public class ProjectProxy extends Proxy
       _iterationList = new ArrayCollection();
       _accessRequests = new ArrayCollection();
       _developers = new ArrayCollection();
+      _projectWorkers = new ArrayCollection();
       _burndown = new ArrayCollection();
 
       _selectedBacklog = new HierarchicalData();
@@ -155,6 +157,7 @@ public class ProjectProxy extends Proxy
       }
       addToProjectList(project);
       accessRequests = project.accessRequests;
+      _projectWorkers.source = project.projectWorkers.source;
       setDevelopers(project.projectWorkers);
       setProductBacklogSource(project.productBacklog);
       themes = project.themes;
@@ -248,6 +251,20 @@ public class ProjectProxy extends Proxy
       for each(var developer : User in _developers) {
          if(developer.id == user.id) {
             developer.copyFrom(user);
+            return;
+         }
+      }
+   }
+
+   public function get projectWorkers() : ArrayCollection {
+      return _projectWorkers;
+   }
+
+   public function removeProjectWorker(worker : ProjectWorker) : void {
+
+      for(var index : int = 0; index < _projectWorkers.length ; index++) {
+         if(_projectWorkers.getItemAt(index).id == worker.id) {
+            _projectWorkers.removeItemAt(index);
             return;
          }
       }

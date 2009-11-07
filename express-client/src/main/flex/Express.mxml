@@ -68,5 +68,6 @@
    <adobe:SizeableTitleWindow id="mainPopup" showCloseButton="true" styleName="mainPopup" verticalScrollPolicy="off"
                               visible="false" showEffect="{irisOut}" hideEffect="{irisIn}" isPopUp="true"
                               close="{mainPopup.visible = false}" includeInLayout="false"/>
+   <comp:ConfirmBox id="confirmBox" width="350" height="150" visible="false" includeInLayout="false" styleName="confirm"/>
 
 </mx:Application>

@@ -246,4 +246,21 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       assertEquals(1, projectManager.loadBacklog(request).size());
    }
 
+   @Test
+   public void testUpdateProjectWorkers() {
+      ProjectWorkersUpdateRequest request = new ProjectWorkersUpdateRequest();
+      Project project = new Project();
+      request.setProjectId(1l);
+      List<ProjectWorkerDto> workers = new ArrayList<ProjectWorkerDto>();
+      ProjectWorkerDto worker = new ProjectWorkerDto();
+      workers.add(worker);
+      request.setWorkers(workers);
+      expect(projectDao.findById(request.getProjectId())).andReturn(project);
+      expect(domainFactory.createProjectWorker(worker)).andReturn(new ProjectWorker());
+      projectDao.save(project);
+      replay();
+      projectManager.updateProjectWorkers(request);
+      assertEquals(1, project.getProjectWorkers().size());
+   }
+
 }

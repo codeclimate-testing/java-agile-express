@@ -152,7 +152,7 @@ public class ProjectPanelMediator extends Mediator{
       }
    }
 
-   private function bindIterationDisplay() : void {
+   public function bindIterationDisplay() : void {
       if(_proxy.selectedIteration) {
          view.iterationSummary.startDate.text = DateField.dateToString(_proxy.selectedIteration.startDate, "DD/MM/YYYY");
          view.iterationSummary.endDate.text = DateField.dateToString(_proxy.selectedIteration.endDate, "DD/MM/YYYY");

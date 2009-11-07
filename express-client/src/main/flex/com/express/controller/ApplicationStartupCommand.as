@@ -53,6 +53,7 @@ public class ApplicationStartupCommand extends SimpleCommand
    private function checkRegistrationConfirmation() : void {
       var browserManager : IBrowserManager = BrowserManager.getInstance();
       browserManager.init();
+      browserManager.setTitle("Express | Agile Project Management");
       var exp : RegExp = /registerId=(\d*)/g;
       if (browserManager.fragment.search(exp) != -1) {
          var userId: Number = exp.exec(browserManager.fragment)[1];

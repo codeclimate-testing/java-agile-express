@@ -386,6 +386,12 @@ LinkButton.form {
    scaleGridBottom=219);
 }
 
+.confirm {
+   border-color: #3679b0;
+   borderAlpha:1.0;
+   title-style-name:alertTitle;
+}
+
 .loginForm {
    background-image:Embed(source = "/images/login-form-bg.png");
    padding-left:70;

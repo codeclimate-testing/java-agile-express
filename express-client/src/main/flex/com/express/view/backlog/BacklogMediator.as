@@ -16,6 +16,7 @@ import com.express.view.projectPanel.ProjectPanelMediator;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
+import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.ComboBox;
 import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
@@ -126,14 +127,28 @@ public class BacklogMediator extends Mediator
 
    private function handleProjectSelected() : void {
       view.lnkCreateIteration.enabled = true;
+      _proxy.selectedIteration = _proxy.selectedProject.currentIteration;
+      view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
       if (!_proxy.selectedIteration) {
-         view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
-         _proxy.selectedIteration = null;
          view.cboIterations.selectedIndex = -1;
          view.btnCreateItem.enabled = false;
       }
+      else {
+         view.cboIterations.selectedIndex = getSelectionIndex(view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);
+         view.btnCreateItem.enabled = true;
+      }
+      ProjectPanelMediator(facade.retrieveMediator(ProjectPanelMediator.NAME)).bindIterationDisplay();
    }
-   
+
+   private function getSelectionIndex(list : ArrayCollection, iteration :Iteration) : int{
+      for(var index : int = 0; index < list.length; index++) {
+         if(list.getItemAt(index).id == iteration.id) {
+            return index;
+         }
+      }
+      return -1;
+   }
+
    private function handleIterationSelected(event : Event) : void {
        selectIteration((event.target as ComboBox).selectedItem as Iteration);
 

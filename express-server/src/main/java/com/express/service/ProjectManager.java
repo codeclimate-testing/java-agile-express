@@ -117,4 +117,9 @@ public interface ProjectManager {
     */
    List<ThemeDto> loadThemes(Long projectId);
 
+   /**
+    * Updates the project workers in the project identified by the projectId provided 
+    * @param request
+    */
+   void updateProjectWorkers(ProjectWorkersUpdateRequest request);
 }

@@ -16,7 +16,10 @@ import com.express.view.themes.ThemesMediator;
 
 import flash.events.Event;
 
+import flash.events.MouseEvent;
+
 import mx.core.UIComponent;
+import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 
 import org.puremvc.as3.interfaces.IFacade;
@@ -114,8 +117,8 @@ public class ExpressPopUpManager {
       }
       replaceTitleWindowChildWith(_projectAdminForm);
       _application.mainPopup.title = "Project Access Requests";
-      _application.mainPopup.width = 450;
-      _application.mainPopup.height = 410;
+      _application.mainPopup.width = 550;
+      _application.mainPopup.height = 450;
       _application.mainPopup.x = (_application.width / 2) - 225;
       _application.mainPopup.y = 80;
       _application.mainPopup.visible = true;
@@ -198,6 +201,17 @@ public class ExpressPopUpManager {
       _application.mainPopup.x = (_application.width / 2) - 225;
       _application.mainPopup.y = 80;
       _application.mainPopup.visible = true;
+   }
+
+   public function showConfirm(title : String, message : String, callback:Function = null) : void {
+      _application.confirmBox.title = title;
+      _application.confirmBox.message.text = message;
+      _application.confirmBox.x = (_application.width / 2) - 225;
+      _application.confirmBox.y = 80;
+      _application.confirmBox.visible = true;
+      if(callback != null) {
+         _application.confirmBox.btnAccept.addEventListener(CloseEvent.CLOSE, callback);
+      }
    }
 
    private function replaceTitleWindowChildWith(component : UIComponent) : void {

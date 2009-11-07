@@ -21,6 +21,7 @@ public class DomainFactoryImpl implements DomainFactory {
    private final IterationDao iterationDao;
    private final BacklogItemDao backlogItemDao;
    private final ThemeDao themeDao;
+   private final ProjectWorkerDao projectWorkerDao;
 
    @Autowired
    public DomainFactoryImpl(@Qualifier("beanMapper") MapperIF beanMapper,
@@ -28,13 +29,15 @@ public class DomainFactoryImpl implements DomainFactory {
                             @Qualifier("projectDao") ProjectDao projectDao,
                             @Qualifier("iterationDao") IterationDao iterationDao,
                             @Qualifier("backlogItemDao") BacklogItemDao backlogItemDao,
-                            @Qualifier("themeDao")ThemeDao themeDao) {
+                            @Qualifier("themeDao") ThemeDao themeDao,
+                            @Qualifier("projectWorkerDao")ProjectWorkerDao projectWorkerDao) {
       this.beanMapper = beanMapper;
       this.userDao = userDao;
       this.projectDao = projectDao;
       this.iterationDao = iterationDao;
       this.backlogItemDao = backlogItemDao;
       this.themeDao = themeDao;
+      this.projectWorkerDao = projectWorkerDao;
    }
 
    public User createUser(UserDto dto) {
@@ -115,6 +118,18 @@ public class DomainFactoryImpl implements DomainFactory {
       return theme;
    }
 
+   public ProjectWorker createProjectWorker(ProjectWorkerDto workerDto) {
+      ProjectWorker projectWorker;
+      if(workerDto.getId() == null || workerDto.getId() == 0) {
+         projectWorker = (ProjectWorker)beanMapper.map(workerDto, ProjectWorker.class, Policy.SHALLOW.getMapId(ProjectWorker.class));
+      }
+      else {
+         projectWorker = projectWorkerDao.findById(workerDto.getId());
+         beanMapper.map(workerDto, projectWorker, Policy.SHALLOW.getMapId(ProjectWorker.class));
+      }
+      return projectWorker;
+   }
+
    private boolean detectAssignentChange(BacklogItemDto dto, BacklogItem item) {
       if(dto.getAssignedTo() == null && item.getAssignedTo() == null) {
          return false;
@@ -126,5 +141,4 @@ public class DomainFactoryImpl implements DomainFactory {
          return dto.getAssignedTo().getId() != item.getAssignedTo().getId();
       }
    }
-
 }

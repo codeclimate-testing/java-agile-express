@@ -316,4 +316,14 @@ public class ProjectManagerImpl implements ProjectManager {
       Collections.sort(themeDtos);
       return themeDtos;
    }
+
+   @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+   public void updateProjectWorkers(ProjectWorkersUpdateRequest request) {
+      Project project = projectDao.findById(request.getProjectId());
+      project.getProjectWorkers().clear();
+      for(ProjectWorkerDto workerDto : request.getWorkers()) {
+         project.addProjectWorker(domainFactory.createProjectWorker(workerDto));
+      }
+      projectDao.save(project);
+   }
 }

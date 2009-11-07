@@ -6,7 +6,7 @@
                        components="{manageMenuBar}" type="hasAny"/>
    <mx:HBox id="manageMenuBar" styleName="menuBar" width="100%" height="30">
       <comp:PopUpLabel id="managePopUp" labelText="Manage" enabled="false"
-                       dataProvider="['User Access','Themes']"/>
+                       dataProvider="['Workers','Themes']"/>
    </mx:HBox>
    <mx:HBox horizontalGap="5">
       <mx:Label text="Reference:" fontWeight="bold" width="115"/>
