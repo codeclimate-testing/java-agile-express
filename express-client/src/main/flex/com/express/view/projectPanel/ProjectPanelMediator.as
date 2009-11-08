@@ -53,6 +53,7 @@ public class ProjectPanelMediator extends Mediator{
       viewComp.projectDisplay.btnEdit.addEventListener(MouseEvent.CLICK, handleEditProject);
       viewComp.iterationSummary.btnEdit.addEventListener(MouseEvent.CLICK, handleEditIteration);
       viewComp.iterationSummary.burndown.addEventListener(MouseEvent.CLICK, handleDisplayBurndown);
+      viewComp.projectDisplay.lnkVelocity.addEventListener(MouseEvent.CLICK, handleDisplayVelocityChart);
    }
 
    public function handleProjectSelected(event : Event) : void {
@@ -137,6 +138,10 @@ public class ProjectPanelMediator extends Mediator{
       sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNDOWN, _proxy.burndown);
    }
 
+   private function handleDisplayVelocityChart(event : Event) : void {
+      sendNotification(ApplicationFacade.NOTE_DISPLAY_VELOCITY, _proxy.selectedProject.iterations);
+   }
+
    public function get view() : ProjectPanel {
       return viewComponent as ProjectPanel;
    }
@@ -148,6 +153,7 @@ public class ProjectPanelMediator extends Mediator{
          view.projectDisplay.startDate.text = DateField.dateToString(_proxy.selectedProject.startDate, "DD/MM/YYYY");
          view.projectDisplay.description.text = _proxy.selectedProject.description;
          view.projectDisplay.rptAdmins.dataProvider = _proxy.selectedProject.admins;
+         view.projectDisplay.lnkVelocity.visible = true;
       }
    }
 

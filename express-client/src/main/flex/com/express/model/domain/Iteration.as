@@ -35,6 +35,10 @@ public class Iteration
 
    public var backlog : ArrayCollection;
 
+   public function get pointsCompleted() : int {
+      return getPoints();
+   }
+
    /**
     * A collection of EffortRecords for this iteration. Effort records should be naturally ordered
     * by date.

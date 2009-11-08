@@ -75,6 +75,7 @@ public class ApplicationFacade extends Facade
 
    public static const NOTE_SECONDARY_NAV : String = "Note.SecondaryNav";
    public static const NOTE_DISPLAY_BURNDOWN : String = "Note.DisplayBurndown";
+   public static const NOTE_DISPLAY_VELOCITY:String = "Note.DisplayVelocityChart";
 
    public static const NOTE_UPDATE_PROJECT_WORKERS : String = "Note.UpdateProjectWorkers";
 
@@ -140,5 +141,6 @@ public class ApplicationFacade extends Facade
    public function startup(app : Express):void {
       sendNotification(NOTE_STARTUP, app);
    }
-}
+
+   }
 }

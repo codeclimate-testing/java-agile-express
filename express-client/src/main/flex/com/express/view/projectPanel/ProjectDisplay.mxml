@@ -21,6 +21,10 @@
       <mx:Label id="startDate"/>
    </mx:HBox>
    <mx:HBox horizontalGap="5">
+      <mx:Label text="Velocity Chart:" fontWeight="bold" width="115"/>
+      <mx:LinkButton id="lnkVelocity" styleName="form" label="view" visible="false" width="50"/>
+   </mx:HBox>
+   <mx:HBox horizontalGap="5">
       <mx:Label text="Description:" fontWeight="bold" width="115"/>
       <mx:Text id="description" width="140" height="120"/>
    </mx:HBox>
