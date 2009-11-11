@@ -1,54 +1,25 @@
 <?xml version="1.0" ?>
-<mx:TabNavigator xmlns:mx="http://www.adobe.com/2006/mxml" height="100%" width="100%" creationPolicy="all">
+<mx:TabNavigator xmlns:mx="http://www.adobe.com/2006/mxml"
+                 xmlns:comp="com.express.view.components.*" xmlns:renderer="com.express.view.renderer.*"
+                 height="100%" width="100%" creationPolicy="all">
 
    <mx:VBox label="Current Workers" width="100%" height="100%">
       <mx:DataGrid id="grdWorkers" width="100%" height="100%">
          <mx:columns>
-            <mx:DataGridColumn id="colWorkerName" headerText="Name" dataField="requestor"/>
-            <mx:DataGridColumn headerText="Project Admin" width="110" textAlign="center">
-               <mx:itemRenderer>
-                  <mx:Component>
-                     <mx:VBox width="100%" horizontalAlign="center">
-                     <mx:Script><![CDATA[
-                        import com.express.model.domain.Permissions;
-                        [Bindable]
-                            private var permission : Permissions;
-                     ]]></mx:Script>
-                     <mx:CheckBox id="chkProjectAdmin" creationComplete="{permission = data.permissions}"
-                                  selected="{permission.projectAdmin}"
-                                  click="permission.projectAdmin = chkProjectAdmin.selected"
-                                  updateComplete="{permission.projectAdmin = chkProjectAdmin.selected}"/>
-                     </mx:VBox>
-                  </mx:Component>
-               </mx:itemRenderer>
-            </mx:DataGridColumn>
-            <mx:DataGridColumn headerText="Iteration Admin" width="115" textAlign="center" editable="true" rendererIsEditor="true">
-               <mx:itemRenderer>
-                  <mx:Component>
-                     <mx:VBox width="100%" horizontalAlign="center">
-                     <mx:Script><![CDATA[
-                        import com.express.model.domain.Permissions;
-                        [Bindable]
-                            private var permission : Permissions;
-                     ]]></mx:Script>
-                     <mx:CheckBox id="chkIterationAdmin" creationComplete="{permission = data.permissions}"
-                                  selected="{permission.iterationAdmin}"
-                                  click="permission.iterationAdmin = chkIterationAdmin.selected"
-                                  updateComplete="{permission.iterationAdmin = chkIterationAdmin.selected}"/>
-                     </mx:VBox>
-                  </mx:Component>
-               </mx:itemRenderer>
-            </mx:DataGridColumn>
+            <renderer:NestedDataGridColumn headerText="Name" dataField="worker.fullName"/>
+            <mx:DataGridColumn headerText="Project Admin" width="110" textAlign="center"
+                               itemRenderer="com.express.view.renderer.ProjectAdminCheckBoxRenderer"/>
+            <mx:DataGridColumn headerText="Iteration Admin" width="110" textAlign="center"
+                               itemRenderer="com.express.view.renderer.IterationAdminCheckBoxRenderer"/>
             <mx:DataGridColumn editable="false" headerText="Remove" width="65">
                <mx:itemRenderer>
                   <mx:Component>
-                     <mx:HBox horizontalGap="4" horizontalAlign="center" click="event.stopImmediatePropagation()">
-                        <mx:Script>
-                           <![CDATA[ import com.express.controller.event.GridButtonEvent;]]>
-                        </mx:Script>
                         <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20" toolTip="remove worker"
-                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));"/>
-                     </mx:HBox>
+                                       click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));event.stopImmediatePropagation();">
+                           <mx:Script>
+                              <![CDATA[ import com.express.controller.event.GridButtonEvent;]]>
+                           </mx:Script>
+                        </mx:LinkButton>
                   </mx:Component>
                </mx:itemRenderer>
             </mx:DataGridColumn>
@@ -62,7 +33,7 @@
    <mx:VBox label="Access Requests" width="100%" height="100%">
       <mx:DataGrid id="grdRequests" width="100%" height="100%">
          <mx:columns>
-            <mx:DataGridColumn id="grdColRrequestor" headerText="Requestor Name" dataField="requestor" width="420"/>
+            <renderer:NestedDataGridColumn headerText="Requestor Name" dataField="requestor.fullName" width="420"/>
             <mx:DataGridColumn headerText="Action" width="70">
                <mx:itemRenderer>
                   <mx:Component>
@@ -71,7 +42,7 @@
                         <![CDATA[
                            import com.express.controller.event.GridButtonEvent;
                         ]]>
-                     </mx:Script>
+                        </mx:Script>
                         <mx:LinkButton icon="@Embed('/images/icons/accept.png')" width="20"
                                        toolTip="accept request"
                                        click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_ACCEPT));"/>

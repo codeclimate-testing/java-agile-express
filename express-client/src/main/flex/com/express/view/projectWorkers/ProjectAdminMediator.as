@@ -3,15 +3,11 @@ import com.express.ApplicationFacade;
 import com.express.controller.event.GridButtonEvent;
 import com.express.model.ProjectProxy;
 import com.express.model.domain.AccessRequest;
-
 import com.express.model.domain.ProjectWorker;
-
-import com.express.view.ExpressPopUpManager;
 
 import flash.events.MouseEvent;
 
 import mx.controls.Alert;
-import mx.controls.dataGridClasses.DataGridColumn;
 import mx.core.Application;
 import mx.events.CloseEvent;
 
@@ -25,12 +21,10 @@ public class ProjectAdminMediator extends Mediator{
    public function ProjectAdminMediator(viewComp : ProjectAdmin, name : String = NAME) {
       super(name, viewComp);
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
-      viewComp.grdColRrequestor.labelFunction = formatRequestor;
       viewComp.grdRequests.addEventListener(GridButtonEvent.CLICK, handleGridButtonClick);
       viewComp.grdRequests.dataProvider = _proxy.accessRequests;
 
       viewComp.grdWorkers.addEventListener(GridButtonEvent.CLICK, handleGridButtonClick);
-      viewComp.colWorkerName.labelFunction = formatWorkerName;
       viewComp.grdWorkers.dataProvider = _proxy.projectWorkers;
 
       viewComp.btnUpdate.addEventListener(MouseEvent.CLICK, handleUpdateProjectWorkers);
@@ -90,16 +84,6 @@ public class ProjectAdminMediator extends Mediator{
 
    public function get view() : ProjectAdmin {
       return viewComponent as ProjectAdmin;
-   }
-
-   private function formatRequestor(row : Object, col : DataGridColumn) : String {
-      var item : AccessRequest = row as AccessRequest;
-      return item.requestor.fullName;
-   }
-
-   private function formatWorkerName(row : Object, col : DataGridColumn) : String {
-      var item : ProjectWorker = row as ProjectWorker;
-      return item.worker.fullName;
    }
 
 }
