@@ -48,6 +48,12 @@ public class IterationMediator extends FormMediator
       view.startDate.selectedDate = _proxy.newIteration.startDate;
       view.endDate.selectedDate = _proxy.newIteration.endDate;
       FormUtility.clearValidationErrors(_validators);
+      if(_proxy.newIteration.id) {
+         view.btnSave.label = "Update";
+      }
+      else {
+         view.btnSave.label = "Create";
+      }
    }
 
    override public function bindModel():void {

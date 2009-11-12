@@ -172,6 +172,7 @@ public class BacklogItemMediator extends FormMediator {
             view.backlogItemForm.focusManager.setFocus(view.backlogItemForm.asA);
          }
          resetValidation();
+         view.tbViews.selectedIndex = 0;
       }
    }
 

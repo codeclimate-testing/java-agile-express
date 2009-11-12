@@ -8,11 +8,11 @@
    <mx:StringValidator id="endValidator" required="true" source="{endDate}" property="text"
           trigger="{btnSave}" triggerEvent="click"/>
 
-   <mx:FormItem label="Title" required="true">
-      <mx:TextInput id="iteratonTitle" width="250"/>
+   <mx:FormItem label="Title" required="true" width="95%">
+      <mx:TextInput id="iteratonTitle" width="100%"/>
    </mx:FormItem>
-   <mx:FormItem label="Description">
-      <mx:TextArea id="description" width="250" height="200"/>
+   <mx:FormItem label="Description" width="95%">
+      <mx:TextArea id="description" width="100%" height="200"/>
    </mx:FormItem>
    <mx:FormItem label="Start Date" required="true">
       <mx:DateField id="startDate" formatString="DD/MM/YYYY"/>
