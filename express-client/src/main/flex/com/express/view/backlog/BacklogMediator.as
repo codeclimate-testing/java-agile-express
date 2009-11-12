@@ -115,7 +115,7 @@ public class BacklogMediator extends Mediator
    override public function handleNotification(notification:INotification):void {
       switch (notification.getName()) {
          case ProjectLoadCommand.SUCCESS :
-            handleProjectSelected();
+            handleProjectLoaded();
             break;
          case IterationCreateCommand.SUCCESS :
             var iteration : Iteration = notification.getBody() as Iteration;
@@ -129,13 +129,19 @@ public class BacklogMediator extends Mediator
       }
    }
 
-   private function handleProjectSelected() : void {
+   private function handleProjectLoaded() : void {
       view.lnkCreateIteration.enabled = true;
-      _proxy.selectedIteration = _proxy.selectedProject.currentIteration;
       view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
       if (!_proxy.selectedIteration) {
-         view.cboIterations.selectedIndex = -1;
-         view.btnCreateItem.enabled = false;
+         _proxy.selectedIteration = _proxy.selectedProject.currentIteration;
+         if (!_proxy.selectedIteration) {
+            view.cboIterations.selectedIndex = -1;
+            view.btnCreateItem.enabled = false;
+         }
+         else {
+            view.cboIterations.selectedIndex = getSelectionIndex(view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);
+            view.btnCreateItem.enabled = true;
+         }
       }
       else {
          view.cboIterations.selectedIndex = getSelectionIndex(view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);

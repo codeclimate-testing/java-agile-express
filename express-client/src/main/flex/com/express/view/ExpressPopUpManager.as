@@ -19,6 +19,8 @@ import flash.events.Event;
 
 import flash.events.MouseEvent;
 
+import mx.binding.utils.BindingUtils;
+import mx.binding.utils.ChangeWatcher;
 import mx.core.UIComponent;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
@@ -45,6 +47,19 @@ public class ExpressPopUpManager {
       _facade = facade;
       _application = application;
       _secureContext = SecureContextProxy(_facade.retrieveProxy(SecureContextProxy.NAME));
+      ChangeWatcher.watch(_application.mainPopup, "visible", handleHidePopup);
+   }
+
+   private function handleHidePopup(event : Event):void {
+      if(!_application.mainPopup.visible) {
+      if(_lastWindowNotification.getName() == BacklogItemMediator.CREATE ||
+            _lastWindowNotification.getName() == BacklogItemMediator.EDIT) {
+         _secureContext.currentUser.storyWindowPreference.x = _application.mainPopup.x;
+         _secureContext.currentUser.storyWindowPreference.y = _application.mainPopup.y;
+         _secureContext.currentUser.storyWindowPreference.height = _application.mainPopup.height;
+         _secureContext.currentUser.storyWindowPreference.width = _application.mainPopup.width;
+      }
+      }
    }
    
    private function createBacklogItemForm() : void {
