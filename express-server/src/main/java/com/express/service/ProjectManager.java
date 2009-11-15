@@ -118,8 +118,15 @@ public interface ProjectManager {
    List<ThemeDto> loadThemes(Long projectId);
 
    /**
-    * Updates the project workers in the project identified by the projectId provided 
-    * @param request
+    *
+    * @param projectId the projectId of the project whos access requests are to be returned
+    * @return list of AccessRequestDtos for the project identified by the id provided
+    */
+   List<AccessRequestDto> loadAccessRequests(Long projectId);
+
+   /**
+    * Updates the project workers in the project identified by the projectId provided
+    * @param request containing the id of the project to update and the list of ProjectWorkers.
     */
    void updateProjectWorkers(ProjectWorkersUpdateRequest request);
 }

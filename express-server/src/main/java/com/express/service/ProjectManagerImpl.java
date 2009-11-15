@@ -326,4 +326,13 @@ public class ProjectManagerImpl implements ProjectManager {
       }
       projectDao.save(project);
    }
+
+   public List<AccessRequestDto> loadAccessRequests(Long projectId) {
+      Project project = projectDao.findById(projectId);
+      List<AccessRequestDto> requests = new ArrayList<AccessRequestDto>();
+      for(AccessRequest request : project.getAccessRequests()) {
+         requests.add(remoteObjectFactory.createAccessRequestDto(request, Policy.DEEP));
+      }
+      return requests;
+   }
 }

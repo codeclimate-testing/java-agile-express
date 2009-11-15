@@ -1,5 +1,6 @@
 package com.express
 {
+import com.express.controller.AccessRequestsLoadCommand;
 import com.express.controller.ApplicationStartupCommand;
 import com.express.controller.ApplicationUsersLoadCommand;
 import com.express.controller.BacklogItemAssignCommand;
@@ -124,6 +125,7 @@ public class ApplicationFacade extends Facade
       registerCommand(NOTE_REMOVE_DEFECT, DefectRemoveCommand);
 
       registerCommand(NOTE_UPDATE_PROJECT_WORKERS, ProjectWorkersUpdateCommand);
+      registerCommand(NOTE_PROJECT_ACCESS_MANAGE, AccessRequestsLoadCommand);
 
       registerCommand(NOTE_UPDATE_THEMES, ThemesUpdateCommand);
       registerCommand(NOTE_LOAD_THEMES, ThemesLoadCommand);

@@ -263,4 +263,16 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       assertEquals(1, project.getProjectWorkers().size());
    }
 
+   @Test
+   public void testLoadAccessRequests() {
+      Long projectId = 1l;
+      Project project = new Project();
+      AccessRequest accessRequest = new AccessRequest();
+      project.addAccessRequest(accessRequest);
+      expect(projectDao.findById(projectId)).andReturn(project);
+      expect(remoteObjectFactory.createAccessRequestDto(accessRequest, Policy.DEEP)).andReturn(new AccessRequestDto());
+      replay();
+      assertEquals(1, projectManager.loadAccessRequests(projectId).size());
+   }
+
 }

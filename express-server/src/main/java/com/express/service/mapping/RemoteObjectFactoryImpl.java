@@ -76,4 +76,8 @@ public class RemoteObjectFactoryImpl implements RemoteObjectFactory {
    public ThemeDto createThemeDto(Theme theme) {
       return (ThemeDto)beanMapper.map(theme, ThemeDto.class);
    }
+
+   public AccessRequestDto createAccessRequestDto(AccessRequest request, Policy policy) {
+      return (AccessRequestDto)beanMapper.map(request, AccessRequestDto.class, policy.getMapId(AccessRequest.class));
+   }
 }
