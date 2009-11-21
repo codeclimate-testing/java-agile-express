@@ -42,7 +42,7 @@
    </comp:TitledBorderBox>
 
    <mx:TitleWindow id="changePasswordPanel" title="Change Password" includeInLayout="false"
-      visible="false" isPopUp="true">
+      visible="false" isPopUp="true" styleName="mainPopup">
       <mx:Form defaultButton="{updatePwdButton}">
          <mx:FormItem required="true" label="Current Password">
             <mx:TextInput id="currentPassword" displayAsPassword="true" width="200"/>
@@ -53,7 +53,7 @@
          <mx:FormItem required="true" label="Confirm New Password">
             <mx:TextInput id="confirmPassword" displayAsPassword="true" width="200"/>
          </mx:FormItem>
-         <mx:HBox>
+         <mx:HBox styleName="buttonBox" width="100%">
             <mx:Button id="updatePwdButton" label="Update"/>
             <mx:LinkButton id="cancelPwdButton" styleName="form" label="cancel"/>
          </mx:HBox>
