@@ -7,7 +7,7 @@ import com.express.view.form.FormUtility;
 
 import flash.events.MouseEvent;
 
-import mx.collections.ArrayCollection;
+import mx.events.CloseEvent;
 
 import org.puremvc.as3.interfaces.INotification;
 
@@ -43,6 +43,7 @@ public class IterationMediator extends FormMediator
    }
 
    override public function bindForm():void {
+      view.visible = true;
       view.iteratonTitle.text = _proxy.newIteration.title;
       view.description.text = _proxy.newIteration.description;
       view.startDate.selectedDate = _proxy.newIteration.startDate;
@@ -67,7 +68,12 @@ public class IterationMediator extends FormMediator
    private function handleIterationSave(event : MouseEvent) : void {
       if (validate(true)) {
          bindModel();
-         sendNotification(ApplicationFacade.NOTE_CREATE_ITERATION);
+         if(_proxy.newIteration.id > 0) {
+            sendNotification(ApplicationFacade.NOTE_UPDATE_ITERATION);
+         }
+         else {
+            sendNotification(ApplicationFacade.NOTE_CREATE_ITERATION);
+         }
          closeWindow();
       }
       else {
@@ -80,7 +86,7 @@ public class IterationMediator extends FormMediator
    }
 
    private function closeWindow() : void {
-      view.parent.visible = false;
+      view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
    }
 
    protected function get view():IterationForm

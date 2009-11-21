@@ -9,6 +9,8 @@ import flash.events.MouseEvent;
 
 import mx.controls.dataGridClasses.DataGridColumn;
 
+import mx.events.CloseEvent;
+
 import org.puremvc.as3.patterns.mediator.Mediator;
 
 public class ThemesMediator extends Mediator{
@@ -49,7 +51,7 @@ public class ThemesMediator extends Mediator{
    }
 
    private function closeWindow() : void {
-      view.parent.visible = false;
+      view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
    }
 
    private function formatId(row : Object, col : DataGridColumn) : String {

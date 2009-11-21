@@ -118,7 +118,8 @@ public class BacklogItemMediator extends FormMediator {
    }
 
    private function closeWindow() : void {
-      view.parent.visible = false;
+      TitleWindow(view.parent).removeEventListener(CloseEvent.CLOSE, handleWindowClose);
+      view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
    }
 
    public override function bindModel() : void {
@@ -186,7 +187,6 @@ public class BacklogItemMediator extends FormMediator {
             _proxy.selectedBacklogItem.acceptanceCriteria.addItem(criteria);
          }
       }
-      TitleWindow(view.parent).removeEventListener(CloseEvent.CLOSE, handleWindowClose);
    }
 
    private function getSelectedThemeIndices(themes : Array) : Array {

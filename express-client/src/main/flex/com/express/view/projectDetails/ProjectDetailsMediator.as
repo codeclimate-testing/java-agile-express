@@ -8,6 +8,8 @@ import flash.events.MouseEvent;
 
 import mx.core.Application;
 
+import mx.events.CloseEvent;
+
 import org.puremvc.as3.interfaces.INotification;
 
 public class ProjectDetailsMediator extends FormMediator{
@@ -61,10 +63,12 @@ public class ProjectDetailsMediator extends FormMediator{
       if(validate(true)) {
          bindModel();
          sendNotification(ApplicationFacade.NOTE_UPDATE_PROJECT);
+         view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
       }
    }
 
    private function handleCancelButton(event : MouseEvent) : void {
+      view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
       sendNotification(CANCEL_EDIT);
    }
 

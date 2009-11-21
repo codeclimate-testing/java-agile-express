@@ -26,9 +26,9 @@
    </channels>
    
    <security>
-      <login-command class="com.express.security.SpringSecurityLoginCommand" server="Tomcat">
-         <per-client-authentication>true</per-client-authentication>
-      </login-command>
+      <!--<login-command class="com.express.security.SpringSecurityLoginCommand" server="Tomcat">-->
+         <!--<per-client-authentication>true</per-client-authentication>-->
+      <!--</login-command>-->
       <security-constraint id="roleuser">
          <auth-method>Custom</auth-method>
          <roles>

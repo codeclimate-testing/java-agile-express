@@ -14,6 +14,7 @@ import com.express.controller.DefectLoadCommand;
 import com.express.controller.DefectRemoveCommand;
 import com.express.controller.DefectUpdateCommand;
 import com.express.controller.IterationCreateCommand;
+import com.express.controller.IterationUpdateCommand;
 import com.express.controller.LoginCommand;
 import com.express.controller.ProjectAccessListLoadCommand;
 import com.express.controller.ProjectAccessRequestCommand;
@@ -46,6 +47,7 @@ public class ApplicationFacade extends Facade
    public static const NOTE_REQUEST_PROJECT_ACCESS : String = "Note.RequestProjectAccess";
 
    public static const NOTE_CREATE_ITERATION : String = "Note.CreateIteration";
+   public static const NOTE_UPDATE_ITERATION : String = "Note.UpdateIteration";
    public static const NOTE_REMOVE_ITERATION : String = "Note.RemoveIteration";
 
    public static const NOTE_CREATE_BACKLOG_ITEM : String = "Note.CreateBacklogItem";
@@ -136,6 +138,7 @@ public class ApplicationFacade extends Facade
       registerCommand(NOTE_CHANGE_PASSWORD, ChangePasswordCommand);
       registerCommand(NOTE_LOAD_APP_USERS, ApplicationUsersLoadCommand);
       registerCommand(NOTE_CREATE_ITERATION, IterationCreateCommand);
+      registerCommand(NOTE_UPDATE_ITERATION, IterationUpdateCommand);
       registerCommand(NOTE_UPDATE_USER, UpdateUserCommand);
       registerCommand(NOTE_PROJECT_ACCESS_RESPONSE, ProjectAccessResponseCommand);
    }

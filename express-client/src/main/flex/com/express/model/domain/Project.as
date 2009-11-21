@@ -119,13 +119,11 @@ public class Project
       actors = project.actors;
       startDate = project.startDate;
       projectWorkers.source = project.projectWorkers.source;
-      iterations == null ? iterations = project.iterations :
-                           iterations.source = project.iterations.source;
-      productBacklog == null ? productBacklog = project.productBacklog :
-                                  productBacklog.source = project.productBacklog.source;
-      accessRequests == null ? accessRequests = project.accessRequests :
-                               accessRequests.source = project.accessRequests.source;
-      defects == null ? defects = project.defects : defects.source = project.defects.source;
+      iterations = project.iterations;
+      productBacklog = project.productBacklog;
+      accessRequests = project.accessRequests;
+      defects = project.defects;
+      themes = project.themes;
    }
 }
 }

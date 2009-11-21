@@ -12,7 +12,7 @@
          <a>id</a>
          <b>id</b>
       </field>
-      <field map-id="AccessRequest.deep">
+      <field>
          <a>accessRequests</a>
          <b>accessRequests</b>
       </field>
@@ -22,27 +22,23 @@
       </field>
    </mapping>
 
-   <mapping map-id="AccessRequest.deep">
-      <class-a>com.express.domain.AccessRequest</class-a>
-      <class-b>com.express.service.dto.AccessRequestDto</class-b>
+   <mapping map-id="User.shallow">
+      <class-a>com.express.domain.User</class-a>
+      <class-b>com.express.service.dto.UserDto</class-b>
       <field custom-converter="com.express.service.mapping.IdConverter">
          <a>id</a>
          <b>id</b>
       </field>
+      <field-exclude>
+         <a>accessRequests</a>
+         <b>accessRequests</b>
+      </field-exclude>
       <field >
          <a is-accessible="true">version</a>
          <b>version</b>
       </field>
-      <field map-id="Project.shallow">
-         <a>project</a>
-         <b>project</b>
-      </field>
-      <field map-id="User.deep">
-         <a>requestor</a>
-         <b>requestor</b>
-      </field>
    </mapping>
-   
+
    <mapping map-id="Project.deep">
       <class-a>com.express.domain.Project</class-a>
       <class-b>com.express.service.dto.ProjectDto</class-b>
@@ -58,9 +54,13 @@
          <a>productBacklog</a>
          <b>productBacklog</b>
       </field>
-      <field map-id="AccessRequest.deep">
+      <field>
          <a>accessRequests</a>
          <b>accessRequests</b>
+      </field>
+      <field>
+         <a>themes</a>
+         <b>themes</b>
       </field>
       <field map-id="ProjectWorker.deep" remove-orphans="true">
          <a>projectWorkers</a>
@@ -87,13 +87,17 @@
          <a>productBacklog</a>
          <b>productBacklog</b>
       </field-exclude>
-      <field map-id="ProjectWorker.deep">
+      <field-exclude>
          <a>projectWorkers</a>
          <b>projectWorkers</b>
-      </field>
+      </field-exclude>
       <field-exclude>
          <a>themes</a>
          <b>themes</b>
+      </field-exclude>
+      <field-exclude>
+         <a>accessRequests</a>
+         <b>accessrequests</b>
       </field-exclude>
       <field >
          <a is-accessible="true">version</a>
@@ -108,11 +112,11 @@
          <a>id</a>
          <b>id</b>
       </field>
-      <field map-id="Project.deep">
+      <field map-id="Project.shallow">
          <a>project</a>
          <b>project</b>
       </field>
-      <field map-id="User.deep">
+      <field map-id="User.shallow">
          <a>worker</a>
          <b>worker</b>
       </field>
@@ -286,14 +290,14 @@
          <a>status</a>
          <b>status</b>
       </field>
-      <field remove-orphans="true">
-         <a>themes</a>
-         <b>themes</b>
-      </field>
-      <field remove-orphans="true">
+      <!--<field-exclude>-->
+         <!--<a>themes</a>-->
+         <!--<b>themes</b>-->
+      <!--</field-exclude>-->
+      <field-exclude>
          <a>acceptanceCriteria</a>
          <b>acceptanceCriteria</b>
-      </field>
+      </field-exclude>
    </mapping>
 
    <mapping>
@@ -310,6 +314,27 @@
       <field >
          <a is-accessible="true">version</a>
          <b>version</b>
+      </field>
+   </mapping>
+
+   <mapping>
+      <class-a>com.express.domain.AccessRequest</class-a>
+      <class-b>com.express.service.dto.AccessRequestDto</class-b>
+      <field custom-converter="com.express.service.mapping.IdConverter">
+         <a>id</a>
+         <b>id</b>
+      </field>
+      <field >
+         <a is-accessible="true">version</a>
+         <b>version</b>
+      </field>
+      <field map-id="Project.shallow">
+         <a>project</a>
+         <b>project</b>
+      </field>
+      <field map-id="User.shallow">
+         <a>requestor</a>
+         <b>requestor</b>
       </field>
    </mapping>
 

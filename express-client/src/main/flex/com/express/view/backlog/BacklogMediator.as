@@ -1,5 +1,6 @@
 package com.express.view.backlog
 {
+import com.express.controller.IterationUpdateCommand;
 import com.express.model.SecureContextProxy;
 import com.express.view.*;
 import com.express.ApplicationFacade;
@@ -109,7 +110,7 @@ public class BacklogMediator extends Mediator
    }
 
    override public function listNotificationInterests():Array {
-      return [ProjectLoadCommand.SUCCESS,IterationCreateCommand.SUCCESS];
+      return [ProjectLoadCommand.SUCCESS,IterationCreateCommand.SUCCESS,IterationUpdateCommand.SUCCESS];
    }
 
    override public function handleNotification(notification:INotification):void {
@@ -118,13 +119,20 @@ public class BacklogMediator extends Mediator
             handleProjectLoaded();
             break;
          case IterationCreateCommand.SUCCESS :
-            var iteration : Iteration = notification.getBody() as Iteration;
+            var newIteration : Iteration = notification.getBody() as Iteration;
             _proxy.selectedProject.iterations.removeItemAt(_proxy.selectedProject.iterations.length - 1);
-            _proxy.selectedProject.iterations.addItem(iteration);
+            _proxy.selectedProject.iterations.addItem(newIteration);
             _proxy.newIteration = null;
             _proxy.updateIterationList();
-            view.cboIterations.selectedItem = iteration;
-            selectIteration(iteration);
+            view.cboIterations.selectedItem = newIteration;
+            selectIteration(newIteration);
+            break;
+         case IterationUpdateCommand.SUCCESS :
+            var updatedIteration : Iteration = notification.getBody() as Iteration;
+            var index : int = getSelectionIndex(_proxy.selectedProject.iterations, updatedIteration);
+            _proxy.selectedProject.iterations.getItemAt(index).copyFrom(updatedIteration);
+            _proxy.newIteration = null;
+            _proxy.updateIterationList();
             break;
       }
    }

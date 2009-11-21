@@ -155,7 +155,6 @@ public class ApplicationMediator extends Mediator
             break;
          case ProjectDetailsMediator.CANCEL_EDIT :
          case ProjectLoadCommand.SUCCESS :
-            app.mainPopup.visible = false;
             _secureContext.setAvailableRoles(_projectProxy.selectedProject);
             break;
          case ApplicationFacade.NOTE_SHOW_ERROR_MSG :

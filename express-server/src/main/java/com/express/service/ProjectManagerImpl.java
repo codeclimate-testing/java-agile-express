@@ -72,7 +72,23 @@ public class ProjectManagerImpl implements ProjectManager {
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public IterationDto updateIteration(IterationDto iterationDto) {
-      Iteration iteration = domainFactory.createIteration(iterationDto);
+      Project project = projectDao.findById(iterationDto.getProject().getId());
+      Iteration iteration = null;
+      for(Iteration existing : project.getIterations()) {
+         if(existing.getId().equals(iterationDto.getId())) {
+            iteration = existing;
+            break;
+         }
+      }
+      if(iteration == null) {
+         throw new IllegalArgumentException("Iteration does not exist");
+      }
+      iteration.setTitle(iterationDto.getTitle());
+      iteration.setDescription(iterationDto.getDescription());
+      iteration.setStartDate(Calendar.getInstance());
+      iteration.getStartDate().setTimeInMillis(iterationDto.getStartDate().getTime());
+      iteration.setEndDate(Calendar.getInstance());
+      iteration.getEndDate().setTimeInMillis(iterationDto.getEndDate().getTime());
       projectDao.save(iteration.getProject());
       return remoteObjectFactory.createIterationDto(iteration, Policy.DEEP);
    }
@@ -331,7 +347,7 @@ public class ProjectManagerImpl implements ProjectManager {
       Project project = projectDao.findById(projectId);
       List<AccessRequestDto> requests = new ArrayList<AccessRequestDto>();
       for(AccessRequest request : project.getAccessRequests()) {
-         requests.add(remoteObjectFactory.createAccessRequestDto(request, Policy.DEEP));
+         requests.add(remoteObjectFactory.createAccessRequestDto(request));
       }
       return requests;
    }

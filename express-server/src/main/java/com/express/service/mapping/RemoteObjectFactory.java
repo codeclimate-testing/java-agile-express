@@ -49,5 +49,5 @@ public interface RemoteObjectFactory {
     */
    ThemeDto createThemeDto(Theme theme);
 
-   AccessRequestDto createAccessRequestDto(AccessRequest request, Policy policy);
+   AccessRequestDto createAccessRequestDto(AccessRequest request);
 }

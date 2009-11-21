@@ -50,6 +50,9 @@ public class RemoteObjectFactoryImpl implements RemoteObjectFactory {
       if(projectDto.getIterations() != null) {
          Collections.sort(projectDto.getIterations());
       }
+      if(projectDto.getProjectWorkers() == null) {
+         projectDto.setProjectWorkers(new ArrayList<ProjectWorkerDto>());
+      }
       return projectDto;
    }
 
@@ -77,7 +80,7 @@ public class RemoteObjectFactoryImpl implements RemoteObjectFactory {
       return (ThemeDto)beanMapper.map(theme, ThemeDto.class);
    }
 
-   public AccessRequestDto createAccessRequestDto(AccessRequest request, Policy policy) {
-      return (AccessRequestDto)beanMapper.map(request, AccessRequestDto.class, policy.getMapId(AccessRequest.class));
+   public AccessRequestDto createAccessRequestDto(AccessRequest request) {
+      return (AccessRequestDto)beanMapper.map(request, AccessRequestDto.class);
    }
 }

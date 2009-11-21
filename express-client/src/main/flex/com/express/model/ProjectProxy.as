@@ -239,11 +239,11 @@ public class ProjectProxy extends Proxy
 
    public function set themes(themes : ArrayCollection) : void {
       if(themes) {
-         _themes.source = themes.source;
+         _themes.source = themes.source.concat();
       }
    }
 
-   public function get themes() : ArrayCollection {
+   public function get  themes() : ArrayCollection {
       return _themes;
    }
 
