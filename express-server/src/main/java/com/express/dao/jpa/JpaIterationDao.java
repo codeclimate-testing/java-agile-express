@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManagerFactory;
-import java.util.List;
-import java.util.Calendar;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 @Repository("iterationDao")
 public class JpaIterationDao extends JpaGenericDao<Iteration> implements IterationDao {
@@ -22,7 +19,8 @@ public class JpaIterationDao extends JpaGenericDao<Iteration> implements Iterati
 
    public List<Iteration> findOpenIterations() {
       Map<String, Calendar> params = new HashMap<String, Calendar>();
-      params.put("date", Calendar.getInstance());
+      Calendar cal = Calendar.getInstance();
+      params.put("date", new GregorianCalendar(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)));
       return this.getJpaTemplate().findByNamedQueryAndNamedParams(Iteration.QUERY_FIND_OPEN,params);
    }
 

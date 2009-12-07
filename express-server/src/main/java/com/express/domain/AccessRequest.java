@@ -3,6 +3,11 @@ package com.express.domain;
 import javax.persistence.*;
 import java.util.Calendar;
 
+/**
+ * An AccessRequest models a user's request to join a Project. It effectively has 2 statuses. If it is approved
+ * then the request is removed and a ProjectWorker recod is written. If it is rejected, however, we keep it to
+ * stop Users making multiple requests to access a project.
+ */
 @Entity
 @Table(name = "ACCESS_REQUEST")
 public class AccessRequest implements Persistable, Comparable<AccessRequest> {

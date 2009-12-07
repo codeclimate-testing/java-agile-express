@@ -307,6 +307,12 @@ StoryView {
    horizontal-align:left;
 }
 
+.printTitle {
+   font-size:20;
+   font-weight:bold;
+   text-align:center;
+}
+
 .printText {
    font-size:18;
    text-align:left;

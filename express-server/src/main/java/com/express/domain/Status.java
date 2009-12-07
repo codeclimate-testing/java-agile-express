@@ -1,5 +1,10 @@
 package com.express.domain;
 
+/**
+ * This Enumeration defines the workflow steps available to a BacklogItem of any type.
+ *
+ * @author adam boas
+ */
 public enum Status {
    OPEN("OPEN"), IN_PROGRESS("IN PROGRESS"), TEST("TEST"), DONE("DONE");
    

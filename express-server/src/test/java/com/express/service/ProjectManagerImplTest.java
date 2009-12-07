@@ -275,4 +275,26 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       assertEquals(1, projectManager.loadAccessRequests(projectId).size());
    }
 
+   @Test
+   public void csvrequestShouldSwitchOnIterationType() {
+      CSVRequest request = new CSVRequest();
+      Long id = 1l;
+      request.setId(id);
+      request.setType(CSVRequest.TYPE_ITERATION_BACKLOG);
+      expect(iterationDao.findById(id)).andReturn(new Iteration());
+      replay();
+      projectManager.getCSV(request);
+   }
+
+   @Test
+   public void csvrequestShouldSwitchProductOnType() {
+      CSVRequest request = new CSVRequest();
+      Long id = 1l;
+      request.setId(id);
+      request.setType(CSVRequest.TYPE_PRODUCT_BACKLOG);
+      expect(projectDao.findById(id)).andReturn(new Project());
+      replay();
+      projectManager.getCSV(request);
+   }
+
 }

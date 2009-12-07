@@ -17,7 +17,8 @@ import javax.persistence.TemporalType;
 /**
  * An Effort record is an immutable object. It represents the remaining effort for some task or 
  * tasks on a given date. It should never be altered.
- * @author adam
+ *
+ * @author adam boas
  *
  */
 @Entity

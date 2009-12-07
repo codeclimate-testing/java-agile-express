@@ -343,6 +343,15 @@ public class ProjectManagerImpl implements ProjectManager {
       projectDao.save(project);
    }
 
+   public String getCSV(CSVRequest request) {
+      if(CSVRequest.TYPE_ITERATION_BACKLOG == request.getType()) {
+         return iterationDao.findById(request.getId()).getBacklogAsCSV();
+      }
+      else {
+         return projectDao.findById(request.getId()).getProductBacklogAsCSV();
+      }
+   }
+
    public List<AccessRequestDto> loadAccessRequests(Long projectId) {
       Project project = projectDao.findById(projectId);
       List<AccessRequestDto> requests = new ArrayList<AccessRequestDto>();

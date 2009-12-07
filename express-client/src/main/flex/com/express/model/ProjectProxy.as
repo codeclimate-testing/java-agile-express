@@ -13,6 +13,9 @@ import com.express.model.domain.User;
 import mx.collections.ArrayCollection;
 import mx.collections.HierarchicalData;
 
+import mx.collections.Sort;
+import mx.collections.SortField;
+
 import org.puremvc.as3.patterns.proxy.Proxy;
 
 public class ProjectProxy extends Proxy
@@ -39,6 +42,7 @@ public class ProjectProxy extends Proxy
    private var _accessRequests: ArrayCollection;
    private var _defectList : ArrayCollection;
    private var _burndown : ArrayCollection;
+   private var _iterationDays : ArrayCollection;
    private var _themes : ArrayCollection;
 
    public var selectedDefect : Issue;
@@ -58,6 +62,11 @@ public class ProjectProxy extends Proxy
       _developers = new ArrayCollection();
       _projectWorkers = new ArrayCollection();
       _burndown = new ArrayCollection();
+      var burndownSort : Sort = new Sort();
+      burndownSort.fields = [new SortField("date")];
+      burndownSort.compareFunction =  sortOnDate;
+      _burndown.sort = burndownSort;
+      _iterationDays = new ArrayCollection();
 
       _selectedBacklog = new HierarchicalData();
       _selectedBacklog.childrenField = "tasks";
@@ -71,6 +80,16 @@ public class ProjectProxy extends Proxy
       colourGroupings = new ArrayCollection();
       colourGroupings.addItem(DEVELOPER);
       colourGroupings.addItem(STORY);
+   }
+
+   private function sortOnDate(a:Object, b:Object, fields:Array = null):int {
+      if (a.date.getTime() < b.date.getTime()) {
+         return -1;
+      }
+      if (a.date.getTime() > b.date.getTime()) {
+         return 1;
+      }
+      return 0;
    }
 
    public function get projectList() : ArrayCollection {
@@ -224,10 +243,11 @@ public class ProjectProxy extends Proxy
 
    public function setBurndown(iteration : Iteration) : void {
       if(iteration) {
-      _burndown.source = iteration.burndown.source.concat();
-         if(iteration.getDaysRemaining() > 0) {
+         _burndown.source = iteration.burndown.source.concat();
+         if(iteration.isOpen()) {
             var effort : EffortRecord = new EffortRecord();
-            effort.date = new Date();
+            var temp: Date = new Date();
+            effort.date = new Date(temp.fullYear, temp.month, temp.day);
             effort.effort = iteration.getTaskHoursRemaining();
             _burndown.addItem(effort);
          }
@@ -235,6 +255,13 @@ public class ProjectProxy extends Proxy
       else {
          _burndown.source = [];
       }
+      for each(var record : EffortRecord in _burndown) {
+            trace(record.id + ":" + record.date);
+         }
+   }
+
+   public function get iterationDays() : ArrayCollection {
+      return _iterationDays;
    }
 
    public function set themes(themes : ArrayCollection) : void {

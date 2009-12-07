@@ -129,4 +129,11 @@ public interface ProjectManager {
     * @param request containing the id of the project to update and the list of ProjectWorkers.
     */
    void updateProjectWorkers(ProjectWorkersUpdateRequest request);
+
+   /**
+    *
+    * @param request containg request perameters
+    * @return String containing comma seperated list
+    */
+   String getCSV(CSVRequest request);
 }

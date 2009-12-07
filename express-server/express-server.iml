@@ -12,8 +12,12 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+        </sourceRoots>
         <building>
-          <setting name="EXPLODED_URL" value="file://$MODULE_DIR$/target/express-server-0.7.1-SNAPSHOT" />
+          <setting name="EXPLODED_URL" value="file://$MODULE_DIR$/target/express-server-0.7.2-SNAPSHOT" />
           <setting name="EXPLODED_ENABLED" value="true" />
           <setting name="JAR_URL" value="file://$MODULE_DIR$/target/express-server-0.2.1-SNAPSHOT.war" />
           <setting name="JAR_ENABLED" value="false" />

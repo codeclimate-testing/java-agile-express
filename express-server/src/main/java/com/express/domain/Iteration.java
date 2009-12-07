@@ -5,6 +5,12 @@ import org.hibernate.annotations.OptimisticLock;
 import javax.persistence.*;
 import java.util.*;
 
+/**
+ * Models an Iteration which is effectively a work period for a project. an Iteration
+ * primarily contains a backlog which is a list of Stories which need to be completed before completion.
+ *
+ * @author adam boas
+ */
 @Entity
 @Table(name = "ITERATION")
 @NamedQueries({
@@ -222,6 +228,15 @@ public class Iteration implements Persistable, Comparable<Iteration> {
       output.append("endDate=").append(endDate).append(",");
       output.append("project=").append(project).append("]");
       return output.toString();
+   }
+
+   public String getBacklogAsCSV() {
+      StringBuilder result = new StringBuilder();
+      for(BacklogItem item : backlog) {
+         result.append(item.toCSV());
+         result.append("\n");
+      }
+      return result.toString();
    }
 
 }

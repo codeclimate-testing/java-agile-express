@@ -131,6 +131,7 @@ public class BacklogMediator extends Mediator
             var updatedIteration : Iteration = notification.getBody() as Iteration;
             var index : int = getSelectionIndex(_proxy.selectedProject.iterations, updatedIteration);
             _proxy.selectedProject.iterations.getItemAt(index).copyFrom(updatedIteration);
+            _proxy.selectedIteration = updatedIteration;
             _proxy.newIteration = null;
             _proxy.updateIterationList();
             break;

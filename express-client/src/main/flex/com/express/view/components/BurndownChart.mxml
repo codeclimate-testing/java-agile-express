@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-         backgroundAlpha="1" backgroundColor="#ffffff" width="100%" height="100%">
+         backgroundAlpha="1" backgroundColor="#ffffff" width="100%" height="100%" verticalGap="3">
    <mx:Style>
       @font-face
       {
@@ -12,38 +12,53 @@
 
       .lineChart {
          font-family: EmbeddedArial;
+         background-color:#880000;
       }
    </mx:Style>
 
    <mx:Script>
       <![CDATA[
-      import mx.charts.CategoryAxis;
+      import mx.charts.chartClasses.IAxis;
       import mx.formatters.DateFormatter;
 
       [Bindable]
       public var dataProvider : Object;
 
-      private function formatDate(categoryValue:Object, previousCategoryValue:Object, axis:CategoryAxis, categoryItem:Object) : String
-      {
+      private function formatDate(labelValue : Date, previousValue : Object, axis : IAxis):String {
          var formatter : DateFormatter = new DateFormatter();
          formatter.formatString = "DD/MM/YYYY";
-         return formatter.format(categoryValue);
+         return formatter.format(labelValue);
+      }
+      
+      private function toggleWeekends(event:Event) : void {
+         if(chkWeekends.selected) {
+            xAxis.disabledDays = [];
+         }
+         else {
+            xAxis.disabledDays = [0,6];
+         }
       }
       ]]>
    </mx:Script>
+
+   <mx:HBox styleName="buttonBox" width="100%">
+      <mx:Label text="Show Weekends"/>
+      <mx:CheckBox id="chkWeekends" selected="false" click="toggleWeekends(event)"/>
+   </mx:HBox>
+
    <mx:Stroke id="lineStroke" color="#3679b0" weight="2" alpha="1"/>
    <mx:Stroke id="axisStroke" color="#404040" alpha=".5" weight="2"/>
-
-   <mx:LineChart id="burndown" showDataTips="true" dataProvider="{dataProvider}" styleName="lineChart"
+   <mx:LineChart id="chart" dataProvider="{dataProvider}" styleName="lineChart" showDataTips="true"
                  width="100%" height="100%">
       <mx:horizontalAxis>
-         <mx:CategoryAxis id="xAxis" categoryField="date" labelFunction="formatDate" ticksBetweenLabels="false"/>
+         <mx:DateTimeAxis id="xAxis" dataUnits="days" labelUnits="days" disabledDays="[0,6]" alignLabelsToUnits="false"
+                          interval="0" labelFunction="formatDate"/>
       </mx:horizontalAxis>
       <mx:verticalAxis>
-         <mx:LinearAxis id="yAxis"/>
+         <mx:LinearAxis id="yAxis" title="Effort Remaining"/>
       </mx:verticalAxis>
       <mx:series>
-         <mx:LineSeries displayName="Effort Remaining" xField="date" yField="effort" lineStroke="{lineStroke}"/>
+         <mx:LineSeries displayName="Effort Remaining" yField="effort" xField="date" lineStroke="{lineStroke}"/>
       </mx:series>
       <!-- turn off drop shadows -->
       <mx:seriesFilters>
@@ -66,5 +81,4 @@
       </mx:verticalAxisRenderers>
 
    </mx:LineChart>
-   <mx:Legend dataProvider="{burndown}"/>
 </mx:VBox>

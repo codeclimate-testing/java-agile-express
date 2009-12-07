@@ -3,6 +3,11 @@ package com.express.domain;
 import javax.persistence.*;
 import java.util.Calendar;
 
+/**
+ * Models the link between a User and a Project.
+ *
+ * @author adam boas
+ */
 @Entity
 @Table(name = "PROJECT_WORKER")
 public class ProjectWorker implements Persistable, Comparable<ProjectWorker> {

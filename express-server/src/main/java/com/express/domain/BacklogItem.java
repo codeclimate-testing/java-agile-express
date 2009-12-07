@@ -10,6 +10,8 @@ import java.util.*;
  * BacklogItem models stories and tasks which can be contained in the product backlog or assigned
  * to an Iteration where they can be worked on. By definition BacklogItems which have a parent are
  * a Task, if the backlogItem does not have a parent then it has either a project or an iteration.
+ *
+ * @author adam boas
  */
 @Entity
 @Table(name = "backlog")
@@ -383,4 +385,22 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       return null;
    }
 
+   public static String getCSVTitleLine() {
+      return "Reference" + "," + "Title" + "," + "Summary" + "," + "Status" + "Assigned To";
+   }
+
+   public String toCSV() {
+      StringBuilder result = new StringBuilder();
+      result.append(reference).append(",");
+      result.append(title).append(",");
+      result.append(summary).append(",");
+      result.append(status.getTitle()).append(",");
+      if(assignedTo == null) {
+         result.append("unassigned");
+      }
+      else {
+         result.append(assignedTo.getFullName());
+      }
+      return result.toString();
+   }
 }

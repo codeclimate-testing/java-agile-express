@@ -8,8 +8,7 @@
       <comp:PopUpLabel id="printPopUp" labelText="Print" enabled="false" dataProvider="['Stories','Tasks']"/>
    </mx:HBox>
 
-   <comp:BurndownChart id="burndown" width="100%" height="200" useHandCursor="true"
-                       buttonMode="true" mouseChildren="false"/>
+   <comp:BurndownChart id="burndown" width="100%" height="200"/>
 
    <mx:HBox>
       <mx:Label text="Start date:" fontWeight="bold" width="150"/>

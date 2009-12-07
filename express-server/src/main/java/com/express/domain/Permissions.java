@@ -2,6 +2,11 @@ package com.express.domain;
 
 import javax.persistence.*;
 
+/**
+ * Models the level of access a User has to a Project.
+ *
+ * @author adam boas
+ */
 @Entity
 @Table(name = "PERMISSIONS")
 public class Permissions implements Persistable {

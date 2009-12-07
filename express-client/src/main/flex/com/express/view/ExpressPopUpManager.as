@@ -1,5 +1,6 @@
 package com.express.view {
 import com.adobe.components.SizeableTitleWindow;
+import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.domain.WindowMetrics;
 import com.express.print.BacklogPrintView;
@@ -46,11 +47,13 @@ public class ExpressPopUpManager {
    private var _facade : IFacade;
    private var _application : Express;
    private var _secureContext : SecureContextProxy;
+   private var _projectProxy : ProjectProxy;
 
    public function ExpressPopUpManager(facade : IFacade, application : Express) {
       _facade = facade;
       _application = application;
       _secureContext = SecureContextProxy(_facade.retrieveProxy(SecureContextProxy.NAME));
+      _projectProxy = ProjectProxy(_facade.retrieveProxy(ProjectProxy.NAME));
       _popup = new SizeableTitleWindow();
       _popup.styleName = "mainPopup";
       _popup.verticalScrollPolicy = "off";
@@ -113,6 +116,12 @@ public class ExpressPopUpManager {
 
    private function createBurndownChart() : void {
       _burndownChart = new BurndownChart();
+      _burndownChart.addEventListener(FlexEvent.CREATION_COMPLETE, handleBurndownCreated);
+   }
+
+   private function handleBurndownCreated(event : FlexEvent):void {
+      _burndownChart.xAxis.minimum = _projectProxy.selectedIteration.startDate;
+      _burndownChart.xAxis.maximum = _projectProxy.selectedIteration.endDate;
    }
 
    private function createVelocityChart() : void {
@@ -185,7 +194,12 @@ public class ExpressPopUpManager {
       if (!_burndownChart) {
          createBurndownChart();
       }
-      _burndownChart.dataProvider = notification.getBody();
+      else {
+         _burndownChart.xAxis.minimum = _projectProxy.selectedIteration.startDate;
+         _burndownChart.xAxis.maximum = _projectProxy.selectedIteration.endDate;
+      }
+      _burndownChart.dataProvider = _projectProxy.burndown;
+
       _popup.title = title;
       _popup.width = 600;
       _popup.height = 450;

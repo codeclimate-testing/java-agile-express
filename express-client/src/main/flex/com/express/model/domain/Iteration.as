@@ -7,13 +7,10 @@ import mx.collections.SortField;
 [RemoteClass(alias="com.express.service.dto.IterationDto")]
 public class Iteration
 {
-   private static const MILLIS_IN_A_DAY : int = 84400000;
+   public static const MILLIS_IN_A_DAY : int = 86400000;
    public function Iteration(id : Number = 0, title : String = null) {
       backlog = new ArrayCollection();
-      _burndown = new ArrayCollection();
-      var burndownSort : Sort = new Sort();
-      burndownSort.fields = [new SortField("date")];
-      _burndown.sort = burndownSort;
+      burndown = new ArrayCollection();
       this.id = id;
       this.title = title;
    }
@@ -27,38 +24,20 @@ public class Iteration
 
    public var description : String;
 
+   [Bindable]
    public var startDate : Date;
 
+   [Bindable]
    public var endDate : Date;
 
    public var project : Project;
 
    public var backlog : ArrayCollection;
 
+   public var burndown : ArrayCollection;
+
    public function get pointsCompleted() : int {
       return getPoints();
-   }
-
-   /**
-    * A collection of EffortRecords for this iteration. Effort records should be naturally ordered
-    * by date.
-    */
-   private var _burndown : ArrayCollection;
-
-   public function get burndown() : ArrayCollection {
-      _burndown.refresh();
-      return _burndown;
-   }
-
-   public function set burndown(burndown : ArrayCollection) : void {
-      _burndown.removeAll();
-      for each(var effort : EffortRecord in burndown) {
-         _burndown.addItem(effort);
-      }
-   }
-
-   public function addEffortRecord(record : EffortRecord) : void {
-      _burndown.addItem(record);
    }
 
    public function getPoints() : int {
@@ -82,6 +61,14 @@ public class Iteration
          result ++;
       }
       return result;
+   }
+
+   public function isOpen() : Boolean {
+      var temp: Date = new Date();
+      var today : Date = new Date(temp.fullYear, temp.month, temp.day);
+      var start :Date = new Date(startDate.fullYear, startDate.month, startDate.day);
+      var end : Date = new Date(endDate.fullYear, endDate.month, endDate.day);
+      return today.getTime() <= end.getTime() && today.getTime() >= start.getTime();
    }
 
    public function getTaskHoursRemaining() : int {

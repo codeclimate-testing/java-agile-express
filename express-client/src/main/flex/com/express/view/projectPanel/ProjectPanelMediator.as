@@ -1,5 +1,6 @@
 package com.express.view.projectPanel {
 import com.express.ApplicationFacade;
+import com.express.controller.IterationUpdateCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
@@ -52,7 +53,6 @@ public class ProjectPanelMediator extends Mediator{
       viewComp.projectDisplay.managePopUp.addEventListener(ListEvent.ITEM_CLICK, handleManageMenuSelection);
       viewComp.projectDisplay.btnEdit.addEventListener(MouseEvent.CLICK, handleEditProject);
       viewComp.iterationSummary.btnEdit.addEventListener(MouseEvent.CLICK, handleEditIteration);
-      viewComp.iterationSummary.burndown.addEventListener(MouseEvent.CLICK, handleDisplayBurndown);
       viewComp.projectDisplay.lnkVelocity.addEventListener(MouseEvent.CLICK, handleDisplayVelocityChart);
    }
 
@@ -101,6 +101,7 @@ public class ProjectPanelMediator extends Mediator{
 
    override public function listNotificationInterests():Array {
       return [ProjectLoadCommand.SUCCESS,
+              IterationUpdateCommand.SUCCESS,
               ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
               ApplicationFacade.NOTE_ITERATION_SELECTED];
    }
@@ -112,16 +113,35 @@ public class ProjectPanelMediator extends Mediator{
             bindDisplay();
             bindIterationDisplay();
             view.projectDisplay.btnEdit.enabled = true;
-               view.projectDisplay.managePopUp.enabled = true;
+            view.projectDisplay.managePopUp.enabled = true;
+            toggleBurndownAsLink();
+            break;
+         case IterationUpdateCommand.SUCCESS :
+            bindIterationDisplay();
             break;
          case ApplicationFacade.NOTE_ITERATION_SELECTED :
             bindIterationDisplay();
             view.iterationSummary.btnEdit.enabled = true;
-               view.iterationSummary.printPopUp.enabled = true;
+            view.iterationSummary.printPopUp.enabled = true;
+            view.iterationSummary.burndown.xAxis.minimum = _proxy.selectedIteration.startDate;
+            view.iterationSummary.burndown.xAxis.maximum = _proxy.selectedIteration.endDate;
+            toggleBurndownAsLink();
             break;
          case ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE :
             bindIterationDisplay();
             break;
+      }
+   }
+
+   private function toggleBurndownAsLink() : void {
+      view.iterationSummary.burndown.chart.useHandCursor = _proxy.selectedIteration != null;
+      view.iterationSummary.burndown.chart.buttonMode = _proxy.selectedIteration != null;
+      view.iterationSummary.burndown.chart.mouseChildren = _proxy.selectedIteration == null;
+      if(_proxy.selectedIteration) {
+         view.iterationSummary.burndown.chart.addEventListener(MouseEvent.CLICK, handleDisplayBurndown);
+      }
+      else {
+         view.iterationSummary.burndown.chart.removeEventListener(MouseEvent.CLICK, handleDisplayBurndown);
       }
    }
 
@@ -135,7 +155,7 @@ public class ProjectPanelMediator extends Mediator{
    }
 
    private function handleDisplayBurndown(event : Event) : void {
-      sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNDOWN, _proxy.burndown);
+      sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNDOWN);
    }
 
    private function handleDisplayVelocityChart(event : Event) : void {
@@ -161,8 +181,7 @@ public class ProjectPanelMediator extends Mediator{
       if(_proxy.selectedIteration) {
          view.iterationSummary.startDate.text = DateField.dateToString(_proxy.selectedIteration.startDate, "DD/MM/YYYY");
          view.iterationSummary.endDate.text = DateField.dateToString(_proxy.selectedIteration.endDate, "DD/MM/YYYY");
-         view.iterationSummary.iterationStatus.text =
-            new Date().getTime() > _proxy.selectedIteration.endDate.getTime() ? "closed" : "open";
+         view.iterationSummary.iterationStatus.text = _proxy.selectedIteration.isOpen() ? "open" : "closed";
          view.iterationSummary.totalPoints.text = "" + _proxy.selectedIteration.getPoints();
          view.iterationSummary.hrsRemaining.text = "" + _proxy.selectedIteration.getTaskHoursRemaining();
          view.iterationSummary.daysRemaining.text = "" + _proxy.selectedIteration.getDaysRemaining();

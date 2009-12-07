@@ -9,6 +9,8 @@ import java.util.*;
 /**
  * Project is the core container in the Express system. The product backlog is assigned to the
  * Project and then assigned to it's Iterations when ready to be worked on.
+ *
+ * @author adam boas
  */
 @Entity
 @Table(name = "PROJECT")
@@ -317,6 +319,14 @@ public class Project implements Persistable {
          }
       }
       return null;
+   }
+
+   public String getProductBacklogAsCSV() {
+      StringBuilder result = new StringBuilder();
+      for(BacklogItem item : productBacklog) {
+         result.append(item.toCSV());
+      }
+      return result.toString();
    }
 
 }

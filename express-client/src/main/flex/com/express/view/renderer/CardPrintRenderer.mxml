@@ -27,7 +27,8 @@
       <mx:Label text="{story.reference}" styleName="printHeading" width="100%" paddingTop="3"/>
       <mx:Label text="{story.businessValue}" styleName="printHeading" />
    </mx:HBox>
-   <mx:Text id="description" styleName="printText" width="100%" paddingTop="3" height="160"
+   <mx:Label styleName="printTitle" width="100%" text="{story.title}"/>
+   <mx:Text id="description" styleName="printText" width="100%" paddingTop="3" height="140"
             text="{story.summary}"
             toolTip="{story.summary}"/>
    <mx:HBox styleName="unpadded" width="100%" verticalAlign="middle" height="35"
