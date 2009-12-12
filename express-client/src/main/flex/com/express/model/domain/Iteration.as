@@ -90,7 +90,7 @@ public class Iteration
       project = iteration.project;
       description = iteration.description;
       burndown = iteration.burndown;
-      backlog.source = iteration.backlog.source;
+      backlog = iteration.backlog;
    }
 }
 }

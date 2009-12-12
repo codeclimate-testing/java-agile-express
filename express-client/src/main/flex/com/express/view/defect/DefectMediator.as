@@ -43,13 +43,13 @@ public class DefectMediator extends Mediator
       viewComp.defectGrid.dataProvider = _projectProxy.defectList;
    }
 
-   override public function listNotificationInterests():Array {
-      return [ApplicationFacade.NOTE_ITERATION_SELECTED];
-   }
-
-   override public function handleNotification(notification:INotification):void {
-      view.defectGrid.dataProvider = _projectProxy.defectList;
-   }
+//   override public function listNotificationInterests():Array {
+//      return [ApplicationFacade.NOTE_ITERATION_SELECTED];
+//   }
+//
+//   override public function handleNotification(notification:INotification):void {
+//      view.defectGrid.dataProvider = _projectProxy.defectList;
+//   }
 
    public function handleAssignIteration(event : MouseEvent) : void {
       switchToAssignIteration();

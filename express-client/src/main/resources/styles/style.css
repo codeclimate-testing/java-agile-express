@@ -368,6 +368,16 @@ LinkButton.form {
    padding-right:0;
 }
 
+LinkButton.secondNav {
+   color:#404040;
+   text-decoration:none;
+   font-weight:normal;
+   font-size:14;
+   padding-bottom:0;
+   padding-left:0;
+   padding-right:0;
+}
+
 .storyGrid {
    padding-top:0;
    padding-bottom:0;
@@ -411,7 +421,7 @@ LinkButton.form {
    border-style:solid;
    border-thickness:1;
    border-sides:bottom;
-   padding-top:4;
+   padding-top:2;
    padding-right:5px;
    padding-bottom:0;
    horizontalAlign:right;

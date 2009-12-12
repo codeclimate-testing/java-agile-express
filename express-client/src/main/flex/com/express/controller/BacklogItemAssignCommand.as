@@ -26,6 +26,7 @@ public class BacklogItemAssignCommand extends SimpleCommand implements IResponde
    public function result(data : Object) : void {
       var proxy : ProjectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       sendNotification(ApplicationFacade.NOTE_LOAD_PROJECT, proxy.selectedProject.id);
+      sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, proxy.selectedIteration.id);
    }
 
    public function fault(info : Object) : void {

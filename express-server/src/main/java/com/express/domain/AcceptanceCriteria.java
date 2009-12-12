@@ -111,4 +111,13 @@ public class AcceptanceCriteria implements Persistable {
       output.append("verified=").append(verified).append("]");
       return output.toString();
    }
+
+   public String toCSV() {
+      StringBuilder result = new StringBuilder();
+      result.append(reference).append(",");
+      result.append(title).append(",");
+      result.append(description).append(",");
+      result.append(verified);
+      return result.toString();
+   }
 }

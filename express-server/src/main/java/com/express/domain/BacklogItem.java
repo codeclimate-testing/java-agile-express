@@ -401,6 +401,10 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       else {
          result.append(assignedTo.getFullName());
       }
+      for(AcceptanceCriteria criteria : acceptanceCriteria) {
+         result.append("\n");
+         result.append(criteria.toCSV());
+      }
       return result.toString();
    }
 }

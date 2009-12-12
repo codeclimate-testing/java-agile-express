@@ -80,8 +80,8 @@ public class ExpressPopUpManager {
       _irisOut.play();
       _popup.removeAllChildren();
       _popupVisible = false;
-      if (_lastWindowNotification.getName() == BacklogItemMediator.CREATE ||
-          _lastWindowNotification.getName() == BacklogItemMediator.EDIT) {
+      if (_lastWindowNotification && (_lastWindowNotification.getName() == BacklogItemMediator.CREATE ||
+          _lastWindowNotification.getName() == BacklogItemMediator.EDIT)) {
          _secureContext.currentUser.storyWindowPreference.x = _popup.x;
          _secureContext.currentUser.storyWindowPreference.y = _popup.y;
          _secureContext.currentUser.storyWindowPreference.height = _popup.height;
@@ -122,6 +122,7 @@ public class ExpressPopUpManager {
    private function handleBurndownCreated(event : FlexEvent):void {
       _burndownChart.xAxis.minimum = _projectProxy.selectedIteration.startDate;
       _burndownChart.xAxis.maximum = _projectProxy.selectedIteration.endDate;
+      _burndownChart.chkWeekends.selected = _lastWindowNotification.getBody() as Boolean;
    }
 
    private function createVelocityChart() : void {
@@ -197,6 +198,7 @@ public class ExpressPopUpManager {
       else {
          _burndownChart.xAxis.minimum = _projectProxy.selectedIteration.startDate;
          _burndownChart.xAxis.maximum = _projectProxy.selectedIteration.endDate;
+         _burndownChart.chkWeekends.selected = notification.getBody() as Boolean;
       }
       _burndownChart.dataProvider = _projectProxy.burndown;
 

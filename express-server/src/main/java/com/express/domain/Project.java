@@ -325,6 +325,7 @@ public class Project implements Persistable {
       StringBuilder result = new StringBuilder();
       for(BacklogItem item : productBacklog) {
          result.append(item.toCSV());
+         result.append("\n");
       }
       return result.toString();
    }

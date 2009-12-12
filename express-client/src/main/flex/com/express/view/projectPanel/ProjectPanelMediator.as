@@ -1,5 +1,6 @@
 package com.express.view.projectPanel {
 import com.express.ApplicationFacade;
+import com.express.controller.IterationLoadCommand;
 import com.express.controller.IterationUpdateCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.model.ProjectProxy;
@@ -14,13 +15,22 @@ import com.express.view.projectDetails.ProjectDetailsMediator;
 import com.express.view.renderer.CardPrintRenderer;
 
 import flash.events.Event;
+import flash.events.HTTPStatusEvent;
+import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
+
+import flash.events.ProgressEvent;
+import flash.events.SecurityErrorEvent;
+import flash.net.FileReference;
+
+import flash.net.URLRequest;
 
 import mx.controls.ComboBox;
 import mx.controls.DateField;
 import mx.controls.TileList;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
+import mx.messaging.config.ServerConfig;
 import mx.printing.FlexPrintJob;
 import mx.printing.FlexPrintJobScaleType;
 
@@ -36,6 +46,7 @@ public class ProjectPanelMediator extends Mediator{
    private var _secureContext : SecureContextProxy;
    private var _printView : BacklogPrintView;
    private var _backlog : Array;
+   private var _fileRef : FileReference;
 
    public function ProjectPanelMediator(viewComp : ProjectPanel, mediatorName : String = NAME) {
       super(mediatorName, viewComp);
@@ -54,6 +65,39 @@ public class ProjectPanelMediator extends Mediator{
       viewComp.projectDisplay.btnEdit.addEventListener(MouseEvent.CLICK, handleEditProject);
       viewComp.iterationSummary.btnEdit.addEventListener(MouseEvent.CLICK, handleEditIteration);
       viewComp.projectDisplay.lnkVelocity.addEventListener(MouseEvent.CLICK, handleDisplayVelocityChart);
+
+      viewComp.iterationSummary.lnkExport.addEventListener(MouseEvent.CLICK, handleIterationBacklogExport);
+      viewComp.projectDisplay.lnkExport.addEventListener(MouseEvent.CLICK, handleProductBacklogExport);
+      _fileRef = new FileReference();
+      _fileRef.addEventListener(Event.CANCEL, handleDownload);
+      _fileRef.addEventListener(Event.COMPLETE, handleDownload);
+      _fileRef.addEventListener(Event.OPEN, handleDownload);
+      _fileRef.addEventListener(Event.SELECT, handleDownload);
+      _fileRef.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleDownload);
+      _fileRef.addEventListener(IOErrorEvent.IO_ERROR, handleDownload);
+      _fileRef.addEventListener(ProgressEvent.PROGRESS, handleDownload);
+      _fileRef.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleDownload);
+   }
+
+   private function handleDownload(evt:Event):void {
+      /* Create shortcut to the FileReference object. */
+      var fr:FileReference = evt.currentTarget as FileReference;
+   }
+
+   private function handleIterationBacklogExport(event : Event) : void {
+      var url : String = ServerConfig.getChannel("my-amf").endpoint;
+      url = url.substr(0,url.length - 18);
+      url += "/iteration/" + _proxy.selectedIteration.id + "/backlog";
+      var request : URLRequest = new URLRequest(url);
+      _fileRef.download(request);
+   }
+
+   private function handleProductBacklogExport(event : Event) : void {
+      var url : String = ServerConfig.getChannel("my-amf").endpoint;
+      url = url.substr(0,url.length - 18);
+      url += "/project/" + _proxy.selectedProject.id + "/backlog";
+      var request : URLRequest = new URLRequest(url);
+      _fileRef.download(request);
    }
 
    public function handleProjectSelected(event : Event) : void {
@@ -103,7 +147,7 @@ public class ProjectPanelMediator extends Mediator{
       return [ProjectLoadCommand.SUCCESS,
               IterationUpdateCommand.SUCCESS,
               ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
-              ApplicationFacade.NOTE_ITERATION_SELECTED];
+              IterationLoadCommand.SUCCESS];
    }
 
    override public function handleNotification(notification : INotification):void {
@@ -112,19 +156,13 @@ public class ProjectPanelMediator extends Mediator{
             view.cboProjects.dataProvider.refresh();
             bindDisplay();
             bindIterationDisplay();
-            view.projectDisplay.btnEdit.enabled = true;
-            view.projectDisplay.managePopUp.enabled = true;
             toggleBurndownAsLink();
             break;
          case IterationUpdateCommand.SUCCESS :
             bindIterationDisplay();
             break;
-         case ApplicationFacade.NOTE_ITERATION_SELECTED :
+         case IterationLoadCommand.SUCCESS :
             bindIterationDisplay();
-            view.iterationSummary.btnEdit.enabled = true;
-            view.iterationSummary.printPopUp.enabled = true;
-            view.iterationSummary.burndown.xAxis.minimum = _proxy.selectedIteration.startDate;
-            view.iterationSummary.burndown.xAxis.maximum = _proxy.selectedIteration.endDate;
             toggleBurndownAsLink();
             break;
          case ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE :
@@ -155,7 +193,7 @@ public class ProjectPanelMediator extends Mediator{
    }
 
    private function handleDisplayBurndown(event : Event) : void {
-      sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNDOWN);
+      sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNDOWN, view.iterationSummary.burndown.chkWeekends);
    }
 
    private function handleDisplayVelocityChart(event : Event) : void {
@@ -174,6 +212,9 @@ public class ProjectPanelMediator extends Mediator{
          view.projectDisplay.description.text = _proxy.selectedProject.description;
          view.projectDisplay.rptAdmins.dataProvider = _proxy.selectedProject.admins;
          view.projectDisplay.lnkVelocity.visible = true;
+         view.projectDisplay.btnEdit.enabled = true;
+         view.projectDisplay.managePopUp.enabled = true;
+         view.projectDisplay.lnkExport.enabled = true;
       }
    }
 
@@ -187,6 +228,10 @@ public class ProjectPanelMediator extends Mediator{
          view.iterationSummary.daysRemaining.text = "" + _proxy.selectedIteration.getDaysRemaining();
          view.iterationSummary.btnEdit.enabled = true;
          view.iterationSummary.printPopUp.enabled = true;
+         view.iterationSummary.lnkExport.enabled = true;
+         view.iterationSummary.burndown.chkWeekends.enabled = true;
+         view.iterationSummary.burndown.xAxis.minimum = _proxy.selectedIteration.startDate;
+         view.iterationSummary.burndown.xAxis.maximum = _proxy.selectedIteration.endDate;
       }
       else {
          view.iterationSummary.startDate.text = "";
@@ -197,6 +242,10 @@ public class ProjectPanelMediator extends Mediator{
          view.iterationSummary.daysRemaining.text = "";
          view.iterationSummary.btnEdit.enabled = false;
          view.iterationSummary.printPopUp.enabled = false;
+         view.iterationSummary.lnkExport.enabled = false;
+         view.iterationSummary.burndown.chkWeekends.enabled = false;
+         view.iterationSummary.burndown.xAxis.minimum = null;
+         view.iterationSummary.burndown.xAxis.maximum = null;
       }
    }
 

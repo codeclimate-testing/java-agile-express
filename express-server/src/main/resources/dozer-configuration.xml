@@ -46,7 +46,7 @@
          <a>id</a>
          <b>id</b>
       </field>
-      <field map-id="Iteration.deep">
+      <field map-id="Iteration.shallow">
          <a>iterations</a>
          <b>iterations</b>
       </field>
@@ -294,10 +294,10 @@
          <!--<a>themes</a>-->
          <!--<b>themes</b>-->
       <!--</field-exclude>-->
-      <field-exclude>
-         <a>acceptanceCriteria</a>
-         <b>acceptanceCriteria</b>
-      </field-exclude>
+      <!--<field-exclude>-->
+         <!--<a>acceptanceCriteria</a>-->
+         <!--<b>acceptanceCriteria</b>-->
+      <!--</field-exclude>-->
    </mapping>
 
    <mapping>

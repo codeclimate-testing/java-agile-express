@@ -1,5 +1,6 @@
 package com.express.view.wall
 {
+import com.express.controller.IterationLoadCommand;
 import com.express.view.*;
 import com.express.ApplicationFacade;
 import com.express.controller.ProjectLoadCommand;
@@ -213,7 +214,7 @@ public class WallMediator extends Mediator
    }
 
    override public function listNotificationInterests():Array {
-      return [ApplicationFacade.NOTE_ITERATION_SELECTED,
+      return [IterationLoadCommand.SUCCESS,
               ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
               ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM,
               ProjectLoadCommand.SUCCESS];
@@ -221,7 +222,7 @@ public class WallMediator extends Mediator
 
    override public function handleNotification(notification:INotification):void {
       switch (notification.getName()) {
-         case ApplicationFacade.NOTE_ITERATION_SELECTED :
+         case IterationLoadCommand.SUCCESS :
             loadIterationBacklog();
             break;
          case ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE :

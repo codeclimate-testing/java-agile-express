@@ -21,9 +21,15 @@ public interface ProjectManager {
    
    /**
     * @param id of the Project to be found
-    * @return Fully loaded ProjectDto using a deep loading policy
+    * @return Fully loaded ProjectDto using a deep loading policy (Iterations will only be loaded shallowly)
     */
    ProjectDto findProject(Long id);
+
+   /**
+    * @param id of the Iteration to be found
+    * @return Fully loaded IterationDto using a deep loading policy
+    */
+   IterationDto findIteration(Long id);
    
    /**
     * Generates an access request for the Project(s) provided or generates a create project request

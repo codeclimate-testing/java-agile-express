@@ -1,13 +1,13 @@
 package com.express.view.backlog
 {
-import com.express.controller.IterationUpdateCommand;
-import com.express.model.SecureContextProxy;
-import com.express.view.*;
 import com.express.ApplicationFacade;
 import com.express.controller.IterationCreateCommand;
+import com.express.controller.IterationLoadCommand;
+import com.express.controller.IterationUpdateCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.controller.event.GridButtonEvent;
 import com.express.model.ProjectProxy;
+import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Iteration;
 import com.express.model.request.BacklogItemAssignRequest;
@@ -75,7 +75,7 @@ public class BacklogMediator extends Mediator
    private function handleDragEnter(event : DragEvent) : void {
       var items : Array = event.dragSource.dataForFormat('treeDataGridItems') as Array;
       for each(var item : BacklogItem in items) {
-         if(item.parent) {
+         if (item.parent) {
             event.preventDefault();
             DragManager.showFeedback(DragManager.NONE);
             return;
@@ -110,7 +110,10 @@ public class BacklogMediator extends Mediator
    }
 
    override public function listNotificationInterests():Array {
-      return [ProjectLoadCommand.SUCCESS,IterationCreateCommand.SUCCESS,IterationUpdateCommand.SUCCESS];
+      return [ProjectLoadCommand.SUCCESS,
+         IterationCreateCommand.SUCCESS,
+         IterationUpdateCommand.SUCCESS,
+         IterationLoadCommand.SUCCESS];
    }
 
    override public function handleNotification(notification:INotification):void {
@@ -125,15 +128,15 @@ public class BacklogMediator extends Mediator
             _proxy.newIteration = null;
             _proxy.updateIterationList();
             view.cboIterations.selectedItem = newIteration;
-            selectIteration(newIteration);
+            view.btnCreateItem.enabled = true;
             break;
          case IterationUpdateCommand.SUCCESS :
-            var updatedIteration : Iteration = notification.getBody() as Iteration;
-            var index : int = getSelectionIndex(_proxy.selectedProject.iterations, updatedIteration);
-            _proxy.selectedProject.iterations.getItemAt(index).copyFrom(updatedIteration);
-            _proxy.selectedIteration = updatedIteration;
-            _proxy.newIteration = null;
+         case IterationLoadCommand.SUCCESS :
+            var index : int = getSelectionIndex(_proxy.selectedProject.iterations, _proxy.selectedIteration);
+            view.cboIterations.selectedIndex = index;
             _proxy.updateIterationList();
+            _proxy.newIteration = null;
+            view.btnCreateItem.enabled = true;
             break;
       }
    }
@@ -141,27 +144,23 @@ public class BacklogMediator extends Mediator
    private function handleProjectLoaded() : void {
       view.lnkCreateIteration.enabled = true;
       view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
-      if (!_proxy.selectedIteration) {
-         _proxy.selectedIteration = _proxy.selectedProject.currentIteration;
-         if (!_proxy.selectedIteration) {
-            view.cboIterations.selectedIndex = -1;
-            view.btnCreateItem.enabled = false;
-         }
-         else {
-            view.cboIterations.selectedIndex = getSelectionIndex(view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);
-            view.btnCreateItem.enabled = true;
-         }
+
+      if (!_proxy.selectedIteration && ! _proxy.selectedProject.currentIteration) {
+         view.cboIterations.selectedIndex = -1;
+         view.btnCreateItem.enabled = false;
       }
-      else {
+      else if(_proxy.selectedIteration) {
          view.cboIterations.selectedIndex = getSelectionIndex(view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);
          view.btnCreateItem.enabled = true;
       }
-      ProjectPanelMediator(facade.retrieveMediator(ProjectPanelMediator.NAME)).bindIterationDisplay();
+      else {
+         sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, _proxy.selectedProject.currentIteration.id);
+      }
    }
 
-   private function getSelectionIndex(list : ArrayCollection, iteration :Iteration) : int{
-      for(var index : int = 0; index < list.length; index++) {
-         if(list.getItemAt(index).id == iteration.id) {
+   private function getSelectionIndex(list : ArrayCollection, iteration :Iteration) : int {
+      for (var index : int = 0; index < list.length; index++) {
+         if (list.getItemAt(index).id == iteration.id) {
             return index;
          }
       }
@@ -169,16 +168,11 @@ public class BacklogMediator extends Mediator
    }
 
    private function handleIterationSelected(event : Event) : void {
-       selectIteration((event.target as ComboBox).selectedItem as Iteration);
-
+      var iteration : Iteration = (event.target as ComboBox).selectedItem as Iteration;
+      sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, iteration.id);
+      view.btnCreateItem.enabled = true;
    }
 
-   private function selectIteration(iteration : Iteration) : void {
-      _proxy.selectedIteration = iteration;
-      view.btnCreateItem.enabled = _proxy.selectedBacklog.source != null;
-      sendNotification(ApplicationFacade.NOTE_ITERATION_SELECTED);
-   }
-   
    public function handleCreateIteration(event : MouseEvent) : void {
       _proxy.newIteration = new Iteration();
       _proxy.newIteration.project = _proxy.selectedProject;
@@ -210,7 +204,7 @@ public class BacklogMediator extends Mediator
 
    private function removeConfirmed(event : CloseEvent) : void {
       if (event.detail == Alert.YES) {
-         if(_proxy.selectedBacklogItem.inProductBacklog()) {
+         if (_proxy.selectedBacklogItem.inProductBacklog()) {
             _proxy.productBacklogRequest = true;
          }
          sendNotification(ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM, _proxy.selectedBacklogItem);

@@ -232,6 +232,11 @@ public class ProjectManagerImpl implements ProjectManager {
       return remoteObjectFactory.createProjectDto(project, Policy.DEEP);
    }
 
+   public IterationDto findIteration(Long id) {
+      Iteration iteration = iterationDao.findById(id);
+      return remoteObjectFactory.createIterationDto(iteration, Policy.DEEP);
+   }
+
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void projectAccessRequest(ProjectAccessRequest request) {
       User user = userService.getAuthenticatedUser();
