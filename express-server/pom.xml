@@ -6,7 +6,7 @@
    <parent>
       <groupId>com.express</groupId>
       <artifactId>express</artifactId>
-      <version>0.7.2-SNAPSHOT</version>
+      <version>0.7.2</version>
    </parent>
 
    <artifactId>express-server</artifactId>
@@ -86,12 +86,12 @@
    </build>
 
    <dependencies>
-      <!--<dependency>-->
-         <!--<groupId>${project.groupId}</groupId>-->
-         <!--<artifactId>express-client</artifactId>-->
-         <!--<version>${project.version}</version>-->
-         <!--<type>swf</type>-->
-      <!--</dependency>-->
+      <dependency>
+         <groupId>${project.groupId}</groupId>
+         <artifactId>express-client</artifactId>
+         <version>${project.version}</version>
+         <type>swf</type>
+      </dependency>
       <dependency>
          <groupId>net.sf.ehcache</groupId>
          <artifactId>ehcache</artifactId>

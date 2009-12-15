@@ -17,6 +17,9 @@ public class ChangePasswordCommand extends SimpleCommand implements IResponder{
    public static const FAILURE : String = "ChangePasswordCommand.FAILURE";
    private var _password : String;
 
+   public function ChangePasswordCommand() {
+   }
+
    override public function execute(note:INotification) :void {
       var request : ChangePasswordRequest = note.getBody() as ChangePasswordRequest;
       _password = request.newPassword;

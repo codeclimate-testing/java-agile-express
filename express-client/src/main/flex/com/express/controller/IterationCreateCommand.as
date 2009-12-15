@@ -2,6 +2,7 @@ package com.express.controller
 {
 import com.express.ApplicationFacade;
 import com.express.model.ProjectProxy;
+import com.express.model.domain.Iteration;
 import com.express.service.ServiceRegistry;
 
 import mx.rpc.IResponder;
@@ -16,6 +17,9 @@ public class IterationCreateCommand extends SimpleCommand implements IResponder 
    public static const FAILURE : String = "IterationCreateCommand.FAIURE";
    private var _proxy : ProjectProxy;
 
+   public function IterationCreateCommand() {
+   }
+
    override public function execute(notification:INotification):void {
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
@@ -26,6 +30,11 @@ public class IterationCreateCommand extends SimpleCommand implements IResponder 
    }
 
    public function result(data:Object):void {
+      _proxy.selectedIteration = data.result as Iteration;
+      _proxy.selectedProject.iterations.removeItemAt(_proxy.selectedProject.iterations.length - 1);
+      _proxy.selectedProject.iterations.addItem(data.result as Iteration);
+      _proxy.newIteration = null;
+      _proxy.updateIterationList();
       sendNotification(SUCCESS, data.result);
    }
 

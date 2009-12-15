@@ -7,6 +7,9 @@ public class AccessRequest {
    public static const APPROVED : uint = 1;
    public static const REJECTED : uint = 2;
 
+   public function AccessRequest() {
+   }
+
    public var id : Number;
 
    public var version : Number;

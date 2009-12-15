@@ -10,7 +10,10 @@ import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.command.SimpleCommand;
 
 public class ProjectAccessResponseCommand extends SimpleCommand implements IResponder{
-   private var _proxy : ProjectProxy; 
+   private var _proxy : ProjectProxy;
+
+   public function ProjectAccessResponseCommand() {
+   }
 
    override public function execute(notification : INotification):void {
       _proxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));

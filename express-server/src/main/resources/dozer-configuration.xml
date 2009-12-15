@@ -290,14 +290,14 @@
          <a>status</a>
          <b>status</b>
       </field>
-      <!--<field-exclude>-->
-         <!--<a>themes</a>-->
-         <!--<b>themes</b>-->
-      <!--</field-exclude>-->
-      <!--<field-exclude>-->
-         <!--<a>acceptanceCriteria</a>-->
-         <!--<b>acceptanceCriteria</b>-->
-      <!--</field-exclude>-->
+      <field remove-orphans="true">
+         <a>themes</a>
+         <b>themes</b>
+      </field>
+      <field remove-orphans="true">
+         <a>acceptanceCriteria</a>
+         <b>acceptanceCriteria</b>
+      </field>
    </mapping>
 
    <mapping>

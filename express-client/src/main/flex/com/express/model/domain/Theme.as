@@ -3,6 +3,9 @@ package com.express.model.domain {
 [RemoteClass(alias="com.express.service.dto.ThemeDto")]
 public class Theme {
 
+   public function Theme() {
+   }
+
    public var id : Number;
 
    public var version : Number;

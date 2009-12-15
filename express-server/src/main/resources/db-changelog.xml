@@ -217,5 +217,10 @@
                                initiallyDeferred="false" referencedColumnNames="backlog_id"
                                referencedTableName="backlog"/>
    </changeSet>
+   <changeSet id="5" author="adam">
+      <addColumn tableName="iteration">
+         <column name="final_velocity" type="int4"/>
+      </addColumn>
+   </changeSet>
 
 </databaseChangeLog>

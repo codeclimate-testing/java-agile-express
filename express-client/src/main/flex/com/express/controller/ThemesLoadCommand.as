@@ -16,6 +16,9 @@ import org.puremvc.as3.patterns.command.SimpleCommand;
 public class ThemesLoadCommand extends SimpleCommand implements IResponder {
    private var _proxy : ProjectProxy;
 
+   public function ThemesLoadCommand() {
+   }
+
    override public function execute(notification : INotification):void {
       _proxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;

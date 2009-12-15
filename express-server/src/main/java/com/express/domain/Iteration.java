@@ -48,6 +48,9 @@ public class Iteration implements Persistable, Comparable<Iteration> {
    @Column(name = "DESCRIPTION")
    private String description;
 
+   @Column(name = "FINAL_VELOCITY")
+   private Integer finalVelocity;
+
    @ManyToOne
    @JoinColumn(name = "PROJECT_ID")
    @OptimisticLock(excluded = true)
@@ -119,6 +122,14 @@ public class Iteration implements Persistable, Comparable<Iteration> {
 
    public void setBacklog(Set<BacklogItem> backlog) {
       this.backlog = backlog;
+   }
+
+   public Integer getFinalVelocity() {
+      return finalVelocity;
+   }
+
+   public void setFinalVelocity(Integer finalVelocity) {
+      this.finalVelocity = finalVelocity;
    }
 
    public void addBacklogItem(BacklogItem backlogItem) {
@@ -198,6 +209,16 @@ public class Iteration implements Persistable, Comparable<Iteration> {
          }
       }
       return null;
+   }
+
+   public void calculateDeliveredVelocity() {
+      int total = 0;
+      for(BacklogItem item : backlog) {
+         if(item.getStatus() == Status.DONE) {
+            total += item.getEffort();
+         }
+      }
+      finalVelocity = total;
    }
 
    @Override

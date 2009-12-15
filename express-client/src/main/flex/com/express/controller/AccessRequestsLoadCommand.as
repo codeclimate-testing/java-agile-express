@@ -12,9 +12,11 @@ import mx.rpc.remoting.mxml.RemoteObject;
 import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.command.SimpleCommand;
 
-public class AccessRequestsLoadCommand extends SimpleCommand implements IResponder
-{
+public class AccessRequestsLoadCommand extends SimpleCommand implements IResponder {
    private var _proxy : ProjectProxy;
+
+   public function AccessRequestsLoadCommand() {
+   }
 
    override public function execute(notification:INotification):void {
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;

@@ -123,10 +123,6 @@ public class BacklogMediator extends Mediator
             break;
          case IterationCreateCommand.SUCCESS :
             var newIteration : Iteration = notification.getBody() as Iteration;
-            _proxy.selectedProject.iterations.removeItemAt(_proxy.selectedProject.iterations.length - 1);
-            _proxy.selectedProject.iterations.addItem(newIteration);
-            _proxy.newIteration = null;
-            _proxy.updateIterationList();
             view.cboIterations.selectedItem = newIteration;
             view.btnCreateItem.enabled = true;
             break;

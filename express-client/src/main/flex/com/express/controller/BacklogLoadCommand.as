@@ -20,6 +20,9 @@ public class BacklogLoadCommand extends SimpleCommand implements IResponder
 {
    private var _proxy : ProjectProxy;
 
+   public function BacklogLoadCommand() {
+   }
+
    override public function execute(notification:INotification):void {
       var request : LoadBacklogRequest = new LoadBacklogRequest();
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;

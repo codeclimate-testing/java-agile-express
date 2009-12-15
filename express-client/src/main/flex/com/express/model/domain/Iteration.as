@@ -30,15 +30,13 @@ public class Iteration
    [Bindable]
    public var endDate : Date;
 
+   public var finalVelocity : Number;
+
    public var project : Project;
 
    public var backlog : ArrayCollection;
 
    public var burndown : ArrayCollection;
-
-   public function get pointsCompleted() : int {
-      return getPoints();
-   }
 
    public function getPoints() : int {
       var total : Number = 0;
@@ -91,6 +89,7 @@ public class Iteration
       description = iteration.description;
       burndown = iteration.burndown;
       backlog = iteration.backlog;
+      finalVelocity = iteration.finalVelocity;
    }
 }
 }

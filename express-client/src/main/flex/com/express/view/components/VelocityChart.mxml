@@ -35,7 +35,7 @@
          <mx:LinearAxis id="yAxis"/>
       </mx:verticalAxis>
       <mx:series>
-         <mx:ColumnSeries displayName="Points Delivered" xField="title" yField="pointsCompleted"
+         <mx:ColumnSeries displayName="Points Delivered" xField="title" yField="finalVelocity"
                           fill="{colFill}" stroke="{colStroke}" />
       </mx:series>
       <!-- turn off drop shadows -->

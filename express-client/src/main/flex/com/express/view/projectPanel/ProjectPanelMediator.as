@@ -1,5 +1,6 @@
 package com.express.view.projectPanel {
 import com.express.ApplicationFacade;
+import com.express.controller.IterationCreateCommand;
 import com.express.controller.IterationLoadCommand;
 import com.express.controller.IterationUpdateCommand;
 import com.express.controller.ProjectLoadCommand;
@@ -146,6 +147,7 @@ public class ProjectPanelMediator extends Mediator{
    override public function listNotificationInterests():Array {
       return [ProjectLoadCommand.SUCCESS,
               IterationUpdateCommand.SUCCESS,
+              IterationCreateCommand.SUCCESS,
               ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
               IterationLoadCommand.SUCCESS];
    }
@@ -159,6 +161,7 @@ public class ProjectPanelMediator extends Mediator{
             toggleBurndownAsLink();
             break;
          case IterationUpdateCommand.SUCCESS :
+         case IterationCreateCommand.SUCCESS :
             bindIterationDisplay();
             break;
          case IterationLoadCommand.SUCCESS :

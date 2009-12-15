@@ -1,7 +1,6 @@
 package com.express.model.domain
 {
-public class Issue
-{
+public class Issue {
    public static const STATUS_NEW : String = "NEW";
 
    public static const STATUS_PROGRESS : String = "IN PROGRESS";
@@ -9,6 +8,9 @@ public class Issue
    public static const STATUS_COMPLETE : String = "COMPLETE";
 
    public static const STATUS_REJECTED : String = "REJECTED";
+
+   public function Issue() {
+   }
 
    public var id : Number;
 

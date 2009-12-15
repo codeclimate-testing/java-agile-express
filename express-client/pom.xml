@@ -7,7 +7,7 @@
    <parent>
       <artifactId>express</artifactId>
       <groupId>com.express</groupId>
-      <version>0.7.2-SNAPSHOT</version>
+      <version>0.7.2</version>
    </parent>
 
    <artifactId>express-client</artifactId>
@@ -25,7 +25,7 @@
          <plugin>
             <groupId>org.sonatype.flexmojos</groupId>
             <artifactId>flexmojos-maven-plugin</artifactId>
-            <version>3.2.0</version>
+            <version>3.4.0</version>
             <extensions>true</extensions>
             <configuration>
                <services>${basedir}/../express-server/src/main/webapp/WEB-INF/flex/services-config.xml</services>
@@ -34,16 +34,14 @@
                </locales>
                <contextRoot>/</contextRoot>
                <sourceFile>Express.mxml</sourceFile>
-               <targetPlayer>9.0.227</targetPlayer>
+               <targetPlayer>10.0.0</targetPlayer>
                <sourcePaths>
                   <sourcePath>src/main/flex</sourcePath>
                   <sourcePath>src/main/resources</sourcePath>
                </sourcePaths>
-               <!-- You will need to uncomment the lines below and add your flexbuilder pro license number to compile
-                    without the datavisualization watermark-->
-               <!--<licenses>-->
-                  <!--<flexbuilder3>nnnn-nnnn-nnnn-nnnn-nnnn-nnnn</flexbuilder3>-->
-               <!--</licenses>-->
+               <licenses>
+                  <flexbuilder3>nnnn-nnnn-nnnn</flexbuilder3>
+               </licenses>
             </configuration>
             <dependencies>
                <dependency>
@@ -51,6 +49,11 @@
                   <artifactId>compiler</artifactId>
                   <version>${flexVersion}</version>
                   <type>pom</type>
+               </dependency>
+               <dependency>
+                  <groupId>com.adobe.flex</groupId>
+                  <artifactId>license</artifactId>
+                  <version>${flexVersion}</version>
                </dependency>
             </dependencies>
          </plugin>
@@ -63,13 +66,19 @@
          <artifactId>flex-framework</artifactId>
          <version>${flexVersion}</version>
          <type>pom</type>
+         <exclusions>
+            <exclusion>
+               <groupId>com.adobe.flex.framework</groupId>
+               <artifactId>playerglobal</artifactId>
+            </exclusion>
+         </exclusions>
       </dependency>
 
       <dependency>
          <groupId>com.adobe.flex.framework</groupId>
          <artifactId>playerglobal</artifactId>
          <version>${flexVersion}</version>
-         <classifier>9</classifier>
+         <classifier>10</classifier>
          <type>swc</type>
       </dependency>
 

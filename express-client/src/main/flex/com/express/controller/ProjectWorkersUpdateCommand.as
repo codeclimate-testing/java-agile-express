@@ -16,6 +16,9 @@ import org.puremvc.as3.patterns.command.SimpleCommand;
 public class ProjectWorkersUpdateCommand extends SimpleCommand implements IResponder {
    private var _proxy : ProjectProxy;
 
+   public function ProjectWorkersUpdateCommand() {
+   }
+
    override public function execute(notification : INotification):void {
       _proxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
       var request : ProjectWorkersUpdateRequest = new ProjectWorkersUpdateRequest();

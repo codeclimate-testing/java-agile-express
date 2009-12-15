@@ -1,8 +1,10 @@
 package com.express.model.domain
 {
 [RemoteClass(alias="com.express.service.dto.EffortRecordDto")]
-public class EffortRecord
-{
+public class EffortRecord {
+
+   public function EffortRecord() {
+   }
 
    public var id : Number;
 

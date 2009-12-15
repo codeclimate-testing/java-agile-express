@@ -314,6 +314,7 @@ public class ProjectManagerImpl implements ProjectManager {
          EffortRecord record =
                new EffortRecord(Calendar.getInstance(), iteration.getTaskEffortRemaining(), iteration);
          iteration.addBurndownRecord(record);
+         iteration.calculateDeliveredVelocity();
          projectDao.save(iteration.getProject());
       }
    }

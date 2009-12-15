@@ -3,6 +3,9 @@ package com.express.model.domain {
 [RemoteClass(alias="com.express.service.dto.ProjectWorkerDto")]
 public class ProjectWorker {
 
+   public function ProjectWorker() {
+   }
+
    public var id : Number;
 
    public var version : Number;

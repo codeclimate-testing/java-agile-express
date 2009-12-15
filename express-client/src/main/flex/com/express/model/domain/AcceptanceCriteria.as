@@ -3,6 +3,9 @@ package com.express.model.domain {
 [RemoteClass(alias="com.express.service.dto.AcceptanceCriteriaDto")]
 public class AcceptanceCriteria {
 
+   public function AcceptanceCriteria() {
+   }
+
    public var id : Number;
 
    public var version : Number;

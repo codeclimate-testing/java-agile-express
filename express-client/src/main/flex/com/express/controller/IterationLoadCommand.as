@@ -3,7 +3,6 @@ package com.express.controller
 import com.express.ApplicationFacade;
 import com.express.model.ProjectProxy;
 import com.express.model.domain.Iteration;
-import com.express.model.domain.Project;
 import com.express.service.ServiceRegistry;
 
 import mx.rpc.IResponder;
@@ -17,6 +16,9 @@ public class IterationLoadCommand extends SimpleCommand implements IResponder
 {
    public static const SUCCESS : String = "IterationLoadCommand.SUCCESS";
    private var _proxy : ProjectProxy;
+
+   public function IterationLoadCommand() {
+   }
 
    override public function execute(notification:INotification):void {
       var id : Number = notification.getBody() as Number;

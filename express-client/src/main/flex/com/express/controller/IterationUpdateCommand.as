@@ -16,6 +16,9 @@ public class IterationUpdateCommand extends SimpleCommand implements IResponder 
    public static const FAILURE : String = "IterationUpdateCommand.FAIURE";
    private var _proxy : ProjectProxy;
 
+   public function IterationUpdateCommand() {
+   }
+
    override public function execute(notification:INotification):void {
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;

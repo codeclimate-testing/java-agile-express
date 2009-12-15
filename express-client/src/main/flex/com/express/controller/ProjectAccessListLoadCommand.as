@@ -5,7 +5,6 @@ import com.express.model.ProfileProxy;
 import com.express.model.request.ProjectAccessData;
 import com.express.service.ServiceRegistry;
 
-import mx.collections.ArrayCollection;
 import mx.rpc.Fault;
 import mx.rpc.IResponder;
 import mx.rpc.events.FaultEvent;
@@ -16,7 +15,8 @@ import org.puremvc.as3.patterns.command.SimpleCommand;
 
 public class ProjectAccessListLoadCommand extends SimpleCommand implements IResponder
 {
-   private var dummyCollection : ArrayCollection = new ArrayCollection();
+   public function ProjectAccessListLoadCommand() {
+   }
 
    override public function execute(notification : INotification) : void {
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;

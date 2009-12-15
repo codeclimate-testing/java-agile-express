@@ -19,6 +19,8 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
    private String title;
    
    private String description;
+
+   private Integer finalVelocity;
    
    private ProjectDto project;
    
@@ -96,6 +98,14 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
 
    public void setBurndown(List<EffortRecordDto> burndown) {
       this.burndown = burndown;
+   }
+
+   public Integer getFinalVelocity() {
+      return finalVelocity;
+   }
+
+   public void setFinalVelocity(Integer finalVelocity) {
+      this.finalVelocity = finalVelocity;
    }
 
    public int compareTo(IterationDto iteration) {

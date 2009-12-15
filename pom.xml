@@ -7,7 +7,7 @@
    <artifactId>express</artifactId>
    <packaging>pom</packaging>
    <name>express</name>
-   <version>0.7.2-SNAPSHOT</version>
+   <version>0.7.2</version>
 
    <modules>
       <module>express-client</module>
@@ -15,7 +15,8 @@
    </modules>
 
    <scm>
-      <connection>scm:svn:http://biz.ricketson.org/svn/express/trunk</connection>
+      <connection>scm:git:ssh://agileexpress.git.sourceforge.net/gitroot/agileexpress/agileexpress
+      </connection>
    </scm>
 
    <repositories>
@@ -26,28 +27,15 @@
          </url>
       </repository>
       <repository>
-         <id>ricketson</id>
-         <name>Ricketson Maven Repository</name>
-         <url>http://biz.ricketson.org/maven/</url>
-      </repository>
-      <repository>
          <id>sun</id>
          <name>Sun Repository</name>
          <url>http://download.java.net/maven/2</url>
       </repository>
-   </repositories>
-   <distributionManagement>
       <repository>
-         <id>ricketson</id>
-         <name>Ricketson Maven Repository</name>
-         <url>dav:http://biz.ricketson.org/maven/</url>
+         <id>flexmojos</id>
+         <url>http://repository.sonatype.org/content/groups/flexgroup/</url>
       </repository>
-      <site>
-         <id>ricketson</id>
-         <name>Ricketson Maven Site Server</name>
-         <url>dav:http://biz.ricketson.org/maven/site/${pom.artifactId}</url>
-      </site>
-   </distributionManagement>
+   </repositories>
 
 
    <build>
