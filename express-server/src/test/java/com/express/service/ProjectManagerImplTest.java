@@ -1,29 +1,27 @@
 package com.express.service;
 
-import static org.easymock.EasyMock.expect;
-
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import org.unitils.UnitilsJUnit4;
-import org.unitils.easymock.EasyMockUnitils;
-import static org.unitils.easymock.EasyMockUnitils.replay;
-import org.unitils.easymock.annotation.Mock;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.Authentication;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-
 import com.express.dao.*;
 import com.express.domain.*;
 import com.express.service.dto.*;
+import com.express.service.internal.UserService;
 import com.express.service.mapping.DomainFactory;
 import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import com.express.service.notification.NotificationService;
-import com.express.service.internal.UserService;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.security.Authentication;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
+import org.unitils.UnitilsJUnit4;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
 
 public class ProjectManagerImplTest extends UnitilsJUnit4 {
 
@@ -51,6 +49,7 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
 
    @Before
    public void setUp() {
+      MockitoAnnotations.initMocks(this);
       projectManager = new ProjectManagerImpl(userService,
                                               projectDao,
                                               remoteObjectFactory,
@@ -70,18 +69,17 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
    }
    
    @Test
-   public void testBasicCreateProject() {
+   public void shouldCreateProjectFromDto() {
       ProjectDto dto = new ProjectDto();
       Project domain = new Project();
-      expect(domainFactory.createProject(dto,Policy.SHALLOW)).andReturn(domain);
+      given(domainFactory.createProject(dto,Policy.SHALLOW)).willReturn(domain);
       projectDao.save(domain);
-      expect(remoteObjectFactory.createProjectDto(domain, Policy.DEEP)).andReturn(dto);
-      EasyMockUnitils.replay();
+      given(remoteObjectFactory.createProjectDto(domain, Policy.DEEP)).willReturn(dto);
       projectManager.updateProject(dto);
    }
-   
+ 
    @Test
-   public void testBasicCreateIteration() {
+   public void shouldCreateIterationFromDto() {
       String title = "test title";
       ProjectDto projectDto = new ProjectDto();
       Long projectId = 1l;
@@ -92,16 +90,15 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       dto.setProject(projectDto);
       Iteration domain = new Iteration();
       domain.setTitle(title);
-      expect(domainFactory.createIteration(dto)).andReturn(domain);
-      expect(projectDao.findById(projectId)).andReturn(project);
+      given(domainFactory.createIteration(dto)).willReturn(domain);
+      given(projectDao.findById(projectId)).willReturn(project);
       projectDao.save(project);
-      expect(remoteObjectFactory.createIterationDto(domain, Policy.DEEP)).andReturn(dto);
-      EasyMockUnitils.replay();
+      given(remoteObjectFactory.createIterationDto(domain, Policy.DEEP)).willReturn(dto);
       projectManager.createIteration(dto);
    }
 
    @Test
-   public void testCreateEffortRecords() {
+   public void shouldCreateEffortRecordsForOpenIterations() {
       Project project = new Project();
       List<Iteration> iterations = new ArrayList<Iteration>();
       Iteration iteration = new Iteration();
@@ -110,114 +107,111 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       iteration = new Iteration();
       iteration.setProject(project);
       iterations.add(iteration);
-      expect(iterationDao.findOpenIterations()).andReturn(iterations);
+      given(iterationDao.findOpenIterations()).willReturn(iterations);
       projectDao.save(project);
       projectDao.save(project);
-      EasyMockUnitils.replay();
+      
       projectManager.createEffortRecords();
    }
 
    @Test
-   public void testFindAllProjects() {
+   public void shouldFindAllProjectsForLoggedInUser() {
       this.intializeSecureContext();
       Project project = new Project();
       List<Project> projects = new ArrayList<Project>();
       projects.add(project);
       User user = new User();
       user.setId(ID);
-      expect(userService.getAuthenticatedUser()).andReturn(user);
-      expect(projectDao.findAll(user)).andReturn(projects);
-      expect(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW)).andReturn(new ProjectDto());
-      EasyMockUnitils.replay();
+      given(userService.getAuthenticatedUser()).willReturn(user);
+      given(projectDao.findAll(user)).willReturn(projects);
+      given(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW)).willReturn(new ProjectDto());
+      
       List<ProjectDto> dtos = projectManager.findAllProjects();
       assertEquals(projects.size(), dtos.size());
    }
 
    @Test
-   public void testFindProject() {
+   public void shouldFindProjectById() {
       Project project = new Project();
-      expect(projectDao.findById(ID)).andReturn(project);
-      expect(remoteObjectFactory.createProjectDto(project, Policy.DEEP)).andReturn(new ProjectDto());
-      EasyMockUnitils.replay();
+      given(projectDao.findById(ID)).willReturn(project);
+      given(remoteObjectFactory.createProjectDto(project, Policy.DEEP)).willReturn(new ProjectDto());
+      
       projectManager.findProject(ID);
    }
    
    @Test
-   public void createUncommitedBacklogItemUnassigned() {
+   public void shouldCreateUnassignedProductBacklogItem() {
       CreateBacklogItemRequest request = new CreateBacklogItemRequest();
       BacklogItemDto itemDto = new BacklogItemDto();
       request.setBacklogItem(itemDto);
-      request.setType(CreateBacklogItemRequest.UNCOMMITED_STORY);
+      request.setType(CreateBacklogItemRequest.PRODUCT_BACKLOG_STORY);
       Long ID = 1l;
       request.setParentId(ID);
       BacklogItem item = new BacklogItem();
       item.setReference("S-1");
       Project project = new Project();
 
-      expect(domainFactory.createBacklogItem(itemDto)).andReturn(item);
-      expect(projectDao.findById(ID)).andReturn(project);
+      given(domainFactory.createBacklogItem(itemDto)).willReturn(item);
+      given(projectDao.findById(ID)).willReturn(project);
       projectDao.save(project);
-      expect(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).andReturn(new BacklogItemDto());
-      EasyMockUnitils.replay();
+      given(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).willReturn(new BacklogItemDto());
+      
       projectManager.createBacklogItem(request);
    }
 
    @Test
-   public void testRemoveBacklogItem() {
+   public void shouldRemoveBacklogItem() {
       BacklogItem item = new BacklogItem();
       Long id = 1l;
       Project project = new Project();
       project.addBacklogItem(item);
 
-      expect(backlogItemDao.findById(id)).andReturn(item);
+      given(backlogItemDao.findById(id)).willReturn(item);
       projectDao.save(project);
-      EasyMockUnitils.replay();
+      
       projectManager.removeBacklogItem(id);
    }
 
    @Test
-   public void testUpdateBacklogItem() {
+   public void shouldUpdateBacklogItem() {
       BacklogItemDto itemDto = new BacklogItemDto();
       BacklogItem item = new BacklogItem();
       Project project = new Project();
       project.addBacklogItem(item);
-
-
-      expect(domainFactory.createBacklogItem(itemDto)).andReturn(item);
+      given(domainFactory.createBacklogItem(itemDto)).willReturn(item);
       projectDao.save(project);
-      EasyMockUnitils.replay();
+      
       projectManager.updateBacklogItem(itemDto);
    }
 
    @Test
-   public void testUpdateThemes() {
+   public void shouldUpdateThemes() {
       Long projectId = 1l;
       Project project = new Project();
       ThemesUpdateRequest request = new ThemesUpdateRequest();
       ThemeDto dto = new ThemeDto();
       request.getThemes().add(dto);
       request.setProjectId(projectId);
-      expect(projectDao.findById(projectId)).andReturn(project);
-      expect(domainFactory.createTheme(dto)).andReturn(new Theme());
+      given(projectDao.findById(projectId)).willReturn(project);
+      given(domainFactory.createTheme(dto)).willReturn(new Theme());
       projectDao.save(project);
-      EasyMockUnitils.replay();
+      
       projectManager.updateThemes(request);
    }
 
    @Test
-   public void testLoadThemes() {
+   public void shouldLoadThemes() {
       Long projectId = 1l;
       Theme theme = new Theme();
       Project project = new Project();
       project.addTheme(theme);
-      expect(projectDao.findById(projectId)).andReturn(project);
-      expect(remoteObjectFactory.createThemeDto(theme)).andReturn(new ThemeDto());
-      replay();
+      given(projectDao.findById(projectId)).willReturn(project);
+      given(remoteObjectFactory.createThemeDto(theme)).willReturn(new ThemeDto());
       assertEquals(1, projectManager.loadThemes(projectId).size());
    }
 
    @Test
-   public void testLoadProductBacklog() {
+   public void shouldLoadProductBacklog() {
       Long projectId = 1l;
       Project project = new Project();
       BacklogItem item = new BacklogItem();
@@ -225,14 +219,13 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       LoadBacklogRequest request = new LoadBacklogRequest();
       request.setType(LoadBacklogRequest.TYPE_PROJECT);
       request.setParentId(projectId);
-      expect(projectDao.findById(projectId)).andReturn(project);
-      expect(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).andReturn(new BacklogItemDto());
-      replay();
+      given(projectDao.findById(projectId)).willReturn(project);
+      given(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).willReturn(new BacklogItemDto());
       assertEquals(1, projectManager.loadBacklog(request).size());
    }
 
    @Test
-   public void testLoadIterationBacklog() {
+   public void shouldLoadIterationBacklog() {
       Long iterationId = 1l;
       Iteration iteration = new Iteration();
       BacklogItem item = new BacklogItem();
@@ -240,14 +233,13 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       LoadBacklogRequest request = new LoadBacklogRequest();
       request.setType(LoadBacklogRequest.TYPE_ITERATION);
       request.setParentId(iterationId);
-      expect(iterationDao.findById(iterationId)).andReturn(iteration);
-      expect(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).andReturn(new BacklogItemDto());
-      replay();
+      given(iterationDao.findById(iterationId)).willReturn(iteration);
+      given(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).willReturn(new BacklogItemDto());
       assertEquals(1, projectManager.loadBacklog(request).size());
    }
 
    @Test
-   public void testUpdateProjectWorkers() {
+   public void shouldUpdateProjectWorkers() {
       ProjectWorkersUpdateRequest request = new ProjectWorkersUpdateRequest();
       Project project = new Project();
       request.setProjectId(1l);
@@ -255,46 +247,41 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       ProjectWorkerDto worker = new ProjectWorkerDto();
       workers.add(worker);
       request.setWorkers(workers);
-      expect(projectDao.findById(request.getProjectId())).andReturn(project);
-      expect(domainFactory.createProjectWorker(worker)).andReturn(new ProjectWorker());
+      given(projectDao.findById(request.getProjectId())).willReturn(project);
+      given(domainFactory.createProjectWorker(worker)).willReturn(new ProjectWorker());
       projectDao.save(project);
-      replay();
       projectManager.updateProjectWorkers(request);
       assertEquals(1, project.getProjectWorkers().size());
    }
 
    @Test
-   public void testLoadAccessRequests() {
+   public void shouldLoadAccessRequests() {
       Long projectId = 1l;
       Project project = new Project();
       AccessRequest accessRequest = new AccessRequest();
       project.addAccessRequest(accessRequest);
-      expect(projectDao.findById(projectId)).andReturn(project);
-      expect(remoteObjectFactory.createAccessRequestDto(accessRequest)).andReturn(new AccessRequestDto());
-      replay();
+      given(projectDao.findById(projectId)).willReturn(project);
+      given(remoteObjectFactory.createAccessRequestDto(accessRequest)).willReturn(new AccessRequestDto());
       assertEquals(1, projectManager.loadAccessRequests(projectId).size());
    }
 
    @Test
-   public void csvrequestShouldSwitchOnIterationType() {
+   public void csvRequestShouldSwitchOnIterationType() {
       CSVRequest request = new CSVRequest();
       Long id = 1l;
       request.setId(id);
       request.setType(CSVRequest.TYPE_ITERATION_BACKLOG);
-      expect(iterationDao.findById(id)).andReturn(new Iteration());
-      replay();
+      given(iterationDao.findById(id)).willReturn(new Iteration());
       projectManager.getCSV(request);
    }
 
    @Test
-   public void csvrequestShouldSwitchProductOnType() {
+   public void csvRequestShouldSwitchProductOnType() {
       CSVRequest request = new CSVRequest();
       Long id = 1l;
       request.setId(id);
       request.setType(CSVRequest.TYPE_PRODUCT_BACKLOG);
-      expect(projectDao.findById(id)).andReturn(new Project());
-      replay();
+      given(projectDao.findById(id)).willReturn(new Project());
       projectManager.getCSV(request);
    }
-
 }

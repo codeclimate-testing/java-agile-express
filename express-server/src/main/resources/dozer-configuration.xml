@@ -355,4 +355,17 @@
       </field>
    </mapping>
 
+   <mapping>
+      <class-a>com.express.domain.Issue</class-a>
+      <class-b>com.express.service.dto.IssueDto</class-b>
+      <field custom-converter="com.express.service.mapping.IdConverter">
+         <a>id</a>
+         <b>id</b>
+      </field>
+      <field >
+         <a is-accessible="true">version</a>
+         <b>version</b>
+      </field>
+   </mapping>
+
 </mappings>

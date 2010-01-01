@@ -1,6 +1,7 @@
 package com.express.service.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class BacklogItemDto implements Serializable, Comparable<BacklogItemDto> {
@@ -27,7 +28,9 @@ public class BacklogItemDto implements Serializable, Comparable<BacklogItemDto> 
    private String status;
    
    private Integer effort;
-   
+
+   private IssueDto impediment;
+
    private Integer businessValue;
    
    private UserDto assignedTo;
@@ -78,6 +81,14 @@ public class BacklogItemDto implements Serializable, Comparable<BacklogItemDto> 
 
    public String getSummary() {
       return summary;
+   }
+
+   public IssueDto getImpediment() {
+      return impediment;
+   }
+
+   public void setImpediment(IssueDto impediment) {
+      this.impediment = impediment;
    }
 
    public void setSummary(String summary) {

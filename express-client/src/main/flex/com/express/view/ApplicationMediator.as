@@ -9,14 +9,11 @@ import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.WallProxy;
 import com.express.model.domain.User;
-import com.express.model.domain.WindowMetrics;
 import com.express.navigation.MenuItem;
 import com.express.print.BacklogPrintView;
 import com.express.service.ServiceRegistry;
 import com.express.view.backlog.BacklogMediator;
-import com.express.view.backlogItem.BacklogItemForm;
 import com.express.view.backlogItem.BacklogItemMediator;
-import com.express.view.defect.DefectMediator;
 import com.express.view.iteration.IterationMediator;
 import com.express.view.login.LoginMediator;
 import com.express.view.login.LoginView;
@@ -45,10 +42,9 @@ public class ApplicationMediator extends Mediator
    public static const LOGIN_VIEW : uint = 0;
    public static const BACKLOG_VIEW : int = 1;
    public static const WALL_VIEW : int = 2;
-   public static const DEFECT_VIEW : int = 3;
-   public static const PROFILE_VIEW : uint = 4;
-   public static const ACCESS_VIEW : uint = 5;
-   public static const REGISTER_VIEW : uint = 6;
+   public static const PROFILE_VIEW : uint = 3;
+   public static const ACCESS_VIEW : uint = 4;
+   public static const REGISTER_VIEW : uint = 5;
 
    public static const LOGIN_HEAD : String = "Login";
    public static const PROJECT_HEAD : String = "Project";
@@ -60,7 +56,6 @@ public class ApplicationMediator extends Mediator
    private var _loginView : LoginView;
    private var _secureContext : SecureContextProxy;
    private var _projectProxy : ProjectProxy;
-   private var _initialProjectViewIndex : int = 0;
    private var _popupManager : ExpressPopUpManager;
 
 
@@ -82,7 +77,6 @@ public class ApplicationMediator extends Mediator
       viewComp.profileView.addEventListener(FlexEvent.CREATION_COMPLETE, handleProfileViewCreated);
       viewComp.registerView.addEventListener(FlexEvent.CREATION_COMPLETE, handleRegisterViewCreated);
       viewComp.menu.addEventListener(MouseEvent.CLICK, handleNavigateRequest);
-      viewComp.mainPopup.addEventListener(FlexEvent.HIDE, handlePopUpClose);
 
       viewComp.btnLogout.addEventListener(MouseEvent.CLICK, handleLogout);
    }
@@ -187,22 +181,8 @@ public class ApplicationMediator extends Mediator
       }
    }
 
-   private function handlePopUpClose(event : Event) : void {
-      if(app.mainPopup.getChildAt(0) is BacklogItemForm) {
-         var metrics : WindowMetrics = _secureContext.currentUser.storyWindowPreference;
-         metrics.width = app.mainPopup.width;
-         metrics.height = app.mainPopup.height;
-         metrics.x = app.mainPopup.x;
-         metrics.y = app.mainPopup.y;
-      }
-   }
-
    public function handleBacklogViewCreated(event : Event) : void {
       facade.registerMediator(new BacklogMediator(app.backlogView));
-   }
-
-   public function handleDefectViewCreated(event : FlexEvent) : void {
-      facade.registerMediator(new DefectMediator(app.defectView));
    }
 
    public function handleProjectAccessFormCreated(event : FlexEvent) : void {
@@ -240,15 +220,6 @@ public class ApplicationMediator extends Mediator
    private function navigate(item : MenuItem) : void {
       sendNotification(ApplicationFacade.NOTE_CLEAR_MSG);
       app.views.selectedIndex = item.index;
-      app.mainPopup.visible = false;
-   }
-
-   private function disableSelectedNav(link : LinkButton) : void {
-      var size : int = app.rptMenu.dataProvider.length;
-      for(var index : int = 0; index < size; index++) {
-         var navLink : LinkButton = app.menuItem[index];
-         navLink.enabled = link != navLink;
-      }
    }
 
    public function handleLoginRequest(event : MouseEvent) : void {

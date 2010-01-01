@@ -7,7 +7,7 @@ public class CreateBacklogItemRequest implements Serializable {
 
    private static final long serialVersionUID = -6979146785438719380L;
    
-   public static final Integer UNCOMMITED_STORY  = 0;
+   public static final Integer PRODUCT_BACKLOG_STORY = 0;
    public static final Integer STORY = 1;
    public static final Integer TASK = 2;
    
@@ -17,7 +17,7 @@ public class CreateBacklogItemRequest implements Serializable {
    
    private  BacklogItemDto backlogItem;
 
-   
+
    public Integer getType() {
       return type;
    }

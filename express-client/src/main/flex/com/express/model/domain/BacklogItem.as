@@ -35,6 +35,9 @@ public class BacklogItem
    public var status : String = STATUS_OPEN;
 
    [Bindable]
+   public var impediment : Issue;
+
+   [Bindable]
    public var effort : int;
 
    [Bindable]
@@ -95,7 +98,7 @@ public class BacklogItem
 
    /**
     * Convenience method to retrieve the BacklogItem's project no matter whether it is in the
-    * uncommittedBacklog, and iteration or a cild of another BacklogItem.
+    * uncommittedBacklog, and iteration or a child of another BacklogItem.
     */
    public function getProject() : Project {
       if (project != null) {
@@ -129,6 +132,7 @@ public class BacklogItem
       soThat = item.soThat;
       themes = item.themes;
       acceptanceCriteria = item.acceptanceCriteria;
+      impediment = item.impediment;
    }
 
 }

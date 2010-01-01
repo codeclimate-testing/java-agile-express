@@ -112,7 +112,7 @@ public class ProjectManagerImpl implements ProjectManager {
          item.setAssignedTo(assignedTo);
       }
       Project project = null;
-      if (CreateBacklogItemRequest.UNCOMMITED_STORY.equals(request.getType())) {
+      if (CreateBacklogItemRequest.PRODUCT_BACKLOG_STORY.equals(request.getType())) {
          project = projectDao.findById(request.getParentId());
          project.addBacklogItem(item);
       }

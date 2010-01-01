@@ -6,28 +6,29 @@
    <parent>
       <groupId>com.express</groupId>
       <artifactId>express</artifactId>
-      <version>0.7.2</version>
+      <version>0.7.3-SNAPSHOT</version>
    </parent>
 
    <artifactId>express-server</artifactId>
    <packaging>war</packaging>
    <name>express server</name>
    <description>Flex server project for express</description>
+   <profiles>
+      <profile>
+         <id>deploy</id>
+         <dependencies>
+            <dependency>
+               <groupId>${project.groupId}</groupId>
+               <artifactId>express-client</artifactId>
+               <version>${project.version}</version>
+               <type>swf</type>
+            </dependency>
+         </dependencies>
+      </profile>
+   </profiles>
 
    <build>
       <plugins>
-         <plugin>
-            <groupId>org.sonatype.flexmojos</groupId>
-            <artifactId>flexmojos-maven-plugin</artifactId>
-            <version>3.2.0</version>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>copy-flex-resources</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
          <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.3</version>
@@ -48,14 +49,6 @@
             <configuration>
                <source>${javaVersion}</source>
                <target>${javaVersion}</target>
-            </configuration>
-         </plugin>
-         <plugin>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <inherited>true</inherited>
-            <configuration>
-               <repositoryId>ricketson</repositoryId>
-               <url>dav:http://biz.ricketson.org/maven/</url>
             </configuration>
          </plugin>
          <plugin>
@@ -86,12 +79,6 @@
    </build>
 
    <dependencies>
-      <dependency>
-         <groupId>${project.groupId}</groupId>
-         <artifactId>express-client</artifactId>
-         <version>${project.version}</version>
-         <type>swf</type>
-      </dependency>
       <dependency>
          <groupId>net.sf.ehcache</groupId>
          <artifactId>ehcache</artifactId>
@@ -370,15 +357,15 @@
          <scope>test</scope>
       </dependency>
       <dependency>
-         <groupId>org.easymock</groupId>
-         <artifactId>easymock</artifactId>
-         <version>2.4</version>
+         <groupId>org.jbehave</groupId>
+         <artifactId>jbehave</artifactId>
+         <version>2.3.2</version>
          <scope>test</scope>
       </dependency>
       <dependency>
-         <groupId>org.easymock</groupId>
-         <artifactId>easymockclassextension</artifactId>
-         <version>2.2.2</version>
+         <groupId>org.mockito</groupId>
+         <artifactId>mockito-all</artifactId>
+         <version>1.8.2</version>
          <scope>test</scope>
       </dependency>
       <dependency>
@@ -414,11 +401,4 @@
          <scope>compile</scope>
       </dependency>
    </dependencies>
-   <properties>
-      <javaVersion>1.5</javaVersion>
-      <springVersion>3.0.0.RC1</springVersion>
-      <springSecurityVersion>2.0.4</springSecurityVersion>
-      <blazeDSVersion>3.2</blazeDSVersion>
-      <hibernateVersion>3.4.0.GA</hibernateVersion>
-   </properties>
 </project>

@@ -223,4 +223,33 @@
       </addColumn>
    </changeSet>
 
+    <changeSet id="6" author="adam">
+      <addColumn tableName="backlog">
+         <column name="final_velocity" type="int4"/>
+      </addColumn>
+   </changeSet>
+
+   <changeSet id="7" author="adam">
+
+      <createTable tableName="issue">
+         <column name="issue_id" type="int8">
+            <constraints nullable="false" primaryKey="true" primaryKeyName="issue_pkey"/>
+         </column>
+         <column name="title" type="varchar(255)"/>
+         <column name="description" type="TEXT(2147483647)"/>
+         <column name="end_date" type="timestamp"/>
+         <column name="start_date" type="timestamp"/>
+         <column name="version_no" type="int8"/>
+      </createTable>
+
+      <addColumn tableName="backlog">
+         <column name="impediment_id" type="int8"/>
+      </addColumn>
+
+      <addForeignKeyConstraint baseColumnNames="impediment_id" baseTableName="backlog"
+                               constraintName="fk_issue_backlog" deferrable="false"
+                               initiallyDeferred="false" referencedColumnNames="issue_id"
+                               referencedTableName="issue"/>
+   </changeSet>
+
 </databaseChangeLog>

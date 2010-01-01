@@ -7,7 +7,7 @@
    <artifactId>express</artifactId>
    <packaging>pom</packaging>
    <name>express</name>
-   <version>0.7.2</version>
+   <version>0.7.3-SNAPSHOT</version>
 
    <modules>
       <module>express-client</module>
@@ -80,6 +80,12 @@
          </plugins>
       </pluginManagement>
    </build>
-   <dependencies>
-   </dependencies>
+   <properties>
+      <javaVersion>1.5</javaVersion>
+      <flexVersion>3.3.0.4852</flexVersion>
+      <springVersion>3.0.0.RC1</springVersion>
+      <springSecurityVersion>2.0.4</springSecurityVersion>
+      <blazeDSVersion>3.2</blazeDSVersion>
+      <hibernateVersion>3.4.0.GA</hibernateVersion>
+   </properties>
 </project>

@@ -7,17 +7,13 @@
    <parent>
       <artifactId>express</artifactId>
       <groupId>com.express</groupId>
-      <version>0.7.2</version>
+      <version>0.7.3-SNAPSHOT</version>
    </parent>
 
    <artifactId>express-client</artifactId>
    <packaging>swf</packaging>
    <name>express client</name>
    <description>Flex client for express</description>
-
-   <properties>
-      <flexVersion>3.3.0.4852</flexVersion>
-   </properties>
 
    <build>
       <sourceDirectory>src/main/flex</sourceDirectory>
@@ -40,7 +36,7 @@
                   <sourcePath>src/main/resources</sourcePath>
                </sourcePaths>
                <licenses>
-                  <flexbuilder3>nnnn-nnnn-nnnn</flexbuilder3>
+                  <flexbuilder3>137740039730199284090423</flexbuilder3>
                </licenses>
             </configuration>
             <dependencies>

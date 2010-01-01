@@ -1,17 +1,5 @@
 package com.express.service;
 
-import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.remoting.RemoteAccessException;
-import org.springframework.security.providers.encoding.PasswordEncoder;
-import org.unitils.UnitilsJUnit4;
-import org.unitils.easymock.EasyMockUnitils;
-import org.unitils.easymock.annotation.Mock;
-
 import com.express.dao.UserDao;
 import com.express.domain.User;
 import com.express.service.dto.LoginRequest;
@@ -20,9 +8,18 @@ import com.express.service.mapping.DomainFactory;
 import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import com.express.service.notification.NotificationService;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.Ehcache;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.remoting.RemoteAccessException;
+import org.springframework.security.providers.encoding.PasswordEncoder;
+import org.unitils.UnitilsJUnit4;
+
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import static org.mockito.BDDMockito.given;
 
 public class UserManagerImplLoginTest extends UnitilsJUnit4 {
    static final String USERNAME = "test@test.com";
@@ -42,12 +39,13 @@ public class UserManagerImplLoginTest extends UnitilsJUnit4 {
    
    @Before
    public void setUp() {
+      MockitoAnnotations.initMocks(this);
       userManager = new UserManagerImpl(mockUserDao, mockPasswordEncoder,mockRemoteObjectFactory,
                mockDomainFactory, mockNotificationService);
    }
    
    @Test
-   public void checkLoginUserHappyDays(){
+   public void shouldLoginUserCorrectly(){
       LoginRequest request = new LoginRequest();
       request.setUsername(USERNAME);
       request.setPassword(PASSWORD);
@@ -55,26 +53,26 @@ public class UserManagerImplLoginTest extends UnitilsJUnit4 {
       user.setEmail(USERNAME);
       user.setPassword(PASSWORD);
       user.setActive(true);
-      expect(mockUserDao.findByUsername(USERNAME)).andReturn(user);
-      expect(mockPasswordEncoder.isPasswordValid(PASSWORD, PASSWORD, USERNAME)).andReturn(Boolean.TRUE);
-      expect(mockRemoteObjectFactory.createUserDto(user, Policy.DEEP)).andReturn(new UserDto());
+      given(mockUserDao.findByUsername(USERNAME)).willReturn(user);
+      given(mockPasswordEncoder.isPasswordValid(PASSWORD, PASSWORD, USERNAME)).willReturn(Boolean.TRUE);
+      given(mockRemoteObjectFactory.createUserDto(user, Policy.DEEP)).willReturn(new UserDto());
       
-      EasyMockUnitils.replay();
+      
       userManager.login(request);
    }
    
    @Test
-   public void checkLoginUserInactiveThrowsExeption(){
+   public void shouldRaiseExceptionWhenUserInactive(){
       LoginRequest request = new LoginRequest();
       request.setUsername(USERNAME);
       request.setPassword(PASSWORD);
       User user = new User();
       user.setEmail(USERNAME);
       user.setPassword(PASSWORD);
-      expect(mockUserDao.findByUsername(USERNAME)).andReturn(user);
-      expect(mockPasswordEncoder.isPasswordValid(PASSWORD, PASSWORD, USERNAME)).andReturn(Boolean.FALSE);
+      given(mockUserDao.findByUsername(USERNAME)).willReturn(user);
+      given(mockPasswordEncoder.isPasswordValid(PASSWORD, PASSWORD, USERNAME)).willReturn(Boolean.FALSE);
       
-      EasyMockUnitils.replay();
+      
       try {
          userManager.login(request);
          fail("Login should fai for inactive users");
@@ -85,7 +83,7 @@ public class UserManagerImplLoginTest extends UnitilsJUnit4 {
    }
    
    @Test
-   public void checkLoginUserPassswordReminderRequestReturnsNull(){
+   public void loginUserPasswordReminderRequestShouldReturnNull(){
       LoginRequest request = new LoginRequest();
       request.setUsername(USERNAME);
       request.setPassword(PASSWORD);
@@ -94,16 +92,13 @@ public class UserManagerImplLoginTest extends UnitilsJUnit4 {
       user.setEmail(USERNAME);
       user.setPassword(PASSWORD);
       user.setActive(false);
-      expect(mockUserDao.findByUsername(USERNAME)).andReturn(user);
+      given(mockUserDao.findByUsername(USERNAME)).willReturn(user);
       mockNotificationService.sendPasswordReminderNotification(user);
-      
-      EasyMockUnitils.replay();
       assertNull(userManager.login(request));
-
    }
    
    @Test
-   public void checkLoginNonExistingUserThrowsExceptionl(){
+   public void shouldRaiseExceptionWhenAttemptingToLoginANonExistingUser(){
       LoginRequest request = new LoginRequest();
       request.setUsername(USERNAME);
       request.setPassword(PASSWORD);
@@ -111,9 +106,8 @@ public class UserManagerImplLoginTest extends UnitilsJUnit4 {
       User user = new User();
       user.setEmail(USERNAME);
       user.setPassword(PASSWORD);
-      expect(mockUserDao.findByUsername(USERNAME)).andThrow(new ObjectRetrievalFailureException(User.class,USERNAME));
+      given(mockUserDao.findByUsername(USERNAME)).willThrow(new ObjectRetrievalFailureException(User.class,USERNAME));
       
-      EasyMockUnitils.replay();
       try {
          userManager.login(request);
          fail("Login should fai for inactive users");

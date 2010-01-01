@@ -1,14 +1,14 @@
 package com.express.view.wall
 {
-import com.express.controller.IterationLoadCommand;
-import com.express.view.*;
 import com.express.ApplicationFacade;
+import com.express.controller.IterationLoadCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.controller.event.StoryClickEvent;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.WallProxy;
 import com.express.model.domain.BacklogItem;
+import com.express.model.domain.Issue;
 import com.express.model.domain.User;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.components.AssignmentPopup;
@@ -16,14 +16,12 @@ import com.express.view.renderer.CardView;
 import com.express.view.renderer.StoryView;
 
 import flash.events.Event;
-
 import flash.events.MouseEvent;
 
 import mx.collections.ArrayCollection;
 import mx.containers.ViewStack;
 import mx.events.DragEvent;
 import mx.events.FlexEvent;
-
 import mx.managers.PopUpManager;
 
 import org.puremvc.as3.interfaces.INotification;
@@ -37,7 +35,6 @@ public class WallMediator extends Mediator
    private var _wallProxy : WallProxy;
    private var _projectProxy : ProjectProxy;
    private var _secureContext : SecureContextProxy;
-   private var _taskMediator : BacklogItemMediator;
    private var _visible : Boolean = true;
    private var _assignmentPopup : AssignmentPopup;
 
@@ -129,7 +126,7 @@ public class WallMediator extends Mediator
       PopUpManager.removePopUp(_assignmentPopup);
    }
 
-   private function handleStorySelected(event : Event) : void {
+//   private function handleStorySelected(event : Event) : void {
       //      var story : BacklogItem = event.currentTarget.selectedItem as BacklogItem;
       //      var tiles : Array = view.tiles;
       //      for each(var cardView : CardView in tiles) {
@@ -140,7 +137,7 @@ public class WallMediator extends Mediator
       //            cardView.setStyle("backgroundColor", "#FFFFFF");
       //         }
       //      }
-   }
+//   }
 
    public function handleAddTask(event : StoryClickEvent) : void {
       var story : BacklogItem = StoryView(event.target).story;
@@ -157,15 +154,6 @@ public class WallMediator extends Mediator
    public function handleEditStory(event : StoryClickEvent) : void {
       var item : BacklogItem = StoryView(event.target).story;
       sendNotification(BacklogItemMediator.EDIT, item);
-   }
-
-   private function refreshLists() : void {
-      view.lstStories.invalidateList();
-      view.lstStories.validateNow();
-      view.lstOpenItems.dataProvider.refresh();
-      view.lstProgressItems.dataProvider.refresh();
-      view.lstTestItems.dataProvider.refresh();
-      view.lstDoneItems.dataProvider.refresh();
    }
 
    public function droppedInOpen(event : DragEvent) : void {
@@ -217,7 +205,9 @@ public class WallMediator extends Mediator
       return [IterationLoadCommand.SUCCESS,
               ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
               ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM,
-              ProjectLoadCommand.SUCCESS];
+              ProjectLoadCommand.SUCCESS,
+              CardView.NOTE_IMPEDED,
+              CardView.NOTE_TAKE_TASK];
    }
 
    override public function handleNotification(notification:INotification):void {
@@ -235,6 +225,19 @@ public class WallMediator extends Mediator
             break;
          case ProjectLoadCommand.SUCCESS :
             loadIterationBacklog();
+            break;
+         case CardView.NOTE_IMPEDED :
+            var impeded : BacklogItem = BacklogItem(notification.getBody());
+            var impediment : Issue = new Issue();
+            impediment.startDate = new Date();
+            impeded.impediment = impediment;
+            sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, impeded);
+            break;
+         case CardView.NOTE_TAKE_TASK :
+            var taken : BacklogItem = BacklogItem(notification.getBody());
+            taken.assignedTo = _secureContext.currentUser;
+            sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, taken);
+            break;
       }
 
    }

@@ -10,6 +10,7 @@
       <class>com.express.domain.ProjectWorker</class>
       <class>com.express.domain.Permissions</class>
       <class>com.express.domain.Theme</class>
+      <class>com.express.domain.Issue</class>
 
       
       <properties>

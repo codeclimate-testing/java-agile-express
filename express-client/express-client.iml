@@ -7,12 +7,12 @@
         <option name="OUTPUT_TYPE" value="Application" />
         <option name="USE_DEFAULT_SDK_CONFIG_FILE" value="false" />
         <option name="USE_CUSTOM_CONFIG_FILE" value="true" />
-        <option name="CUSTOM_CONFIG_FILE" value="$MODULE_DIR$/target/express-client-0.7.2-config-report.xml" />
+        <option name="CUSTOM_CONFIG_FILE" value="$MODULE_DIR$/target/express-client-0.7.3-SNAPSHOT-config-report.xml" />
         <option name="USE_CUSTOM_CONFIG_FILE_FOR_TESTS" value="false" />
         <option name="CUSTOM_CONFIG_FILE_FOR_TESTS" value="" />
         <option name="APPLICATION_ENTRY_POINT" value="" />
         <option name="MAIN_CLASS" value="Express" />
-        <option name="OUTPUT_FILE_NAME" value="express-client-0.7.2.swf" />
+        <option name="OUTPUT_FILE_NAME" value="express-client-0.7.3-SNAPSHOT.swf" />
         <option name="USE_FACET_COMPILE_OUTPUT_PATH" value="true" />
         <option name="FACET_COMPILE_OUTPUT_PATH" value="$MODULE_DIR$/target" />
         <option name="INCLUDE_RESOURCE_FILES_IN_SWC" value="false" />
@@ -37,7 +37,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="jdk" jdkName="3.3" jdkType="Flex SDK Type" />
+    <orderEntry type="jdk" jdkName="3.3 (player 10)" jdkType="Flex SDK Type" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Maven: com.adobe.flex.framework:applicationupdater:swc:3.3.0.4852" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.adobe.flex.framework:applicationupdater_ui:swc:3.3.0.4852" level="project" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="com.express.view.components.*"
          height="100" width="100" paddingLeft="10" horizontalAlign="left"
          horizontalScrollPolicy="off" verticalScrollPolicy="off" dataChange="init(event)"
          creationComplete="init(event)" doubleClickEnabled="true" backgroundAlpha="1.0"
@@ -9,22 +9,54 @@
    </mx:filters>
    <mx:Script>
       <![CDATA[
+      import com.express.ApplicationFacade;
       import com.express.controller.event.StoryClickEvent;
       import com.express.model.domain.BacklogItem;
 
-      [Bindable]
-      public var story: BacklogItem;
+      import mx.events.ListEvent;
 
-      private function init(event : Event) : void {
+      public static const NOTE_IMPEDED :String = "Note.Impeded";
+      public static const NOTE_TAKE_TASK : String = "Note.TakTask";
+      private var _facade:ApplicationFacade;
+
+      [Bindable]
+      public var story:BacklogItem;
+
+      private var _quickMenu : Array = [];
+
+      private function init(event:Event):void {
          if (data) {
             story = data as BacklogItem;
+         }
+         if (story.impediment) {
+            this.styleName = "impeded";
+            _quickMenu[0] = "unimpeded";
+         }
+         else {
+            _quickMenu[0] = "impeded";
+         }
+         if(actionPopUp) {
+            actionPopUp.addEventListener(ListEvent.ITEM_CLICK, handleQuickMenuSelection);
+         }
+         _facade = ApplicationFacade.getInstance();
+      }
+
+      private function handleQuickMenuSelection(event:ListEvent):void {
+         switch (event.rowIndex) {
+            case 0 :
+               _facade.sendNotification(NOTE_IMPEDED, story);
+               break;
+            case 1 :
+               _facade.sendNotification(NOTE_TAKE_TASK, story);
+               break;
          }
       }
 
       ]]>
    </mx:Script>
    <mx:HBox width="100%" paddingTop="5">
-      <mx:Label text="{story.reference}" styleName="cardHeading" width="100%" paddingTop="3"/>
+      <mx:Label text="{story.reference}" styleName="cardHeading" width="100%"/>
+      <comp:PopUpLabel id="actionPopUp" dataProvider="['Impeded','Take Task']" paddingRight="3"/>
    </mx:HBox>
    <mx:Text id="description" styleName="cardText" width="100%" paddingTop="3" height="45"
             text="{story.summary}"

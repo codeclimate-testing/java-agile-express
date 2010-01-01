@@ -271,17 +271,6 @@ public class ExpressPopUpManager {
       showPopup(_projectForm);
    }
 
-   public function showConfirm(title : String, message : String, callback:Function = null) : void {
-      _application.confirmBox.title = title;
-      _application.confirmBox.message.text = message;
-      _application.confirmBox.x = (_application.width / 2) - 225;
-      _application.confirmBox.y = 80;
-      _application.confirmBox.visible = true;
-      if (callback != null) {
-         _application.confirmBox.btnAccept.addEventListener(CloseEvent.CLOSE, callback);
-      }
-   }
-
    private function showPopup(child : UIComponent) : void {
       if(_popupVisible) {
          _popup.removeAllChildren();

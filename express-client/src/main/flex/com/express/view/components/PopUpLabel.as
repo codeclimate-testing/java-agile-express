@@ -15,6 +15,7 @@ import mx.controls.List;
 import mx.core.Application;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
+import mx.managers.PopUpManager;
 
 public class PopUpLabel extends HBox{
 
@@ -25,6 +26,10 @@ public class PopUpLabel extends HBox{
    [Bindable]
    [Embed(source="/images/icons/down.png")]
    public var popUpIcon : Class;
+
+   [Bindable]
+   [Embed(source="/images/icons/down-over.png")]
+   public var popUpIconOver : Class;
 
    [Bindable]
    public var labelStyleName : String;
@@ -46,79 +51,81 @@ public class PopUpLabel extends HBox{
    private var _leftImg : Image;
 
    public function PopUpLabel() {
-      _leftImg = new Image();
-      this.addChild(_leftImg);
-      _label = new Label();
-      this.addChild(_label);
-      _img = new Image();
-      this.addChild(_img);
-      _img.addEventListener(MouseEvent.CLICK, popup);
       this.addEventListener(FlexEvent.CREATION_COMPLETE, handleCreationComplete);
    }
 
    private function handleCreationComplete(event : Event) : void {
-      _label.text = _labelText;
-      _label.styleName = labelStyleName;
       if(leftIcon) {
+         _leftImg = new Image();
          _leftImg.source = leftIcon;
+         this.addChild(_leftImg);
       }
+      if(_labelText) {
+         _label = new Label();
+         _label.text = _labelText;
+         _label.styleName = labelStyleName;
+         this.addChild(_label);
+      }
+      _img = new Image();
       _img.source = popUpIcon;
+      _img.addEventListener(MouseEvent.MOUSE_OVER, handleIconOver);
+      _img.addEventListener(MouseEvent.MOUSE_OUT, handleIconOff);
+      this.addChild(_img);
+      _img.addEventListener(MouseEvent.CLICK, popup);
       _img.buttonMode = true;
       _img.useHandCursor = true;
-
-      _popup = new VBox();
-      createPopUpList();
-      _popup.addChild(_list);
-      _popup.verticalScrollPolicy = "off";
-      _popup.horizontalScrollPolicy = "off";
-      _popup.height = (_dataProvider.length + 1) * _rowHeight;
-      _popup.includeInLayout = false;
-      _popup.visible = false;
-      Application.application.addChild(_popup);
-
    }
 
-   private function createPopUpList() : void {
+   private function createPopUp() : void {
+      _popup = new VBox();
+      _popup.verticalScrollPolicy = "off";
+      _popup.horizontalScrollPolicy = "off";
+      _popup.height = (_dataProvider.length + 1) * _rowHeight + 11;
       _list = new List();
       _list.dataProvider = _dataProvider;
       if(labelFunction != null) {
          _list.labelFunction = labelFunction;
       }
-      _list.setStyle("textAlign", "left");
+      _list.styleName = "popupList";
       _list.addEventListener(ListEvent.ITEM_CLICK, handleEventListItemClick);
-      _list.setStyle("fontSize", 14);
-      _list.setStyle("fontWeight", "normal");
       _list.variableRowHeight = true;
       _list.height = (_dataProvider.length + 1) * _rowHeight;
       selectedIndex = -1;
+      _popup.addChild(_list);
+   }
+
+   private function handleIconOver(event : Event) : void {
+      _img.source = popUpIconOver;
+   }
+
+   private function handleIconOff(event : Event) : void {
+      _img.source = popUpIcon;
    }
 
    private function handleEventListItemClick(event : ListEvent) : void {
       selectedIndex = event.rowIndex;
       this.dispatchEvent(event);
-      _popup.visible = false;
    }
 
    private function popup(event : MouseEvent) : void {
-      if (!_popup.visible) {
-         var newX :int = event.stageX;
-         if(newX + _popup.width > Application.application.width) {
-            newX = newX - _popup.width;
-         }
-         _popup.x = newX;
-         _popup.y = event.stageY;
-         _popup.visible = true;
-         _list.selectedIndex = -1;
-         event.stopImmediatePropagation();
-         Application.application.stage.addEventListener(MouseEvent.CLICK, handleMouseClick);
+      if(!_popup) {
+         createPopUp();
       }
+      PopUpManager.addPopUp(_popup,Application.application as Express);
+      var newX :int = event.stageX;
+      if(newX + _popup.width > Application.application.width) {
+         newX = newX - _popup.width;
+      }
+      _popup.x = newX;
+      _popup.y = event.stageY;
+      _list.selectedIndex = -1;
+      event.stopImmediatePropagation();
+      Application.application.stage.addEventListener(MouseEvent.CLICK, handleMouseClick);
    }
 
    private function handleMouseClick(event : MouseEvent) : void {
-      if (_popup.visible) {
-         _popup.visible = false;
-         Application.application.stage.removeEventListener(MouseEvent.CLICK, handleMouseClick);
-      }
+      PopUpManager.removePopUp(_popup);
+      Application.application.stage.removeEventListener(MouseEvent.CLICK, handleMouseClick);
    }
 
    public function set dataProvider(value : Object) : void {

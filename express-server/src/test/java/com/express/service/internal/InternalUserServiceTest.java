@@ -2,9 +2,9 @@ package com.express.service.internal;
 
 import org.junit.Test;
 import org.junit.Before;
-import static org.easymock.EasyMock.expect;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.unitils.easymock.EasyMockUnitils;
-import org.unitils.easymock.annotation.Mock;
 import org.unitils.UnitilsJUnit4;
 import com.express.domain.User;
 import com.express.service.internal.UserService;
@@ -12,6 +12,8 @@ import com.express.service.internal.InternalUserService;
 import com.express.dao.UserDao;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.Ehcache;
+
+import static org.mockito.BDDMockito.given;
 
 /**
  * @author Adam Boas
@@ -28,6 +30,7 @@ public class InternalUserServiceTest extends UnitilsJUnit4 {
 
    @Before
    public void setUp() {
+      MockitoAnnotations.initMocks(this);
       userService = new InternalUserService(userDao, cache);
    }
 
@@ -36,8 +39,7 @@ public class InternalUserServiceTest extends UnitilsJUnit4 {
       String uname = "AbCde";
       User user = new User();
       user.setEmail(uname);
-      expect(cache.get(uname.toLowerCase())).andReturn(new Element(uname, user));
-      EasyMockUnitils.replay();
+      given(cache.get(uname.toLowerCase())).willReturn(new Element(uname, user));
       userService.loadUserByUsername(uname);
    }
 }

@@ -13,7 +13,6 @@
                 xmlns:wall="com.express.view.wall.*"
                 xmlns:profile="com.express.view.profile.*"
                 xmlns:register="com.express.view.register.*"
-                xmlns:defect="com.express.view.defect.*"
                 verticalScrollPolicy="off" verticalAlign="top"
                 layout="vertical" horizontalAlign="left" height="100%" width="100%"
                 creationComplete="facade.startup(this)">
@@ -50,7 +49,7 @@
       <mx:HBox id="topBox" styleName="topBox" width="100%" height="100%" visible="false">
          <mx:Image source="@Embed('/images/icons/user.png')"/>
          <mx:Label id="lblUser" styleName="welcome"/>
-         <mx:LinkButton id="btnLogout" styleName="form" label="logout"/>
+         <mx:LinkButton id="btnLogout" styleName="logout" overSkin="{null}" label="logout"/>
       </mx:HBox>
    </mx:HBox>
 
@@ -59,15 +58,9 @@
       <login:LoginView id="loginView" width="100%" label=""/>
       <backlog:BacklogView id="backlogView" label="Backlog" width="100%" height="100%"/>
       <wall:WallView id="wallView" label="Wall" width="100%" height="100%"/>
-      <defect:DefectView id="defectView" label="Defects" width="740" height="100%"/>
       <profile:ProfileView id="profileView" width="100%" label="Profile"/>
       <projectAccess:ProjectAccessForm id="projectAccessForm" height="100%"/>
       <register:RegisterView id="registerView"/>
    </mx:ViewStack>
-
-   <adobe:SizeableTitleWindow id="mainPopup" showCloseButton="true" styleName="mainPopup" verticalScrollPolicy="off"
-                              visible="false" showEffect="{irisOut}" hideEffect="{irisIn}" isPopUp="true"
-                              close="{mainPopup.visible = false}" includeInLayout="false"/>
-   <comp:ConfirmBox id="confirmBox" width="350" height="150" visible="false" includeInLayout="false" styleName="confirm"/>
 
 </mx:Application>

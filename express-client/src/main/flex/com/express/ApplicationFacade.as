@@ -9,10 +9,6 @@ import com.express.controller.BacklogItemRemoveCommand;
 import com.express.controller.BacklogItemUpdateCommand;
 import com.express.controller.BacklogLoadCommand;
 import com.express.controller.ChangePasswordCommand;
-import com.express.controller.DefectCreateCommand;
-import com.express.controller.DefectLoadCommand;
-import com.express.controller.DefectRemoveCommand;
-import com.express.controller.DefectUpdateCommand;
 import com.express.controller.IterationCreateCommand;
 import com.express.controller.IterationLoadCommand;
 import com.express.controller.IterationUpdateCommand;
@@ -59,11 +55,6 @@ public class ApplicationFacade extends Facade
    public static const NOTE_EDIT_BACKLOG_ITEM : String = "Note.EditBacklogItem";
    public static const NOTE_LOAD_BACKLOG : String = "Note.LoadBacklog";
    public static const NOTE_LOAD_BACKLOG_COMPLETE : String = "Note.LoadBacklog.Complete";
-
-   public static const NOTE_LOAD_DEFECT : String = "Note.LoadDefect";
-   public static const NOTE_CREATE_DEFECT : String = "Note.CreateDefect";
-   public static const NOTE_UPDATE_DEFECT : String = "Note.UpdateDefect";
-   public static const NOTE_REMOVE_DEFECT : String = "Note.RemoveDefect";
 
    public static const NOTE_LOGIN : String = "Note.Login";
    public static const NOTE_REGISTER : String = "Note.Register";
@@ -125,11 +116,6 @@ public class ApplicationFacade extends Facade
       registerCommand(NOTE_REMOVE_BACKLOG_ITEM, BacklogItemRemoveCommand);
       registerCommand(NOTE_LOAD_BACKLOG, BacklogLoadCommand);
       registerCommand(NOTE_ASSIGN_BACKLOG_ITEM, BacklogItemAssignCommand);
-
-      registerCommand(NOTE_LOAD_DEFECT, DefectLoadCommand);
-      registerCommand(NOTE_CREATE_DEFECT, DefectCreateCommand);
-      registerCommand(NOTE_UPDATE_DEFECT, DefectUpdateCommand);
-      registerCommand(NOTE_REMOVE_DEFECT, DefectRemoveCommand);
 
       registerCommand(NOTE_UPDATE_PROJECT_WORKERS, ProjectWorkersUpdateCommand);
       registerCommand(NOTE_PROJECT_ACCESS_MANAGE, AccessRequestsLoadCommand);

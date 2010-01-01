@@ -62,6 +62,10 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    @Column(name = "effort")
    private Integer effort;
 
+   @ManyToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "impediment_id", referencedColumnName = "issue_id")
+   private Issue impediment;
+
    @ManyToOne
    @JoinColumn(name = "user_id")
    private User assignedTo;
@@ -210,6 +214,14 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
 
    public void setSummary(String summary) {
       this.summary = summary;
+   }
+
+   public Issue getImpediment() {
+      return impediment;
+   }
+
+   public void setImpediment(Issue impediment) {
+      this.impediment = impediment;
    }
 
    public String getDetailedDescription() {

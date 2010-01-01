@@ -8,7 +8,6 @@ import com.express.model.domain.ProjectWorker;
 import flash.events.MouseEvent;
 
 import mx.controls.Alert;
-import mx.core.Application;
 import mx.events.CloseEvent;
 
 import org.puremvc.as3.patterns.mediator.Mediator;
@@ -53,15 +52,6 @@ public class ProjectAdminMediator extends Mediator{
       }
    }
 
-   public function showConfirm(title : String, message : String) : void {
-      var _application : Express = Application.application as Express;
-      _application.confirmBox.title = title;
-      _application.confirmBox.message.text = message;
-      _application.confirmBox.x = (_application.width / 2) - 225;
-      _application.confirmBox.y = 80;
-      _application.confirmBox.visible = true;
-   }
-
    private function handleAcceptConfirm(event : CloseEvent) : void {
       if (event.detail == Alert.YES) {
          _proxy.selectedAccessRequest.status = AccessRequest.APPROVED;
@@ -73,12 +63,6 @@ public class ProjectAdminMediator extends Mediator{
       if (event.detail == Alert.YES) {
          _proxy.selectedAccessRequest.status = AccessRequest.REJECTED;
          sendNotification(ApplicationFacade.NOTE_PROJECT_ACCESS_RESPONSE, false);
-      }
-   }
-
-   private function handleRemoveConfirm(event : CloseEvent) : void {
-      if (event.detail == Alert.YES) {
-
       }
    }
 
