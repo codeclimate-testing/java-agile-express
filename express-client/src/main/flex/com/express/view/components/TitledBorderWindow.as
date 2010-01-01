@@ -1,20 +1,18 @@
 package com.express.view.components
 {
-    import flash.display.DisplayObject;
-    import flash.display.Graphics;
-    import flash.events.Event;
-    import flash.filters.DropShadowFilter;
-    import flash.geom.Rectangle;
-    import flash.text.TextField;
+import flash.display.DisplayObject;
+import flash.display.Graphics;
+import flash.events.Event;
+import flash.filters.DropShadowFilter;
+import flash.geom.Rectangle;
+import flash.text.TextField;
 
-    import mx.containers.TitleWindow;
-    import mx.core.EdgeMetrics;
-    import mx.core.UIComponent;
-    import mx.core.mx_internal;
-    import mx.styles.CSSStyleDeclaration;
-    import mx.styles.StyleManager;
+import mx.containers.TitleWindow;
+import mx.core.EdgeMetrics;
+import mx.core.UIComponent;
+import mx.core.mx_internal;
 
-    use namespace mx_internal;
+use namespace mx_internal;
 
     /**
      *  The border alpha value (0-1).
@@ -74,26 +72,7 @@ package com.express.view.components
      * @author Chris Callendar
      * @date April 2nd, 2009
      */
-    public class TitledBorderWindow extends TitleWindow
-    {
-        // setup the default styles
-        private static var classConstructed:Boolean = classConstruct();
-        private static function classConstruct():Boolean {
-            var style:CSSStyleDeclaration = StyleManager.getStyleDeclaration("TitledBorderWindow");
-            if (!style) {
-                style = new CSSStyleDeclaration();
-            }
-            style.defaultFactory = function():void {
-                this.backgroundAlpha = 1;
-                this.backgroundColor = NaN;    // no default
-                   this.borderColor = 0x0;
-                this.borderThickness = 1;
-                this.borderAlpha = 1;
-                this.cornerRadius = 0;
-            };
-            StyleManager.setStyleDeclaration("TitledBorderWindow", style, true);
-            return true;
-        };
+    public class TitledBorderWindow extends TitleWindow {
 
         private var _borderDropShadow:Boolean;
         private var extraTitleBarButtons:Array;
@@ -263,7 +242,7 @@ package com.express.view.components
 
         override protected function updateDisplayList(w:Number, h:Number):void {
             super.updateDisplayList(w, h);
-            drawBorderAndBackground(w, h);
+            drawBorderAndBackground(w);
         }
 
         override protected function layoutChrome(w:Number, h:Number):void {
@@ -281,7 +260,7 @@ package com.express.view.components
                 var statusHeight:Number = statusTextField.height;
                 for each (var btn:UIComponent in extraTitleBarButtons) {
                     btnWidth += btn.width + 2;
-                    var by:Number = statusTop + ((statusHeight - btn.height) / 2)
+                    var by:Number = statusTop + ((statusHeight - btn.height) / 2);
                     btn.move(statusRight - btnWidth, by);
                 }
                 btnWidth += 4;
@@ -292,7 +271,7 @@ package com.express.view.components
         /**
          * Draws the background first, then the border.
          */
-        protected function drawBorderAndBackground(w:Number, h:Number):void {
+        protected function drawBorderAndBackground(w:Number):void {
             if (border) {
                 // collect the styles for the background and border
                 var bgAlpha:Number = getNumberStyle("backgroundAlpha", 1);

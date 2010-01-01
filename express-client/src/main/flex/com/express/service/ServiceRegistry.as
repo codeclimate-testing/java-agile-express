@@ -4,23 +4,18 @@ import flash.utils.Dictionary;
 
 import mx.messaging.Channel;
 import mx.messaging.ChannelSet;
-import mx.rpc.http.mxml.HTTPService;
 import mx.rpc.remoting.mxml.RemoteObject;
 
 import org.puremvc.as3.patterns.proxy.Proxy;
 
-   /**
+/**
     * The ServiceRegistry allows the registration of RemoteObject and HTTPService objects. It provides
     * central management of credentials for remote calls.
     */
-public class ServiceRegistry extends Proxy
-{
+public class ServiceRegistry extends Proxy {
    public static const NAME : String = "ServiceRegistry";
 
    protected var _services:Dictionary;
-
-   private var _charset : String;
-
    private var _channelSet : ChannelSet;
 
    public function ServiceRegistry(channel : Channel) {
@@ -50,13 +45,11 @@ public class ServiceRegistry extends Proxy
       return _services[id] as RemoteObject;
    }
 
-   public function setCredentials(username:String, password:String, charset:String = null):void
-   {
-      _channelSet.login(username, password);
+   public function setCredentials(username:String, password:String, charset:String = null):void {
+      _channelSet.login(username, password, charset);
    }
 
-   public function logout():void
-   {
+   public function logout():void {
       _channelSet.logout();
    }
 }

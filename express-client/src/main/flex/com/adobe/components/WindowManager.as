@@ -75,7 +75,7 @@ public class WindowManager extends PopUpManager
    public static function resize(win:IFlexDisplayObject):void
    {
       var w:int = Application.application.width * .6;
-      var h:int = Application.application.height * .6
+      var h:int = Application.application.height * .6;
       if (w > win.width)
          win.width = w;
       if (h > win.height)

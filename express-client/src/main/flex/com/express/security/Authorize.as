@@ -20,7 +20,6 @@ public class Authorize extends EventDispatcher{
    public static const DISABLE : String = "disable";
    public static const VANISH : String = "vanish";
    public static const COLLAPSE : String = "collapse";
-   private static const BEHAVIOUR_ENUM : String = DISABLE + "," + VANISH + "," + COLLAPSE;
 
    /**
     * Roles which will be evaluated against the type rules and user's roles.

@@ -11,9 +11,6 @@ import com.express.view.form.FormUtility;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
-import flash.events.TimerEvent;
-import flash.utils.Timer;
-
 import mx.events.FlexEvent;
 
 import org.puremvc.as3.interfaces.INotification;

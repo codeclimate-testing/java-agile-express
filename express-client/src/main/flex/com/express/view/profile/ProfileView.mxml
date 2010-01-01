@@ -2,7 +2,6 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
          xmlns:form="com.express.view.form.*"
          xmlns:view="com.express.view.*"
-         xmlns:display="com.express.view.display.*"
          xmlns:comp="com.express.view.components.*"
          width="100%" height="100%" paddingLeft="20" paddingTop="20" >
    <mx:StringValidator id="firstNameValidator" required="false" minLength="3" source="{firstName}" property="text"/>

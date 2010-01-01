@@ -6,8 +6,6 @@ import com.express.view.form.FormMediator;
 
 import flash.events.MouseEvent;
 
-import mx.core.Application;
-
 import mx.events.CloseEvent;
 
 import org.puremvc.as3.interfaces.INotification;

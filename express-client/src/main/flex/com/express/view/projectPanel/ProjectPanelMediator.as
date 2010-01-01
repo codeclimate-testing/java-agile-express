@@ -82,7 +82,7 @@ public class ProjectPanelMediator extends Mediator{
 
    private function handleDownload(evt:Event):void {
       /* Create shortcut to the FileReference object. */
-      var fr:FileReference = evt.currentTarget as FileReference;
+//      var fr:FileReference = evt.currentTarget as FileReference;
    }
 
    private function handleIterationBacklogExport(event : Event) : void {

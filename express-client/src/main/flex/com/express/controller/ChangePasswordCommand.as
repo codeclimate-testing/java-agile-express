@@ -31,9 +31,7 @@ public class ChangePasswordCommand extends SimpleCommand implements IResponder{
 
    public function result(data:Object):void {
       var secureContext : SecureContextProxy = facade.retrieveProxy(SecureContextProxy.NAME) as SecureContextProxy;
-      var serviceRegistry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var user : User = data.result as User;
-      secureContext.currentUser = user;
+      secureContext.currentUser = data.result as User;
       sendNotification(SUCCESS);
    }
 

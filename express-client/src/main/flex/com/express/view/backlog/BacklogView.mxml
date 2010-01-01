@@ -3,7 +3,6 @@
                 xmlns:form="com.express.view.form.*" xmlns:view="com.express.view.*"
                 xmlns:backlogItem="com.express.view.backlogItem.*"
                 xmlns:component="com.express.view.components.*"
-                xmlns:display="com.express.view.display.*"
                 xmlns:iteration="com.express.view.iteration.*"
                 xmlns:projectPanel="com.express.view.projectPanel.*"
                 xmlns:security="com.express.security.*"
@@ -84,7 +83,6 @@
                         <mx:Script>
                         <![CDATA[
                            import com.express.controller.event.GridButtonEvent;
-                           import com.express.view.*;
                         ]]>
                         </mx:Script>
                         <mx:LinkButton icon="@Embed('/images/icons/add.png')" width="20"
@@ -102,7 +100,4 @@
       </mx:AdvancedDataGrid>
    </mx:VBox>
    <projectPanel:ProjectPanel id="projectPanel" width="25%" height="100%"/>
-   <mx:Script><![CDATA[
-      import com.express.view.*;
-      ]]></mx:Script>
 </mx:HDividedBox>

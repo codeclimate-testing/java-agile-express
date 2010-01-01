@@ -1,34 +1,31 @@
 package com.express.view.components
 {
-    import flash.display.DisplayObject;
-    import flash.display.Graphics;
-    import flash.events.Event;
-    import flash.events.TextEvent;
-    import flash.filters.DropShadowFilter;
-    import flash.geom.Rectangle;
-    import flash.text.TextLineMetrics;
+import flash.display.DisplayObject;
+import flash.display.Graphics;
+import flash.events.Event;
+import flash.events.TextEvent;
+import flash.filters.DropShadowFilter;
+import flash.geom.Rectangle;
+import flash.text.TextLineMetrics;
 
-    import mx.containers.BoxDirection;
-    import mx.containers.utilityClasses.BoxLayout;
-    import mx.containers.utilityClasses.CanvasLayout;
-    import mx.containers.utilityClasses.ConstraintColumn;
-    import mx.containers.utilityClasses.ConstraintRow;
-    import mx.containers.utilityClasses.IConstraintLayout;
-    import mx.containers.utilityClasses.Layout;
-    import mx.core.Container;
-    import mx.core.ContainerLayout;
-    import mx.core.EdgeMetrics;
-    import mx.core.IFlexModuleFactory;
-    import mx.core.IFontContextComponent;
-    import mx.core.IUITextField;
-    import mx.core.UIComponent;
-    import mx.core.UITextField;
-    import mx.core.UITextFormat;
-    import mx.styles.CSSStyleDeclaration;
-    import mx.styles.StyleManager;
+import mx.containers.BoxDirection;
+import mx.containers.utilityClasses.BoxLayout;
+import mx.containers.utilityClasses.CanvasLayout;
+import mx.containers.utilityClasses.ConstraintColumn;
+import mx.containers.utilityClasses.ConstraintRow;
+import mx.containers.utilityClasses.IConstraintLayout;
+import mx.containers.utilityClasses.Layout;
+import mx.core.Container;
+import mx.core.ContainerLayout;
+import mx.core.EdgeMetrics;
+import mx.core.IFlexModuleFactory;
+import mx.core.IFontContextComponent;
+import mx.core.IUITextField;
+import mx.core.UIComponent;
+import mx.core.UITextField;
+import mx.core.UITextFormat;
 
-
-    /**
+/**
      *  Alpha of the title bar, control bar and sides of the Panel.
      *  The default value is 1.
      */
@@ -116,33 +113,7 @@ package com.express.view.components
      * @author Chris Callendar
      * @date April 1st, 2009
      */
-    public class TitledBorderBox extends Container implements IConstraintLayout, IFontContextComponent
-    {
-        // setup the default styles
-        private static var classConstructed:Boolean = classConstruct();
-        private static function classConstruct():Boolean {
-            var style:CSSStyleDeclaration = StyleManager.getStyleDeclaration("TitledBorderBox");
-            if (!style) {
-                style = new CSSStyleDeclaration();
-            }
-            style.defaultFactory = function():void {
-                this.backgroundAlpha = 1;
-                this.backgroundColor = NaN;    // no default
-                this.borderColor = 0x0;
-                this.borderThickness = 1;
-                this.borderAlpha = 1;
-                this.horizontalGap = 8;
-                this.paddingLeft = 5;
-                this.paddingTop = 20;
-                this.paddingRight = 5;
-                this.paddingBottom = 5;
-                this.titleStyleName = "windowStyles";
-                this.verticalGap = 6;
-            };
-            StyleManager.setStyleDeclaration("TitledBorderBox", style, true);
-            return true;
-        };
-
+    public class TitledBorderBox extends Container implements IConstraintLayout, IFontContextComponent {
         private var layoutObject:Layout;
         private var _title:String;
         private var titleTextField:IUITextField;
@@ -213,8 +184,7 @@ package com.express.view.components
                 } else {
                     rawChildren.addChildAt(DisplayObject(titleTextField), childIndex);
                 }
-                var titleStyleName:String = getStyle("titleStyleName");
-                titleTextField.styleName = titleStyleName;
+               titleTextField.styleName = getStyle("titleStyleName");
                 titleTextField.text = title;
                 titleTextField.enabled = enabled;
                 titleTextField.x = 15;
@@ -259,10 +229,9 @@ package com.express.view.components
         override public function styleChanged(styleProp:String):void {
             var allStyles:Boolean = !styleProp || styleProp == "styleName";
             super.styleChanged(styleProp);
-            if (allStyles || styleProp == "titleStyleName") {
+            if (allStyles || styleProp == getStyle(getStyle("titleStyleName"))) {
                 if (titleTextField) {
-                    var titleStyleName:String = getStyle("titleStyleName");
-                    titleTextField.styleName = titleStyleName;
+                   titleTextField.styleName = getStyle("titleStyleName");
                     titleChanged = true;
                 }
             }
@@ -294,7 +263,7 @@ package com.express.view.components
         /**
          * Size the title textfield.
          */
-        protected function sizeTitleTextField(w:Number, h:Number):void {
+        protected function sizeTitleTextField():void {
             if (titleChanged) {
                 var padding:int = 38;
                 var measuredW:Number = titleTextField.measuredWidth;
@@ -315,14 +284,13 @@ package com.express.view.components
         override protected function updateDisplayList(w:Number, h:Number):void {
             super.updateDisplayList(w, h);
             layoutObject.updateDisplayList(unscaledWidth, unscaledHeight);
-            sizeTitleTextField(w, h);
+            sizeTitleTextField();
             drawBorder(w, h);
         }
 
         protected function drawBorder(w:Number, h:Number):void {
             if (border) {
                 var tfx:Number = titleTextField.x;
-                var tfy:Number = titleTextField.y;
                 var tfw:Number = titleTextField.width;
                 var tfh:Number = titleTextField.height;
                 var hasTitle:Boolean = (titleTextField.text.length > 0);

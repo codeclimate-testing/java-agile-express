@@ -8,7 +8,6 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 
 import mx.controls.dataGridClasses.DataGridColumn;
-
 import mx.events.CloseEvent;
 
 import org.puremvc.as3.patterns.mediator.Mediator;
@@ -31,7 +30,6 @@ public class ThemesMediator extends Mediator{
 
    private function handleAddTheme(event : Event) : void {
       _proxy.themes.addItem(new Theme());
-      var focusedCell:Object = new Object();;
       view.grdThemes.editedItemPosition = {rowIndex: _proxy.themes.length -1, columnIndex: 1};
    }
 

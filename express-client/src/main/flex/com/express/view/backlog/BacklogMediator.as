@@ -35,7 +35,6 @@ public class BacklogMediator extends Mediator
 
    private var _proxy : ProjectProxy;
    private var _secureContext : SecureContextProxy;
-   private var _viewOnClick : Boolean;
 
    public function BacklogMediator(viewComp : BacklogView)
    {
