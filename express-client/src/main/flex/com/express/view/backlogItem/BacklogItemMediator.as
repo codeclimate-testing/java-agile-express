@@ -69,7 +69,6 @@ public class BacklogItemMediator extends FormMediator {
       var criteria : AcceptanceCriteria = new AcceptanceCriteria();
       criteria.backlogItem = _proxy.selectedBacklogItem;
       _proxy.selectedBacklogItem.acceptanceCriteria.addItem(criteria);
-      var focusedCell:Object = new Object();;
       view.acceptanceCriteriaView.grdCriteria.editedItemPosition =
          {rowIndex: _proxy.selectedBacklogItem.acceptanceCriteria.length -1, columnIndex: 0};
    }
@@ -210,33 +209,33 @@ public class BacklogItemMediator extends FormMediator {
    public override function handleNotification(notification:INotification):void {
       TitleWindow(view.parent).addEventListener(CloseEvent.CLOSE, handleWindowClose);
       _proxy.selectedBacklogItem = notification.getBody() as BacklogItem;
-      switch (notification.getName()) {
-         case CREATE :
-            if (_proxy.selectedBacklogItem.parent == null) {
-               _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CREATE;
-               TitleWindow(view.parent).title = "New Story";
-               setStoryView();
-            }
-            else {
-               _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CHILD_CREATE;
-               TitleWindow(view.parent).title = "Add Task for " + _proxy.selectedBacklogItem.parent.reference;
-               setTaskView();
-            }
-            break;
-         case EDIT :
-            if (_proxy.selectedBacklogItem.parent == null) {
-               _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_EDIT;
-               TitleWindow(view.parent).title = "Editing Story " + _proxy.selectedBacklogItem.reference;
-               setStoryView();
-            }
-            else {
-               _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CHILD_EDIT;
-               TitleWindow(view.parent).title = "Editing Task " + _proxy.selectedBacklogItem.reference;
-               setTaskView();
-            }
-            break;
-      }
-      bindForm();
+         switch (notification.getName()) {
+            case CREATE :
+               if (_proxy.selectedBacklogItem.parent == null) {
+                  _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CREATE;
+                  TitleWindow(view.parent).title = "New Story";
+                  setStoryView();
+               }
+               else {
+                  _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CHILD_CREATE;
+                  TitleWindow(view.parent).title = "Add Task for " + _proxy.selectedBacklogItem.parent.reference;
+                  setTaskView();
+               }
+               break;
+            case EDIT :
+               if (_proxy.selectedBacklogItem.parent == null) {
+                  _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_EDIT;
+                  TitleWindow(view.parent).title = "Editing Story " + _proxy.selectedBacklogItem.reference;
+                  setStoryView();
+               }
+               else {
+                  _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CHILD_EDIT;
+                  TitleWindow(view.parent).title = "Editing Task " + _proxy.selectedBacklogItem.reference;
+                  setTaskView();
+               }
+               break;
+         }
+         bindForm();
    }
 
    private function setTaskView() : void {

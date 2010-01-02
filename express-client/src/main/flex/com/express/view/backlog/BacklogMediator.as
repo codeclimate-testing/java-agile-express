@@ -10,6 +10,7 @@ import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Iteration;
+import com.express.model.domain.User;
 import com.express.model.request.BacklogItemAssignRequest;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.iteration.IterationMediator;
@@ -29,15 +30,13 @@ import mx.managers.DragManager;
 import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.mediator.Mediator;
 
-public class BacklogMediator extends Mediator
-{
-   public static const NAME : String = "BacklogViewMediator";
+public class BacklogMediator extends Mediator {
+   public static const NAME:String = "BacklogViewMediator";
 
-   private var _proxy : ProjectProxy;
-   private var _secureContext : SecureContextProxy;
+   private var _proxy:ProjectProxy;
+   private var _secureContext:SecureContextProxy;
 
-   public function BacklogMediator(viewComp : BacklogView)
-   {
+   public function BacklogMediator(viewComp:BacklogView) {
       super(NAME, viewComp);
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       _secureContext = facade.retrieveProxy(SecureContextProxy.NAME) as SecureContextProxy;
@@ -49,6 +48,7 @@ public class BacklogMediator extends Mediator
       viewComp.grdIterationBacklog.dataTipFunction = buildToolTip;
       viewComp.grdProductBacklog.dataTipFunction = buildToolTip;
       viewComp.assignedToColumn.labelFunction = formatAssignedTo;
+      viewComp.assignedToColumn.sortCompareFunction = sortAssignedTo;
       viewComp.auth.userRoles = _secureContext.availableRoles;
 
       viewComp.cboIterations.addEventListener(Event.CHANGE, handleIterationSelected);
@@ -71,9 +71,9 @@ public class BacklogMediator extends Mediator
     * @param event
     * @return
     */
-   private function handleDragEnter(event : DragEvent) : void {
-      var items : Array = event.dragSource.dataForFormat('treeDataGridItems') as Array;
-      for each(var item : BacklogItem in items) {
+   private function handleDragEnter(event:DragEvent):void {
+      var items:Array = event.dragSource.dataForFormat('treeDataGridItems') as Array;
+      for each(var item:BacklogItem in items) {
          if (item.parent) {
             event.preventDefault();
             DragManager.showFeedback(DragManager.NONE);
@@ -82,27 +82,25 @@ public class BacklogMediator extends Mediator
       }
    }
 
-   private function dropInIteration(event : DragEvent) : void {
+   private function dropInIteration(event:DragEvent):void {
 
-      var assignmentRequest : BacklogItemAssignRequest =
-            createAssignmentrequest(event.dragSource.dataForFormat('treeDataGridItems') as Array);
+      var assignmentRequest:BacklogItemAssignRequest = createAssignmentrequest(event.dragSource.dataForFormat('treeDataGridItems') as Array);
       assignmentRequest.iterationToId = _proxy.selectedIteration.id;
       assignmentRequest.iterationFromId = 0;
       sendNotification(ApplicationFacade.NOTE_ASSIGN_BACKLOG_ITEM, assignmentRequest);
    }
 
-   private function dropInProductBacklog(event : DragEvent) : void {
-      var assignmentRequest : BacklogItemAssignRequest =
-            createAssignmentrequest(event.dragSource.dataForFormat('treeDataGridItems') as Array);
+   private function dropInProductBacklog(event:DragEvent):void {
+      var assignmentRequest:BacklogItemAssignRequest = createAssignmentrequest(event.dragSource.dataForFormat('treeDataGridItems') as Array);
       assignmentRequest.iterationToId = 0;
       assignmentRequest.iterationFromId = _proxy.selectedIteration.id;
       sendNotification(ApplicationFacade.NOTE_ASSIGN_BACKLOG_ITEM, assignmentRequest);
    }
 
-   private function createAssignmentrequest(items : Array) : BacklogItemAssignRequest {
-      var assignmentRequest : BacklogItemAssignRequest = new BacklogItemAssignRequest();
-      var length : int = items.length;
-      for (var index : int; index < length; index++) {
+   private function createAssignmentrequest(items:Array):BacklogItemAssignRequest {
+      var assignmentRequest:BacklogItemAssignRequest = new BacklogItemAssignRequest();
+      var length:int = items.length;
+      for (var index:int; index < length; index++) {
          assignmentRequest.itemIds.push(items[index].id);
       }
       return assignmentRequest;
@@ -121,13 +119,13 @@ public class BacklogMediator extends Mediator
             handleProjectLoaded();
             break;
          case IterationCreateCommand.SUCCESS :
-            var newIteration : Iteration = notification.getBody() as Iteration;
+            var newIteration:Iteration = notification.getBody() as Iteration;
             view.cboIterations.selectedItem = newIteration;
             view.btnCreateItem.enabled = true;
             break;
          case IterationUpdateCommand.SUCCESS :
          case IterationLoadCommand.SUCCESS :
-            var index : int = getSelectionIndex(_proxy.selectedProject.iterations, _proxy.selectedIteration);
+            var index:int = getSelectionIndex(_proxy.selectedProject.iterations, _proxy.selectedIteration);
             view.cboIterations.selectedIndex = index;
             _proxy.updateIterationList();
             _proxy.newIteration = null;
@@ -136,15 +134,14 @@ public class BacklogMediator extends Mediator
       }
    }
 
-   private function handleProjectLoaded() : void {
+   private function handleProjectLoaded():void {
       view.lnkCreateIteration.enabled = true;
       view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
 
       if (!_proxy.selectedIteration && ! _proxy.selectedProject.currentIteration) {
          view.cboIterations.selectedIndex = -1;
          view.btnCreateItem.enabled = false;
-      }
-      else if(_proxy.selectedIteration) {
+      } else if (_proxy.selectedIteration) {
          view.cboIterations.selectedIndex = getSelectionIndex(view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);
          view.btnCreateItem.enabled = true;
       }
@@ -153,8 +150,8 @@ public class BacklogMediator extends Mediator
       }
    }
 
-   private function getSelectionIndex(list : ArrayCollection, iteration :Iteration) : int {
-      for (var index : int = 0; index < list.length; index++) {
+   private function getSelectionIndex(list:ArrayCollection, iteration:Iteration):int {
+      for (var index:int = 0; index < list.length; index++) {
          if (list.getItemAt(index).id == iteration.id) {
             return index;
          }
@@ -162,42 +159,42 @@ public class BacklogMediator extends Mediator
       return -1;
    }
 
-   private function handleIterationSelected(event : Event) : void {
-      var iteration : Iteration = (event.target as ComboBox).selectedItem as Iteration;
+   private function handleIterationSelected(event:Event):void {
+      var iteration:Iteration = (event.target as ComboBox).selectedItem as Iteration;
       sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, iteration.id);
       view.btnCreateItem.enabled = true;
    }
 
-   public function handleCreateIteration(event : MouseEvent) : void {
+   public function handleCreateIteration(event:MouseEvent):void {
       _proxy.newIteration = new Iteration();
       _proxy.newIteration.project = _proxy.selectedProject;
-      _proxy.newIteration.title = "Iteration " +
-                                  (_proxy.selectedProject.iterations.length + 1);
+      _proxy.newIteration.title = "Iteration " + (_proxy.selectedProject.iterations.length + 1);
       sendNotification(IterationMediator.CREATE);
    }
 
-   private function handleGridButton(event : GridButtonEvent) : void {
+   private function handleGridButton(event:GridButtonEvent):void {
       switch (event.action) {
          case GridButtonEvent.ACTION_ADD_CHILD :
-            var task : BacklogItem = new BacklogItem();
-            var parent : BacklogItem = event.data as BacklogItem;
+            var task:BacklogItem = new BacklogItem();
+            var parent:BacklogItem = event.data as BacklogItem;
             task.parent = parent;
             sendNotification(BacklogItemMediator.CREATE, task);
             break;
          case GridButtonEvent.ACTION_REMOVE :
             _proxy.selectedBacklogItem = event.data as BacklogItem;
-            Alert.show("Are you sure you want to delete this item?", "Confirm Removal",
-                  Alert.YES | Alert.NO, null, removeConfirmed, null, Alert.YES);
+            Alert.show("Are you sure you want to delete this item?", "Confirm Removal", Alert.YES | Alert.NO, null, removeConfirmed, null, Alert.YES);
             break;
       }
    }
 
-   private function handleGridDoubleClick(event : MouseEvent) : void {
-      var item : BacklogItem = event.currentTarget.selectedItem as BacklogItem;
-      sendNotification(BacklogItemMediator.EDIT, item);
+   private function handleGridDoubleClick(event:MouseEvent):void {
+      var item:BacklogItem = event.currentTarget.selectedItem as BacklogItem;
+      if(item) {
+         sendNotification(BacklogItemMediator.EDIT, item);
+      }
    }
 
-   private function removeConfirmed(event : CloseEvent) : void {
+   private function removeConfirmed(event:CloseEvent):void {
       if (event.detail == Alert.YES) {
          if (_proxy.selectedBacklogItem.inProductBacklog()) {
             _proxy.productBacklogRequest = true;
@@ -206,30 +203,51 @@ public class BacklogMediator extends Mediator
       }
    }
 
-   private function handleCreateBacklogItem(event : MouseEvent) : void {
-      var story : BacklogItem = new BacklogItem();
+   private function handleCreateBacklogItem(event:MouseEvent):void {
+      var story:BacklogItem = new BacklogItem();
       story.iteration = _proxy.selectedIteration;
       _proxy.productBacklogRequest = false;
       sendNotification(BacklogItemMediator.CREATE, story);
    }
 
-   private function handleCreateProductBacklogItem(event : MouseEvent) : void {
-      var story : BacklogItem = new BacklogItem();
+   private function handleCreateProductBacklogItem(event:MouseEvent):void {
+      var story:BacklogItem = new BacklogItem();
       story.project = _proxy.selectedProject;
       _proxy.productBacklogRequest = true;
       sendNotification(BacklogItemMediator.CREATE, story);
    }
 
-   private function formatAssignedTo(row : Object, col : AdvancedDataGridColumn) : String {
-      var item : BacklogItem = row as BacklogItem;
-      if (item.assignedTo == null) {
+   private function formatAssignedTo(row:Object, col:AdvancedDataGridColumn):String {
+      var item:BacklogItem = row as BacklogItem;
+      if (!item.assignedTo) {
          return "Unassigned";
       }
       return item.assignedTo.fullName;
    }
 
-   private function buildToolTip(row : Object) : String {
-      var item : BacklogItem = row as BacklogItem;
+   private function sortAssignedTo(obj1:Object, obj2:Object):int {
+      if (obj1 == null && obj2 == null) {
+         return 0;
+      }
+      if (obj1 == null) {
+         return 1;
+      }
+      if (obj2 == null) {
+         return -1
+      }
+      var name1:String = User(obj1).fullName.toLocaleLowerCase();
+      var name2:String = User(obj2).fullName.toLocaleLowerCase();
+      if (name1 < name2) {
+         return -1
+      }
+      if (name2 < name1) {
+         return 1;
+      }
+      return 0;
+   }
+
+   private function buildToolTip(row:Object):String {
+      var item:BacklogItem = row as BacklogItem;
       return item ? item.summary : "";
    }
 

@@ -73,8 +73,7 @@
             <mx:AdvancedDataGridColumn headerText="Effort" dataField="effort" width="50" textAlign="center"
                                        showDataTips="true"/>
             <mx:AdvancedDataGridColumn headerText="Status" dataField="status" showDataTips="true" width="130"/>
-            <mx:AdvancedDataGridColumn id="assignedToColumn" headerText="Assigned To"
-                                       dataField="user" showDataTips="true"/>
+            <mx:AdvancedDataGridColumn id="assignedToColumn" headerText="Assigned To" showDataTips="true"/>
             <mx:AdvancedDataGridColumn headerText="Actions" width="65">
                <mx:itemRenderer>
                   <mx:Component>
@@ -85,12 +84,10 @@
                            import com.express.controller.event.GridButtonEvent;
                         ]]>
                         </mx:Script>
-                        <mx:LinkButton icon="@Embed('/images/icons/add.png')" width="20"
-                                       toolTip="add task"
+                        <mx:LinkButton icon="@Embed('/images/icons/add.png')" width="20" toolTip="add task"
                                        click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_ADD_CHILD));"
                                        visible="{data.parent == null}"/>
-                        <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20"
-                                       toolTip="remove item"
+                        <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20" toolTip="remove item"
                                        click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));"/>
                      </mx:HBox>
                   </mx:Component>
