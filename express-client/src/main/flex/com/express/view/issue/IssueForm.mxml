@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <mx:Form xmlns:mx="http://www.adobe.com/2006/mxml"
          defaultButton="{btnSave}" styleName="unpadded" width="100%" height="100%" verticalGap="8">
-   <mx:StringValidator id="titleValidator" required="true" property="text" source="{iterationTitle}"
+
+   <mx:StringValidator id="titleValidator" required="true" property="text" source="{issueTitle}"
           trigger="{btnSave}" triggerEvent="click"/>
    <mx:StringValidator id="startValidator" required="true" source="{startDate}" property="text"
           trigger="{btnSave}" triggerEvent="click"/>
@@ -9,7 +10,7 @@
           trigger="{btnSave}" triggerEvent="click"/>
 
    <mx:FormItem label="Title" required="true" width="95%">
-      <mx:TextInput id="iterationTitle" width="100%"/>
+      <mx:TextInput id="issueTitle" width="100%"/>
    </mx:FormItem>
    <mx:FormItem label="Description" width="95%">
       <mx:TextArea id="description" width="100%" height="200"/>

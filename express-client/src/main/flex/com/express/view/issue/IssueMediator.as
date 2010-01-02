@@ -1,5 +1,5 @@
-package com.express.view.iteration
-{
+package com.express.view.issue {
+
 import com.express.ApplicationFacade;
 import com.express.model.ProjectProxy;
 import com.express.view.form.FormMediator;
@@ -11,15 +11,15 @@ import mx.events.CloseEvent;
 
 import org.puremvc.as3.interfaces.INotification;
 
-public class IterationMediator extends FormMediator
+public class IssueMediator extends FormMediator
 {
-   public static const NAME:String = "CreateIterationMediator";
-   public static const CREATE:String = "CreateIterationMediator.CREATE";
-   public static const EDIT:String = "CreateIterationMediator.EDIT";
+   public static const NAME:String = "IssueMediator";
+   public static const CREATE:String = "IssueMediator.CREATE";
+   public static const EDIT:String = "IssueMediator.EDIT";
 
    private var _proxy : ProjectProxy;
 
-   public function IterationMediator(viewComp: IterationForm) {
+   public function IssueMediator(viewComp: IssueForm) {
       super(NAME, viewComp);
       _proxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
       viewComp.btnCancel.addEventListener(MouseEvent.CLICK, handleCancel);
@@ -39,12 +39,12 @@ public class IterationMediator extends FormMediator
 
    override public function handleNotification(notification : INotification):void {
       bindForm();
-      view.focusManager.setFocus(view.iterationTitle);
+      view.focusManager.setFocus(view.issueTitle);
    }
 
    override public function bindForm():void {
       view.visible = true;
-      view.iterationTitle.text = _proxy.newIteration.title;
+      view.issueTitle.text = _proxy.newIteration.title;
       view.description.text = _proxy.newIteration.description;
       view.startDate.selectedDate = _proxy.newIteration.startDate;
       view.endDate.selectedDate = _proxy.newIteration.endDate;
@@ -58,7 +58,7 @@ public class IterationMediator extends FormMediator
    }
 
    override public function bindModel():void {
-      _proxy.newIteration.title = view.iterationTitle.text;
+      _proxy.newIteration.title = view.issueTitle.text;
       _proxy.newIteration.description = view.description.text;
       _proxy.newIteration.startDate = view.startDate.selectedDate;
       _proxy.newIteration.endDate = view.endDate.selectedDate;
@@ -89,9 +89,9 @@ public class IterationMediator extends FormMediator
       view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
    }
 
-   protected function get view():IterationForm
+   protected function get view():IssueForm
    {
-      return viewComponent as IterationForm;
+      return viewComponent as IssueForm;
    }
 
 }

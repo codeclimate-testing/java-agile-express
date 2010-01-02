@@ -44,7 +44,7 @@ public class PopUpLabel extends HBox{
    public var leftIcon : Class;
 
    private var _popup : VBox;
-   private var _rowHeight : int = 18;
+   private var _rowHeight : int = 20;
    private var _img : Image;
    private var _label : Label;
    private var _list : List;
@@ -80,7 +80,6 @@ public class PopUpLabel extends HBox{
       _popup = new VBox();
       _popup.verticalScrollPolicy = "off";
       _popup.horizontalScrollPolicy = "off";
-      _popup.height = (_dataProvider.length + 1) * _rowHeight + 11;
       _list = new List();
       _list.dataProvider = _dataProvider;
       if(labelFunction != null) {
@@ -88,7 +87,6 @@ public class PopUpLabel extends HBox{
       }
       _list.styleName = "popupList";
       _list.addEventListener(ListEvent.ITEM_CLICK, handleEventListItemClick);
-      _list.variableRowHeight = true;
       _list.height = (_dataProvider.length + 1) * _rowHeight;
       selectedIndex = -1;
       _popup.addChild(_list);

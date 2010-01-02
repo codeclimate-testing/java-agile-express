@@ -18,12 +18,10 @@ import mx.core.Application;
 import mx.core.IFlexDisplayObject;
 import mx.managers.PopUpManager;
 
-public class WindowManager extends PopUpManager
-{
+public class WindowManager extends PopUpManager {
    public static var windowList:Array = [];
 
-   public static function add(window:IFlexDisplayObject, parent:DisplayObject, modal:Boolean = false, childList:String = null):void
-   {
+   public static function add(window:IFlexDisplayObject, parent:DisplayObject, modal:Boolean = false, childList:String = null):void {
       // track windows
       WindowManager.windowList[WindowManager.windowList.length] = window;
 
@@ -38,12 +36,9 @@ public class WindowManager extends PopUpManager
       // WindowManager.maximize(window);
    }
 
-   public static function remove(win:IFlexDisplayObject):void
-   {
-      for (var i:int = 0; i < WindowManager.windowList.length; i++)
-      {
-         if (WindowManager.windowList[i] == win)
-         {
+   public static function remove(win:IFlexDisplayObject):void {
+      for (var i:int = 0; i < WindowManager.windowList.length; i++) {
+         if (WindowManager.windowList[i] == win) {
             WindowManager.windowList.splice(i, 1);
             break;
          }
@@ -51,20 +46,9 @@ public class WindowManager extends PopUpManager
       PopUpManager.removePopUp(win);
    }
 
-   public static function position(win:IFlexDisplayObject):void
-   {
-      var x:int = WindowManager.windowList.length * 50;
-      var y:int = WindowManager.windowList.length * 50;
-
-      if (WindowManager.windowList.length > 1)
-      {
-         var c:IFlexDisplayObject = IFlexDisplayObject(WindowManager.windowList[WindowManager.windowList.length - 1]);
-         //x = c.x;
-         //y = c.y;
-      }
-
-      win.x = x;
-      win.y = y;
+   public static function position(win:IFlexDisplayObject):void {
+      win.x = WindowManager.windowList.length * 50;
+      win.y = WindowManager.windowList.length * 50;
 
       // cycle back around
       if ((win.x + win.width) > Application.application.width) win.x = 50;
@@ -72,8 +56,7 @@ public class WindowManager extends PopUpManager
    }
 
    // set a min. width/height
-   public static function resize(win:IFlexDisplayObject):void
-   {
+   public static function resize(win:IFlexDisplayObject):void {
       var w:int = Application.application.width * .6;
       var h:int = Application.application.height * .6;
       if (w > win.width)
@@ -82,8 +65,7 @@ public class WindowManager extends PopUpManager
          win.height = h;
    }
 
-   public static function maximize(win:IFlexDisplayObject):void
-   {
+   public static function maximize(win:IFlexDisplayObject):void {
       win.x = 10;
       win.y = 40;
       win.width = Application.application.width - 20;

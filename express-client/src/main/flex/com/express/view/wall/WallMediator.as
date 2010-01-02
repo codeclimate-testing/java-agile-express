@@ -87,7 +87,6 @@ public class WallMediator extends Mediator
       else {
          newHeight = _minHeight;
       }
-      //view.minHeight = newHeight;
       view.storyListHolder.height = newHeight - 50;
       view.swimLanes.height = newHeight - 40;
       view.height = newHeight;
@@ -207,6 +206,8 @@ public class WallMediator extends Mediator
               ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM,
               ProjectLoadCommand.SUCCESS,
               CardView.NOTE_IMPEDED,
+              CardView.NOTE_UNIMPEDED,
+              CardView.NOTE_UNASSIGN_TASK,
               CardView.NOTE_TAKE_TASK];
    }
 
@@ -233,13 +234,23 @@ public class WallMediator extends Mediator
             impeded.impediment = impediment;
             sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, impeded);
             break;
+         case CardView.NOTE_UNIMPEDED :
+            var unimpeded : BacklogItem = BacklogItem(notification.getBody());
+            unimpeded.impediment = null;
+            //TODO: This actually needs some logic somewhere to store the impediments against the project
+            sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, unimpeded);
+            break;
          case CardView.NOTE_TAKE_TASK :
             var taken : BacklogItem = BacklogItem(notification.getBody());
             taken.assignedTo = _secureContext.currentUser;
             sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, taken);
             break;
+         case CardView.NOTE_UNASSIGN_TASK :
+            var unassigned : BacklogItem = BacklogItem(notification.getBody());
+            unassigned.assignedTo = null;
+            sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, unassigned);
+            break;
       }
-
    }
 
    private function loadIterationBacklog() : void {

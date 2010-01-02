@@ -1,16 +1,15 @@
 package com.express.view.renderer {
 import mx.controls.dataGridClasses.DataGridColumn;
 
-public class NestedDataGridColumn extends DataGridColumn{
+public class NestedDataGridColumn extends DataGridColumn {
 
    public function NestedDataGridColumn(columnName:String = null) {
       super(columnName);
       this.sortable = false;
    }
 
-   override public function itemToLabel(data:Object):String
-   {
-      if(!data) {
+   override public function itemToLabel(data:Object):String {
+      if (!data) {
          return null;
       }
       var fields:Array;

@@ -8,6 +8,8 @@ import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.backlogItem.BacklogItemView;
 import com.express.view.components.BurndownChart;
 import com.express.view.components.VelocityChart;
+import com.express.view.issue.IssueForm;
+import com.express.view.issue.IssueMediator;
 import com.express.view.iteration.IterationForm;
 import com.express.view.iteration.IterationMediator;
 import com.express.view.projectDetails.ProjectDetailsForm;
@@ -20,6 +22,7 @@ import com.express.view.themes.ThemesMediator;
 import flash.events.Event;
 
 import mx.core.UIComponent;
+import mx.effects.Effect;
 import mx.effects.Iris;
 import mx.events.CloseEvent;
 import mx.events.FlexEvent;
@@ -30,26 +33,27 @@ import org.puremvc.as3.interfaces.INotification;
 
 public class ExpressPopUpManager {
 
-   private var _backlogItemView : BacklogItemView;
-   private var _iterationForm : IterationForm;
-   private var _projectForm : ProjectDetailsForm;
-   private var _projectAdminForm : ProjectAdmin;
-   private var _themesForm : ThemesForm;
-   private var _burndownChart : BurndownChart;
-   private var _velocityChart : VelocityChart;
-   private var _lastWindowNotification : INotification;
-   private var _popup : SizeableTitleWindow;
-   private var _popupVisible : Boolean = false;
+   private var _backlogItemView:BacklogItemView;
+   private var _iterationForm:IterationForm;
+   private var _issueForm:IssueForm;
+   private var _projectForm:ProjectDetailsForm;
+   private var _projectAdminForm:ProjectAdmin;
+   private var _themesForm:ThemesForm;
+   private var _burndownChart:BurndownChart;
+   private var _velocityChart:VelocityChart;
+   private var _lastWindowNotification:INotification;
+   private var _popup:SizeableTitleWindow;
+   private var _popupVisible:Boolean = false;
 
-   private var _irisIn : Iris;
-   private var _irisOut : Iris;
+   private var _openEffect:Effect;
+   private var _closeEffect:Effect;
 
-   private var _facade : IFacade;
-   private var _application : Express;
-   private var _secureContext : SecureContextProxy;
-   private var _projectProxy : ProjectProxy;
+   private var _facade:IFacade;
+   private var _application:Express;
+   private var _secureContext:SecureContextProxy;
+   private var _projectProxy:ProjectProxy;
 
-   public function ExpressPopUpManager(facade : IFacade, application : Express) {
+   public function ExpressPopUpManager(facade:IFacade, application:Express) {
       _facade = facade;
       _application = application;
       _secureContext = SecureContextProxy(_facade.retrieveProxy(SecureContextProxy.NAME));
@@ -60,28 +64,33 @@ public class ExpressPopUpManager {
       _popup.horizontalScrollPolicy = "off";
       _popup.showCloseButton = true;
       _popup.addEventListener(CloseEvent.CLOSE, handleHidePopup);
-      _irisIn = new Iris(_popup);
-      _irisIn.scaleXFrom = 0;
-      _irisIn.scaleYFrom = 0;
-      _irisIn.scaleXTo = 1;
-      _irisIn.scaleYTo = 1;
-      _irisIn.duration = 200;
-      _irisOut = new Iris(_popup);
-      _irisOut.scaleXFrom = 1;
-      _irisOut.scaleYFrom = 1;
-      _irisOut.scaleXTo = 0;
-      _irisOut.scaleYTo = 0;
-      _irisOut.duration = 200;
+      createOpenCloseEffects();
    }
 
-   private function handleHidePopup(event : Event):void {
+   private function createOpenCloseEffects() : void {
+      var irisOpen : Iris = new Iris(_popup);
+      irisOpen.scaleXFrom = 0;
+      irisOpen.scaleYFrom = 0;
+      irisOpen.scaleXTo = 1;
+      irisOpen.scaleYTo = 1;
+      irisOpen.duration = 200;
+      _openEffect = irisOpen;
+      var irisClose : Iris = new Iris(_popup);
+      irisClose.scaleXFrom = 1;
+      irisClose.scaleYFrom = 1;
+      irisClose.scaleXTo = 0;
+      irisClose.scaleYTo = 0;
+      irisClose.duration = 200;
+      _closeEffect = irisClose;
+   }
+
+   private function handleHidePopup(event:Event):void {
       PopUpManager.removePopUp(_popup);
-      _irisOut.end();
-      _irisOut.play();
       _popup.removeAllChildren();
+      _closeEffect.end();
+      _closeEffect.play();
       _popupVisible = false;
-      if (_lastWindowNotification && (_lastWindowNotification.getName() == BacklogItemMediator.CREATE ||
-          _lastWindowNotification.getName() == BacklogItemMediator.EDIT)) {
+      if (_lastWindowNotification && (_lastWindowNotification.getName() == BacklogItemMediator.CREATE || _lastWindowNotification.getName() == BacklogItemMediator.EDIT)) {
          _secureContext.currentUser.storyWindowPreference.x = _popup.x;
          _secureContext.currentUser.storyWindowPreference.y = _popup.y;
          _secureContext.currentUser.storyWindowPreference.height = _popup.height;
@@ -89,73 +98,84 @@ public class ExpressPopUpManager {
       }
    }
 
-   private function createBacklogItemForm() : void {
+   private function createBacklogItemForm():void {
       _backlogItemView = new BacklogItemView();
       _backlogItemView.addEventListener(FlexEvent.CREATION_COMPLETE, handleBacklogItemFormCreated);
    }
 
-   private function createProjectAdmin() : void {
+   private function createProjectAdmin():void {
       _projectAdminForm = new ProjectAdmin();
       _projectAdminForm.addEventListener(FlexEvent.CREATION_COMPLETE, handleProjectAdminCreated);
    }
 
-   private function createThemesForm() : void {
+   private function createThemesForm():void {
       _themesForm = new ThemesForm();
       _themesForm.addEventListener(FlexEvent.CREATION_COMPLETE, handleThemesFormCreated);
    }
 
-   private function createIterationForm() : void {
+   private function createIterationForm():void {
       _iterationForm = new IterationForm();
       _iterationForm.addEventListener(FlexEvent.CREATION_COMPLETE, handleIterationFormCreated);
    }
 
-   private function createProjectForm() : void {
-      _projectForm = new ProjectDetailsForm();
-      _projectForm.addEventListener(FlexEvent.CREATION_COMPLETE, handleProjectdetailsFormCreated);
+   private function createIssueForm():void {
+      _issueForm = new IssueForm();
+      _issueForm.addEventListener(FlexEvent.CREATION_COMPLETE, handleIssueFormCreated);
    }
 
-   private function createBurndownChart() : void {
+   private function createProjectForm():void {
+      _projectForm = new ProjectDetailsForm();
+      _projectForm.addEventListener(FlexEvent.CREATION_COMPLETE, handleProjectDetailsFormCreated);
+   }
+
+   private function createBurndownChart():void {
       _burndownChart = new BurndownChart();
       _burndownChart.addEventListener(FlexEvent.CREATION_COMPLETE, handleBurndownCreated);
    }
 
-   private function handleBurndownCreated(event : FlexEvent):void {
+   private function handleBurndownCreated(event:FlexEvent):void {
       _burndownChart.xAxis.minimum = _projectProxy.selectedIteration.startDate;
       _burndownChart.xAxis.maximum = _projectProxy.selectedIteration.endDate;
       _burndownChart.chkWeekends.selected = _lastWindowNotification.getBody() as Boolean;
    }
 
-   private function createVelocityChart() : void {
+   private function createVelocityChart():void {
       _velocityChart = new VelocityChart();
    }
 
-   public function handleThemesFormCreated(event : Event) : void {
+   public function handleThemesFormCreated(event:Event):void {
       _facade.registerMediator(new ThemesMediator(_themesForm));
    }
 
-   private function handleBacklogItemFormCreated(event : FlexEvent) : void {
-      var mediator : BacklogItemMediator = new BacklogItemMediator(_backlogItemView);
+   private function handleBacklogItemFormCreated(event:FlexEvent):void {
+      var mediator:BacklogItemMediator = new BacklogItemMediator(_backlogItemView);
       _facade.registerMediator(mediator);
       mediator.handleNotification(_lastWindowNotification);
    }
 
-   private function handleProjectAdminCreated(event : FlexEvent) : void {
+   private function handleProjectAdminCreated(event:FlexEvent):void {
       _facade.registerMediator(new ProjectAdminMediator(_projectAdminForm));
    }
 
-   private function handleIterationFormCreated(event : FlexEvent) : void {
-      var mediator : IterationMediator = new IterationMediator(_iterationForm);
+   private function handleIterationFormCreated(event:FlexEvent):void {
+      var mediator:IterationMediator = new IterationMediator(_iterationForm);
       _facade.registerMediator(mediator);
       mediator.handleNotification(_lastWindowNotification);
    }
 
-   private function handleProjectdetailsFormCreated(event : FlexEvent) : void {
-      var mediator : ProjectDetailsMediator = new ProjectDetailsMediator(_projectForm, "MainProjectDetailsMediator");
+   private function handleIssueFormCreated(event:FlexEvent):void {
+      var mediator:IssueMediator = new IssueMediator(_issueForm);
       _facade.registerMediator(mediator);
       mediator.handleNotification(_lastWindowNotification);
    }
 
-   public function showPrintPreview(previewPanel : BacklogPrintView) : void {
+   private function handleProjectDetailsFormCreated(event:FlexEvent):void {
+      var mediator:ProjectDetailsMediator = new ProjectDetailsMediator(_projectForm, "MainProjectDetailsMediator");
+      _facade.registerMediator(mediator);
+      mediator.handleNotification(_lastWindowNotification);
+   }
+
+   public function showPrintPreview(previewPanel:BacklogPrintView):void {
       _popup.title = "Print Preview - Print in landscape on A4";
       _popup.width = 825;
       _popup.height = 500;
@@ -164,7 +184,7 @@ public class ExpressPopUpManager {
       showPopup(previewPanel);
    }
 
-   public function showProjectAdminWindow(notification : INotification) : void {
+   public function showProjectAdminWindow(notification:INotification):void {
       _lastWindowNotification = notification;
       if (!_projectAdminForm) {
          createProjectAdmin();
@@ -177,7 +197,7 @@ public class ExpressPopUpManager {
       showPopup(_projectAdminForm);
    }
 
-   public function showThemesWindow(notification : INotification) : void {
+   public function showThemesWindow(notification:INotification):void {
       _lastWindowNotification = notification;
       if (!_themesForm) {
          createThemesForm();
@@ -190,7 +210,7 @@ public class ExpressPopUpManager {
       showPopup(_themesForm);
    }
 
-   public function showBurndownWindow(title : String, notification : INotification) : void {
+   public function showBurndownWindow(title:String, notification:INotification):void {
       _lastWindowNotification = notification;
       if (!_burndownChart) {
          createBurndownChart();
@@ -210,7 +230,7 @@ public class ExpressPopUpManager {
       showPopup(_burndownChart);
    }
 
-   public function showVelocityWindow(title : String, notification : INotification) : void {
+   public function showVelocityWindow(title:String, notification:INotification):void {
       _lastWindowNotification = notification;
       if (!_velocityChart) {
          createVelocityChart();
@@ -224,12 +244,12 @@ public class ExpressPopUpManager {
       showPopup(_velocityChart);
    }
 
-   public function showBacklogWindow(notification : INotification) : void {
+   public function showBacklogWindow(notification:INotification):void {
       _lastWindowNotification = notification;
       if (!_backlogItemView) {
          createBacklogItemForm();
       }
-      var metrics : WindowMetrics = _secureContext.currentUser.storyWindowPreference;
+      var metrics:WindowMetrics = _secureContext.currentUser.storyWindowPreference;
       if (!metrics) {
          metrics = new WindowMetrics();
          metrics.x = (_application.width / 2) - 450;
@@ -245,7 +265,7 @@ public class ExpressPopUpManager {
       showPopup(_backlogItemView);
    }
 
-   public function showIterationWindow(title : String, notification : INotification) : void {
+   public function showIterationWindow(title:String, notification:INotification):void {
       _lastWindowNotification = notification;
       if (!_iterationForm) {
          createIterationForm();
@@ -258,7 +278,20 @@ public class ExpressPopUpManager {
       showPopup(_iterationForm);
    }
 
-   public function showProjectWindow(title : String, notification : INotification) : void {
+   public function showIssueWindow(title:String, notification:INotification):void {
+      _lastWindowNotification = notification;
+      if (!_issueForm) {
+         createIssueForm();
+      }
+      _popup.title = title;
+      _popup.width = 450;
+      _popup.height = 410;
+      _popup.x = (_application.width / 2) - 225;
+      _popup.y = 80;
+      showPopup(_issueForm);
+   }
+
+   public function showProjectWindow(title:String, notification:INotification):void {
       _lastWindowNotification = notification;
       if (!_projectForm) {
          createProjectForm();
@@ -271,15 +304,15 @@ public class ExpressPopUpManager {
       showPopup(_projectForm);
    }
 
-   private function showPopup(child : UIComponent) : void {
-      if(_popupVisible) {
+   private function showPopup(child:UIComponent):void {
+      if (_popupVisible) {
          _popup.removeAllChildren();
       }
       else {
          PopUpManager.addPopUp(_popup, _application);
          _popupVisible = true;
-         _irisIn.end();
-         _irisIn.play();
+         _openEffect.end();
+         _openEffect.play();
       }
       _popup.addChild(child);
    }

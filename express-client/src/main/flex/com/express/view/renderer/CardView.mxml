@@ -2,7 +2,7 @@
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:comp="com.express.view.components.*"
          height="100" width="100" paddingLeft="10" horizontalAlign="left"
          horizontalScrollPolicy="off" verticalScrollPolicy="off" dataChange="init(event)"
-         creationComplete="init(event)" doubleClickEnabled="true" backgroundAlpha="1.0"
+         doubleClickEnabled="true" backgroundAlpha="1.0" creationComplete="initEventListener(event)"
          doubleClick="{dispatchEvent(new StoryClickEvent(story,true,true))}">
    <mx:filters>
       <mx:DropShadowFilter angle="45" alpha="0.4" hideObject="false"/>
@@ -11,43 +11,72 @@
       <![CDATA[
       import com.express.ApplicationFacade;
       import com.express.controller.event.StoryClickEvent;
+      import com.express.model.SecureContextProxy;
       import com.express.model.domain.BacklogItem;
+      import com.express.model.domain.User;
 
+      import mx.collections.ArrayCollection;
+      import mx.events.FlexEvent;
       import mx.events.ListEvent;
 
       public static const NOTE_IMPEDED :String = "Note.Impeded";
-      public static const NOTE_TAKE_TASK : String = "Note.TakTask";
+
+      public static const NOTE_UNIMPEDED :String = "Note.Unimpeded";
+      public static const NOTE_TAKE_TASK : String = "Note.TakeTask";
+      public static const NOTE_UNASSIGN_TASK : String = "Note.UnassignTask";
+      private static const _IMPEDED :String = "Impeded";
+
+      private static const _UNIMPEDED :String = "Unimpeded";
+      private static const _TAKE_TASK :String = "Take Task";
+      private static const _UNASSIGN :String = "Unassign";
       private var _facade:ApplicationFacade;
 
       [Bindable]
       public var story:BacklogItem;
 
-      private var _quickMenu : Array = [];
+      [Bindable]
+      private var _quickMenu : ArrayCollection = new ArrayCollection();
 
       private function init(event:Event):void {
-         if (data) {
-            story = data as BacklogItem;
+         _quickMenu.source = [];
+         if(!_facade) {
+            _facade = ApplicationFacade.getInstance();
          }
+         story = BacklogItem(data);
          if (story.impediment) {
             this.styleName = "impeded";
-            _quickMenu[0] = "unimpeded";
+            _quickMenu.addItem(_UNIMPEDED);
          }
          else {
-            _quickMenu[0] = "impeded";
+            this.styleName = "";
+            _quickMenu.addItem(_IMPEDED);
          }
-         if(actionPopUp) {
-            actionPopUp.addEventListener(ListEvent.ITEM_CLICK, handleQuickMenuSelection);
+         if(story.assignedTo) {
+            _quickMenu.addItem(_UNASSIGN);
          }
-         _facade = ApplicationFacade.getInstance();
+         var currentUser : User = SecureContextProxy(_facade.retrieveProxy(SecureContextProxy.NAME)).currentUser;
+         if(!(story.assignedTo) ||story.assignedTo.id != currentUser.id) {
+            _quickMenu.addItem(_TAKE_TASK);
+         }
+      }
+
+      private function initEventListener(event:FlexEvent):void {
+         actionPopUp.addEventListener(ListEvent.ITEM_CLICK, handleQuickMenuSelection);
       }
 
       private function handleQuickMenuSelection(event:ListEvent):void {
-         switch (event.rowIndex) {
-            case 0 :
+         switch (_quickMenu[event.rowIndex]) {
+            case _IMPEDED :
                _facade.sendNotification(NOTE_IMPEDED, story);
                break;
-            case 1 :
+            case _UNIMPEDED :
+               _facade.sendNotification(NOTE_UNIMPEDED, story);
+               break;
+            case _TAKE_TASK :
                _facade.sendNotification(NOTE_TAKE_TASK, story);
+               break;
+            case _UNASSIGN :
+               _facade.sendNotification(NOTE_UNASSIGN_TASK, story);
                break;
          }
       }
@@ -56,7 +85,7 @@
    </mx:Script>
    <mx:HBox width="100%" paddingTop="5">
       <mx:Label text="{story.reference}" styleName="cardHeading" width="100%"/>
-      <comp:PopUpLabel id="actionPopUp" dataProvider="['Impeded','Take Task']" paddingRight="3"/>
+      <comp:PopUpLabel id="actionPopUp" dataProvider="{_quickMenu}" paddingRight="3"/>
    </mx:HBox>
    <mx:Text id="description" styleName="cardText" width="100%" paddingTop="3" height="45"
             text="{story.summary}"

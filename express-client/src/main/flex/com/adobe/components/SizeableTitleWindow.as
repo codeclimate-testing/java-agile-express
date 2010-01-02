@@ -22,8 +22,7 @@ import mx.managers.CursorManager;
 
 [Event("stopResize")]
 
-public class SizeableTitleWindow extends TitleWindow
-{
+public class SizeableTitleWindow extends TitleWindow {
    // this is a copy of the const from panel.as (which is now private)
    // to make it compile in the new versions of the framework until they fix their bug
    // to make getHeaderHeight protected
@@ -99,54 +98,37 @@ public class SizeableTitleWindow extends TitleWindow
 
       // the NW corner has to be done in a seperate section because this
       // corner is twitchy and we add a 1 pix buffer
-      if (x >= 0 && x <= dragThreshold + 1 && y >= 0 && y <= dragThreshold + 1)
-      {
+      if (x >= 0 && x <= dragThreshold + 1 && y >= 0 && y <= dragThreshold + 1) {
          return cursorSizeNW;
-      }
-      else if (x >= 0 && x <= dragThreshold)
-      {
-         if (y >= this.height - dragThreshold)
-         {
+      } else if (x >= 0 && x <= dragThreshold) {
+         if (y >= this.height - dragThreshold) {
             return cursorSizeSW;
          }
          else {
             return cursorSizeW;
          }
-      }
-      else if (x >= this.width - dragThreshold - this.getStyle("borderThicknessRight"))
-         {
-            if (y >= 0 && y <= dragThreshold)
-            {
-               return cursorSizeNE;
-            }
-            else if (y >= this.height - dragThreshold)
-            {
-               return cursorSizeSE;
-            }
-            else {
-               return cursorSizeE;
-            }
+      } else if (x >= this.width - dragThreshold - this.getStyle("borderThicknessRight")) {
+         if (y >= 0 && y <= dragThreshold) {
+            return cursorSizeNE;
+         } else if (y >= this.height - dragThreshold) {
+            return cursorSizeSE;
          }
-         else if (y >= 0 && y <= dragThreshold)
-            {
-               return cursorSizeN;
-            }
-            else if (y >= this.height - dragThreshold)
-               {
-                  return cursorSizeS;
-                  // if you want to have the "move" style cursor when over the title bar, uncomment the next three lines
-               }
-               else if (isTitleBar)
-                  {
-                     return cursorSizeAll;
-                  }
+         else {
+            return cursorSizeE;
+         }
+      } else if (y >= 0 && y <= dragThreshold) {
+         return cursorSizeN;
+      } else if (y >= this.height - dragThreshold) {
+         return cursorSizeS;
+         // if you want to have the "move" style cursor when over the title bar, uncomment the next three lines
+      } else if (isTitleBar) {
+         return cursorSizeAll;
+      }
       return cursorSizeNone;
    }
 
-   protected function clearCursor():void
-   {
-      if (currentCursorID != CursorManager.NO_CURSOR)
-      {
+   protected function clearCursor():void {
+      if (currentCursorID != CursorManager.NO_CURSOR) {
          CursorManager.removeCursor(currentCursorID);
          currentCursorID = CursorManager.NO_CURSOR;
       }
@@ -157,8 +139,7 @@ public class SizeableTitleWindow extends TitleWindow
     *  @protected
     *  Returns the height of the header.
     */
-   override protected function getHeaderHeight():Number
-   {
+   override protected function getHeaderHeight():Number {
       var headerHeight:Number = getStyle("headerHeight");
 
       if (isNaN(headerHeight))
@@ -171,20 +152,17 @@ public class SizeableTitleWindow extends TitleWindow
     *  @protected. Returns a Rectangle containing the largest piece of header
     *  text (can be either the title or status, whichever is bigger).
     */
-   protected function measureHeaderText():Rectangle
-   {
+   protected function measureHeaderText():Rectangle {
       var textWidth:Number = 20;
       var textHeight:Number = 14;
 
-      if (titleTextField && titleTextField.text)
-      {
+      if (titleTextField && titleTextField.text) {
          titleTextField.validateNow();
          textWidth = titleTextField.textWidth;
          textHeight = titleTextField.textHeight;
       }
 
-      if (statusTextField)
-      {
+      if (statusTextField) {
          statusTextField.validateNow();
          textWidth = Math.max(textWidth, statusTextField.textWidth);
          textHeight = Math.max(textHeight, statusTextField.textHeight);
@@ -193,24 +171,20 @@ public class SizeableTitleWindow extends TitleWindow
       return new Rectangle(0, 0, textWidth, textHeight);
    }
 
-   protected function adjustCursor(event:MouseEvent, isTitleBar:Boolean):void
-   {
+   protected function adjustCursor(event:MouseEvent, isTitleBar:Boolean):void {
       var c:int;
 
       // we only want the move event from the title bar itself, not from it's children
       // otherwise you get weird cursor behavior in the middle of the titlebar
-      if (isTitleBar && event.target != titleBar)
-      {
+      if (isTitleBar && event.target != titleBar) {
          c = cursorSizeAll;
       }
       else {
-         c = getCursorStyle(event.currentTarget.mouseX,
-               event.currentTarget.mouseY, isTitleBar);
+         c = getCursorStyle(event.currentTarget.mouseX, event.currentTarget.mouseY, isTitleBar);
       }
 
       // don't switch stuff around if we don't have to
-      if (c == prevCursor)
-      {
+      if (c == prevCursor) {
          return;
       }
 
@@ -218,8 +192,7 @@ public class SizeableTitleWindow extends TitleWindow
 
       clearCursor();
 
-      switch (c)
-            {
+      switch (c) {
          // if you want to have the "move" style cursor when over the title bar, uncomment the next three lines
          //					case cursorSizeAll:
          //						currentCursorID = CursorManager.setCursor(sizeAllCursorSymbol, 2, -10, -10);
@@ -243,10 +216,8 @@ public class SizeableTitleWindow extends TitleWindow
       }
    }
 
-   protected function titleBar_resizeMoveListener(event:MouseEvent):void
-   {
-      if (event.target is Button)
-      {
+   protected function titleBar_resizeMoveListener(event:MouseEvent):void {
+      if (event.target is Button) {
          //the base class doesn't give me access to "closeButton", so this
          //is the only way to check if we are over the button
          clearCursor();
@@ -256,8 +227,7 @@ public class SizeableTitleWindow extends TitleWindow
       adjustCursor(event, true);
    }
 
-   protected function resizeMoveListener(event:MouseEvent):void
-   {
+   protected function resizeMoveListener(event:MouseEvent):void {
       //don't do it twice, the title bar takes care of it,
       //and don't do it if we aren't the the TitleWindow
 
@@ -269,14 +239,11 @@ public class SizeableTitleWindow extends TitleWindow
       }
    }
 
-   override protected function startDragging(event:MouseEvent):void
-   {
+   override protected function startDragging(event:MouseEvent):void {
       // check for the threshholds first,
       // if we are within the threshold do our stuff, else call super
-      var cursorStyle:int = getCursorStyle(event.currentTarget.mouseX,
-            event.currentTarget.mouseY, true);
-      if (cursorStyle != cursorSizeNone && cursorStyle != cursorSizeAll)
-      {
+      var cursorStyle:int = getCursorStyle(event.currentTarget.mouseX, event.currentTarget.mouseY, true);
+      if (cursorStyle != cursorSizeNone && cursorStyle != cursorSizeAll) {
          startSizing(cursorStyle, event.stageX, event.stageY);
       }
       else {
@@ -284,20 +251,16 @@ public class SizeableTitleWindow extends TitleWindow
       }
    }
 
-   protected function resizeDownListener(event:MouseEvent):void
-   {
+   protected function resizeDownListener(event:MouseEvent):void {
       // check for the threshholds first,
       // if we are within the threshold do our stuff, else call super
-      var cursorStyle:int = getCursorStyle(event.currentTarget.mouseX,
-            event.currentTarget.mouseY, true);
-      if (cursorStyle != cursorSizeNone && cursorStyle != cursorSizeAll)
-      {
+      var cursorStyle:int = getCursorStyle(event.currentTarget.mouseX, event.currentTarget.mouseY, true);
+      if (cursorStyle != cursorSizeNone && cursorStyle != cursorSizeAll) {
          startSizing(cursorStyle, event.stageX, event.stageY);
       }
    }
 
-   protected function startSizing(cursor:int, x:int, y:int):void
-   {
+   protected function startSizing(cursor:int, x:int, y:int):void {
       downX = x;
       downY = y;
       startHeight = this.height;
@@ -307,63 +270,50 @@ public class SizeableTitleWindow extends TitleWindow
       resizeCursor = cursor;
       isResizing = true;
 
-      systemManager.addEventListener(
-            MouseEvent.MOUSE_MOVE, systemManager_resizeMouseMoveHandler, true);
+      systemManager.addEventListener(MouseEvent.MOUSE_MOVE, systemManager_resizeMouseMoveHandler, true);
 
-      systemManager.addEventListener(
-            MouseEvent.MOUSE_UP, systemManager_resizeMouseUpHandler, true);
+      systemManager.addEventListener(MouseEvent.MOUSE_UP, systemManager_resizeMouseUpHandler, true);
 
-      stage.addEventListener(
-            Event.MOUSE_LEAVE, stage_resizeMouseLeaveHandler);
+      stage.addEventListener(Event.MOUSE_LEAVE, stage_resizeMouseLeaveHandler);
 
       this.dispatchEvent(new Event("startResize"));
    }
 
-   protected function stopSizing():void
-   {
+   protected function stopSizing():void {
       isResizing = false;
 
-      systemManager.removeEventListener(
-            MouseEvent.MOUSE_MOVE, systemManager_resizeMouseMoveHandler, true);
+      systemManager.removeEventListener(MouseEvent.MOUSE_MOVE, systemManager_resizeMouseMoveHandler, true);
 
-      systemManager.removeEventListener(
-            MouseEvent.MOUSE_UP, systemManager_resizeMouseUpHandler, true);
+      systemManager.removeEventListener(MouseEvent.MOUSE_UP, systemManager_resizeMouseUpHandler, true);
 
-      stage.removeEventListener(
-            Event.MOUSE_LEAVE, stage_resizeMouseLeaveHandler);
+      stage.removeEventListener(Event.MOUSE_LEAVE, stage_resizeMouseLeaveHandler);
 
       clearCursor();
 
       this.dispatchEvent(new Event("stopResize"));
    }
 
-   private function sizeWidth(event:MouseEvent):void
-   {
+   private function sizeWidth(event:MouseEvent):void {
       var tmp:int;
       tmp = startWidth + event.stageX - downX;
-      if (tmp >= minSizeWidth)
-      {
+      if (tmp >= minSizeWidth) {
          this.width = tmp;
       }
    }
 
-   private function sizeHeight(event:MouseEvent):void
-   {
+   private function sizeHeight(event:MouseEvent):void {
       var tmp:int;
       tmp = startHeight + event.stageY - downY;
-      if (tmp >= minSizeHeight)
-      {
+      if (tmp >= minSizeHeight) {
          this.height = tmp;
       }
    }
 
-   private function sizeTop(event:MouseEvent):int
-   {
+   private function sizeTop(event:MouseEvent):int {
       var tmp:int;
       var delta:int = downY - event.stageY;
       tmp = startHeight + delta;
-      if (tmp < minSizeHeight)
-      {
+      if (tmp < minSizeHeight) {
          delta = minSizeHeight - startHeight;
          tmp = startHeight + delta;
       }
@@ -373,13 +323,11 @@ public class SizeableTitleWindow extends TitleWindow
       //				return 0;
    }
 
-   private function sizeLeft(event:MouseEvent):int
-   {
+   private function sizeLeft(event:MouseEvent):int {
       var tmp:int;
       var delta:int = downX - event.stageX;
       tmp = startWidth + delta;
-      if (tmp < minSizeWidth)
-      {
+      if (tmp < minSizeWidth) {
          delta = minSizeWidth - startWidth;
          tmp = startWidth + delta;
       }
@@ -392,12 +340,10 @@ public class SizeableTitleWindow extends TitleWindow
    /**
     *  @private
     */
-   private function systemManager_resizeMouseMoveHandler(event:MouseEvent):void
-   {
+   private function systemManager_resizeMouseMoveHandler(event:MouseEvent):void {
       var leftDelta:int = 0;
       var topDelta:int = 0;
-      switch (resizeCursor)
-            {
+      switch (resizeCursor) {
          case cursorSizeE:
             sizeWidth(event);
             break;
@@ -430,8 +376,7 @@ public class SizeableTitleWindow extends TitleWindow
 
       // when sizing, we only want to do the move once (multiple moves cause ugly refresh problems)
       // a move happens when dragging involves the left or top side
-      if (leftDelta != 0 || topDelta != 0)
-      {
+      if (leftDelta != 0 || topDelta != 0) {
          move(startLeft - leftDelta, startTop - topDelta);
       }
    }
@@ -439,23 +384,19 @@ public class SizeableTitleWindow extends TitleWindow
    /**
     *  @private
     */
-   private function systemManager_resizeMouseUpHandler(event:MouseEvent):void
-   {
+   private function systemManager_resizeMouseUpHandler(event:MouseEvent):void {
       stopSizing();
    }
 
    /**
     *  @private
     */
-   private function stage_resizeMouseLeaveHandler(event:Event):void
-   {
+   private function stage_resizeMouseLeaveHandler(event:Event):void {
       stopSizing();
    }
 
-   private function cursorMouseOutListener(event:MouseEvent):void
-   {
-      if (!isResizing)
-      {
+   private function cursorMouseOutListener(event:MouseEvent):void {
+      if (!isResizing) {
          clearCursor();
       }
    }
