@@ -11,6 +11,7 @@ public class Iteration
    public function Iteration(id : Number = 0, title : String = null) {
       backlog = new ArrayCollection();
       burndown = new ArrayCollection();
+      impediments = new ArrayCollection();
       this.id = id;
       this.title = title;
    }
@@ -37,6 +38,8 @@ public class Iteration
    public var backlog : ArrayCollection;
 
    public var burndown : ArrayCollection;
+
+   public var impediments : ArrayCollection;
 
    public function getPoints() : int {
       var total : Number = 0;
@@ -90,6 +93,7 @@ public class Iteration
       burndown = iteration.burndown;
       backlog = iteration.backlog;
       finalVelocity = iteration.finalVelocity;
+      impediments = iteration.impediments;
    }
 }
 }

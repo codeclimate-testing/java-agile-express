@@ -18,5 +18,7 @@ public class Issue {
 
    public var endDate : Date;
 
+   public var iteration : Iteration;
+
 }
 }

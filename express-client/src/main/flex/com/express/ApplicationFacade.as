@@ -9,6 +9,8 @@ import com.express.controller.BacklogItemRemoveCommand;
 import com.express.controller.BacklogItemUpdateCommand;
 import com.express.controller.BacklogLoadCommand;
 import com.express.controller.ChangePasswordCommand;
+import com.express.controller.ImpedimentCreateCommand;
+import com.express.controller.ImpedimentRemoveCommand;
 import com.express.controller.IterationCreateCommand;
 import com.express.controller.IterationLoadCommand;
 import com.express.controller.IterationUpdateCommand;
@@ -29,64 +31,65 @@ import com.express.controller.UpdateUserCommand;
 
 import org.puremvc.as3.patterns.facade.Facade;
 
-public class ApplicationFacade extends Facade
-{
+public class ApplicationFacade extends Facade {
    public static const USER_SERVICE:String = "userService";
    public static const PROJECT_SERVICE:String = "projectService";
 
    // Notification name constants application
    public static const NOTE_STARTUP:String = "startup";
-   public static const NOTE_LOAD_PROJECT : String = "Note.LoadProject";
-   public static const NOTE_LOAD_PROJECT_LIST : String = "Note.LoadProjectList";
-   public static const NOTE_LOAD_PROJECT_ACCESS_LIST : String = "Note.LoadProjectAccessList";
-   public static const NOTE_CREATE_POJECT : String = "Note.CreateProject";
-   public static const NOTE_UPDATE_PROJECT : String = "Note.UpdateProject";
-   public static const NOTE_REQUEST_PROJECT_ACCESS : String = "Note.RequestProjectAccess";
+   public static const NOTE_LOAD_PROJECT:String = "Note.LoadProject";
+   public static const NOTE_LOAD_PROJECT_LIST:String = "Note.LoadProjectList";
+   public static const NOTE_LOAD_PROJECT_ACCESS_LIST:String = "Note.LoadProjectAccessList";
+   public static const NOTE_CREATE_POJECT:String = "Note.CreateProject";
+   public static const NOTE_UPDATE_PROJECT:String = "Note.UpdateProject";
+   public static const NOTE_REQUEST_PROJECT_ACCESS:String = "Note.RequestProjectAccess";
 
-   public static const NOTE_LOAD_ITERATION : String = "Note.LoadIteration";
-   public static const NOTE_CREATE_ITERATION : String = "Note.CreateIteration";
-   public static const NOTE_UPDATE_ITERATION : String = "Note.UpdateIteration";
-   public static const NOTE_REMOVE_ITERATION : String = "Note.RemoveIteration";
+   public static const NOTE_LOAD_ITERATION:String = "Note.LoadIteration";
+   public static const NOTE_CREATE_ITERATION:String = "Note.CreateIteration";
+   public static const NOTE_UPDATE_ITERATION:String = "Note.UpdateIteration";
+   public static const NOTE_REMOVE_ITERATION:String = "Note.RemoveIteration";
+   public static const NOTE_CREATE_BACKLOG_ITEM:String = "Note.CreateBacklogItem";
 
-   public static const NOTE_CREATE_BACKLOG_ITEM : String = "Note.CreateBacklogItem";
-   public static const NOTE_UPDATE_BACKLOG_ITEM : String = "Note.UpdateBacklogItem";
-   public static const NOTE_REMOVE_BACKLOG_ITEM : String = "Note.RemoveBacklogItem";
-   public static const NOTE_ASSIGN_BACKLOG_ITEM : String = "Note.AssignBacklogItem";
-   public static const NOTE_EDIT_BACKLOG_ITEM : String = "Note.EditBacklogItem";
-   public static const NOTE_LOAD_BACKLOG : String = "Note.LoadBacklog";
-   public static const NOTE_LOAD_BACKLOG_COMPLETE : String = "Note.LoadBacklog.Complete";
+   public static const NOTE_UPDATE_BACKLOG_ITEM:String = "Note.UpdateBacklogItem";
+   public static const NOTE_REMOVE_BACKLOG_ITEM:String = "Note.RemoveBacklogItem";
+   public static const NOTE_ASSIGN_BACKLOG_ITEM:String = "Note.AssignBacklogItem";
+   public static const NOTE_EDIT_BACKLOG_ITEM:String = "Note.EditBacklogItem";
+   public static const NOTE_LOAD_BACKLOG:String = "Note.LoadBacklog";
+   public static const NOTE_LOAD_BACKLOG_COMPLETE:String = "Note.LoadBacklog.Complete";
+   public static const NOTE_LOGIN:String = "Note.Login";
 
-   public static const NOTE_LOGIN : String = "Note.Login";
-   public static const NOTE_REGISTER : String = "Note.Register";
-   public static const NOTE_REGISTER_CONFIRM : String = "Note.RegisterConfirm";
-   public static const NOTE_LOAD_APP_USERS : String = "Note.ApplicationUsersLoad";
-   public static const NOTE_CHANGE_PASSWORD : String = "Note.ChangePassword";
-   public static const NOTE_UPDATE_USER : String = "Note.UpdateUser";
-   public static const NOTE_PROJECT_ACCESS_RESPONSE : String = "Note.ProjectAccessResponse";
-   public static const NOTE_PROJECT_ACCESS_MANAGE : String = "Note.ProjectAccessManage";
+   public static const NOTE_CREATE_IMPEDIMENT:String = "Note.CreateImpediment";
+   public static const NOTE_REMOVE_IMPEDIMENT:String = "Note.RemoveImpediment";
 
-   public static const NOTE_SHOW_COLOUR_GROUP : String = "Note.ShowColourGroup";
-   public static const NOTE_HIDE_COLOUR_GROUP : String = "Note.HideColourGroup";
+   public static const NOTE_REGISTER:String = "Note.Register";
+   public static const NOTE_REGISTER_CONFIRM:String = "Note.RegisterConfirm";
+   public static const NOTE_LOAD_APP_USERS:String = "Note.ApplicationUsersLoad";
+   public static const NOTE_CHANGE_PASSWORD:String = "Note.ChangePassword";
+   public static const NOTE_UPDATE_USER:String = "Note.UpdateUser";
+   public static const NOTE_PROJECT_ACCESS_RESPONSE:String = "Note.ProjectAccessResponse";
+   public static const NOTE_PROJECT_ACCESS_MANAGE:String = "Note.ProjectAccessManage";
 
-   public static const NOTE_SECONDARY_NAV : String = "Note.SecondaryNav";
-   public static const NOTE_DISPLAY_BURNDOWN : String = "Note.DisplayBurndown";
+   public static const NOTE_SHOW_COLOUR_GROUP:String = "Note.ShowColourGroup";
+   public static const NOTE_HIDE_COLOUR_GROUP:String = "Note.HideColourGroup";
+
+   public static const NOTE_SECONDARY_NAV:String = "Note.SecondaryNav";
+   public static const NOTE_DISPLAY_BURNDOWN:String = "Note.DisplayBurndown";
    public static const NOTE_DISPLAY_VELOCITY:String = "Note.DisplayVelocityChart";
 
-   public static const NOTE_UPDATE_PROJECT_WORKERS : String = "Note.UpdateProjectWorkers";
+   public static const NOTE_UPDATE_PROJECT_WORKERS:String = "Note.UpdateProjectWorkers";
 
-   public static const NOTE_UPDATE_THEMES : String = "Note.UpdateThemes";
-   public static const NOTE_LOAD_THEMES : String = "Note.LoadThemes";
-   public static const NOTE_THEMES_MANAGE : String = "Note.ManageThemes";
+   public static const NOTE_UPDATE_THEMES:String = "Note.UpdateThemes";
+   public static const NOTE_LOAD_THEMES:String = "Note.LoadThemes";
+   public static const NOTE_THEMES_MANAGE:String = "Note.ManageThemes";
 
-   public static const NOTE_NAVIGATE : String = "Note.Navigate";
+   public static const NOTE_NAVIGATE:String = "Note.Navigate";
 
-   public static const NOTE_SHOW_ERROR_MSG : String = "Note.ShowErrorMsg";
-   public static const NOTE_SHOW_SUCCESS_MSG : String = "Note.ShowSuccessMsg";
-   public static const NOTE_CLEAR_MSG : String = "Note.ClearMsg";
+   public static const NOTE_SHOW_ERROR_MSG:String = "Note.ShowErrorMsg";
+   public static const NOTE_SHOW_SUCCESS_MSG:String = "Note.ShowSuccessMsg";
+   public static const NOTE_CLEAR_MSG:String = "Note.ClearMsg";
 
 
-   public static function getInstance() : ApplicationFacade
-   {
+   public static function getInstance():ApplicationFacade {
       if (instance == null) {
          instance = new ApplicationFacade();
       }
@@ -96,7 +99,7 @@ public class ApplicationFacade extends Facade
    /**
     * Register Commands with the Controller
     */
-   override protected function initializeController() : void {
+   override protected function initializeController():void {
       super.initializeController();
       registerCommand(NOTE_STARTUP, ApplicationStartupCommand);
 
@@ -123,6 +126,9 @@ public class ApplicationFacade extends Facade
       registerCommand(NOTE_UPDATE_THEMES, ThemesUpdateCommand);
       registerCommand(NOTE_LOAD_THEMES, ThemesLoadCommand);
 
+      registerCommand(NOTE_CREATE_IMPEDIMENT, ImpedimentCreateCommand);
+      registerCommand(NOTE_REMOVE_IMPEDIMENT, ImpedimentRemoveCommand);
+
       registerCommand(NOTE_LOGIN, LoginCommand);
       registerCommand(NOTE_REGISTER, RegisterCommand);
       registerCommand(NOTE_REGISTER_CONFIRM, RegisterConfirmCommand);
@@ -132,9 +138,9 @@ public class ApplicationFacade extends Facade
       registerCommand(NOTE_PROJECT_ACCESS_RESPONSE, ProjectAccessResponseCommand);
    }
 
-   public function startup(app : Express):void {
+   public function startup(app:Express):void {
       sendNotification(NOTE_STARTUP, app);
    }
 
-   }
+}
 }

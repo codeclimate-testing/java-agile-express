@@ -1,6 +1,7 @@
 package com.express.view.wall
 {
 import com.express.ApplicationFacade;
+import com.express.controller.ImpedimentCreateCommand;
 import com.express.controller.IterationLoadCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.controller.event.StoryClickEvent;
@@ -10,6 +11,7 @@ import com.express.model.WallProxy;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Issue;
 import com.express.model.domain.User;
+import com.express.model.request.AddImpedimentRequest;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.components.AssignmentPopup;
 import com.express.view.renderer.CardView;
@@ -230,15 +232,15 @@ public class WallMediator extends Mediator
          case CardView.NOTE_IMPEDED :
             var impeded : BacklogItem = BacklogItem(notification.getBody());
             var impediment : Issue = new Issue();
-            impediment.startDate = new Date();
-            impeded.impediment = impediment;
-            sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, impeded);
+            var request : AddImpedimentRequest = new AddImpedimentRequest();
+            request.impediment = impediment;
+            request.backlogItemId = impeded.id;
+            request.iterationId = _projectProxy.selectedIteration.id;
+            sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT, request);
             break;
          case CardView.NOTE_UNIMPEDED :
             var unimpeded : BacklogItem = BacklogItem(notification.getBody());
-            unimpeded.impediment = null;
-            //TODO: This actually needs some logic somewhere to store the impediments against the project
-            sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, unimpeded);
+            sendNotification(ApplicationFacade.NOTE_REMOVE_IMPEDIMENT, unimpeded);
             break;
          case CardView.NOTE_TAKE_TASK :
             var taken : BacklogItem = BacklogItem(notification.getBody());

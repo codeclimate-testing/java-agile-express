@@ -142,4 +142,16 @@ public interface ProjectManager {
     * @return String containing comma seperated list
     */
    String getCSV(CSVRequest request);
+
+   /**
+    * Creates an Issue as an impediment for a BacklogItem adding it to the BacklogItem and the Iteration
+    * @param request continaing all information required to create the impediment
+    */
+   void addImpediment(AddImpedimentRequest request);
+
+   /**
+    * Removes the impediment from the BacklogItem provided
+    * @param dto representing the BacklogItem to remove the impediment from.
+    */
+   void removeImpediment(BacklogItemDto dto);
 }

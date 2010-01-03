@@ -358,6 +358,27 @@ public class ProjectManagerImpl implements ProjectManager {
       }
    }
 
+   @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+   public void addImpediment(AddImpedimentRequest request) {
+      BacklogItem item = backlogItemDao.findById(request.getBacklogItemId());
+      Issue impediment = new Issue();
+      impediment.setStartDate(Calendar.getInstance());
+      impediment.setTitle(request.getImpediment().getTitle());
+      impediment.setDescription(request.getImpediment().getDescription());
+      iterationDao.findById(request.getIterationId()).addImpediment(impediment);
+      item.setImpediment(impediment);
+      projectDao.save(item.getProject());
+   }
+
+   @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+   public void removeImpediment(BacklogItemDto dto) {
+      BacklogItem item = backlogItemDao.findById(dto.getId());
+      Issue impediment = item.getImpediment();
+      impediment.setEndDate(Calendar.getInstance());
+      item.setImpediment(null);
+      projectDao.save(item.getProject());
+   }
+
    public List<AccessRequestDto> loadAccessRequests(Long projectId) {
       Project project = projectDao.findById(projectId);
       List<AccessRequestDto> requests = new ArrayList<AccessRequestDto>();

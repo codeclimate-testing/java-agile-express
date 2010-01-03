@@ -177,6 +177,16 @@ public class Iteration implements Persistable, Comparable<Iteration> {
       this.impediments = impediments;
    }
 
+   public void addImpediment(Issue impediment) {
+      this.impediments.add(impediment);
+      impediment.setIteration(this);
+   }
+
+   public void removeImpediment(Issue impediment) {
+      this.impediments.remove(impediment);
+      impediment.setIteration(null);
+   }
+
    public int compareTo(Iteration iteration) {
       return this.startDate.compareTo(iteration.getStartDate());
    }
