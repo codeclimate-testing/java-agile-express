@@ -71,7 +71,7 @@ public class User implements Persistable, UserDetails, Comparable<User>
 
    @OneToMany(mappedBy = "requestor")
    @OptimisticLock(excluded = true)
-   private Set<AccessRequest> accessRequests;
+   private final Set<AccessRequest> accessRequests;
 
    public User() {
       this.accessRequests = new HashSet<AccessRequest>();
@@ -199,7 +199,7 @@ public class User implements Persistable, UserDetails, Comparable<User>
 
    public boolean hasPendingRequest(Project project) {
       for(AccessRequest request : accessRequests) {
-         if(project.equals(request.getProject()) && request.getStatus().equals(AccessRequest.UNRESOLVED)) {
+         if(AccessRequest.UNRESOLVED.equals(request.getStatus()) && project.equals(request.getProject())) {
             return true;
          }
       }
@@ -239,10 +239,6 @@ public class User implements Persistable, UserDetails, Comparable<User>
       output.append("phone2=").append(phone2).append(",");
       output.append("createdDate=").append(createdDate).append("]");
       return output.toString();
-   }
-   
-   public void setGrantedAuthorities() {
-      
    }
    
    //UserDetails implementation

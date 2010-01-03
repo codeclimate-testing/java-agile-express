@@ -22,7 +22,7 @@ public class InternalUserService implements UserService {
 
    private final UserDao userDao;
 
-   private Ehcache cache;
+   private final Ehcache cache;
 
    @Autowired
    public InternalUserService(@Qualifier("userDao")UserDao userDao,

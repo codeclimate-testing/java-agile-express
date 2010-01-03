@@ -37,7 +37,7 @@ public class ProjectManagerImpl implements ProjectManager {
 
    private final RemoteObjectFactory remoteObjectFactory;
 
-   private NotificationService notificationService;
+   private final NotificationService notificationService;
 
    @Autowired
    public ProjectManagerImpl(@Qualifier("internalUserService") UserService userService,

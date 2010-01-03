@@ -136,7 +136,7 @@ public class DomainFactoryImpl implements DomainFactory {
          return true;
       }
       else {
-         return dto.getAssignedTo().getId() != item.getAssignedTo().getId();
+         return dto.getAssignedTo().getId().equals(item.getAssignedTo().getId());
       }
    }
 }

@@ -25,10 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserManagerImpl implements UserManager {
    private static final Log LOG = LogFactory.getLog(UserManagerImpl.class);
    
-   private UserDao userDao;
-   private PasswordEncoder passwordEncoder;
-   private RemoteObjectFactory remoteObjectFactory;
-   private DomainFactory domainFactory;
+   private final UserDao userDao;
+   private final PasswordEncoder passwordEncoder;
+   private final RemoteObjectFactory remoteObjectFactory;
+   private final DomainFactory domainFactory;
 
    private NotificationService notificationService;
 
