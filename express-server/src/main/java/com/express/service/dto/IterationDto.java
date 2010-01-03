@@ -28,6 +28,8 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
    
    private List<EffortRecordDto> burndown;
 
+   private List<IssueDto> impediments;
+
    public Long getId() {
       return id;
    }
@@ -106,6 +108,14 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
 
    public void setFinalVelocity(Integer finalVelocity) {
       this.finalVelocity = finalVelocity;
+   }
+
+   public List<IssueDto> getImpediments() {
+      return impediments;
+   }
+
+   public void setImpediments(List<IssueDto> impediments) {
+      this.impediments = impediments;
    }
 
    public int compareTo(IterationDto iteration) {

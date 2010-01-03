@@ -13,7 +13,7 @@ import org.hibernate.annotations.OptimisticLock;
 import com.express.security.Role;
 
 /**
- * The core actor in the Express system. Users access Projects through their relationship as a ProjectWorker.
+ * The core actor in the Express system. Users accesses Projects through their relationship as a ProjectWorker.
  *
  * @author Adam Boas
  *

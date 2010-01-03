@@ -33,6 +33,9 @@ public class Issue implements Persistable{
    @Column(name = "end_date")
    private Calendar endDate;
 
+   @ManyToOne @JoinColumn(name = "iteration_id")
+   private Iteration iteration;
+
    public Long getId() {
       return id;
    }
@@ -71,5 +74,13 @@ public class Issue implements Persistable{
 
    public void setEndDate(Calendar endDate) {
       this.endDate = endDate;
+   }
+
+   public Iteration getIteration() {
+      return iteration;
+   }
+
+   public void setIteration(Iteration iteration) {
+      this.iteration = iteration;
    }
 }

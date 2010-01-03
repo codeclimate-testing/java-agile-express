@@ -2,6 +2,10 @@ package com.express.domain;
 
 import javax.persistence.*;
 
+/**
+ * Models themes which backlog items share as a way of grouping them.
+ */
+
 @Entity
 @Table(name = "theme")
 public class Theme implements Persistable, Comparable<Theme> {

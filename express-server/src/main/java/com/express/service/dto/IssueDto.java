@@ -19,6 +19,8 @@ public class IssueDto implements Serializable {
 
    private Date endDate;
 
+   private IterationDto iteration;
+
    public Long getId() {
       return id;
    }
@@ -65,5 +67,13 @@ public class IssueDto implements Serializable {
 
    public void setEndDate(Date endDate) {
       this.endDate = endDate;
+   }
+
+   public IterationDto getIteration() {
+      return iteration;
+   }
+
+   public void setIteration(IterationDto iteration) {
+      this.iteration = iteration;
    }
 }

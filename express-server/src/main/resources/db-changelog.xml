@@ -239,6 +239,7 @@
          <column name="description" type="TEXT(2147483647)"/>
          <column name="end_date" type="timestamp"/>
          <column name="start_date" type="timestamp"/>
+         <column name="iteration_id" type="int8"/>
          <column name="version_no" type="int8"/>
       </createTable>
 
@@ -250,6 +251,10 @@
                                constraintName="fk_issue_backlog" deferrable="false"
                                initiallyDeferred="false" referencedColumnNames="issue_id"
                                referencedTableName="issue"/>
+      <addForeignKeyConstraint baseColumnNames="iteration_id" baseTableName="issue"
+                               constraintName="fk_iteration_issue" deferrable="false"
+                               initiallyDeferred="false" referencedColumnNames="iteration_id"
+                               referencedTableName="iteration"/>
    </changeSet>
 
 </databaseChangeLog>

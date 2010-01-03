@@ -61,6 +61,10 @@ public class Iteration implements Persistable, Comparable<Iteration> {
    private Set<BacklogItem> backlog;
 
    @OneToMany(mappedBy = "iteration", cascade = CascadeType.ALL)
+   @OptimisticLock(excluded = true)
+   private Set<Issue> impediments;
+
+   @OneToMany(mappedBy = "iteration", cascade = CascadeType.ALL)
    private final Set<EffortRecord> burndown;
 
    public Iteration() {
@@ -165,6 +169,14 @@ public class Iteration implements Persistable, Comparable<Iteration> {
       this.burndown.remove(record);
    }
 
+   public Set<Issue> getImpediments() {
+      return impediments;
+   }
+
+   public void setImpediments(Set<Issue> impediments) {
+      this.impediments = impediments;
+   }
+
    public int compareTo(Iteration iteration) {
       return this.startDate.compareTo(iteration.getStartDate());
    }
@@ -185,7 +197,7 @@ public class Iteration implements Persistable, Comparable<Iteration> {
 
    /**
     * It is not intended that Velocity vary in the life of an Iteration. It will, however, alter
-    * if the effort value of a story in the iteration is altered or a Stroy removed.
+    * if the effort value of a story in the iteration is altered or a Story is removed or added.
     *
     * @return int representing the current velocity (number of Story Points) in whatever measure
     *         has been set in the parent project.
