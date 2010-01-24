@@ -21,6 +21,8 @@ public class IssueDto implements Serializable {
 
    private IterationDto iteration;
 
+   private UserDto responsible;
+
    public Long getId() {
       return id;
    }
@@ -75,5 +77,13 @@ public class IssueDto implements Serializable {
 
    public void setIteration(IterationDto iteration) {
       this.iteration = iteration;
+   }
+
+   public UserDto getResponsible() {
+      return responsible;
+   }
+
+   public void setResponsible(UserDto responsible) {
+      this.responsible = responsible;
    }
 }

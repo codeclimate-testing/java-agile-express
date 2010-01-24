@@ -13,6 +13,7 @@ import com.express.model.domain.Issue;
 import com.express.model.domain.User;
 import com.express.model.request.AddImpedimentRequest;
 import com.express.view.backlogItem.BacklogItemMediator;
+import com.express.view.backlogItem.BacklogItemProxy;
 import com.express.view.components.AssignmentPopup;
 import com.express.view.renderer.CardView;
 import com.express.view.renderer.StoryView;
@@ -36,15 +37,17 @@ public class WallMediator extends Mediator
    private var _minHeight : Number;
    private var _wallProxy : WallProxy;
    private var _projectProxy : ProjectProxy;
+   private var _backlogItemProxy : BacklogItemProxy;
    private var _secureContext : SecureContextProxy;
    private var _visible : Boolean = true;
    private var _assignmentPopup : AssignmentPopup;
 
    public function WallMediator(viewComp : WallView) {
       super(NAME, viewComp);
-      _wallProxy = facade.retrieveProxy(WallProxy.NAME) as WallProxy;
-      _projectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
-      _secureContext = facade.retrieveProxy(SecureContextProxy.NAME) as SecureContextProxy;
+      _wallProxy = WallProxy(facade.retrieveProxy(WallProxy.NAME));
+      _projectProxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
+      _backlogItemProxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
+      _secureContext = SecureContextProxy(facade.retrieveProxy(SecureContextProxy.NAME));
       _minHeight = ViewStack(view.parent).minHeight;
 
       viewComp.lstStories.dataProvider = _wallProxy.currentBacklog;
@@ -207,7 +210,9 @@ public class WallMediator extends Mediator
               ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
               ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM,
               ProjectLoadCommand.SUCCESS,
+              StoryView.NOTE_ADD_TASK,
               CardView.NOTE_IMPEDED,
+              CardView.NOTE_VIEW_IMPEDIMENT,
               CardView.NOTE_UNIMPEDED,
               CardView.NOTE_UNASSIGN_TASK,
               CardView.NOTE_TAKE_TASK];
@@ -229,14 +234,20 @@ public class WallMediator extends Mediator
          case ProjectLoadCommand.SUCCESS :
             loadIterationBacklog();
             break;
+         case StoryView.NOTE_ADD_TASK :
+            sendNotification(BacklogItemMediator.CREATE, notification.getBody());
+            break;
          case CardView.NOTE_IMPEDED :
-            var impeded : BacklogItem = BacklogItem(notification.getBody());
-            var impediment : Issue = new Issue();
-            var request : AddImpedimentRequest = new AddImpedimentRequest();
-            request.impediment = impediment;
-            request.backlogItemId = impeded.id;
-            request.iterationId = _projectProxy.selectedIteration.id;
-            sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT, request);
+            _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
+            _backlogItemProxy.currentIssue = new Issue();
+            _backlogItemProxy.currentIssue.startDate = new Date();
+            _backlogItemProxy.currentIteration = _projectProxy.selectedIteration;
+            sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT);
+            break;
+         case CardView.NOTE_VIEW_IMPEDIMENT :
+            _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
+            _backlogItemProxy.currentIssue = _backlogItemProxy.currentBacklogItem.impediment;
+            sendNotification(ApplicationFacade.NOTE_EDIT_IMPEDIMENT);
             break;
          case CardView.NOTE_UNIMPEDED :
             var unimpeded : BacklogItem = BacklogItem(notification.getBody());

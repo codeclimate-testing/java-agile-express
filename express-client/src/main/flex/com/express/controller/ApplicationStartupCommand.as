@@ -1,7 +1,6 @@
 package com.express.controller
 {
 import com.express.ApplicationFacade;
-import com.express.model.NavigationItem;
 import com.express.model.ProfileProxy;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
@@ -11,9 +10,9 @@ import com.express.view.backlogItem.BacklogItemProxy;
 
 import mx.managers.BrowserManager;
 import mx.managers.IBrowserManager;
-
 import mx.messaging.Channel;
 import mx.messaging.config.ServerConfig;
+
 import org.puremvc.as3.interfaces.*;
 import org.puremvc.as3.patterns.command.*;
 

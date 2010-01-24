@@ -208,6 +208,10 @@
          <a>burndown</a>
          <b>burndown</b>
       </field-exclude>
+      <field-exclude>
+         <a>impediments</a>
+         <b>impediments</b>
+      </field-exclude>
       <field >
          <a is-accessible="true">version</a>
          <b>version</b>
@@ -361,6 +365,14 @@
       <field custom-converter="com.express.service.mapping.IdConverter">
          <a>id</a>
          <b>id</b>
+      </field>
+      <field map-id="Iteration.shallow">
+         <a>iteration</a>
+         <b>iteration</b>
+      </field>
+      <field map-id="User.shallow">
+         <a>responsible</a>
+         <b>responsible</b>
       </field>
       <field >
          <a is-accessible="true">version</a>

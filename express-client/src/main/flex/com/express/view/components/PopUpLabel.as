@@ -17,50 +17,54 @@ import mx.events.FlexEvent;
 import mx.events.ListEvent;
 import mx.managers.PopUpManager;
 
-public class PopUpLabel extends HBox{
+public class PopUpLabel extends HBox {
 
-   public var _dataProvider : ICollectionView;
+   public var _dataProvider:ICollectionView;
 
-   private var _labelText : String;
+   private var _labelText:String;
 
    [Bindable]
    [Embed(source="/images/icons/down.png")]
-   public var popUpIcon : Class;
+   public var popUpIcon:Class;
 
    [Bindable]
    [Embed(source="/images/icons/down-over.png")]
-   public var popUpIconOver : Class;
+   public var popUpIconOver:Class;
 
    [Bindable]
-   public var labelStyleName : String;
+   [Embed(source="/images/icons/down-disabled.png")]
+   public var popUpIconDisabled:Class;
 
    [Bindable]
-   public var labelFunction : Function ;
+   public var labelStyleName:String;
 
    [Bindable]
-   public var selectedIndex : int;
+   public var labelFunction:Function;
 
    [Bindable]
-   public var leftIcon : Class;
+   public var selectedIndex:int;
 
-   private var _popup : VBox;
-   private var _rowHeight : int = 20;
-   private var _img : Image;
-   private var _label : Label;
-   private var _list : List;
-   private var _leftImg : Image;
+   [Bindable]
+   public var leftIcon:Class;
+
+   private var _popup:VBox;
+   private var _rowHeight:int = 20;
+   private var _img:Image;
+   private var _label:Label;
+   private var _list:List;
+   private var _leftImg:Image;
 
    public function PopUpLabel() {
       this.addEventListener(FlexEvent.CREATION_COMPLETE, handleCreationComplete);
    }
 
-   private function handleCreationComplete(event : Event) : void {
-      if(leftIcon) {
+   private function handleCreationComplete(event:Event):void {
+      if (leftIcon) {
          _leftImg = new Image();
          _leftImg.source = leftIcon;
          this.addChild(_leftImg);
       }
-      if(_labelText) {
+      if (_labelText) {
          _label = new Label();
          _label.text = _labelText;
          _label.styleName = labelStyleName;
@@ -70,19 +74,20 @@ public class PopUpLabel extends HBox{
       _img.source = popUpIcon;
       _img.addEventListener(MouseEvent.MOUSE_OVER, handleIconOver);
       _img.addEventListener(MouseEvent.MOUSE_OUT, handleIconOff);
-      this.addChild(_img);
       _img.addEventListener(MouseEvent.CLICK, popup);
       _img.buttonMode = true;
       _img.useHandCursor = true;
+
+      this.addChild(_img);
    }
 
-   private function createPopUp() : void {
+   private function createPopUp():void {
       _popup = new VBox();
       _popup.verticalScrollPolicy = "off";
       _popup.horizontalScrollPolicy = "off";
       _list = new List();
       _list.dataProvider = _dataProvider;
-      if(labelFunction != null) {
+      if (labelFunction != null) {
          _list.labelFunction = labelFunction;
       }
       _list.styleName = "popupList";
@@ -92,26 +97,26 @@ public class PopUpLabel extends HBox{
       _popup.addChild(_list);
    }
 
-   private function handleIconOver(event : Event) : void {
+   private function handleIconOver(event:Event):void {
       _img.source = popUpIconOver;
    }
 
-   private function handleIconOff(event : Event) : void {
+   private function handleIconOff(event:Event):void {
       _img.source = popUpIcon;
    }
 
-   private function handleEventListItemClick(event : ListEvent) : void {
+   private function handleEventListItemClick(event:ListEvent):void {
       selectedIndex = event.rowIndex;
       this.dispatchEvent(event);
    }
 
-   private function popup(event : MouseEvent) : void {
-      if(!_popup) {
+   private function popup(event:MouseEvent):void {
+      if (!_popup) {
          createPopUp();
       }
-      PopUpManager.addPopUp(_popup,Application.application as Express);
-      var newX :int = event.stageX;
-      if(newX + _popup.width > Application.application.width) {
+      PopUpManager.addPopUp(_popup, Application.application as Express);
+      var newX:int = event.stageX;
+      if (newX + _popup.width > Application.application.width) {
          newX = newX - _popup.width;
       }
       _popup.x = newX;
@@ -121,29 +126,26 @@ public class PopUpLabel extends HBox{
       Application.application.stage.addEventListener(MouseEvent.CLICK, handleMouseClick);
    }
 
-   private function handleMouseClick(event : MouseEvent) : void {
+   private function handleMouseClick(event:MouseEvent):void {
       PopUpManager.removePopUp(_popup);
       Application.application.stage.removeEventListener(MouseEvent.CLICK, handleMouseClick);
    }
 
-   public function set dataProvider(value : Object) : void {
+   public function set dataProvider(value:Object):void {
       if (value is Array) {
          _dataProvider = new ArrayCollection(value as Array);
-      }
-      else if (value is ICollectionView) {
+      } else if (value is ICollectionView) {
          _dataProvider = ICollectionView(value);
+      } else if (value is IList) {
+         _dataProvider = new ListCollectionView(IList(value));
+      } else if (value is XMLList) {
+         _dataProvider = new XMLListCollection(value as XMLList);
       }
-      else if (value is IList) {
-            _dataProvider = new ListCollectionView(IList(value));
-         }
-         else if (value is XMLList) {
-               _dataProvider = new XMLListCollection(value as XMLList);
-            }
-            else {
-               // convert it to an array containing this one item
-               var tmp : Array = [value];
-               _dataProvider = new ArrayCollection(tmp);
-            }
+      else {
+         // convert it to an array containing this one item
+         var tmp:Array = [value];
+         _dataProvider = new ArrayCollection(tmp);
+      }
    }
 
    [Bindable]
@@ -153,7 +155,7 @@ public class PopUpLabel extends HBox{
 
    public function set labelText(value:String):void {
       _labelText = value;
-      if(_label) {
+      if (_label) {
          _label.text = _labelText;
       }
    }

@@ -4,9 +4,7 @@
 
    <mx:StringValidator id="titleValidator" required="true" property="text" source="{issueTitle}"
           trigger="{btnSave}" triggerEvent="click"/>
-   <mx:StringValidator id="startValidator" required="true" source="{startDate}" property="text"
-          trigger="{btnSave}" triggerEvent="click"/>
-   <mx:StringValidator id="endValidator" required="true" source="{endDate}" property="text"
+   <mx:StringValidator id="descriptionValidator" required="true" property="text" source="{description}"
           trigger="{btnSave}" triggerEvent="click"/>
 
    <mx:FormItem label="Title" required="true" width="95%">
@@ -15,11 +13,8 @@
    <mx:FormItem label="Description" width="95%">
       <mx:TextArea id="description" width="100%" height="200"/>
    </mx:FormItem>
-   <mx:FormItem label="Start Date" required="true">
-      <mx:DateField id="startDate" formatString="DD/MM/YYYY"/>
-   </mx:FormItem>
-   <mx:FormItem label="End Date" required="true">
-      <mx:DateField id="endDate" formatString="DD/MM/YYYY"/>
+   <mx:FormItem label="Who is responsible?">
+      <mx:ComboBox id="lstResponsible" labelField="fullName" prompt="-- Select --"/>
    </mx:FormItem>
    <mx:HBox width="100%" height="100%" verticalAlign="bottom" horizontalAlign="right">
       <mx:Button id="btnSave" label="Create"/>

@@ -45,7 +45,7 @@ public class ProjectProxy extends Proxy
    private var _iterationDays : ArrayCollection;
    private var _themes : ArrayCollection;
 
-   public var selectedDefect : Issue;
+   public var newImpediment : Issue;
 
    public var selectedBacklogItem : BacklogItem;
    public var selectedAccessRequest : AccessRequest;
@@ -184,10 +184,6 @@ public class ProjectProxy extends Proxy
 
    public function get selectedBacklog() : HierarchicalData {
       return _selectedBacklog;
-   }
-
-   private function setSelectedBacklogSource(backlog : ArrayCollection) : void {
-      _selectedBacklog.source = backlog;
    }
 
    public function get productBacklog() : HierarchicalData {

@@ -20,5 +20,7 @@ public class Issue {
 
    public var iteration : Iteration;
 
+   public var responsible : User;
+
 }
 }

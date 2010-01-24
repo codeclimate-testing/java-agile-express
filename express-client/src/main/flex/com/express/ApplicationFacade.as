@@ -11,6 +11,7 @@ import com.express.controller.BacklogLoadCommand;
 import com.express.controller.ChangePasswordCommand;
 import com.express.controller.ImpedimentCreateCommand;
 import com.express.controller.ImpedimentRemoveCommand;
+import com.express.controller.ImpedimentUpdateCommand;
 import com.express.controller.IterationCreateCommand;
 import com.express.controller.IterationLoadCommand;
 import com.express.controller.IterationUpdateCommand;
@@ -59,7 +60,10 @@ public class ApplicationFacade extends Facade {
    public static const NOTE_LOGIN:String = "Note.Login";
 
    public static const NOTE_CREATE_IMPEDIMENT:String = "Note.CreateImpediment";
+   public static const NOTE_EDIT_IMPEDIMENT:String = "Note.EditImpediment";
+   public static const NOTE_ADD_IMPEDIMENT:String = "Note.AddImpediment";
    public static const NOTE_REMOVE_IMPEDIMENT:String = "Note.RemoveImpediment";
+   public static const NOTE_UPDATE_IMPEDIMENT:String = "Note.UpdateImpediment";
 
    public static const NOTE_REGISTER:String = "Note.Register";
    public static const NOTE_REGISTER_CONFIRM:String = "Note.RegisterConfirm";
@@ -126,8 +130,9 @@ public class ApplicationFacade extends Facade {
       registerCommand(NOTE_UPDATE_THEMES, ThemesUpdateCommand);
       registerCommand(NOTE_LOAD_THEMES, ThemesLoadCommand);
 
-      registerCommand(NOTE_CREATE_IMPEDIMENT, ImpedimentCreateCommand);
+      registerCommand(NOTE_ADD_IMPEDIMENT, ImpedimentCreateCommand);
       registerCommand(NOTE_REMOVE_IMPEDIMENT, ImpedimentRemoveCommand);
+      registerCommand(NOTE_UPDATE_IMPEDIMENT, ImpedimentUpdateCommand);
 
       registerCommand(NOTE_LOGIN, LoginCommand);
       registerCommand(NOTE_REGISTER, RegisterCommand);

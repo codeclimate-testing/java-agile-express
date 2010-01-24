@@ -8,7 +8,7 @@
       <mx:Image source="@Embed('/images/separator.gif')"/>
       <mx:LinkButton id="lnkExport" label="Export" styleName="secondNav" enabled="false"/>
       <mx:Image source="@Embed('/images/separator.gif')"/>
-      <comp:PopUpLabel id="managePopUp" labelText="Manage" enabled="false"
+      <comp:PopUpLabel id="managePopUp" labelText="Manage" enabled="false" paddingTop="2"
                        dataProvider="['Workers','Themes']"/>
    </mx:HBox>
    <mx:HBox horizontalGap="5">

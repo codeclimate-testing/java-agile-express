@@ -71,9 +71,11 @@ public class RemoteObjectFactoryImpl implements RemoteObjectFactory {
    }
 
    public BacklogItemDto createBacklogItemDto(BacklogItem backlogItem, Policy policy) {
-      return (BacklogItemDto)beanMapper.map(backlogItem,
+      BacklogItemDto item = (BacklogItemDto)beanMapper.map(backlogItem,
                                             BacklogItemDto.class,
                                             policy.getMapId(BacklogItem.class));
+      Collections.sort(item.getThemes());
+      return item;
    }
 
    public ThemeDto createThemeDto(Theme theme) {

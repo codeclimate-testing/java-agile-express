@@ -140,6 +140,12 @@ public class ProjectManagerImpl implements ProjectManager {
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+   public void updateImpediment(IssueDto issueDto) {
+      Issue issue = domainFactory.createIssue(issueDto);
+      projectDao.save(issue.getIteration().getProject());
+   }
+
+   @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void removeBacklogItem(Long id) {
       BacklogItem backlogItem = backlogItemDao.findById(id);
       Project project = backlogItem.getProject();
@@ -361,10 +367,7 @@ public class ProjectManagerImpl implements ProjectManager {
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void addImpediment(AddImpedimentRequest request) {
       BacklogItem item = backlogItemDao.findById(request.getBacklogItemId());
-      Issue impediment = new Issue();
-      impediment.setStartDate(Calendar.getInstance());
-      impediment.setTitle(request.getImpediment().getTitle());
-      impediment.setDescription(request.getImpediment().getDescription());
+      Issue impediment = domainFactory.createIssue(request.getImpediment());
       iterationDao.findById(request.getIterationId()).addImpediment(impediment);
       item.setImpediment(impediment);
       projectDao.save(item.getProject());

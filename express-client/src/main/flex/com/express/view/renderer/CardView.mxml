@@ -20,22 +20,23 @@
       import mx.events.ListEvent;
 
       public static const NOTE_IMPEDED :String = "Note.Impeded";
-
       public static const NOTE_UNIMPEDED :String = "Note.Unimpeded";
+      public static const NOTE_VIEW_IMPEDIMENT :String = "Note.ViewImpdeiment";
       public static const NOTE_TAKE_TASK : String = "Note.TakeTask";
       public static const NOTE_UNASSIGN_TASK : String = "Note.UnassignTask";
-      private static const _IMPEDED :String = "Impeded";
 
+      private static const _IMPEDED :String = "Impeded";
       private static const _UNIMPEDED :String = "Unimpeded";
+      private static const _VIEW_IMPEDIMENT :String = "View Impediment";
       private static const _TAKE_TASK :String = "Take Task";
       private static const _UNASSIGN :String = "Unassign";
+
       private var _facade:ApplicationFacade;
+      [Bindable]
+      private var _quickMenu : ArrayCollection = new ArrayCollection();
 
       [Bindable]
       public var story:BacklogItem;
-
-      [Bindable]
-      private var _quickMenu : ArrayCollection = new ArrayCollection();
 
       private function init(event:Event):void {
          _quickMenu.source = [];
@@ -45,9 +46,10 @@
          story = BacklogItem(data);
          if (story.impediment) {
             this.styleName = "impeded";
+            _quickMenu.addItem(_VIEW_IMPEDIMENT);
             _quickMenu.addItem(_UNIMPEDED);
          }
-         else {
+      else {
             this.styleName = "";
             _quickMenu.addItem(_IMPEDED);
          }
@@ -59,6 +61,7 @@
             _quickMenu.addItem(_TAKE_TASK);
          }
       }
+
 
       private function initEventListener(event:FlexEvent):void {
          actionPopUp.addEventListener(ListEvent.ITEM_CLICK, handleQuickMenuSelection);
@@ -72,6 +75,9 @@
             case _UNIMPEDED :
                _facade.sendNotification(NOTE_UNIMPEDED, story);
                break;
+            case _VIEW_IMPEDIMENT :
+               _facade.sendNotification(NOTE_VIEW_IMPEDIMENT, story);
+               break;
             case _TAKE_TASK :
                _facade.sendNotification(NOTE_TAKE_TASK, story);
                break;
@@ -83,9 +89,9 @@
 
       ]]>
    </mx:Script>
-   <mx:HBox width="100%" paddingTop="5">
+   <mx:HBox width="100%" paddingTop="1">
       <mx:Label text="{story.reference}" styleName="cardHeading" width="100%"/>
-      <comp:PopUpLabel id="actionPopUp" dataProvider="{_quickMenu}" paddingRight="3"/>
+      <comp:PopUpLabel id="actionPopUp" dataProvider="{_quickMenu}" paddingRight="3" paddingTop="2"/>
    </mx:HBox>
    <mx:Text id="description" styleName="cardText" width="100%" paddingTop="3" height="45"
             text="{story.summary}"

@@ -17,7 +17,7 @@ Application {
 
 Label.welcome {
    font-size: 16;
-   font-family:"Trebuchet MS";
+   font-family:"News Gothic MT,Trebuchet MS";
    color:#ffffff;
 }
 
@@ -35,12 +35,12 @@ Label.welcome {
    padding-bottom: 0;
    font-weight: normal;
    text-decoration: underline;
-   font-family:"Trebuchet MS";
+   font-family:"News Gothic MT,Trebuchet MS";
 }
 
 .menu {
    color: #ffffff;
-   font-family:"Trebuchet MS";
+   font-family:"News Gothic MT,Trebuchet MS";
    disabledColor:#382d37;
    horizontalGap:0;
    padding-top:0;
@@ -286,6 +286,7 @@ StoryView {
 }
 
 .cardHeading {
+    paddingTop:2;
    font-weight:bold;
    font-size:12;
    horizontal-align:left;
@@ -472,7 +473,3 @@ TitleWindow {
    padding-left:5px;
    padding-right:5px;
 }
-
-/*RichTextEditor {*/
-    /*padding-top:35;*/
-/*}*/

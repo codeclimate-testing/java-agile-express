@@ -1,7 +1,9 @@
 package com.express.view.issue {
 
 import com.express.ApplicationFacade;
-import com.express.model.ProjectProxy;
+import com.express.model.domain.User;
+import com.express.model.request.AddImpedimentRequest;
+import com.express.view.backlogItem.BacklogItemProxy;
 import com.express.view.form.FormMediator;
 import com.express.view.form.FormUtility;
 
@@ -17,62 +19,82 @@ public class IssueMediator extends FormMediator
    public static const CREATE:String = "IssueMediator.CREATE";
    public static const EDIT:String = "IssueMediator.EDIT";
 
-   private var _proxy : ProjectProxy;
+   private var _proxy : BacklogItemProxy;
 
    public function IssueMediator(viewComp: IssueForm) {
       super(NAME, viewComp);
-      _proxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
+      _proxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
+      viewComp.lstResponsible.dataProvider = _proxy.assignToList;
       viewComp.btnCancel.addEventListener(MouseEvent.CLICK, handleCancel);
-      viewComp.btnSave.addEventListener(MouseEvent.CLICK, handleIterationSave);
+      viewComp.btnSave.addEventListener(MouseEvent.CLICK, handleImpedimentSave);
    }
 
    override public function registerValidators():void {
       _validators.push(view.titleValidator);
-      _validators.push(view.startValidator);
-      _validators.push(view.endValidator);
+      _validators.push(view.descriptionValidator);
    }
 
 
    override public function listNotificationInterests():Array {
-      return [CREATE, EDIT];
+      return [ApplicationFacade.NOTE_EDIT_IMPEDIMENT,
+              ApplicationFacade.NOTE_CREATE_IMPEDIMENT];
    }
 
    override public function handleNotification(notification : INotification):void {
+      switch(notification.getName()) {
+         case ApplicationFacade.NOTE_CREATE_IMPEDIMENT :
+            _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CREATE;
+            view.btnSave.label = "Save";
+            break;
+         case ApplicationFacade.NOTE_EDIT_IMPEDIMENT :
+            _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_EDIT;
+            view.btnSave.label = "Update";
+            break;
+      }
       bindForm();
       view.focusManager.setFocus(view.issueTitle);
    }
 
    override public function bindForm():void {
-      view.visible = true;
-      view.issueTitle.text = _proxy.newIteration.title;
-      view.description.text = _proxy.newIteration.description;
-      view.startDate.selectedDate = _proxy.newIteration.startDate;
-      view.endDate.selectedDate = _proxy.newIteration.endDate;
-      FormUtility.clearValidationErrors(_validators);
-      if(_proxy.newIteration.id) {
-         view.btnSave.label = "Update";
+      view.issueTitle.text = _proxy.currentIssue.title;
+      view.description.text = _proxy.currentIssue.description;
+      if(_proxy.currentIssue.responsible) {
+         view.lstResponsible.selectedIndex =
+            getSelectedUser( _proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
       }
       else {
-         view.btnSave.label = "Create";
+         view.lstResponsible.selectedIndex = -1;
       }
+      FormUtility.clearValidationErrors(_validators);
+   }
+
+   private function getSelectedUser(id : Number, array : Array) : int {
+      for( var index : int = 0; index < array.length; index++) {
+         if(array[index].id == id) {
+            return index;
+         }
+      }
+      return -1;
    }
 
    override public function bindModel():void {
-      _proxy.newIteration.title = view.issueTitle.text;
-      _proxy.newIteration.description = view.description.text;
-      _proxy.newIteration.startDate = view.startDate.selectedDate;
-      _proxy.newIteration.endDate = view.endDate.selectedDate;
-      _proxy.selectedProject.iterations.addItem(_proxy.newIteration);
+      _proxy.currentIssue.title = view.issueTitle.text;
+      _proxy.currentIssue.description = view.description.text;
+      _proxy.currentIssue.responsible = view.lstResponsible.selectedItem as User;
    }
 
-   private function handleIterationSave(event : MouseEvent) : void {
+   private function handleImpedimentSave(event : MouseEvent) : void {
       if (validate(true)) {
          bindModel();
-         if(_proxy.newIteration.id > 0) {
-            sendNotification(ApplicationFacade.NOTE_UPDATE_ITERATION);
+         if(_proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CREATE) {
+            var request : AddImpedimentRequest = new AddImpedimentRequest();
+            request.impediment = _proxy.currentIssue;
+            request.iterationId = _proxy.currentIteration.id;
+            request.backlogItemId = _proxy.currentBacklogItem.id;
+            sendNotification(ApplicationFacade.NOTE_ADD_IMPEDIMENT, request);
          }
          else {
-            sendNotification(ApplicationFacade.NOTE_CREATE_ITERATION);
+            sendNotification(ApplicationFacade.NOTE_UPDATE_IMPEDIMENT, _proxy.currentBacklogItem.impediment);
          }
          closeWindow();
       }

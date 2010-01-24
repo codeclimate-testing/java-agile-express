@@ -5,6 +5,8 @@ import com.express.model.ProjectProxy;
 import com.express.model.domain.Project;
 import com.express.service.ServiceRegistry;
 
+import com.express.view.backlogItem.BacklogItemProxy;
+
 import mx.rpc.Fault;
 import mx.rpc.IResponder;
 import mx.rpc.events.FaultEvent;
@@ -24,8 +26,10 @@ public class ProjectUpdateCommand extends SimpleCommand implements IResponder
    }
 
    public function result(data : Object) : void {
-      var proxy : ProjectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
+      var proxy : ProjectProxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
       proxy.selectedProject = data.result as Project;
+      var backlogItemProxy : BacklogItemProxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
+      backlogItemProxy.assignToList = proxy.developers;
       sendNotification(ProjectLoadCommand.SUCCESS);
    }
 

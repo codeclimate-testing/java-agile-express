@@ -96,6 +96,8 @@ public class ApplicationMediator extends Mediator
               ApplicationFacade.NOTE_CLEAR_MSG,
               ApplicationFacade.NOTE_PROJECT_ACCESS_MANAGE,
               ApplicationFacade.NOTE_THEMES_MANAGE,
+              ApplicationFacade.NOTE_CREATE_IMPEDIMENT,
+              ApplicationFacade.NOTE_EDIT_IMPEDIMENT,
               LoginCommand.SUCCESS,
               BacklogItemMediator.CREATE,
               BacklogItemMediator.EDIT,
@@ -131,6 +133,12 @@ public class ApplicationMediator extends Mediator
             break;
          case ProjectPanelMediator.SHOW_PRINT_PREVIEW :
             _popupManager.showPrintPreview(notification.getBody() as BacklogPrintView);
+            break;
+         case ApplicationFacade.NOTE_CREATE_IMPEDIMENT :
+            _popupManager.showIssueWindow("Add Impediment", notification);
+            break;
+         case ApplicationFacade.NOTE_EDIT_IMPEDIMENT :
+            _popupManager.showIssueWindow("Edit Impediment", notification);
             break;
          case ApplicationFacade.NOTE_PROJECT_ACCESS_MANAGE :
             _popupManager.showProjectAdminWindow(notification);

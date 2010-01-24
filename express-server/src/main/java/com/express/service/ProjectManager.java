@@ -154,4 +154,10 @@ public interface ProjectManager {
     * @param dto representing the BacklogItem to remove the impediment from.
     */
    void removeImpediment(BacklogItemDto dto);
+
+   /**
+    * 
+    * @param issueDto
+    */
+   public void updateImpediment(IssueDto issueDto);
 }

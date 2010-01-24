@@ -36,6 +36,9 @@ public class Issue implements Persistable{
    @ManyToOne @JoinColumn(name = "iteration_id")
    private Iteration iteration;
 
+   @ManyToOne(cascade = CascadeType.ALL) @JoinColumn(name = "user_id")
+   private User responsible;
+
    public Long getId() {
       return id;
    }
@@ -82,5 +85,42 @@ public class Issue implements Persistable{
 
    public void setIteration(Iteration iteration) {
       this.iteration = iteration;
+   }
+
+   public User getResponsible() {
+      return responsible;
+   }
+
+   public void setResponsible(User responsible) {
+      this.responsible = responsible;
+   }
+   
+   @Override
+   public boolean equals(Object obj) {
+      if (obj == this)
+         return true;
+      if (this.id == null || !(obj instanceof Issue))
+         return false;
+      Issue issue = (Issue) obj;
+      return this.id.equals(issue.getId());
+   }
+
+   @Override
+   public int hashCode() {
+      return this.id == null ? super.hashCode() : this.id.hashCode();
+   }
+
+   @Override
+   public String toString() {
+      StringBuilder output = new StringBuilder();
+      output.append(Issue.class.getName());
+      output.append("[");
+      output.append("id=").append(id).append(",");
+      output.append("version=").append(version).append(",");
+      output.append("title=").append(title).append(",");
+      output.append("description=").append(description).append(",");
+      output.append("startDate=").append(startDate).append(",");
+      output.append("endDate=").append(endDate).append("]");
+      return output.toString();
    }
 }
