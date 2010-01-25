@@ -1,7 +1,6 @@
 package com.express.view.wall
 {
 import com.express.ApplicationFacade;
-import com.express.controller.ImpedimentCreateCommand;
 import com.express.controller.IterationLoadCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.controller.event.StoryClickEvent;
@@ -11,7 +10,6 @@ import com.express.model.WallProxy;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Issue;
 import com.express.model.domain.User;
-import com.express.model.request.AddImpedimentRequest;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.backlogItem.BacklogItemProxy;
 import com.express.view.components.AssignmentPopup;
@@ -62,7 +60,6 @@ public class WallMediator extends Mediator
       viewComp.lstDoneItems.addEventListener(DragEvent.DRAG_DROP, droppedInDone);
 
       viewComp.storyListHolder.addEventListener(StoryClickEvent.STORY_EDIT, handleEditStory);
-      viewComp.storyListHolder.addEventListener(StoryClickEvent.TASK_ADD, handleAddTask);
       viewComp.lstOpenItems.addEventListener(StoryClickEvent.STORY_EDIT, handleEditTask);
       viewComp.lstProgressItems.addEventListener(StoryClickEvent.STORY_EDIT, handleEditTask);
       viewComp.lstTestItems.addEventListener(StoryClickEvent.STORY_EDIT, handleEditTask);
@@ -143,13 +140,6 @@ public class WallMediator extends Mediator
       //      }
 //   }
 
-   public function handleAddTask(event : StoryClickEvent) : void {
-      var story : BacklogItem = StoryView(event.target).story;
-      var item : BacklogItem = new BacklogItem();
-      item.parent = story;
-      sendNotification(BacklogItemMediator.CREATE, item);
-   }
-
    public function handleEditTask(event : StoryClickEvent) : void {
       var item : BacklogItem = CardView(event.target).story;
       sendNotification(BacklogItemMediator.EDIT, item);
@@ -211,6 +201,7 @@ public class WallMediator extends Mediator
               ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM,
               ProjectLoadCommand.SUCCESS,
               StoryView.NOTE_ADD_TASK,
+              StoryView.NOTE_MARK_DONE,
               CardView.NOTE_IMPEDED,
               CardView.NOTE_VIEW_IMPEDIMENT,
               CardView.NOTE_UNIMPEDED,
@@ -234,8 +225,13 @@ public class WallMediator extends Mediator
          case ProjectLoadCommand.SUCCESS :
             loadIterationBacklog();
             break;
+         case StoryView.NOTE_MARK_DONE :
+            sendNotification(ApplicationFacade.NOTE_MARK_DONE_BACKLOG_ITEM, BacklogItem(notification.getBody()).id);
+            break;
          case StoryView.NOTE_ADD_TASK :
-            sendNotification(BacklogItemMediator.CREATE, notification.getBody());
+            var item : BacklogItem = new BacklogItem();
+            item.parent = BacklogItem(notification.getBody());
+            sendNotification(BacklogItemMediator.CREATE, item);
             break;
          case CardView.NOTE_IMPEDED :
             _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());

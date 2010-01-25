@@ -5,6 +5,7 @@ import com.express.controller.ApplicationStartupCommand;
 import com.express.controller.ApplicationUsersLoadCommand;
 import com.express.controller.BacklogItemAssignCommand;
 import com.express.controller.BacklogItemCreateCommand;
+import com.express.controller.BacklogItemMarkDoneCommand;
 import com.express.controller.BacklogItemRemoveCommand;
 import com.express.controller.BacklogItemUpdateCommand;
 import com.express.controller.BacklogLoadCommand;
@@ -49,14 +50,16 @@ public class ApplicationFacade extends Facade {
    public static const NOTE_CREATE_ITERATION:String = "Note.CreateIteration";
    public static const NOTE_UPDATE_ITERATION:String = "Note.UpdateIteration";
    public static const NOTE_REMOVE_ITERATION:String = "Note.RemoveIteration";
-   public static const NOTE_CREATE_BACKLOG_ITEM:String = "Note.CreateBacklogItem";
 
+   public static const NOTE_CREATE_BACKLOG_ITEM:String = "Note.CreateBacklogItem";
    public static const NOTE_UPDATE_BACKLOG_ITEM:String = "Note.UpdateBacklogItem";
+   public static const NOTE_MARK_DONE_BACKLOG_ITEM:String = "Note.MarkDoneBacklogItem";
    public static const NOTE_REMOVE_BACKLOG_ITEM:String = "Note.RemoveBacklogItem";
    public static const NOTE_ASSIGN_BACKLOG_ITEM:String = "Note.AssignBacklogItem";
    public static const NOTE_EDIT_BACKLOG_ITEM:String = "Note.EditBacklogItem";
    public static const NOTE_LOAD_BACKLOG:String = "Note.LoadBacklog";
    public static const NOTE_LOAD_BACKLOG_COMPLETE:String = "Note.LoadBacklog.Complete";
+
    public static const NOTE_LOGIN:String = "Note.Login";
 
    public static const NOTE_CREATE_IMPEDIMENT:String = "Note.CreateImpediment";
@@ -120,6 +123,7 @@ public class ApplicationFacade extends Facade {
 
       registerCommand(NOTE_CREATE_BACKLOG_ITEM, BacklogItemCreateCommand);
       registerCommand(NOTE_UPDATE_BACKLOG_ITEM, BacklogItemUpdateCommand);
+      registerCommand(NOTE_MARK_DONE_BACKLOG_ITEM, BacklogItemMarkDoneCommand);
       registerCommand(NOTE_REMOVE_BACKLOG_ITEM, BacklogItemRemoveCommand);
       registerCommand(NOTE_LOAD_BACKLOG, BacklogLoadCommand);
       registerCommand(NOTE_ASSIGN_BACKLOG_ITEM, BacklogItemAssignCommand);

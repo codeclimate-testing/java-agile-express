@@ -13,6 +13,7 @@ import mx.controls.Image;
 import mx.controls.Label;
 import mx.controls.List;
 import mx.core.Application;
+import mx.events.CollectionEvent;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
 import mx.managers.PopUpManager;
@@ -93,8 +94,13 @@ public class PopUpLabel extends HBox {
       _list.styleName = "popupList";
       _list.addEventListener(ListEvent.ITEM_CLICK, handleEventListItemClick);
       _list.height = (_dataProvider.length + 1) * _rowHeight;
+      _list.dataProvider.addEventListener(CollectionEvent.COLLECTION_CHANGE, handleListSizeChange);
       selectedIndex = -1;
       _popup.addChild(_list);
+   }
+
+   private function handleListSizeChange(event:CollectionEvent):void {
+      _list.height = (_dataProvider.length + 1) * _rowHeight;
    }
 
    private function handleIconOver(event:Event):void {

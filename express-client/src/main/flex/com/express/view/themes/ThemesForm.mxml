@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
       width="100%" height="100%">
-   <mx:DataGrid id="grdThemes" editable="true" width="100%" height="100%">
+   <mx:DataGrid id="grdThemes" editable="true" variableRowHeight="true" width="100%" height="100%">
       <mx:columns>
-         <mx:DataGridColumn id="colId" editable="false" dataField="id" width="40"/>
+         <mx:DataGridColumn id="colId" editable="false" dataField="id" width="30"/>
          <mx:DataGridColumn editable="true" dataField="title"/>
-         <mx:DataGridColumn editable="true" dataField="description"/>
-         <mx:DataGridColumn editable="false" headerText="Actions">
+         <mx:DataGridColumn editable="true" dataField="description" wordWrap="true" editorUsesEnterKey="true" itemEditor="mx.controls.TextArea"/>
+         <mx:DataGridColumn editable="false" headerText="Actions" width="70">
             <mx:itemRenderer>
             <mx:Component>
             <mx:HBox horizontalGap="4" horizontalAlign="center" click="event.stopImmediatePropagation()">

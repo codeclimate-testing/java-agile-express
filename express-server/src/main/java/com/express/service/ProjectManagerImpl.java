@@ -140,6 +140,16 @@ public class ProjectManagerImpl implements ProjectManager {
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+   public void markStoryDone(Long id) {
+      BacklogItem story = backlogItemDao.findById(id);
+      for(BacklogItem task : story.getTasks()) {
+         task.setStatus(Status.DONE);
+         task.setEffort(0);
+      }
+      projectDao.save(story.getProject());
+   }
+
+   @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void updateImpediment(IssueDto issueDto) {
       Issue issue = domainFactory.createIssue(issueDto);
       projectDao.save(issue.getIteration().getProject());

@@ -31,8 +31,12 @@
 
       private function init(event:Event):void {
          story = data as BacklogItem;
+         _quickMenu.source = [];
          _quickMenu.addItem(_ADD_TASK);
          _quickMenu.addItem(_MARK_DONE);
+         if(!_facade) {
+            _facade = ApplicationFacade.getInstance();
+         }
       }
 
       private function initEventListener(event:FlexEvent):void {

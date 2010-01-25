@@ -156,8 +156,14 @@ public interface ProjectManager {
    void removeImpediment(BacklogItemDto dto);
 
    /**
-    * 
+    * Update data for the issue provided
     * @param issueDto
     */
    public void updateImpediment(IssueDto issueDto);
+
+   /**
+    * Convenience method to allow all a Story's tasks to be marked as done.
+    * @param id of the story who's tasks are all to be marked as done.
+    */
+   public void markStoryDone(Long id);
 }
