@@ -66,6 +66,7 @@ public class ProjectPanelMediator extends Mediator{
       viewComp.projectDisplay.btnEdit.addEventListener(MouseEvent.CLICK, handleEditProject);
       viewComp.iterationSummary.btnEdit.addEventListener(MouseEvent.CLICK, handleEditIteration);
       viewComp.projectDisplay.lnkVelocity.addEventListener(MouseEvent.CLICK, handleDisplayVelocityChart);
+      viewComp.lnkRefresh.addEventListener(MouseEvent.CLICK, handleRefreshProjectRequest);
 
       viewComp.iterationSummary.lnkExport.addEventListener(MouseEvent.CLICK, handleIterationBacklogExport);
       viewComp.projectDisplay.lnkExport.addEventListener(MouseEvent.CLICK, handleProductBacklogExport);
@@ -107,6 +108,12 @@ public class ProjectPanelMediator extends Mediator{
       if (project != null) {
          _proxy.selectedProject = project;
          sendNotification(ApplicationFacade.NOTE_LOAD_PROJECT, project.id);
+      }
+   }
+
+   private function handleRefreshProjectRequest(event : Event) : void {
+      if (_proxy.selectedProject != null) {
+         sendNotification(ApplicationFacade.NOTE_LOAD_PROJECT, _proxy.selectedProject.id);
       }
    }
 
@@ -229,6 +236,7 @@ public class ProjectPanelMediator extends Mediator{
          view.iterationSummary.totalPoints.text = "" + _proxy.selectedIteration.getPoints();
          view.iterationSummary.hrsRemaining.text = "" + _proxy.selectedIteration.getTaskHoursRemaining();
          view.iterationSummary.daysRemaining.text = "" + _proxy.selectedIteration.getDaysRemaining();
+         view.iterationSummary.description.text = "" + _proxy.selectedIteration.description;
          view.iterationSummary.btnEdit.enabled = true;
          view.iterationSummary.printPopUp.enabled = true;
          view.iterationSummary.lnkExport.enabled = true;

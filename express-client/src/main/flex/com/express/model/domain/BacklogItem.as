@@ -74,6 +74,13 @@ public class BacklogItem
       }
    }
 
+   public function get assignedToLabel() : String {
+      if(!assignedTo) {
+         return "Unassigned";
+      }
+      return assignedTo.fullName;
+   }
+
    public function get themesLabel() : String {
       if(parent) {
          return "-";

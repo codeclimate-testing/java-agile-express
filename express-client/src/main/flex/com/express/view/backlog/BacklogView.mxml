@@ -73,7 +73,8 @@
             <mx:AdvancedDataGridColumn headerText="Effort" dataField="effort" width="50" textAlign="center"
                                        showDataTips="true"/>
             <mx:AdvancedDataGridColumn headerText="Status" dataField="status" showDataTips="true" width="130"/>
-            <mx:AdvancedDataGridColumn id="assignedToColumn" headerText="Assigned To" showDataTips="true"/>
+            <mx:AdvancedDataGridColumn id="assignedToColumn" headerText="Assigned To" dataField="assignedToLabel"
+                                       showDataTips="true"/>
             <mx:AdvancedDataGridColumn headerText="Actions" width="65">
                <mx:itemRenderer>
                   <mx:Component>

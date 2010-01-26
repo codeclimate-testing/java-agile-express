@@ -10,7 +10,6 @@ import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Iteration;
-import com.express.model.domain.User;
 import com.express.model.request.BacklogItemAssignRequest;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.iteration.IterationMediator;
@@ -22,7 +21,6 @@ import flash.events.MouseEvent;
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.controls.ComboBox;
-import mx.controls.advancedDataGridClasses.AdvancedDataGridColumn;
 import mx.events.CloseEvent;
 import mx.events.DragEvent;
 import mx.managers.DragManager;
@@ -47,8 +45,6 @@ public class BacklogMediator extends Mediator {
       viewComp.grdProductBacklog.dataProvider = _proxy.productBacklog;
       viewComp.grdIterationBacklog.dataTipFunction = buildToolTip;
       viewComp.grdProductBacklog.dataTipFunction = buildToolTip;
-      viewComp.assignedToColumn.labelFunction = formatAssignedTo;
-      viewComp.assignedToColumn.sortCompareFunction = sortAssignedTo;
       viewComp.auth.userRoles = _secureContext.availableRoles;
 
       viewComp.cboIterations.addEventListener(Event.CHANGE, handleIterationSelected);
@@ -215,35 +211,6 @@ public class BacklogMediator extends Mediator {
       story.project = _proxy.selectedProject;
       _proxy.productBacklogRequest = true;
       sendNotification(BacklogItemMediator.CREATE, story);
-   }
-
-   private function formatAssignedTo(row:Object, col:AdvancedDataGridColumn):String {
-      var item:BacklogItem = row as BacklogItem;
-      if (!item.assignedTo) {
-         return "Unassigned";
-      }
-      return item.assignedTo.fullName;
-   }
-
-   private function sortAssignedTo(obj1:Object, obj2:Object):int {
-      if (obj1 == null && obj2 == null) {
-         return 0;
-      }
-      if (obj1 == null) {
-         return 1;
-      }
-      if (obj2 == null) {
-         return -1
-      }
-      var name1:String = User(obj1).fullName.toLocaleLowerCase();
-      var name2:String = User(obj2).fullName.toLocaleLowerCase();
-      if (name1 < name2) {
-         return -1
-      }
-      if (name2 < name1) {
-         return 1;
-      }
-      return 0;
    }
 
    private function buildToolTip(row:Object):String {
