@@ -127,7 +127,7 @@ public class BacklogItemMediator extends FormMediator {
       _proxy.currentBacklogItem.effort = int(view.backlogItemForm.effort.text);
       _proxy.currentBacklogItem.businessValue = int(view.backlogItemForm.businessValue.text);
       _proxy.currentBacklogItem.status = view.backlogItemForm.itemStatus.selectedLabel;
-      _proxy.currentBacklogItem.assignedTo = view.backlogItemForm.assignedToList.selectedItem as User;
+      _proxy.currentBacklogItem.assignedTo = view.backlogItemForm.cboAssignedTo.selectedItem as User;
       _proxy.currentBacklogItem.detailedDescription = view.backlogItemForm.descriptionEditor.htmlText;
    }
 
@@ -154,8 +154,8 @@ public class BacklogItemMediator extends FormMediator {
          view.backlogItemForm.itemStatus.selectedItem = _proxy.currentBacklogItem.status;
          view.backlogItemForm.effort.text = _proxy.currentBacklogItem.effort.toString();
          view.backlogItemForm.businessValue.text = _proxy.currentBacklogItem.businessValue.toString();
-         view.backlogItemForm.assignedToList.dataProvider = _projectProxy.developers;
-         view.backlogItemForm.assignedToList.selectedIndex = _projectProxy.getDeveloperIndex(_proxy.currentBacklogItem.assignedTo);
+         view.backlogItemForm.cboAssignedTo.dataProvider = _projectProxy.developers;
+         view.backlogItemForm.cboAssignedTo.selectedIndex = _projectProxy.getDeveloperIndex(_proxy.currentBacklogItem.assignedTo);
          view.backlogItemForm.descriptionEditor.textArea.htmlText = _proxy.currentBacklogItem.detailedDescription;
          if (_proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CHILD_CREATE ||
              _proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CHILD_EDIT) {

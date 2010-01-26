@@ -47,7 +47,7 @@ public class BacklogItemProxy extends Proxy
    }
 
    public function set assignToList(assignToList : ArrayCollection) : void {
-      _assignToList.removeAll();
+      _assignToList.source = [];
       for each(var user : User in assignToList) {
          _assignToList.addItem(user);
       }

@@ -62,7 +62,11 @@
          <mx:ComboBox id="itemStatus" prompt="-- Select --"/>
       </mx:FormItem>
       <mx:FormItem id="assignedToItem" label="Assigned To:">
-         <mx:ComboBox id="assignedToList" labelField="fullName" prompt="-- Select --"/>
+         <mx:HBox>
+            <mx:ComboBox id="cboAssignedTo" labelField="fullName" prompt="-- Select --"/>
+            <mx:LinkButton id="lnkClearAssignedTo" icon=" @Embed('/images/icons/remove.png')" width="20"
+                           toolTip="clear assigned to" click="{cboAssignedTo.selectedIndex = -1}"/>
+         </mx:HBox>
       </mx:FormItem>
    </mx:Form>
    <mx:RichTextEditor id="descriptionEditor" height="100%" width="100%" title="Detailed Description"
