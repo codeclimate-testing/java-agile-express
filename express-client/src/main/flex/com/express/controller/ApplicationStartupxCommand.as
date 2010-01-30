@@ -16,7 +16,7 @@ import mx.messaging.config.ServerConfig;
 import org.puremvc.as3.interfaces.*;
 import org.puremvc.as3.patterns.command.*;
 
-public class ApplicationStartupCommand extends SimpleCommand {
+public class ApplicationStartupxCommand extends SimpleCommand {
    override public function execute(note:INotification):void {
       var registry:ServiceRegistry = createServiceRegistry();
       registerProxies(registry);
