@@ -1,7 +1,7 @@
 package com.express
 {
 import com.express.controller.AccessRequestsLoadCommand;
-import com.express.controller.ApplicationStartupxCommand;
+import com.express.controller.ApplicationStartUpCommand;
 import com.express.controller.ApplicationUsersLoadCommand;
 import com.express.controller.BacklogItemAssignCommand;
 import com.express.controller.BacklogItemCreateCommand;
@@ -108,7 +108,7 @@ public class ApplicationFacade extends Facade {
     */
    override protected function initializeController():void {
       super.initializeController();
-      registerCommand(NOTE_STARTUP, ApplicationStartupxCommand);
+      registerCommand(NOTE_STARTUP, ApplicationStartUpCommand);
 
       registerCommand(NOTE_LOAD_PROJECT, ProjectLoadCommand);
       registerCommand(NOTE_LOAD_PROJECT_LIST, ProjectListLoadCommand);
