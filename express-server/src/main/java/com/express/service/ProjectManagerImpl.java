@@ -114,11 +114,11 @@ public class ProjectManagerImpl implements ProjectManager {
       Project project = null;
       if (CreateBacklogItemRequest.PRODUCT_BACKLOG_STORY.equals(request.getType())) {
          project = projectDao.findById(request.getParentId());
-         project.addBacklogItem(item);
+         project.addBacklogItem(item, true);
       }
       else if (CreateBacklogItemRequest.STORY.equals(request.getType())) {
          Iteration iteration = iterationDao.findById(request.getParentId());
-         iteration.addBacklogItem(item);
+         iteration.addBacklogItem(item, true);
          project = iteration.getProject();
       }
       else if (CreateBacklogItemRequest.TASK.equals(request.getType())) {
@@ -198,10 +198,10 @@ public class ProjectManagerImpl implements ProjectManager {
          }
          if (request.getIterationToId() != null && request.getIterationToId() != 0) {
             Iteration to = iterationDao.findById(request.getIterationToId());
-            to.addBacklogItem(item);
+            to.addBacklogItem(item, false);
          }
          else {
-            project.addBacklogItem(item);
+            project.addBacklogItem(item, false);
          }
       }
 
@@ -260,6 +260,7 @@ public class ProjectManagerImpl implements ProjectManager {
          Project project = domainFactory.createProject(request.getNewProject(), Policy.DEEP);
          ProjectWorker worker = new ProjectWorker();
          worker.getPermissions().setProjectAdmin(Boolean.TRUE);
+         worker.getPermissions().setIterationAdmin(Boolean.TRUE);
          project.addProjectWorker(worker);
          worker.setWorker(user);
          projectDao.save(project);

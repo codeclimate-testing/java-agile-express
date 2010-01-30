@@ -15,7 +15,7 @@
                 xmlns:register="com.express.view.register.*"
                 verticalScrollPolicy="off" verticalAlign="top"
                 layout="vertical" horizontalAlign="left" height="100%" width="100%"
-                creationComplete="facade.startup(this)">
+                creationComplete="facade.startUp(this)">
 
    <mx:Style source="styles/yflexskin.css"/>
    <mx:Style source="styles/style.css"/>

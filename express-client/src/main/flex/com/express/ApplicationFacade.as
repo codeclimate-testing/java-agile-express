@@ -147,7 +147,7 @@ public class ApplicationFacade extends Facade {
       registerCommand(NOTE_PROJECT_ACCESS_RESPONSE, ProjectAccessResponseCommand);
    }
 
-   public function startup(app:Express):void {
+   public function startUp(app:Express):void {
       sendNotification(NOTE_STARTUP, app);
    }
 

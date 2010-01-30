@@ -164,7 +164,7 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       BacklogItem item = new BacklogItem();
       Long id = 1l;
       Project project = new Project();
-      project.addBacklogItem(item);
+      project.addBacklogItem(item, true);
 
       given(backlogItemDao.findById(id)).willReturn(item);
       projectDao.save(project);
@@ -177,7 +177,7 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       BacklogItemDto itemDto = new BacklogItemDto();
       BacklogItem item = new BacklogItem();
       Project project = new Project();
-      project.addBacklogItem(item);
+      project.addBacklogItem(item, true);
       given(domainFactory.createBacklogItem(itemDto)).willReturn(item);
       projectDao.save(project);
       
@@ -215,7 +215,7 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
       Long projectId = 1l;
       Project project = new Project();
       BacklogItem item = new BacklogItem();
-      project.addBacklogItem(item);
+      project.addBacklogItem(item, true);
       LoadBacklogRequest request = new LoadBacklogRequest();
       request.setType(LoadBacklogRequest.TYPE_PROJECT);
       request.setParentId(projectId);
@@ -227,9 +227,11 @@ public class ProjectManagerImplTest extends UnitilsJUnit4 {
    @Test
    public void shouldLoadIterationBacklog() {
       Long iterationId = 1l;
+      Project project = new Project();
       Iteration iteration = new Iteration();
+      project.addIteration(iteration);
       BacklogItem item = new BacklogItem();
-      iteration.addBacklogItem(item);
+      iteration.addBacklogItem(item, true);
       LoadBacklogRequest request = new LoadBacklogRequest();
       request.setType(LoadBacklogRequest.TYPE_ITERATION);
       request.setParentId(iterationId);

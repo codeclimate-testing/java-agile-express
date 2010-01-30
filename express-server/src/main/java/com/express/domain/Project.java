@@ -14,11 +14,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "PROJECT")
-@NamedQueries({
-      @NamedQuery(name = "Project.findAll", query = "SELECT P FROM Project P"),
-      @NamedQuery(name = "Project.findNotWorkingOn", query = "SELECT DISTINCT P FROM Project P WHERE P NOT IN(SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1)"),
-      @NamedQuery(name = "Project.findWorkingOn", query = "SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1")
-})
+@NamedQueries({@NamedQuery(name = "Project.findAll", query = "SELECT P FROM Project P"), @NamedQuery(name = "Project.findNotWorkingOn", query = "SELECT DISTINCT P FROM Project P WHERE P NOT IN(SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1)"), @NamedQuery(name = "Project.findWorkingOn", query = "SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1")})
 public class Project implements Persistable {
    private static final long serialVersionUID = 5917736851219902630L;
 
@@ -53,6 +49,9 @@ public class Project implements Persistable {
 
    @Column(name = "EFFORT_UNIT")
    private String effortUnit;
+
+   @Column(name = "story_count")
+   private Integer storyCount = 0;
 
    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
@@ -132,6 +131,27 @@ public class Project implements Persistable {
       this.effortUnit = effortUnit;
    }
 
+   public Integer getStoryCount() {
+      //For versions before 0.7.3 storyCount will not have been maintained
+      if(storyCount == 1 && (productBacklog.size() > 1 || iterationsHaveStories())) {
+         storyCount = getTotalStoryCount() + 10;
+      }
+      return storyCount;
+   }
+
+   private boolean iterationsHaveStories() {
+      for(Iteration iteration : iterations) {
+         if(iteration.getBacklog().size() > 1) {
+            return true;
+         }
+      }
+      return false;
+   }
+
+   public void incrementStoryCount() {
+      storyCount++;
+   }
+
    public Set<ProjectWorker> getProjectWorkers() {
       return projectWorkers;
    }
@@ -152,8 +172,8 @@ public class Project implements Persistable {
 
    public List<User> getProjectManagers() {
       List<User> managers = new ArrayList<User>();
-      for(ProjectWorker worker : projectWorkers) {
-         if(worker.getPermissions().getProjectAdmin()) {
+      for (ProjectWorker worker : projectWorkers) {
+         if (worker.getPermissions().getProjectAdmin()) {
             managers.add(worker.getWorker());
          }
       }
@@ -162,8 +182,8 @@ public class Project implements Persistable {
    }
 
    public boolean isManager(User user) {
-      for(ProjectWorker worker : projectWorkers) {
-         if(worker.getWorker().equals(user)) {
+      for (ProjectWorker worker : projectWorkers) {
+         if (worker.getWorker().equals(user)) {
             return true;
          }
       }
@@ -196,10 +216,13 @@ public class Project implements Persistable {
       this.productBacklog = productBacklog;
    }
 
-   public void addBacklogItem(BacklogItem backlogItem) {
+   public void addBacklogItem(BacklogItem backlogItem, boolean isNew) {
       this.productBacklog.add(backlogItem);
       backlogItem.setProject(this);
       backlogItem.setIteration(null);
+      if (isNew) {
+         this.storyCount++;
+      }
    }
 
    public boolean removeBacklogItem(BacklogItem backlogItem) {
@@ -253,23 +276,23 @@ public class Project implements Persistable {
       this.themes.clear();
    }
 
-   public int getTotalStoryCount() {
-      synchronized (this) {
-         int total = 0;
-         total += productBacklog.size();
-         for (Iteration iteration : iterations) {
-            total += iteration.getBacklog().size();
-         }
-         return total;
+   private int getTotalStoryCount() {
+      int total = 0;
+      total += productBacklog.size();
+      for (Iteration iteration : iterations) {
+         total += iteration.getBacklog().size();
       }
+      return total;
    }
 
    @Override
    public boolean equals(Object obj) {
-      if (obj == this)
+      if (obj == this) {
          return true;
-      if (this.id == null || !(obj instanceof Project))
+      }
+      if (this.id == null || !(obj instanceof Project)) {
          return false;
+      }
       Project project = (Project) obj;
       return this.id.equals(project.getId());
    }
@@ -298,7 +321,7 @@ public class Project implements Persistable {
             return item;
          }
          BacklogItem task = item.findTaskByReference(ref);
-         if(task != null) {
+         if (task != null) {
             return task;
          }
       }
@@ -323,7 +346,7 @@ public class Project implements Persistable {
 
    public String getProductBacklogAsCSV() {
       StringBuilder result = new StringBuilder();
-      for(BacklogItem item : productBacklog) {
+      for (BacklogItem item : productBacklog) {
          result.append(item.toCSV());
          result.append("\n");
       }

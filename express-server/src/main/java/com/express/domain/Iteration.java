@@ -136,10 +136,13 @@ public class Iteration implements Persistable, Comparable<Iteration> {
       this.finalVelocity = finalVelocity;
    }
 
-   public void addBacklogItem(BacklogItem backlogItem) {
+   public void addBacklogItem(BacklogItem backlogItem, boolean isNew) {
       this.backlog.add(backlogItem);
       backlogItem.setIteration(this);
       backlogItem.setProject(null);
+      if(isNew) {
+         this.project.incrementStoryCount();
+      }
    }
 
    public boolean removeBacklogItem(BacklogItem backlogItem) {

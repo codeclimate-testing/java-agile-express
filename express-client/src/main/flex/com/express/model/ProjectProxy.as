@@ -38,6 +38,7 @@ public class ProjectProxy extends Proxy
    private var _productBacklog : HierarchicalData;
 
    private var _developers : ArrayCollection;
+   private var _nameSort : Sort;
    private var _projectWorkers : ArrayCollection;
    private var _accessRequests: ArrayCollection;
    private var _defectList : ArrayCollection;
@@ -59,7 +60,12 @@ public class ProjectProxy extends Proxy
       _projectList = new ArrayCollection();
       _iterationList = new ArrayCollection();
       _accessRequests = new ArrayCollection();
+
       _developers = new ArrayCollection();
+      _nameSort = new Sort();
+      _nameSort.fields = [new SortField("fullName", true)];
+      _developers.sort = _nameSort;
+
       _projectWorkers = new ArrayCollection();
       _burndown = new ArrayCollection();
       var burndownSort : Sort = new Sort();
@@ -212,11 +218,11 @@ public class ProjectProxy extends Proxy
    }
 
    public function setDevelopers(projectWorkers : ArrayCollection) : void {
-      var developers : Array = [];
+      _developers.source = [];
       for each(var worker : ProjectWorker in projectWorkers) {
-         developers.push(worker.worker);
+         _developers.addItem(worker.worker);
       }
-      _developers.source = developers;
+      _developers.refresh();
    }
 
    public function getDeveloperIndex(developer : User) : int {

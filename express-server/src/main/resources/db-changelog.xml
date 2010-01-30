@@ -262,4 +262,13 @@
                                referencedTableName="express_user"/>
    </changeSet>
 
+   <changeSet id="8" author="adam">
+      <addColumn tableName="project">
+         <column name="story_count" type="int4" defaultValue="0"/>
+      </addColumn>
+      <addColumn tableName="backlog">
+         <column name="task_count" type="int4" defaultValue="0"/>
+      </addColumn>
+   </changeSet>
+
 </databaseChangeLog>

@@ -62,6 +62,9 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    @Column(name = "effort")
    private Integer effort;
 
+   @Column(name = "task_count")
+   private Integer taskCount = 0;
+
    @ManyToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "impediment_id", referencedColumnName = "issue_id")
    private Issue impediment;
@@ -145,6 +148,14 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
 
    public Integer getEffort() {
       return effort;
+   }
+
+   public Integer getTaskCount() {
+      //For versions before 0.7.3 taskCount will not have been maintained
+      if(taskCount == 1 && tasks.size() > 1) {
+         taskCount = tasks.size() + 1;
+      }
+      return taskCount;
    }
 
    public void setEffort(Integer effort) {
@@ -255,6 +266,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    public void addTask(BacklogItem task) {
       this.tasks.add(task);
       task.setParent(this);
+      taskCount++;
    }
 
    public boolean removeTask(BacklogItem task) {
@@ -293,7 +305,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       }
       else {
          ref.append(getProject().getReference()).append("-");
-         ref.append(getProject().getTotalStoryCount());
+         ref.append(getProject().getStoryCount());
       }
       this.reference = ref.toString();
    }
@@ -350,12 +362,6 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
          remainingEffort += task.getEffort();
       }
       return remainingEffort;
-   }
-
-   private int getTaskCount() {
-      synchronized (this) {
-         return tasks.size();
-      }
    }
 
    public void makeStatusConsitent() {

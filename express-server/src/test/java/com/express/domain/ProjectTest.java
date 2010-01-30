@@ -28,7 +28,7 @@ public class ProjectTest extends UnitilsJUnit4 {
    }
 
    @Test
-   public void testDevelopers() {
+   public void shouldAddAndremoveDevelopers() {
       assertNotNull(project.getProjectWorkers());
       assertEquals(0, project.getProjectWorkers().size());
       ProjectWorker projectWorker = new ProjectWorker();
@@ -39,7 +39,7 @@ public class ProjectTest extends UnitilsJUnit4 {
    }
 
    @Test
-   public void testAccessRequests() {
+   public void shouldAddAndRemoveAccessRequests() {
       assertNotNull(project.getAccessRequests());
       assertEquals(0, project.getAccessRequests().size());
       AccessRequest request = new AccessRequest();
@@ -75,6 +75,38 @@ public class ProjectTest extends UnitilsJUnit4 {
       projectWorker = new ProjectWorker();
       project.addProjectWorker(projectWorker);
       assertEquals(1, project.getProjectManagers().size());
+   }
+
+   @Test
+   public void shouldIncrementStoryCountWhenAddedToProductBacklog() {
+      assertEquals(0, project.getStoryCount().intValue());
+      project.addBacklogItem(new BacklogItem(), true);
+      assertEquals(1, project.getStoryCount().intValue());
+   }
+
+   @Test
+   public void shouldNotIncrementStoryCountWhenMovedToProductBacklog() {
+      assertEquals(0, project.getStoryCount().intValue());
+      project.addBacklogItem(new BacklogItem(), false);
+      assertEquals(0, project.getStoryCount().intValue());
+   }
+
+   @Test
+   public void shouldIncrementStoryCountWhenAddedToIterationBacklog() {
+      assertEquals(0, project.getStoryCount().intValue());
+      Iteration iteration = new Iteration();
+      project.addIteration(iteration);
+      iteration.addBacklogItem(new BacklogItem(), true);
+      assertEquals(1, project.getStoryCount().intValue());
+   }
+
+   @Test
+   public void shouldNotIncrementStoryCountWhenMovedToIterationBacklog() {
+      assertEquals(0, project.getStoryCount().intValue());
+      Iteration iteration = new Iteration();
+      project.addIteration(iteration);
+      iteration.addBacklogItem(new BacklogItem(), false);
+      assertEquals(0, project.getStoryCount().intValue());
    }
 
 }
