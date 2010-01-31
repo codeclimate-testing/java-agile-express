@@ -404,21 +404,27 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    }
 
    public static String getCSVTitleLine() {
-      return "Reference" + "," + "Title" + "," + "Summary" + "," + "Status" + "Assigned To";
+      return "Reference," + "Themes," + "Title," + "Summary," + "Status," + "Assigned To," + "Effort," + "Business Value";
    }
 
    public String toCSV() {
       StringBuilder result = new StringBuilder();
       result.append(reference).append(",");
+      for(Theme theme : themes) {
+         result.append(theme.getTitle()).append(" ");
+      }
+      result.append(",");
       result.append(title).append(",");
       result.append(summary).append(",");
       result.append(status.getTitle()).append(",");
       if(assignedTo == null) {
-         result.append("unassigned");
+         result.append("unassigned,");
       }
       else {
-         result.append(assignedTo.getFullName());
+         result.append(assignedTo.getFullName()).append(",");
       }
+      result.append(effort).append(",");
+      result.append(businessValue);
       for(AcceptanceCriteria criteria : acceptanceCriteria) {
          result.append("\n");
          result.append(criteria.toCSV());

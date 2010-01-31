@@ -91,7 +91,7 @@ public class ProjectPanelMediator extends Mediator{
       url = url.substr(0,url.length - 18);
       url += "/iteration/" + _proxy.selectedIteration.id + "/backlog";
       var request : URLRequest = new URLRequest(url);
-      _fileRef.download(request);
+      _fileRef.download(request, _proxy.selectedIteration.title + "_backlog.csv");
    }
 
    private function handleProductBacklogExport(event : Event) : void {
@@ -99,7 +99,7 @@ public class ProjectPanelMediator extends Mediator{
       url = url.substr(0,url.length - 18);
       url += "/project/" + _proxy.selectedProject.id + "/backlog";
       var request : URLRequest = new URLRequest(url);
-      _fileRef.download(request);
+      _fileRef.download(request, _proxy.selectedProject.title + "_backlog.csv");
    }
 
    public function handleProjectSelected(event : Event) : void {

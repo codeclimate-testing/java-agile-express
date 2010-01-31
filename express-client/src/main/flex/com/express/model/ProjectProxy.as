@@ -249,7 +249,7 @@ public class ProjectProxy extends Proxy
          if(iteration.isOpen()) {
             var effort : EffortRecord = new EffortRecord();
             var temp: Date = new Date();
-            effort.date = new Date(temp.fullYear, temp.month, temp.day);
+            effort.date = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate());
             effort.effort = iteration.getTaskHoursRemaining();
             _burndown.addItem(effort);
          }

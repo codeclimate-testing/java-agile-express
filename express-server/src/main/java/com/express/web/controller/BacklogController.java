@@ -1,14 +1,14 @@
 package com.express.web.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import com.express.service.ProjectManager;
 import com.express.service.dto.CSVRequest;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class BacklogController {
    }
 
    @RequestMapping(value = "/iteration/{id}/backlog", method = RequestMethod.GET)
-   public void getCSVForIterationBacklog(@PathVariable("id")Long id, HttpServletResponse response) {
+   public void getCSVForIterationBacklog(@PathVariable("id") Long id, HttpServletResponse response) {
       CSVRequest request = new CSVRequest();
       request.setType(CSVRequest.TYPE_ITERATION_BACKLOG);
       request.setId(id);
@@ -36,7 +36,7 @@ public class BacklogController {
    }
 
    @RequestMapping(value = "/project/{id}/backlog", method = RequestMethod.GET)
-   public void getCSVForProductBacklog(@PathVariable("id")Long id, HttpServletResponse response) {
+   public void getCSVForProductBacklog(@PathVariable("id") Long id, HttpServletResponse response) {
       CSVRequest request = new CSVRequest();
       request.setType(CSVRequest.TYPE_PRODUCT_BACKLOG);
       request.setId(id);
@@ -45,8 +45,8 @@ public class BacklogController {
 
    private void writeStringToResponse(String csv, HttpServletResponse response) {
       try {
-         response.setContentType("text/csv");
-         response.addHeader("Content-Disposition", "inline;filename=backlog.csv");
+         response.setContentType("text/x-csv");
+         response.setHeader("Content-Disposition", "inline; filename=\"backlog.csv\"");
          response.getOutputStream().write(csv.getBytes());
       }
       catch (IOException e) {
