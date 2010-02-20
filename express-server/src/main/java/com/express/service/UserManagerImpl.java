@@ -113,6 +113,10 @@ public class UserManagerImpl implements UserManager {
       return remoteObjectFactory.createUserDto(user, Policy.DEEP);
    }
 
+   public UserDto resetPassword(Long userId) {
+      return null;  //To change body of implemented methods use File | Settings | File Templates.
+   }
+
    private void rejectExistingUsername(String username) throws RemoteAccessException {
       try {
          User user = userDao.findByUsername(username);

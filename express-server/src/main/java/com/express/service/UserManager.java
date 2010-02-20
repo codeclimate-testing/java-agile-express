@@ -44,4 +44,11 @@ public interface UserManager {
     */
    UserDto changePassword(ChangePasswordRequest request);
 
+   /**
+    * Resets the User identified by the password provied
+    * @param userId
+    * @return
+    */
+   UserDto resetPassword(Long userId);
+
 }

@@ -25,13 +25,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots>
-          <root url="file://$MODULE_DIR$/target/express-server-0.7.3-SNAPSHOT" />
-          <root url="file://$MODULE_DIR$/src/main/java" />
-          <root url="file://$MODULE_DIR$/src/main/resources" />
-          <root url="file://$MODULE_DIR$/src/test/java" />
-          <root url="file://$MODULE_DIR$/src/test/resources" />
-        </sourceRoots>
         <context-artifact name="express-server:war exploded" />
       </configuration>
     </facet>
@@ -139,6 +132,7 @@
     <orderEntry type="library" exported="" name="Maven: org.codehaus.jackson:jackson-core-asl:1.0.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.servlet:jstl:1.1.2" level="project" />
     <orderEntry type="library" exported="" name="Maven: taglibs:standard:1.1.2" level="project" />
+    <orderEntry type="module" module-name="express-client" exported="" />
   </component>
 </module>
 

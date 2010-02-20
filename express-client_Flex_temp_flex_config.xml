@@ -28,5 +28,5 @@
   <file-specs>
     <path-element>express-client/src/main/flex/Express.mxml</path-element>
   </file-specs>
-  <output>/Users/adam/Projects/agileexpress/express-server/target/express-server-0.7.3-SNAPSHOT/express-client-0.7.3-SNAPSHOT.swf</output>
+  <output>/Users/adam/Projects/agileexpress/express-server/target/express-server-0.7.4-SNAPSHOT/express-client-0.7.4-SNAPSHOT.swf</output>
 </flex-config>

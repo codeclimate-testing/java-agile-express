@@ -12,7 +12,7 @@ public class WallProxy extends Proxy
 {
    public static const NAME : String = "WallProxy";
 
-   public var inProgresstem : BacklogItem;
+   public var inProgressItem : BacklogItem;
    private var _currentBacklog : ArrayCollection;
    private var _allTasks : ArrayCollection;
    private var _taskCollections : Dictionary;

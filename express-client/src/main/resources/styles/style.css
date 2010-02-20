@@ -275,16 +275,6 @@ TextArea {
    backgroundAlpha:0.7;
 }
 
-StoryView {
-   border-skin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
-   background-image: Embed("/images/story-bg.png");
-   background-position: left, top;
-   padding-right:2;
-   verticalGap: 0;
-
-   border-thickness:0;
-}
-
 .cardHeading {
     paddingTop:2;
    font-weight:bold;
@@ -292,9 +282,90 @@ StoryView {
    horizontal-align:left;
 }
 
+.cardSummaryText {
+   font-size:10;
+   horizontal-align:left;
+   padding-top:3px;
+}
+
 .cardText {
    font-size:10;
    horizontal-align:left;
+}
+
+StoryCard {
+   border-skin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
+   background-image: Embed("/images/story-bg.png");
+   background-position: left, top;
+   backgroundAlpha: 1.0;
+   padding-right:2px;
+   padding-left:10px;
+   padding-bottom:5px;
+   verticalGap: 0;
+   border-thickness:0;
+}
+
+.storyCardHeaderBox {
+   padding-left:0;
+   padding-right:0;
+   padding-top:2;
+   padding-bottom:0;
+   verticalAlign:middle;
+   horizontalGap:0;
+}
+
+.storyText {
+   font-size:12;
+   padding-top:4px;
+}
+
+.storyQuickMenu {
+   padding-top:2px;
+   padding-right:0;
+}
+
+WallRow {
+   horizontalGap:0;
+   horizontalAlign:center;
+   border-style: solid;
+   padding-top:3px;
+   padding-bottom:3px;
+   border-thickness: 1;
+   border-color: #B7BABC;
+   background-color:#ffffff;
+   backgroundAlpha:0.7;
+}
+
+CardGrid {
+   background-color: #FFFFFF;
+   backgroundAlpha:0.7;
+   horizontalGap:5px;
+   verticalGap:5px;
+}
+
+TaskCard {
+   border-skin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
+   background-image: Embed("/images/task-bg.png");
+   background-position: left, top;
+   verticalGap: 0;
+   border-thickness:0;
+   horizontal-align:left;
+   padding-left:10px;
+   padding-right:2px;
+}
+
+TaskCard.impeded {
+   background-image: Embed("/images/task-impeded-bg.png");
+}
+
+.cardColourDot {
+   padding-bottom: 0;
+   padding-left: 0;
+   padding-right: 0;
+   padding-top: 0;
+   corner-radius: 15;
+   border-thickness: 1;
+   border-style: solid;
 }
 
 .titledBorder {
@@ -321,35 +392,6 @@ StoryView {
 
 .page {
    borderThickness:0;
-}
-
-CardView {
-   border-skin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
-   background-image: Embed("/images/task-bg.png");
-   background-position: left, top;
-
-   verticalGap: 0;
-   
-   border-thickness:0;
-   horizontal-align:left;
-}
-
-CardView.impeded {
-   background-image: Embed("/images/task-impeded-bg.png");
-}
-
-.cardColourDot {
-   padding-bottom: 0;
-   padding-left: 0;
-   padding-right: 0;
-   padding-top: 0;
-   corner-radius: 15;
-   border-thickness: 1;
-   border-style: solid;
-}
-
-.selectedTask {
-   background-color: #66ccff;
 }
 
 .accordionHeader {

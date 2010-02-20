@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:scrumWall="com.express.view.scrumWall.*"
+      verticalGap="0">
+   <mx:Script>
+   <![CDATA[ import com.express.model.domain.BacklogItem; ]]>
+   </mx:Script>
+   <mx:HBox horizontalGap="0" width="100%">
+      <mx:Label styleName="h2" text="Stories" width="225"/>
+      <mx:HDividedBox id="swimLaneHeaders" width="100%">
+         <mx:HBox id="openLane" height="30" styleName="wallHeader">
+            <mx:Label styleName="h2White" text="OPEN"/>
+         </mx:HBox>
+         <mx:HBox id="progressLane" height="30" styleName="wallHeader">
+            <mx:Label styleName="h2White" text="IN PROGRESS"/>
+         </mx:HBox>
+         <mx:HBox id="testLane" height="30" styleName="wallHeader">
+            <mx:Label styleName="h2White" text="TEST"/>
+         </mx:HBox>
+         <mx:HBox id="doneLane" height="30" styleName="wallHeader">
+            <mx:Label styleName="h2White" text="DONE"/>
+         </mx:HBox>
+      </mx:HDividedBox>
+   </mx:HBox>
+   <mx:Repeater id="rptStories">
+      <scrumWall:WallRow story="{rptStories.currentItem as BacklogItem}" header="{openLane}" openWidth="{openLane.width}"
+            progressWidth="{progressLane.width}" testWidth="{testLane.width}" doneWidth="{doneLane.width}"/>
+   </mx:Repeater>
+</mx:VBox>

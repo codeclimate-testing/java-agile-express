@@ -22,6 +22,7 @@ import com.express.view.projectAccess.ProjectAccessMediator;
 import com.express.view.projectDetails.ProjectDetailsMediator;
 import com.express.view.projectPanel.ProjectPanelMediator;
 import com.express.view.register.RegisterMediator;
+import com.express.view.scrumWall.ScrumWallMediator;
 import com.express.view.wall.WallMediator;
 
 import flash.events.Event;
@@ -203,7 +204,8 @@ public class ApplicationMediator extends Mediator
 
    public function handleWallViewCreated(event : FlexEvent) : void {
       facade.registerProxy(new WallProxy());
-      facade.registerMediator(new WallMediator(app.wallView));
+      facade.registerMediator(new ScrumWallMediator(app.wallView));
+//      facade.registerMediator(new WallMediator(app.wallView));
    }
 
    public function handleLoginViewCreated(event : Event) : void {

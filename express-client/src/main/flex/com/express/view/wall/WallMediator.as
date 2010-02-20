@@ -121,7 +121,7 @@ public class WallMediator extends Mediator
    }
 
    private function handleAssigned(event : Event) : void {
-      var item : BacklogItem = _wallProxy.inProgresstem;
+      var item : BacklogItem = _wallProxy.inProgressItem;
       item.assignedTo = _assignmentPopup.cboAssignedTo.selectedItem as User;
       buildAndSendUpdateNotification(BacklogItem.STATUS_PROGRESS, item);
       PopUpManager.removePopUp(_assignmentPopup);
@@ -158,7 +158,7 @@ public class WallMediator extends Mediator
    public function droppedInProgress(event : DragEvent) : void {
       var item : BacklogItem = getDragItem(event);
       if(!item.assignedTo) {
-         _wallProxy.inProgresstem = item;
+         _wallProxy.inProgressItem = item;
          PopUpManager.addPopUp(getAssignmentPopup(), view, true);
          PopUpManager.centerPopUp(_assignmentPopup);
       }
