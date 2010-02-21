@@ -45,7 +45,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    @Column(name = "summary")
    private String summary;
 
-   @Column(name = "description")
+   @Column(name = "description", length = 2147483647)
    @Lob
    private String detailedDescription;
 

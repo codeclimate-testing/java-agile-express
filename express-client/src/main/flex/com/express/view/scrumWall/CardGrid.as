@@ -29,6 +29,7 @@ public class CardGrid extends Grid {
    private var _assignmentPopup : AssignmentPopup;
    private var _secureContext : SecureContextProxy;
    private var _projectProxy : ProjectProxy;
+   private var _rows : int;
 
    public var story : BacklogItem;
 
@@ -56,14 +57,14 @@ public class CardGrid extends Grid {
       }
       var cardsPerRow : int = Math.floor(this.width / WallRow.CARD_WIDTH);
       var index : int = 0;
-      var rows : int = 1;
+      _rows = 1;
       var row : GridRow = new GridRow();
       var card : TaskCard;
       for each(var task : BacklogItem in _tasks) {
          if(index != 0 && index % cardsPerRow == 0) {
             this.addChild(row);
             row = new GridRow();
-            rows++;
+            _rows++;
          }
          card = new TaskCard();
          card.task = task;
@@ -73,12 +74,16 @@ public class CardGrid extends Grid {
          index++;
       }
       this.addChild(row);
-      WallRow(this.parent).setRowHeight((WallRow.CARD_HEIGHT + 5) * rows);
+      WallRow(this.parent).setRowHeight((WallRow.CARD_HEIGHT + 5) * _rows);
+   }
+
+   public function getLayedOutHeight() : int {
+      return (WallRow.CARD_HEIGHT + 5) * _rows;
    }
 
    private function handleDrop(event:DragEvent):void {
       var task : BacklogItem = TaskCard(event.dragSource.dataForFormat("taskCard")).task;
-      if(!task.assignedTo) {
+      if(!task.assignedTo && gridStatus == BacklogItem.STATUS_PROGRESS) {
          _wallProxy.inProgressItem = task;
          PopUpManager.addPopUp(getAssignmentPopUp(), this, true);
          PopUpManager.centerPopUp(_assignmentPopup);
@@ -124,7 +129,7 @@ public class CardGrid extends Grid {
    private function getAssignmentPopUp() : AssignmentPopup {
       if(! _assignmentPopup) {
          _assignmentPopup = new AssignmentPopup();
-         _assignmentPopup.addEventListener(FlexEvent.CREATION_COMPLETE, handlePopupCreationComplete);
+         _assignmentPopup.addEventListener(FlexEvent.CREATION_COMPLETE, handlePopUpCreationComplete);
       }
       else {
          _assignmentPopup.cboAssignedTo.selectedItem = getAssigneeIndex(_secureContext.currentUser.id);
@@ -132,7 +137,7 @@ public class CardGrid extends Grid {
       return _assignmentPopup;
    }
 
-   private function handlePopupCreationComplete(event : Event) : void {
+   private function handlePopUpCreationComplete(event : Event) : void {
       _assignmentPopup.cboAssignedTo.dataProvider = _projectProxy.developers;
       _assignmentPopup.btnAssign.addEventListener(MouseEvent.CLICK, handleAssigned);
       _assignmentPopup.cboAssignedTo.selectedIndex = getAssigneeIndex(_secureContext.currentUser.id);

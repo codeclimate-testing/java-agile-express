@@ -23,7 +23,6 @@ import com.express.view.projectDetails.ProjectDetailsMediator;
 import com.express.view.projectPanel.ProjectPanelMediator;
 import com.express.view.register.RegisterMediator;
 import com.express.view.scrumWall.ScrumWallMediator;
-import com.express.view.wall.WallMediator;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -35,33 +34,31 @@ import mx.managers.PopUpManager;
 import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.mediator.Mediator;
 
-public class ApplicationMediator extends Mediator
-{
-   // Cannonical name of the Mediator
+public class ApplicationMediator extends Mediator {
+   // Canonical name of the Mediator
    public static const NAME:String = "ApplicationMediator";
 
-   public static const LOGIN_VIEW : uint = 0;
-   public static const BACKLOG_VIEW : int = 1;
-   public static const WALL_VIEW : int = 2;
-   public static const PROFILE_VIEW : uint = 3;
-   public static const ACCESS_VIEW : uint = 4;
-   public static const REGISTER_VIEW : uint = 5;
+   public static const LOGIN_VIEW:uint = 0;
+   public static const BACKLOG_VIEW:int = 1;
+   public static const WALL_VIEW:int = 2;
+   public static const PROFILE_VIEW:uint = 3;
+   public static const ACCESS_VIEW:uint = 4;
+   public static const REGISTER_VIEW:uint = 5;
 
-   public static const LOGIN_HEAD : String = "Login";
-   public static const PROJECT_HEAD : String = "Project";
-   public static const ACCESS_HEAD : String = "Project Access";
-   public static const PROFILE_HEAD : String = "User Profile";
-   public static const REGISTER_HEAD : String = "User Registration";
-   public static const REGISTER_CONFIRM_HEAD : String = "Registration Confirmation";
+   public static const LOGIN_HEAD:String = "Login";
+   public static const PROJECT_HEAD:String = "Project";
+   public static const ACCESS_HEAD:String = "Project Access";
+   public static const PROFILE_HEAD:String = "User Profile";
+   public static const REGISTER_HEAD:String = "User Registration";
+   public static const REGISTER_CONFIRM_HEAD:String = "Registration Confirmation";
 
-   private var _loginView : LoginView;
-   private var _secureContext : SecureContextProxy;
-   private var _projectProxy : ProjectProxy;
-   private var _popupManager : ExpressPopUpManager;
+   private var _loginView:LoginView;
+   private var _secureContext:SecureContextProxy;
+   private var _projectProxy:ProjectProxy;
+   private var _popupManager:ExpressPopUpManager;
 
 
-   public function ApplicationMediator(viewComp:Express)
-   {
+   public function ApplicationMediator(viewComp:Express) {
       super(NAME, viewComp);
 
       _secureContext = SecureContextProxy(facade.retrieveProxy(SecureContextProxy.NAME));
@@ -82,40 +79,39 @@ public class ApplicationMediator extends Mediator
       viewComp.btnLogout.addEventListener(MouseEvent.CLICK, handleLogout);
    }
 
-   private function handleLogout(event : Event) : void {
+   private function handleLogout(event:Event):void {
       logout();
    }
 
 
-
    override public function listNotificationInterests():Array {
       return [ApplicationFacade.NOTE_DISPLAY_BURNDOWN,
-              ApplicationFacade.NOTE_DISPLAY_VELOCITY,
-              ApplicationFacade.NOTE_NAVIGATE,
-              ApplicationFacade.NOTE_SHOW_ERROR_MSG,
-              ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
-              ApplicationFacade.NOTE_CLEAR_MSG,
-              ApplicationFacade.NOTE_PROJECT_ACCESS_MANAGE,
-              ApplicationFacade.NOTE_THEMES_MANAGE,
-              ApplicationFacade.NOTE_CREATE_IMPEDIMENT,
-              ApplicationFacade.NOTE_EDIT_IMPEDIMENT,
-              LoginCommand.SUCCESS,
-              BacklogItemMediator.CREATE,
-              BacklogItemMediator.EDIT,
-              ProjectPanelMediator.SHOW_PRINT_PREVIEW,
-              UpdateUserCommand.SUCCESS,
-              RegisterConfirmCommand.SUCCESS,
-              RegisterConfirmCommand.FAILURE,
-              UpdateUserCommand.SUCCESS,
-              IterationMediator.CREATE,
-              IterationMediator.EDIT,
-              ProjectDetailsMediator.CANCEL_EDIT,
-              ProjectDetailsMediator.EDIT,
-              ProjectLoadCommand.SUCCESS];
+         ApplicationFacade.NOTE_DISPLAY_VELOCITY,
+         ApplicationFacade.NOTE_NAVIGATE,
+         ApplicationFacade.NOTE_SHOW_ERROR_MSG,
+         ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
+         ApplicationFacade.NOTE_CLEAR_MSG,
+         ApplicationFacade.NOTE_PROJECT_ACCESS_MANAGE,
+         ApplicationFacade.NOTE_THEMES_MANAGE,
+         ApplicationFacade.NOTE_CREATE_IMPEDIMENT,
+         ApplicationFacade.NOTE_EDIT_IMPEDIMENT,
+         LoginCommand.SUCCESS,
+         BacklogItemMediator.CREATE,
+         BacklogItemMediator.EDIT,
+         ProjectPanelMediator.SHOW_PRINT_PREVIEW,
+         UpdateUserCommand.SUCCESS,
+         RegisterConfirmCommand.SUCCESS,
+         RegisterConfirmCommand.FAILURE,
+         UpdateUserCommand.SUCCESS,
+         IterationMediator.CREATE,
+         IterationMediator.EDIT,
+         ProjectDetailsMediator.CANCEL_EDIT,
+         ProjectDetailsMediator.EDIT,
+         ProjectLoadCommand.SUCCESS];
    }
 
-   override public function handleNotification(notification : INotification):void {
-      switch(notification.getName()) {
+   override public function handleNotification(notification:INotification):void {
+      switch (notification.getName()) {
          case BacklogItemMediator.CREATE :
          case BacklogItemMediator.EDIT :
             _popupManager.showBacklogWindow(notification);
@@ -173,66 +169,64 @@ public class ApplicationMediator extends Mediator
             app.lblUser.text = _secureContext.currentUser.fullName;
             break;
          case RegisterConfirmCommand.SUCCESS :
-            sendNotification(ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,"Your registration has now " +
-                             "been confirmed and you can access express using the email address " +
-                             "and password you provided.");
+            sendNotification(ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
+                             "Your registration has now been confirmed and you can access express using the " +
+                             "email address and password you provided.");
             app.loginView.reponseText.visible = true;
             app.loginView.reponseText.includeInLayout = true;
             break;
          case RegisterConfirmCommand.FAILURE :
-            sendNotification(ApplicationFacade.NOTE_SHOW_ERROR_MSG,"Unfortunately we were unable " +
-                             "to comfirm your  registration. If you have used the link on the " +
-                             "email we sent you please contact the administrator and report this " +
-                             "problem");
+            sendNotification(ApplicationFacade.NOTE_SHOW_ERROR_MSG,
+                             "Unfortunately we were unable to comfirm your  registration. If you have used the " +
+                             "link on the email we sent you please contact the administrator and report this problem");
             app.loginView.reponseText.visible = false;
             app.loginView.reponseText.includeInLayout = false;
-      break;
+            break;
       }
    }
 
-   public function handleBacklogViewCreated(event : Event) : void {
+   public function handleBacklogViewCreated(event:Event):void {
       facade.registerMediator(new BacklogMediator(app.backlogView));
    }
 
-   public function handleProjectAccessFormCreated(event : FlexEvent) : void {
+   public function handleProjectAccessFormCreated(event:FlexEvent):void {
       facade.registerMediator(new ProjectAccessMediator(app.projectAccessForm));
    }
 
-   public function handleRiskViewCreated(event : FlexEvent) : void {
+   public function handleRiskViewCreated(event:FlexEvent):void {
       //facade.registerMediator(new RiskMediator(view.riskView));
    }
 
-   public function handleWallViewCreated(event : FlexEvent) : void {
+   public function handleWallViewCreated(event:FlexEvent):void {
       facade.registerProxy(new WallProxy());
       facade.registerMediator(new ScrumWallMediator(app.wallView));
-//      facade.registerMediator(new WallMediator(app.wallView));
+      //      facade.registerMediator(new WallMediator(app.wallView));
    }
 
-   public function handleLoginViewCreated(event : Event) : void {
+   public function handleLoginViewCreated(event:Event):void {
       facade.registerMediator(new LoginMediator(_loginView));
    }
 
-   public function handleProfileViewCreated(event : Event) : void {
+   public function handleProfileViewCreated(event:Event):void {
       facade.registerMediator(new ProfileMediator(app.profileView));
    }
 
-   public function handleRegisterViewCreated(event : Event) : void {
+   public function handleRegisterViewCreated(event:Event):void {
       facade.registerMediator(new RegisterMediator(app.registerView));
    }
 
 
-
-   public function handleNavigateRequest(event : MouseEvent) : void {
-      var item : MenuItem = (event.target as LinkButton).data as MenuItem;
+   public function handleNavigateRequest(event:MouseEvent):void {
+      var item:MenuItem = (event.target as LinkButton).data as MenuItem;
       navigate(item);
    }
 
-   private function navigate(item : MenuItem) : void {
+   private function navigate(item:MenuItem):void {
       sendNotification(ApplicationFacade.NOTE_CLEAR_MSG);
       app.views.selectedIndex = item.index;
    }
 
-   public function handleLoginRequest(event : MouseEvent) : void {
+   public function handleLoginRequest(event:MouseEvent):void {
       if (_loginView == null) {
          _loginView = new LoginView();
          _loginView.addEventListener(FlexEvent.CREATION_COMPLETE, handleLoginViewCreated);
@@ -244,8 +238,8 @@ public class ApplicationMediator extends Mediator
       _loginView.visible = true;
    }
 
-   public function login() : void {
-      var user : User = _secureContext.currentUser;
+   public function login():void {
+      var user:User = _secureContext.currentUser;
       sendNotification(ApplicationFacade.NOTE_LOAD_PROJECT_LIST);
 
       app.lblUser.text = user.fullName;
@@ -259,7 +253,7 @@ public class ApplicationMediator extends Mediator
       app.menu.visible = true;
    }
 
-   public function logout() : void {
+   public function logout():void {
       SecureContextProxy(facade.retrieveProxy(SecureContextProxy.NAME)).logout();
       ServiceRegistry(facade.retrieveProxy(ServiceRegistry.NAME)).logout();
       app.views.selectedIndex = LOGIN_VIEW;
@@ -267,12 +261,11 @@ public class ApplicationMediator extends Mediator
       app.menu.visible = false;
    }
 
-   public function get app():Express
-   {
+   public function get app():Express {
       return viewComponent as Express;
    }
 
-   public function get loginView() : LoginView {
+   public function get loginView():LoginView {
       return _loginView;
    }
 

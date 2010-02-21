@@ -4,6 +4,7 @@ import com.express.model.domain.BacklogItem;
 import mx.containers.HBox;
 import mx.controls.Spacer;
 import mx.core.Container;
+import mx.events.DividerEvent;
 import mx.events.FlexEvent;
 
 public class WallRow extends HBox {
@@ -20,6 +21,8 @@ public class WallRow extends HBox {
    private var _progressGrid : CardGrid;
    private var _testGrid : CardGrid;
    private var _doneGrid : CardGrid;
+   private var _allGrids : Array;
+   private var _resizeIndex : int;
 
    public function WallRow() {
       super();
@@ -63,9 +66,18 @@ public class WallRow extends HBox {
       _doneGrid.percentHeight = 100;
 //      _doneGrid.setStyle("backgroundColor", "#009999");
       this.addChild(_doneGrid);
+      _allGrids = [_openGrid, _progressGrid, _testGrid, _doneGrid];
 
       this.addEventListener(FlexEvent.CREATION_COMPLETE, handleCreationComplete);
       this.minHeight = 100;
+   }
+
+   /**
+    * It is more efficient to only resize the grids that are effected by the divider being moved
+    * @param event
+    */
+   private function handleResizeIndexes(event:DividerEvent):void {
+      _resizeIndex = event.dividerIndex;
    }
 
    /**
@@ -75,14 +87,19 @@ public class WallRow extends HBox {
     */
    private function handleHeaderResize(event : FlexEvent):void {
       this.height = CARD_HEIGHT + 3;
-      _openGrid.layoutCards();
-      _progressGrid.layoutCards();
-      _testGrid.layoutCards();
-      _doneGrid.layoutCards();
+      for(var index : int = 0; index < _allGrids.length; index++) {
+         if(index == _resizeIndex || index == (_resizeIndex + 1)) {
+            _allGrids[index].layoutCards();
+         }
+         else {
+            setRowHeight(_allGrids[index].getLayedOutHeight());
+         }
+      }
    }
 
    private function handleCreationComplete(event : FlexEvent) : void {
       header.parent.addEventListener(FlexEvent.UPDATE_COMPLETE, handleHeaderResize);
+      header.parent.addEventListener(DividerEvent.DIVIDER_RELEASE, handleResizeIndexes);
    }
 
    public function setRowHeight(newHeight : int) : void {
