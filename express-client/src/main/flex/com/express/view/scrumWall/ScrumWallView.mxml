@@ -4,8 +4,8 @@
    <mx:Script>
    <![CDATA[ import com.express.model.domain.BacklogItem; ]]>
    </mx:Script>
-   <mx:HBox horizontalGap="0" width="100%">
-      <mx:Label styleName="h2" text="Stories" width="225"/>
+   <mx:HBox horizontalGap="0" width="100%" verticalAlign="middle">
+      <mx:Label styleName="storyHead" text="Stories" width="225"/>
       <mx:HDividedBox id="swimLaneHeaders" width="100%">
          <mx:HBox id="openLane" height="30" styleName="wallHeader">
             <mx:Label styleName="h2White" text="OPEN"/>
@@ -22,7 +22,7 @@
       </mx:HDividedBox>
    </mx:HBox>
    <mx:Repeater id="rptStories">
-      <scrumWall:WallRow story="{rptStories.currentItem as BacklogItem}" header="{openLane}" openWidth="{openLane.width}"
+      <scrumWall:WallRow id="rows" story="{rptStories.currentItem as BacklogItem}" header="{openLane}" openWidth="{openLane.width}"
             progressWidth="{progressLane.width}" testWidth="{testLane.width}" doneWidth="{doneLane.width}"/>
    </mx:Repeater>
 </mx:VBox>

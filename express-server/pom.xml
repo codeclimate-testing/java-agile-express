@@ -101,12 +101,6 @@
          <version>1.5.0</version>
       </dependency>
       <dependency>
-         <groupId>hsqldb</groupId>
-         <artifactId>hsqldb</artifactId>
-         <version>1.8.0.7</version>
-         <scope>test</scope>
-      </dependency>
-      <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
          <version>4.4</version>
@@ -295,6 +289,8 @@
          <artifactId>log4j</artifactId>
          <version>1.2.15</version>
       </dependency>
+
+      <!-- Database drivers -->
       <dependency>
          <groupId>postgresql</groupId>
          <artifactId>postgresql</artifactId>
@@ -306,6 +302,12 @@
          <version>5.1.9</version>
          <scope>compile</scope>
       </dependency>
+      <!--<dependency>-->
+         <!--<groupId>hsqldb</groupId>-->
+         <!--<artifactId>hsqldb</artifactId>-->
+         <!--<version>1.8.0.7</version>-->
+      <!--</dependency>-->
+
       <dependency>
          <groupId>com.adobe</groupId>
          <artifactId>flex-messaging-common</artifactId>

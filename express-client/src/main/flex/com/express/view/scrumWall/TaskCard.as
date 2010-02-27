@@ -4,11 +4,13 @@ import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.User;
 
+import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.components.PopUpLabel;
 
 import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 
+import mx.binding.utils.BindingUtils;
 import mx.collections.ArrayCollection;
 import mx.containers.Box;
 import mx.containers.HBox;
@@ -91,12 +93,18 @@ public class TaskCard extends VBox {
       this.height = WallRow.CARD_HEIGHT;
       addDropShadow();
       this.addEventListener(MouseEvent.MOUSE_MOVE, handleDragStart);
+      this.doubleClickEnabled = true;
+      this.addEventListener(MouseEvent.DOUBLE_CLICK, handleDoubleClick);
    }
 
    private function handleDragStart(event:MouseEvent):void {
       var source : DragSource = new DragSource();
       source.addData(this, "taskCard");
       DragManager.doDrag(this,source,event);
+   }
+
+   private function handleDoubleClick(event:MouseEvent):void {
+      _facade.sendNotification(BacklogItemMediator.EDIT, _task);
    }
 
    private function addDropShadow() : void {
@@ -109,7 +117,7 @@ public class TaskCard extends VBox {
       this.filters = newFilters;
    }
    
-   private function buildQuickMenu() : void {
+   private function buildQuickMenu(obj:Object = null) : void {
       _quickMenu.source = [];
       if (!_facade) {
          _facade = ApplicationFacade.getInstance();
@@ -154,11 +162,12 @@ public class TaskCard extends VBox {
 
    public function set task(value:BacklogItem):void {
       _task = value;
+      BindingUtils.bindProperty(_refHeading, "text", value, "reference");
+      BindingUtils.bindProperty(_text, "text", value, "summary");
+      BindingUtils.bindProperty(_text, "toolTip", value, "summary");
+      BindingUtils.bindProperty(_assignedToLabel, "text", value, "assignedToLabel");
+      BindingUtils.bindSetter(buildQuickMenu, value, "impediment");
       _color = _task.assignedTo == null ? 0 : _task.assignedTo.colour;
-      _refHeading.text = _task.reference;
-      _text.text = _task.summary;
-      _text.toolTip = _task.summary;
-      _assignedToLabel.text = _task.assignedToLabel;
       _dot.setStyle("borderColor", _color);
       _dot.setStyle("backgroundColor", _color);
       _effortLabel.text = _EFFORT_PREFIX + " " + _task.effort;

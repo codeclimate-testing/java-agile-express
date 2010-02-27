@@ -5,17 +5,12 @@ import com.express.controller.ProjectLoadCommand;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.WallProxy;
-
 import com.express.model.domain.BacklogItem;
-
 import com.express.model.domain.Issue;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.backlogItem.BacklogItemProxy;
-import com.express.view.renderer.CardView;
 
 import mx.collections.ArrayCollection;
-
-import mx.events.FlexEvent;
 
 import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.mediator.Mediator;
@@ -51,11 +46,11 @@ public class ScrumWallMediator extends Mediator {
               ProjectLoadCommand.SUCCESS,
               StoryCard.NOTE_ADD_TASK,
               StoryCard.NOTE_MARK_DONE,
-              CardView.NOTE_IMPEDED,
-              CardView.NOTE_VIEW_IMPEDIMENT,
-              CardView.NOTE_UNIMPEDED,
-              CardView.NOTE_UNASSIGN_TASK,
-              CardView.NOTE_TAKE_TASK];
+              TaskCard.NOTE_IMPEDED,
+              TaskCard.NOTE_VIEW_IMPEDIMENT,
+              TaskCard.NOTE_UNIMPEDED,
+              TaskCard.NOTE_UNASSIGN_TASK,
+              TaskCard.NOTE_TAKE_TASK];
    }
 
    override public function handleNotification(notification:INotification):void {
@@ -65,7 +60,10 @@ public class ScrumWallMediator extends Mediator {
             break;
          case ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE :
                if(_projectProxy.selectedIteration) {
-                  _wallProxy.currentBacklog = _projectProxy.selectedIteration.backlog;
+                  _wallProxy.refreshCurrentBacklog(_projectProxy.selectedIteration.backlog);
+                  for each(var row : WallRow in view.rows){
+                     row.layoutCards();
+                  }
                }
             break;
          case ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM :
@@ -82,34 +80,35 @@ public class ScrumWallMediator extends Mediator {
             item.parent = BacklogItem(notification.getBody());
             sendNotification(BacklogItemMediator.CREATE, item);
             break;
-         case CardView.NOTE_IMPEDED :
+         case TaskCard.NOTE_IMPEDED :
             _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
             _backlogItemProxy.currentIssue = new Issue();
             _backlogItemProxy.currentIssue.startDate = new Date();
             _backlogItemProxy.currentIteration = _projectProxy.selectedIteration;
             sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT);
             break;
-         case CardView.NOTE_VIEW_IMPEDIMENT :
+         case TaskCard.NOTE_VIEW_IMPEDIMENT :
             _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
             _backlogItemProxy.currentIssue = _backlogItemProxy.currentBacklogItem.impediment;
             sendNotification(ApplicationFacade.NOTE_EDIT_IMPEDIMENT);
             break;
-         case CardView.NOTE_UNIMPEDED :
+         case TaskCard.NOTE_UNIMPEDED :
             var unimpeded : BacklogItem = BacklogItem(notification.getBody());
             sendNotification(ApplicationFacade.NOTE_REMOVE_IMPEDIMENT, unimpeded);
             break;
-         case CardView.NOTE_TAKE_TASK :
+         case TaskCard.NOTE_TAKE_TASK :
             var taken : BacklogItem = BacklogItem(notification.getBody());
             taken.assignedTo = _secureContext.currentUser;
             sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, taken);
             break;
-         case CardView.NOTE_UNASSIGN_TASK :
+         case TaskCard.NOTE_UNASSIGN_TASK :
             var unassigned : BacklogItem = BacklogItem(notification.getBody());
             unassigned.assignedTo = null;
             sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, unassigned);
             break;
       }
    }
+
 
    private function loadIterationBacklog() : void {
       if (_projectProxy.selectedIteration != null && _projectProxy.selectedIteration.id != -1) {
@@ -119,5 +118,8 @@ public class ScrumWallMediator extends Mediator {
          _wallProxy.currentBacklog = new ArrayCollection();
       }
    }
-}
+      public function get view() : ScrumWallView {
+         return this.viewComponent as ScrumWallView;
+      }
+   }
 }

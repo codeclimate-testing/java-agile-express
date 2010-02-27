@@ -111,12 +111,54 @@ public class CardGrid extends Grid {
       }
    }
 
-   public function set tasks(value:ArrayCollection):void {
-      _tasks = value;
+   public function set tasks(value:Array):void {
+      var refresh : Boolean = value.length != _tasks.length;
+      if(_tasks.length == 0) {
+         _tasks.source = value;
+      }
+      else {
+         removeItemsNotInTasks(value);
+         for each(var item : BacklogItem in value) {
+            var task : BacklogItem = findInTasks(item.id);
+            if(task) {
+               task.copyFrom(item);
+            }
+            else {
+               _tasks.addItem(item);
+            }
+         }
+      }
+      if(refresh) {
+         layoutCards();
+      }
+      else {
+         WallRow(this.parent).setRowHeight((WallRow.CARD_HEIGHT + 5) * _rows);
+      }
    }
 
-   public function addTask(task : BacklogItem) : void {
-      _tasks.addItem(task);
+   private function findInTasks(id : Number) : BacklogItem {
+      for each(var task : BacklogItem in _tasks) {
+         if(task.id == id) {
+            return task;
+         }
+      }
+      return null;
+   }
+
+   private function removeItemsNotInTasks(tasks : Array) : void {
+      for(var index : int; index < _tasks.length; index++) {
+         var existingTask : BacklogItem = BacklogItem(_tasks[index]);
+         var found : Boolean = false;
+         for each(var task : BacklogItem in tasks) {
+            if(task.id == existingTask.id) {
+               found = true;
+               break;
+            }
+         }
+         if(!found) {
+            _tasks.removeItemAt(index--);
+         }
+      }
    }
 
    private function handleAssigned(event : Event) : void {

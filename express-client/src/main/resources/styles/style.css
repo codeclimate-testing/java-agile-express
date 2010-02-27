@@ -114,8 +114,13 @@ Label.h2White {
 }
 
 Label.sideText {
-   text-align: justify;
+   text-align:justify;
    vertical-gap: 2;
+}
+
+Label.storyHead {
+   font-size: 16;
+   text-align:center;
 }
 
 AdvancedDataGrid {
@@ -332,6 +337,7 @@ WallRow {
    padding-bottom:3px;
    border-thickness: 1;
    border-color: #B7BABC;
+   borderSides:"top";
    background-color:#ffffff;
    backgroundAlpha:0.7;
 }
@@ -366,6 +372,12 @@ TaskCard.impeded {
    corner-radius: 15;
    border-thickness: 1;
    border-style: solid;
+}
+
+ScrumWallView {
+   border-thickness: 1;
+   border-color: #B7BABC;
+   border-style:solid;
 }
 
 .titledBorder {

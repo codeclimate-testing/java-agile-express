@@ -29,7 +29,7 @@ public class WallRow extends HBox {
       _storyCard = new StoryCard();
       this.addChild(_storyCard);
       var spacer : Spacer = new Spacer();
-      spacer.width = 4;
+      spacer.width = 5;
       this.addChild(spacer);
       _openGrid = new CardGrid();
       _openGrid.gridStatus = BacklogItem.STATUS_OPEN;
@@ -38,7 +38,7 @@ public class WallRow extends HBox {
       this.addChild(_openGrid);
 
       spacer = new Spacer();
-      spacer.width = 8;
+      spacer.width = 10;
       this.addChild(spacer);
 
       _progressGrid = new CardGrid();
@@ -48,7 +48,7 @@ public class WallRow extends HBox {
       this.addChild(_progressGrid);
 
       spacer = new Spacer();
-      spacer.width = 8;
+      spacer.width = 10;
       this.addChild(spacer);
 
       _testGrid = new CardGrid();
@@ -58,7 +58,7 @@ public class WallRow extends HBox {
       this.addChild(_testGrid);
 
       spacer = new Spacer();
-      spacer.width = 8;
+      spacer.width = 10;
       this.addChild(spacer);
 
       _doneGrid = new CardGrid();
@@ -122,23 +122,24 @@ public class WallRow extends HBox {
       sortTasks();
    }
 
+   public function layoutCards() : void {
+      this.height = WallRow.CARD_HEIGHT + 8;
+      sortTasks();
+   }
+
    private function sortTasks() : void {
+      var tasks : Array = [];
+      tasks[BacklogItem.STATUS_OPEN] = [];
+      tasks[BacklogItem.STATUS_PROGRESS] = [];
+      tasks[BacklogItem.STATUS_TEST] = [];
+      tasks[BacklogItem.STATUS_DONE] = [];
       for each (var task : BacklogItem in _story.tasks) {
-         switch(task.status) {
-            case BacklogItem.STATUS_OPEN :
-               _openGrid.addTask(task);
-               break;
-            case BacklogItem.STATUS_PROGRESS :
-               _progressGrid.addTask(task);
-               break;
-            case BacklogItem.STATUS_TEST :
-               _testGrid.addTask(task);
-               break;
-            case BacklogItem.STATUS_DONE :
-               _doneGrid.addTask(task);
-               break;
-         }
+         tasks[task.status].push(task);
       }
+      _openGrid.tasks = tasks[BacklogItem.STATUS_OPEN];
+      _progressGrid.tasks = tasks[BacklogItem.STATUS_PROGRESS];
+      _testGrid.tasks = tasks[BacklogItem.STATUS_TEST];
+      _doneGrid.tasks = tasks[BacklogItem.STATUS_DONE];
    }
 
    public function set openWidth(value:int):void {

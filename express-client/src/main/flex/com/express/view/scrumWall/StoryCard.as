@@ -1,10 +1,13 @@
 package com.express.view.scrumWall {
 import com.express.ApplicationFacade;
 import com.express.model.domain.BacklogItem;
+import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.components.PopUpLabel;
 
+import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 
+import mx.binding.utils.BindingUtils;
 import mx.collections.ArrayCollection;
 import mx.containers.HBox;
 import mx.containers.VBox;
@@ -59,8 +62,14 @@ public class StoryCard extends VBox {
       this.addChild(_text);
       this.width = 220;
       _facade = ApplicationFacade.getInstance();
+      this.doubleClickEnabled = true;
+      this.addEventListener(MouseEvent.DOUBLE_CLICK, handleDoubleClick);
       buildQuickMenu();
       addDropShadow();
+   }
+
+   private function handleDoubleClick(event:MouseEvent):void {
+      _facade.sendNotification(BacklogItemMediator.EDIT, _story);
    }
 
    private function buildQuickMenu() : void {
@@ -91,11 +100,17 @@ public class StoryCard extends VBox {
    }
 
    public function set story(value:BacklogItem):void {
-      _story = value;
-      _refHeading.text = value.reference;
-      _statusHeading.text = value.status;
-      _text.text = value.summary;
-      _text.toolTip = value.summary;
+      if(_story && _story.id == value.id) {
+         _story.copyFrom(value);
+      }
+      else {
+         _story = value;
+         BindingUtils.bindProperty(_refHeading, "text", value, "reference");
+         BindingUtils.bindProperty(_statusHeading, "text", value, "status");
+         BindingUtils.bindProperty(_text, "text", value, "summary");
+         BindingUtils.bindProperty(_text, "toolTip", value, "summary");
+      }
+
    }
 }
 }
