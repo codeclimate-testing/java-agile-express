@@ -132,6 +132,9 @@ public class DomainFactoryImpl implements DomainFactory {
       Issue issue;
       if(dto.getId() == null || dto.getId() == 0) {
          issue = (Issue) beanMapper.map(dto, Issue.class);
+         if(dto.getResponsible() != null) {
+            issue.setResponsible(userDao.findById(dto.getResponsible().getId()));
+         }
       }
       else {
          issue = issueDao.findById(dto.getId());

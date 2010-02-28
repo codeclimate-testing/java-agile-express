@@ -45,7 +45,7 @@ public class StoryCard extends VBox {
       _refHeading.width = 75;
       headerBox.addChild(_refHeading);
       _statusHeading = new Label();
-      _statusHeading.width = 105;
+      _statusHeading.percentWidth = 100;
       headerBox.addChild(_statusHeading);
       _actionPopUp = new PopUpLabel();
       _actionPopUp.dataProvider = _quickMenu;
