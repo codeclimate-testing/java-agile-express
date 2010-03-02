@@ -43,8 +43,11 @@ public class BacklogItem
    [Bindable]
    public var businessValue : int;
 
-   [Bindable]
-   public var assignedTo : User;
+   private var _assignedToLabel : String;
+
+   private var _assignedTo : User;
+
+   private var _colour : int;
 
    [Bindable]
    public var parent : BacklogItem;
@@ -74,11 +77,13 @@ public class BacklogItem
       }
    }
 
+   public function set assignedToLabel(value : String) : void {
+      _assignedToLabel = value;
+   }
+
+   [Bindable]
    public function get assignedToLabel() : String {
-      if(!assignedTo) {
-         return "Unassigned";
-      }
-      return assignedTo.fullName;
+      return _assignedToLabel;
    }
 
    public function get themesLabel() : String {
@@ -140,6 +145,31 @@ public class BacklogItem
       themes = item.themes;
       acceptanceCriteria = item.acceptanceCriteria;
       impediment = item.impediment;
+   }
+
+   public function get assignedTo():User {
+      return _assignedTo;
+   }
+
+   public function set assignedTo(value:User):void {
+      _assignedTo = value;
+      if(!_assignedTo) {
+         assignedToLabel =  "Unassigned";
+         colour = 0;
+      }
+      else {
+         assignedToLabel = _assignedTo.fullName;
+         colour = _assignedTo.colour;
+      }
+   }
+
+   [Bindable]
+   public function get colour():int {
+      return _colour;
+   }
+
+   public function set colour(value:int):void {
+      _colour = value;
    }
 
 }

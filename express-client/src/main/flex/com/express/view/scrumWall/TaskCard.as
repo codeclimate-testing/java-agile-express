@@ -40,7 +40,7 @@ public class TaskCard extends VBox {
    private var _facade:ApplicationFacade;
    private var _quickMenu:ArrayCollection = new ArrayCollection();
    private var _task:BacklogItem;
-   private var _color : int;
+   private var _colour : int;
 
    //Child visual components
    private var _refHeading : Label;
@@ -166,12 +166,19 @@ public class TaskCard extends VBox {
       BindingUtils.bindProperty(_text, "text", value, "summary");
       BindingUtils.bindProperty(_text, "toolTip", value, "summary");
       BindingUtils.bindProperty(_assignedToLabel, "text", value, "assignedToLabel");
+      BindingUtils.bindProperty(_assignedToLabel, "text", value, "assignedToLabel");
       BindingUtils.bindSetter(buildQuickMenu, value, "impediment");
-      _color = _task.assignedTo == null ? 0 : _task.assignedTo.colour;
-      _dot.setStyle("borderColor", _color);
-      _dot.setStyle("backgroundColor", _color);
+      BindingUtils.bindSetter(setColour, value, "colour");
+      _dot.setStyle("borderColor", _colour);
+      _dot.setStyle("backgroundColor", _colour);
       _effortLabel.text = _EFFORT_PREFIX + " " + _task.effort;
       buildQuickMenu();
+   }
+
+   private function setColour(value : Object = null) : void {
+      _colour = _task.colour;
+      _dot.setStyle("borderColor", _colour);
+      _dot.setStyle("backgroundColor", _colour);
    }
 
    public function get task() : BacklogItem {

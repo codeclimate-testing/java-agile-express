@@ -34,10 +34,8 @@
    <mx:HBox styleName="unpadded" width="100%" verticalAlign="middle" height="35"
             horizontalAlign="left">
       <mx:HBox height="25" width="25" styleName="cardColourDot"
-               borderColor="{story.assignedTo == null ? 0 : story.assignedTo.colour}"
-               backgroundColor="{story.assignedTo == null ? 0 : story.assignedTo.colour}"/>
-      <mx:Label text="{story.assignedTo == null ? 'unassigned' : story.assignedTo.fullName}"
-                styleName="printText" width="100%"/>
+               borderColor="{story.colour}" backgroundColor="{story.colour}"/>
+      <mx:Label text="{story.assignedToLabel}" styleName="printText" width="100%"/>
       <mx:Label id="effort" styleName="printHeading" text="{story.effort}"/>
    </mx:HBox>
 </mx:VBox>
