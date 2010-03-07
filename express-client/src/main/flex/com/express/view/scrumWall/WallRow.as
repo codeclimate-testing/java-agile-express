@@ -9,8 +9,8 @@ import mx.events.FlexEvent;
 
 public class WallRow extends HBox {
 
-   public static const CARD_WIDTH :int = 120;
-   public static const CARD_HEIGHT :int = 108;
+   public static const CARD_WIDTH :int = 125;
+   public static const CARD_HEIGHT :int = 110;
 
    public var header : Container;
 

@@ -57,7 +57,7 @@ public class TaskCard extends VBox {
       headerBox.percentWidth = 100;
       _refHeading = new Label();
       _refHeading.styleName = "cardHeading";
-      _refHeading.percentWidth = 100;
+      _refHeading.width = 95;
       _actionPopUp = new PopUpLabel();
       _actionPopUp.dataProvider = _quickMenu;
       _actionPopUp.styleName = "storyQuickMenu";
@@ -91,6 +91,8 @@ public class TaskCard extends VBox {
       this.addChild(_effortLabel);
       this.width = WallRow.CARD_WIDTH;
       this.height = WallRow.CARD_HEIGHT;
+      this.horizontalScrollPolicy = "off";
+      this.verticalScrollPolicy = "off";
       addDropShadow();
       this.addEventListener(MouseEvent.MOUSE_MOVE, handleDragStart);
       this.doubleClickEnabled = true;
