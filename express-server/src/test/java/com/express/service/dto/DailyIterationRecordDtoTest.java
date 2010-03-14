@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import com.express.testutils.SetterGetterInvoker;
 
-public class EffortRecordDtoTest {
+public class DailyIterationRecordDtoTest {
    @Test
    public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<EffortRecordDto> setterGetterInvoker = new SetterGetterInvoker<EffortRecordDto>(new EffortRecordDto());
+       SetterGetterInvoker<DailyIterationStatusRecordDto> setterGetterInvoker = new SetterGetterInvoker<DailyIterationStatusRecordDto>(new DailyIterationStatusRecordDto());
        setterGetterInvoker.invokeSettersAndGetters();
    }
 

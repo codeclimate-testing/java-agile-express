@@ -125,6 +125,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: ognl:ognl:2.6.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jbehave:jbehave:2.3.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.mockito:mockito-all:1.8.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.hamcrest:hamcrest-all:1.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.apache.velocity:velocity:1.5" level="project" />
     <orderEntry type="library" exported="" name="Maven: oro:oro:2.0.8" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.liquibase:liquibase-core:1.9.1" level="project" />
@@ -132,7 +133,6 @@
     <orderEntry type="library" exported="" name="Maven: org.codehaus.jackson:jackson-core-asl:1.0.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.servlet:jstl:1.1.2" level="project" />
     <orderEntry type="library" exported="" name="Maven: taglibs:standard:1.1.2" level="project" />
-    <orderEntry type="module" module-name="express-client" exported="" />
   </component>
 </module>
 

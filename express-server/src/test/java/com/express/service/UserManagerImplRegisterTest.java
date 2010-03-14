@@ -17,7 +17,7 @@ import org.unitils.UnitilsJUnit4;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 
-public class UserManagerImplRegisterTest extends UnitilsJUnit4 {
+public class UserManagerImplRegisterTest {
    static final String USERNAME = "test@test.com";
    static final String PASSWORD = "password";
    @Mock

@@ -67,6 +67,10 @@ public class Project implements Persistable {
    private Set<BacklogItem> productBacklog;
 
    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+   @OptimisticLock(excluded = true)
+   private Set<DailyProjectStatusRecord> history;
+
+   @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
    @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
    @OptimisticLock(excluded = true)
    private Set<AccessRequest> accessRequests;
@@ -129,6 +133,18 @@ public class Project implements Persistable {
 
    public void setEffortUnit(String effortUnit) {
       this.effortUnit = effortUnit;
+   }
+
+   public Set<DailyProjectStatusRecord> getHistory() {
+      return history;
+   }
+
+   public void setHistory(Set<DailyProjectStatusRecord> history) {
+      this.history = history;
+   }
+
+   public void addHistoryRecord(DailyProjectStatusRecord record) {
+      this.history.add(record);
    }
 
    public Integer getStoryCount() {
@@ -351,6 +367,30 @@ public class Project implements Persistable {
          result.append("\n");
       }
       return result.toString();
+   }
+
+   public int getStoryPoints() {
+      int points = 0;
+      for (BacklogItem item : productBacklog) {
+         points += item.getEffort();
+      }
+      for(Iteration iteration : iterations) {
+         points += iteration.getStoryPoints();
+      }
+      return points;
+   }
+
+   public int getStoryPointsCompleted() {
+      int total = 0;
+      for(BacklogItem item : productBacklog) {
+         if(item.getStatus() == Status.DONE) {
+            total += item.getEffort();
+         }
+      }
+      for(Iteration iteration : iterations) {
+         total += iteration.getStoryPointsCompleted();
+      }
+      return total;
    }
 
 }

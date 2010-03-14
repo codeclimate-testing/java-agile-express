@@ -17,7 +17,6 @@ import static junit.framework.Assert.assertEquals;
 
 /**
  * @author Adam Boas
- *         Created on Mar 21, 2009
  */
 @DataSet({"/DataRemovalDataSet.xml", "/JpaIterationDaoTest.xml"})
 public class JpaIterationDaoTest extends AbstractUnitilsTestBase {

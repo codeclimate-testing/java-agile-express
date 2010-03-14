@@ -19,9 +19,9 @@
          <props>
             <prop key="mail.smtp.localhost">localhost</prop>
             <prop key="mail.smtp.auth">${mail.authenticate}</prop>
-            <!--<prop key="mail.smtp.starttls.enable">true</prop>-->
-            <!--<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>-->
-            <!--<prop key="mail.smtp.socketFactory.port">${mail.port}</prop>-->
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+            <prop key="mail.smtp.socketFactory.port">${mail.port}</prop>
          </props>
       </property>
    </bean>

@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 public class ProjectTest extends UnitilsJUnit4 {
    private static final Log LOG = LogFactory.getLog(ProjectTest.class);
    
@@ -28,7 +31,7 @@ public class ProjectTest extends UnitilsJUnit4 {
    }
 
    @Test
-   public void shouldAddAndremoveDevelopers() {
+   public void shouldAddAndRemoveDevelopers() {
       assertNotNull(project.getProjectWorkers());
       assertEquals(0, project.getProjectWorkers().size());
       ProjectWorker projectWorker = new ProjectWorker();
@@ -52,7 +55,7 @@ public class ProjectTest extends UnitilsJUnit4 {
    }
    
    @Test
-   public void testThemeSetList() {
+   public void shouldAddAndRemoveThemes() {
       assertNotNull(project.getThemes());
       assertEquals(0, project.getThemes().size());
       Theme theme = new Theme();
@@ -65,7 +68,8 @@ public class ProjectTest extends UnitilsJUnit4 {
    }
 
    @Test
-   public void testProjectManagersReturned() {
+   public void projectWorkersWithProjectAdminPermissionShouldBeReturnedAsManagers() {
+      int numberOfAdmins = 1;
       assertNotNull(project.getProjectWorkers());
       assertEquals(0, project.getProjectWorkers().size());
       ProjectWorker projectWorker = new ProjectWorker();
@@ -74,7 +78,7 @@ public class ProjectTest extends UnitilsJUnit4 {
       //Add non-manager
       projectWorker = new ProjectWorker();
       project.addProjectWorker(projectWorker);
-      assertEquals(1, project.getProjectManagers().size());
+      assertThat("number of admins", project.getProjectManagers().size(), equalTo(numberOfAdmins));
    }
 
    @Test

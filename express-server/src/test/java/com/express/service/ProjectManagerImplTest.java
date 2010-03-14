@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-import org.unitils.UnitilsJUnit4;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 
-public class ProjectManagerImplTest extends UnitilsJUnit4 {
+public class ProjectManagerImplTest {
 
    static final Long ID = 1l;
    @Mock

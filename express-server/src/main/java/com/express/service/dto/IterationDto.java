@@ -1,6 +1,7 @@
 package com.express.service.dto;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
    
    private List<BacklogItemDto> backlog;
    
-   private List<EffortRecordDto> burndown;
+   private List<DailyIterationStatusRecordDto> history;
 
    private List<IssueDto> impediments;
 
@@ -94,12 +95,13 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
       this.backlog = backlog;
    }
 
-   public List<EffortRecordDto> getBurndown() {
-      return burndown;
+   public List<DailyIterationStatusRecordDto> getHistory() {
+      return history;
    }
 
-   public void setBurndown(List<EffortRecordDto> burndown) {
-      this.burndown = burndown;
+   public void setHistory(List<DailyIterationStatusRecordDto> history) {
+      Collections.sort(history);
+      this.history = history;
    }
 
    public Integer getFinalVelocity() {

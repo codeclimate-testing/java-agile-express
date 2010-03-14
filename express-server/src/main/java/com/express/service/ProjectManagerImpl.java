@@ -328,11 +328,24 @@ public class ProjectManagerImpl implements ProjectManager {
    public void createEffortRecords() {
       List<Iteration> iterations = iterationDao.findOpenIterations();
       for (Iteration iteration : iterations) {
-         EffortRecord record =
-               new EffortRecord(Calendar.getInstance(), iteration.getTaskEffortRemaining(), iteration);
-         iteration.addBurndownRecord(record);
-         iteration.calculateDeliveredVelocity();
+         int completedPoints = iteration.getStoryPointsCompleted();
+         DailyIterationStatusRecord record = new DailyIterationStatusRecord(Calendar.getInstance(),
+                                                                            iteration.getTaskEffortRemaining(),
+                                                                            iteration.getStoryPoints(),
+                                                                            completedPoints,
+                                                                            iteration);
+         iteration.setFinalVelocity(completedPoints);
+         iteration.addHistoryRecord(record);
          projectDao.save(iteration.getProject());
+      }
+      List<Project> projects = projectDao.findAll();
+      for(Project project : projects) {
+         DailyProjectStatusRecord record = new DailyProjectStatusRecord(Calendar.getInstance(),
+                                                                        project.getStoryPoints(),
+                                                                        project.getStoryPointsCompleted(),
+                                                                        project);
+         project.addHistoryRecord(record);
+         projectDao.save(project);
       }
    }
 

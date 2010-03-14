@@ -65,11 +65,12 @@ public class Iteration implements Persistable, Comparable<Iteration> {
    private Set<Issue> impediments;
 
    @OneToMany(mappedBy = "iteration", cascade = CascadeType.ALL)
-   private final Set<EffortRecord> burndown;
+   private Set<DailyIterationStatusRecord> history;
 
    public Iteration() {
       backlog = new HashSet<BacklogItem>();
-      burndown = new HashSet<EffortRecord>();
+      impediments = new HashSet<Issue>();
+      history = new HashSet<DailyIterationStatusRecord>();
    }
 
    public Long getId() {
@@ -153,23 +154,16 @@ public class Iteration implements Persistable, Comparable<Iteration> {
       return result;
    }
 
-   public List<EffortRecord> getBurndown() {
-      List<EffortRecord> records = new ArrayList<EffortRecord>(burndown);
-      Collections.sort(records);
-      return records;
+   public Set<DailyIterationStatusRecord> getHistory() {
+      return history;
    }
 
-   public void setBurndown(List<EffortRecord> burndown) {
-      this.burndown.clear();
-      this.burndown.addAll(burndown);
+   public void setHistory(Set<DailyIterationStatusRecord> history) {
+      this.history = history;
    }
 
-   public void addBurndownRecord(EffortRecord record) {
-      this.burndown.add(record);
-   }
-
-   public void removeBurndownRecord(EffortRecord record) {
-      this.burndown.remove(record);
+   public void addHistoryRecord(DailyIterationStatusRecord record) {
+      this.history.add(record);
    }
 
    public Set<Issue> getImpediments() {
@@ -215,12 +209,22 @@ public class Iteration implements Persistable, Comparable<Iteration> {
     * @return int representing the current velocity (number of Story Points) in whatever measure
     *         has been set in the parent project.
     */
-   public int getVelocity() {
+   public int getStoryPoints() {
       int velocity = 0;
       for (BacklogItem item : backlog) {
          velocity += item.getEffort();
       }
       return velocity;
+   }
+
+   public int getStoryPointsCompleted() {
+      int total = 0;
+      for(BacklogItem item : backlog) {
+         if(item.getStatus() == Status.DONE) {
+            total += item.getEffort();
+         }
+      }
+      return total;
    }
 
    public BacklogItem findBacklogItemByReference(String ref) {
@@ -234,16 +238,6 @@ public class Iteration implements Persistable, Comparable<Iteration> {
          }
       }
       return null;
-   }
-
-   public void calculateDeliveredVelocity() {
-      int total = 0;
-      for(BacklogItem item : backlog) {
-         if(item.getStatus() == Status.DONE) {
-            total += item.getEffort();
-         }
-      }
-      finalVelocity = total;
    }
 
    @Override

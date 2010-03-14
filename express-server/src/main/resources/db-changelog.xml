@@ -271,4 +271,28 @@
       </addColumn>
    </changeSet>
 
+   <changeSet id="9" author="adam">
+      <createTable tableName="project_status">
+         <column name="project_status_id" type="int8">
+            <constraints nullable="false" primaryKey="true" primaryKeyName="project_status_pkey"/>
+         </column>
+         <column name="record_date" type="DATE"/>
+         <column name="points_total" type="int4"/>
+         <column name="points_completed" type="int4"/>
+         <column name="project_id" type="int8"/>
+      </createTable>
+
+      <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_status"
+                               constraintName="fk_proj_proj_status" deferrable="false"
+                               initiallyDeferred="false" referencedColumnNames="project_id"
+                               referencedTableName="project"/>
+
+      <addColumn tableName="effort">
+         <column name="points_total" type="int4" />
+      </addColumn>
+      <addColumn tableName="effort">
+         <column name="points_completed" type="int4" />
+      </addColumn>
+   </changeSet>
+
 </databaseChangeLog>

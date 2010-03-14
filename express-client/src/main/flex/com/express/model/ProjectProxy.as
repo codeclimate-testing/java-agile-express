@@ -2,7 +2,7 @@ package com.express.model
 {
 import com.express.model.domain.AccessRequest;
 import com.express.model.domain.BacklogItem;
-import com.express.model.domain.EffortRecord;
+import com.express.model.domain.DailyIterationStatusRecord;
 import com.express.model.domain.Issue;
 import com.express.model.domain.Iteration;
 import com.express.model.domain.Project;
@@ -247,17 +247,17 @@ public class ProjectProxy extends Proxy
       if(iteration) {
          _burndown.source = iteration.burndown.source.concat();
          if(iteration.isOpen()) {
-            var effort : EffortRecord = new EffortRecord();
+            var effort : DailyIterationStatusRecord = new DailyIterationStatusRecord();
             var temp: Date = new Date();
             effort.date = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate());
-            effort.effort = iteration.getTaskHoursRemaining();
+            effort.taskHoursRemaining = iteration.getTaskHoursRemaining();
             _burndown.addItem(effort);
          }
       }
       else {
          _burndown.source = [];
       }
-      for each(var record : EffortRecord in _burndown) {
+      for each(var record : DailyIterationStatusRecord in _burndown) {
             trace(record.id + ":" + record.date);
          }
    }
