@@ -13,7 +13,6 @@ import com.express.model.domain.Iteration;
 import com.express.model.request.BacklogItemAssignRequest;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.iteration.IterationMediator;
-import com.express.view.projectPanel.ProjectPanelMediator;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -38,7 +37,6 @@ public class BacklogMediator extends Mediator {
       super(NAME, viewComp);
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       _secureContext = facade.retrieveProxy(SecureContextProxy.NAME) as SecureContextProxy;
-      facade.registerMediator(new ProjectPanelMediator(viewComp.projectPanel));
 
       viewComp.cboIterations.dataProvider = _proxy.iterationList;
       viewComp.grdIterationBacklog.dataProvider = _proxy.selectedBacklog;

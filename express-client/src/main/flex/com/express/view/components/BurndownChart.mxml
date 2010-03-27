@@ -55,7 +55,7 @@
          <mx:LinearAxis id="yAxis" title="Effort Remaining"/>
       </mx:verticalAxis>
       <mx:series>
-         <mx:LineSeries displayName="Effort Remaining" yField="effort" xField="date" lineStroke="{lineStroke}"/>
+         <mx:LineSeries displayName="Effort Remaining" yField="taskHoursRemaining" xField="date" lineStroke="{lineStroke}"/>
       </mx:series>
       <!-- turn off drop shadows -->
       <mx:seriesFilters>

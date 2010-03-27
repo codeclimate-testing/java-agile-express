@@ -84,9 +84,10 @@ Label.welcome {
    background-position: center, top;
    background-image: Embed(source = "/images/main-bg.jpg");
    background-color:#ffffff;
-   padding-right:10;
+   padding-right:0;
    padding-left:10;
    padding-bottom:5;
+   horizontalGap:0;
 }
 
 Label.h1 {
@@ -111,6 +112,7 @@ Label.h3 {
 Label.h2White {
    font-size: 14;
    color: #FFFFFF;
+   text-align:center;
 }
 
 Label.sideText {
@@ -129,7 +131,7 @@ AdvancedDataGrid {
 
 .wallHeader {
    border-thickness: 0;
-   horizontal-align: center;
+   horizontal-align: left;
    vertical-align: middle;
    background-image:Embed(source = "/images/heading-bg.png");
    backgroundSize:"100%";
@@ -378,6 +380,8 @@ ScrumWallView {
    border-thickness: 1;
    border-color: #B7BABC;
    border-style:solid;
+   backgroundAlpha:0.8;
+   backgroundColor:#ffffff;
 }
 
 .titledBorder {
@@ -526,4 +530,21 @@ TitleWindow {
    font-size:14px;
    padding-left:5px;
    padding-right:5px;
+}
+
+.sideTabs {
+   backgroundAlpha:1.0;
+   backgroundColor:#FFFFFF;
+   verticalGap:10px;
+   paddingLeft:5px;
+}
+
+.sidePanel {
+   backgroundAlpha:1.0;
+   background-color:#ffffff;
+   borderSides:left,top,bottom;
+   borderThickness:1;
+   border-style:solid;
+   border-color:#404040;
+   verticalGap:0;
 }

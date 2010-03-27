@@ -15,12 +15,13 @@ import com.express.service.ServiceRegistry;
 import com.express.view.backlog.BacklogMediator;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.iteration.IterationMediator;
+import com.express.view.iterationSummary.IterationSummaryMediator;
 import com.express.view.login.LoginMediator;
 import com.express.view.login.LoginView;
 import com.express.view.profile.ProfileMediator;
 import com.express.view.projectAccess.ProjectAccessMediator;
 import com.express.view.projectDetails.ProjectDetailsMediator;
-import com.express.view.projectPanel.ProjectPanelMediator;
+import com.express.view.projectSummary.ProjectSummaryMediator;
 import com.express.view.register.RegisterMediator;
 import com.express.view.scrumWall.ScrumWallMediator;
 
@@ -65,6 +66,8 @@ public class ApplicationMediator extends Mediator {
       _projectProxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
       _popupManager = new ExpressPopUpManager(facade, viewComp);
       facade.registerMediator(new LoginMediator(viewComp.loginView));
+      facade.registerMediator(new ProjectSummaryMediator(viewComp.projectSummary));
+      facade.registerMediator(new IterationSummaryMediator(viewComp.iterationSummary));
 
       viewComp.rptMenu.dataProvider = _secureContext.menu;
 
@@ -77,6 +80,16 @@ public class ApplicationMediator extends Mediator {
       viewComp.menu.addEventListener(MouseEvent.CLICK, handleNavigateRequest);
 
       viewComp.btnLogout.addEventListener(MouseEvent.CLICK, handleLogout);
+      viewComp.lnkProjectSummary.addEventListener(MouseEvent.CLICK, handleShowProjectSummary);
+      viewComp.lnkIterationSummary.addEventListener(MouseEvent.CLICK, handleShowIterationSummary);
+   }
+
+   private function handleShowIterationSummary(event:MouseEvent):void {
+      app.iterationSummary.visible = true;
+   }
+
+   private function handleShowProjectSummary(event:MouseEvent):void {
+      app.projectSummary.visible = true;
    }
 
    private function handleLogout(event:Event):void {
@@ -98,7 +111,7 @@ public class ApplicationMediator extends Mediator {
          LoginCommand.SUCCESS,
          BacklogItemMediator.CREATE,
          BacklogItemMediator.EDIT,
-         ProjectPanelMediator.SHOW_PRINT_PREVIEW,
+         IterationSummaryMediator.SHOW_PRINT_PREVIEW,
          UpdateUserCommand.SUCCESS,
          RegisterConfirmCommand.SUCCESS,
          RegisterConfirmCommand.FAILURE,
@@ -128,7 +141,7 @@ public class ApplicationMediator extends Mediator {
          case LoginCommand.SUCCESS :
             login();
             break;
-         case ProjectPanelMediator.SHOW_PRINT_PREVIEW :
+         case IterationSummaryMediator.SHOW_PRINT_PREVIEW :
             _popupManager.showPrintPreview(notification.getBody() as BacklogPrintView);
             break;
          case ApplicationFacade.NOTE_CREATE_IMPEDIMENT :
@@ -251,6 +264,7 @@ public class ApplicationMediator extends Mediator {
          navigate(new MenuItem(ACCESS_HEAD, ACCESS_VIEW, null));
       }
       app.menu.visible = true;
+      app.sideTabs.visible = true;
    }
 
    public function logout():void {
@@ -259,6 +273,7 @@ public class ApplicationMediator extends Mediator {
       app.views.selectedIndex = LOGIN_VIEW;
       app.topBox.visible = false;
       app.menu.visible = false;
+      app.sideTabs.visible = false;
    }
 
    public function get app():Express {
