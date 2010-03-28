@@ -71,7 +71,7 @@
                            overIcon="@Embed('/images/side-tab-project-over.png')"/>
             <mx:LinkButton id="lnkIterationSummary" styleName="sideLink" width="35"
                            icon="@Embed('/images/side-tab-iteration.png')"
-                           toolTip="Iteration  Summary"
+                           toolTip="Iteration  Summary" rollOverColor="#FFFFFF"
                            overIcon="@Embed('/images/side-tab-iteration-over.png')"/>
          </mx:VBox>
       </mx:HBox>

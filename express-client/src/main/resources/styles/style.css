@@ -380,8 +380,6 @@ ScrumWallView {
    border-thickness: 1;
    border-color: #B7BABC;
    border-style:solid;
-   backgroundAlpha:0.8;
-   backgroundColor:#ffffff;
 }
 
 .titledBorder {
@@ -533,8 +531,6 @@ TitleWindow {
 }
 
 .sideTabs {
-   backgroundAlpha:1.0;
-   backgroundColor:#FFFFFF;
    verticalGap:10px;
    paddingLeft:5px;
 }
@@ -547,4 +543,15 @@ TitleWindow {
    border-style:solid;
    border-color:#404040;
    verticalGap:0;
+}
+
+.panelBox {
+   paddingLeft:10px;
+   paddingTop:8px;
+   horizontalGap:5px;
+}
+
+.loggedInViewStack {
+   backgroundAlpha:0.7;
+   backgroundColor:#ffffff;
 }

@@ -10,7 +10,11 @@ import com.express.view.ApplicationMediator;
 import com.express.view.projectDetails.ProjectDetailsMediator;
 
 import flash.events.Event;
+import flash.events.HTTPStatusEvent;
+import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
+import flash.events.ProgressEvent;
+import flash.events.SecurityErrorEvent;
 import flash.net.FileReference;
 import flash.net.URLRequest;
 
@@ -47,6 +51,19 @@ public class ProjectSummaryMediator extends Mediator{
       viewComp.lnkExport.addEventListener(MouseEvent.CLICK, handleProductBacklogExport);
       viewComp.lnkClose.addEventListener(MouseEvent.CLICK, handleClose);
       _fileRef = new FileReference();
+      _fileRef.addEventListener(Event.CANCEL, handleDownload);
+      _fileRef.addEventListener(Event.COMPLETE, handleDownload);
+      _fileRef.addEventListener(Event.OPEN, handleDownload);
+      _fileRef.addEventListener(Event.SELECT, handleDownload);
+      _fileRef.addEventListener(HTTPStatusEvent.HTTP_STATUS, handleDownload);
+      _fileRef.addEventListener(IOErrorEvent.IO_ERROR, handleDownload);
+      _fileRef.addEventListener(ProgressEvent.PROGRESS, handleDownload);
+      _fileRef.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleDownload);
+   }
+
+   private function handleDownload(evt:Event):void {
+      /* Create shortcut to the FileReference object. */
+//      var fr:FileReference = evt.currentTarget as FileReference;
    }
 
    private function handleClose(event:MouseEvent):void {

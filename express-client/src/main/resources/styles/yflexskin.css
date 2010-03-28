@@ -19,17 +19,17 @@ global {
 //  AccordionHeader
 //------------------------------
 */
-AccordionHeader
-{
-	disabledSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_disabledSkin");
-	downSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_downSkin");
-	overSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_overSkin");
-	selectedDisabledSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_disabledSkin");
-	selectedDownSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_downSkin");
-	selectedOverSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_overSkin");
-	selectedUpSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_selectedSkin");
-	upSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_upSkin");
-}
+/*AccordionHeader*/
+/*{*/
+	/*disabledSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_disabledSkin");*/
+	/*downSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_downSkin");*/
+	/*overSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_overSkin");*/
+	/*selectedDisabledSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_disabledSkin");*/
+	/*selectedDownSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_downSkin");*/
+	/*selectedOverSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_overSkin");*/
+	/*selectedUpSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_selectedSkin");*/
+	/*upSkin: Embed(source="yflexskin.swf", symbol="AccordionHeader_upSkin");*/
+/*}*/
 
 /*
 //------------------------------

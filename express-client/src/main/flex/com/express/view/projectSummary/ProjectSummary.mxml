@@ -20,37 +20,37 @@
       <comp:PopUpLabel id="managePopUp" labelText="Manage" enabled="false" paddingTop="2"
                        dataProvider="['Workers','Themes']"/>
    </mx:HBox>
-   <mx:HBox paddingLeft="10">
+   <mx:HBox styleName="panelBox">
       <mx:ComboBox id="cboProjects" width="230" labelField="title" prompt=" Open an existing Project "/>
       <mx:LinkButton id="lnkRefresh" icon="@Embed('/images/icons/refresh.png')" width="20" toolTip="refresh project"
             enabled="{cboProjects.selectedIndex > -1}" disabledIcon="@Embed('/images/icons/refresh-disabled.png')"/>
    </mx:HBox>
 
-   <mx:HBox horizontalGap="10" verticalAlign="bottom" paddingLeft="10">
+   <mx:HBox horizontalGap="10" verticalAlign="bottom" styleName="panelBox">
       <mx:Label styleName="bannerLabel" text="or"/>
       <mx:LinkButton id="lnkProjectAccess" styleName="form" label="Create/Access a new Project"/>
    </mx:HBox>
-   <mx:HBox horizontalGap="5" paddingLeft="10">
+   <mx:HBox styleName="panelBox">
       <mx:Label text="Reference:" fontWeight="bold" width="115"/>
       <mx:Label id="reference"/>
    </mx:HBox>
-   <mx:HBox horizontalGap="5" paddingLeft="10">
+   <mx:HBox styleName="panelBox">
       <mx:Label text="Effort Unit" fontWeight="bold" width="115"/>
       <mx:Label id="effortUnit"/>
    </mx:HBox>
-   <mx:HBox horizontalGap="5" paddingLeft="10">
+   <mx:HBox styleName="panelBox">
       <mx:Label text="Start Date:" fontWeight="bold" width="115"/>
       <mx:Label id="startDate"/>
    </mx:HBox>
-   <mx:HBox horizontalGap="5" paddingLeft="10">
+   <mx:HBox styleName="panelBox">
       <mx:Label text="Velocity Chart:" fontWeight="bold" width="115"/>
       <mx:LinkButton id="lnkVelocity" styleName="form" label="view" visible="false" width="50"/>
    </mx:HBox>
-   <mx:HBox horizontalGap="5" width="100%" paddingLeft="10">
+   <mx:HBox width="100%" styleName="panelBox">
       <mx:Label text="Description:" fontWeight="bold" width="115"/>
       <mx:Text id="description" width="100%"/>
    </mx:HBox>
-   <mx:HBox horizontalGap="5" paddingLeft="10">
+   <mx:HBox styleName="panelBox">
       <mx:Label text="Project Admins:" fontWeight="bold" width="115"/>
       <mx:VBox>
          <mx:Repeater id="rptAdmins">
