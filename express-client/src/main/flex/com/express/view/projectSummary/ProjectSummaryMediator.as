@@ -46,6 +46,7 @@ public class ProjectSummaryMediator extends Mediator{
       viewComp.managePopUp.addEventListener(ListEvent.ITEM_CLICK, handleManageMenuSelection);
       viewComp.btnEdit.addEventListener(MouseEvent.CLICK, handleEditProject);
       viewComp.lnkVelocity.addEventListener(MouseEvent.CLICK, handleDisplayVelocityChart);
+      viewComp.lnkBurnUp.addEventListener(MouseEvent.CLICK, handleDisplayBurnUpChart);
       viewComp.lnkRefresh.addEventListener(MouseEvent.CLICK, handleRefreshProjectRequest);
 
       viewComp.lnkExport.addEventListener(MouseEvent.CLICK, handleProductBacklogExport);
@@ -59,6 +60,10 @@ public class ProjectSummaryMediator extends Mediator{
       _fileRef.addEventListener(IOErrorEvent.IO_ERROR, handleDownload);
       _fileRef.addEventListener(ProgressEvent.PROGRESS, handleDownload);
       _fileRef.addEventListener(SecurityErrorEvent.SECURITY_ERROR, handleDownload);
+   }
+
+   private function handleDisplayBurnUpChart(event:MouseEvent):void {
+      sendNotification(ApplicationFacade.NOTE_DISPLAY_BURNUP, _proxy.selectedProject);
    }
 
    private function handleDownload(evt:Event):void {
@@ -79,7 +84,7 @@ public class ProjectSummaryMediator extends Mediator{
    }
 
    public function handleProjectSelected(event : Event) : void {
-      var project : Project = (event.target as ComboBox).selectedItem as Project;
+      var project : Project = view.cboProjects.selectedItem as Project;
       _proxy.selectedIteration = null;
       if (project != null) {
          _proxy.selectedProject = project;
@@ -146,6 +151,7 @@ public class ProjectSummaryMediator extends Mediator{
          view.description.text = _proxy.selectedProject.description;
          view.rptAdmins.dataProvider = _proxy.selectedProject.admins;
          view.lnkVelocity.visible = true;
+         view.lnkBurnUp.visible = true;
          view.btnEdit.enabled = true;
          view.managePopUp.enabled = true;
          view.lnkExport.enabled = true;

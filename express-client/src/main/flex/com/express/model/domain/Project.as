@@ -35,6 +35,8 @@ public class Project
 
    public var startDate : Date;
 
+   private var _targetReleaseDate : Date;
+
    public var productBacklog : ArrayCollection;
 
    public var iterations : ArrayCollection;
@@ -48,6 +50,8 @@ public class Project
    public var actors : ArrayCollection;
 
    public var themes : ArrayCollection;
+
+   public var history : ArrayCollection;
 
    public function get currentIteration() : Iteration {
       var today : Date = new Date();
@@ -124,6 +128,18 @@ public class Project
       accessRequests = project.accessRequests;
       defects = project.defects;
       themes = project.themes;
+      history = project.history;
+   }
+
+   public function get targetReleaseDate():Date {
+      if(iterations.length == 0) {
+         return startDate;
+      }
+      return Iteration(iterations.getItemAt(iterations.length-1)).endDate;
+   }
+
+   public function set targetReleaseDate(value:Date):void {
+      targetReleaseDate = value;
    }
 }
 }

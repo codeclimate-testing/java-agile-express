@@ -1,5 +1,5 @@
 $(document).ready(function() {
-   $("#main").height($(window).height() - 280);
+  // $("#main").height($(window).height() - 280);
 
 //   $('#colorSelector').ColorPicker({
 //      color: '#0000ff',

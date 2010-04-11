@@ -8,17 +8,15 @@ body {
    margin: 0;
    font-family: Arial, Helvetica, sans-serif;
    color: #382d37;
-   font-size: .85em;
+   font-size: 1em;
    vertical-align: top;
-   overflow: hidden;
    background-color: #ffffff;
 }
 
-
 #banner {
-   background: url(../images/banner-bg.gif) no-repeat left;
+   background: url(../images/banner-bg.jpg) no-repeat left;
    width: 100%;
-   height: 251px;
+   height: 200px;
 
 }
 
@@ -31,29 +29,27 @@ h1 {
 
 ul.mainNav {
    list-style: none;
-	float:left;
-   margin: 10px 0 0 5px;
+   margin: -10px 0 0 120px;
    padding: 0;
-   background: #ffffff;
-   width: 250px;
-	height:143px;
-	border-top:#404040 1px solid;
-	border-left:#404040 1px solid;
-	border-right:#404040 1px solid;
+   background-color: transparent;
+   height: 35px;
+   width: 90%;
+   float: left;
 }
 
 ul.mainNav li {
-	padding:0 0 0 10px;
-   height:35px;
-	border-bottom:#404040 1px solid;
-   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+   padding: 0 10px 0 10px;
+   margin-left: 20px;
+   height: 35px;
+   font-family: "News Gothic MT", "Trebuchet MS", Arial, Helvetica, sans-serif;
    vertical-align: top;
    font-size: 1.2em;
    line-height: 35px;
+   float: left;
 }
 
 ul.mainNav li a {
-	color: #404040;
+   color: #404040;
    text-decoration: none;
 }
 
@@ -61,9 +57,24 @@ ul.mainNav li a:hover {
    text-decoration: underline;
 }
 
-ul.mainNav li.selected {
-	background:#404040;
-	color:#ffffff;
+.selectedLeft {
+   background-image: url(../images/selected-left.png);
+   width: 10px;
+   height: 35px;
+   float: left;
+}
+
+.selected {
+   background: #d0cfce;
+   margin: 0;
+   float: left;
+}
+
+.selectedRight {
+   background-image: url(../images/selected-right.png);
+   width: 10px;
+   height: 35px;
+   float: right;
 }
 
 ul.mainNav li a:hover {
@@ -71,20 +82,34 @@ ul.mainNav li a:hover {
 }
 
 #main {
-   width: 100%;
-	overflow:auto;
+   width: 90%;
+   clear: both;
+   padding: 20px 0 20px 20px;
 }
 
-#application #main {
-   width: 100%;
+#application {
    overflow: hidden;
 }
 
+#application #main {
+   overflow: hidden;
+   padding: 0;
+   margin: 0;
+   width: 100%;
+}
+
+.left {
+   float: left;
+   width: 400px;
+}
+
+.right {
+   margin-left: 450px;
+   width: 550px;
+}
 
 .section {
-   padding-top: 20px;
-   padding-left: 300px;
-   width:650px;
+   width: 650px;
 }
 
 .section p {
@@ -178,4 +203,34 @@ table.form td {
    font-size: 1.2em;
    float: left;
    color: #ffffff;
+}
+
+.blue, .green, .yellow {
+   width: 370px;
+   height: 70px;
+   padding: 15px;
+   margin-bottom: 20px;
+}
+
+.blue p, .green p, .yellow p {
+   width: 300px;
+   float: right;
+   margin-top: 0;
+   font-size: .9em;
+}
+
+.blue img, .green img, .yellow img {
+   float: left;
+}
+
+.blue {
+   background-image: url(../images/blue-bg.png);
+}
+
+.green {
+   background-image: url(../images/green-bg.png);
+}
+
+.yellow {
+   background-image: url(../images/yellow-bg.png);
 }

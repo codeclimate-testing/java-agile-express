@@ -100,6 +100,7 @@ public class ApplicationMediator extends Mediator {
    override public function listNotificationInterests():Array {
       return [ApplicationFacade.NOTE_DISPLAY_BURNDOWN,
          ApplicationFacade.NOTE_DISPLAY_VELOCITY,
+         ApplicationFacade.NOTE_DISPLAY_BURNUP,
          ApplicationFacade.NOTE_NAVIGATE,
          ApplicationFacade.NOTE_SHOW_ERROR_MSG,
          ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
@@ -161,6 +162,9 @@ public class ApplicationMediator extends Mediator {
             break;
          case ApplicationFacade.NOTE_DISPLAY_VELOCITY :
             _popupManager.showVelocityWindow(_projectProxy.selectedProject.title + " Velocity comparison", notification);
+            break;
+         case ApplicationFacade.NOTE_DISPLAY_BURNUP :
+            _popupManager.showBurnUpWindow(_projectProxy.selectedProject.title + " BurnUp", notification);
             break;
          case ApplicationFacade.NOTE_NAVIGATE :
             navigate(MenuItem(notification.getBody()));

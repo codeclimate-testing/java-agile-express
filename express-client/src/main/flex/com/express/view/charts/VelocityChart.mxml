@@ -16,6 +16,8 @@
    <mx:Script>
       <![CDATA[
 
+      import com.express.view.components.*;
+
       [Bindable]
       public var dataProvider : Object;
 

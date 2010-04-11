@@ -43,6 +43,10 @@
       <mx:Label id="startDate"/>
    </mx:HBox>
    <mx:HBox styleName="panelBox">
+      <mx:Label text="BurnUp Chart:" fontWeight="bold" width="115"/>
+      <mx:LinkButton id="lnkBurnUp" styleName="form" label="view" visible="false" width="50"/>
+   </mx:HBox>
+   <mx:HBox styleName="panelBox">
       <mx:Label text="Velocity Chart:" fontWeight="bold" width="115"/>
       <mx:LinkButton id="lnkVelocity" styleName="form" label="view" visible="false" width="50"/>
    </mx:HBox>

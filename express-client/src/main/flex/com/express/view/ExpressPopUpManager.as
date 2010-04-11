@@ -6,8 +6,9 @@ import com.express.model.domain.WindowMetrics;
 import com.express.print.BacklogPrintView;
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.backlogItem.BacklogItemView;
-import com.express.view.components.BurndownChart;
-import com.express.view.components.VelocityChart;
+import com.express.view.charts.BurndownChart;
+import com.express.view.charts.BurnupChart;
+import com.express.view.charts.VelocityChart;
 import com.express.view.issue.IssueForm;
 import com.express.view.issue.IssueMediator;
 import com.express.view.iteration.IterationForm;
@@ -40,6 +41,7 @@ public class ExpressPopUpManager {
    private var _projectAdminForm:ProjectAdmin;
    private var _themesForm:ThemesForm;
    private var _burndownChart:BurndownChart;
+   private var _burnUpChart:BurnupChart;
    private var _velocityChart:VelocityChart;
    private var _lastWindowNotification:INotification;
    private var _popup:SizeableTitleWindow;
@@ -138,6 +140,18 @@ public class ExpressPopUpManager {
       _burndownChart.xAxis.maximum = _projectProxy.selectedIteration.endDate;
       _burndownChart.chkWeekends.selected = _lastWindowNotification.getBody() as Boolean;
    }
+   
+   private function createBurnUpChart():void {
+      _burnUpChart = new BurnupChart();
+      _burnUpChart.addEventListener(FlexEvent.CREATION_COMPLETE, handleBurnUpCreated);
+   }
+
+   private function handleBurnUpCreated(event:FlexEvent):void {
+      _burnUpChart.xAxis.minimum = _projectProxy.selectedProject.startDate;
+      _burnUpChart.xAxis.maximum = _projectProxy.selectedProject.targetReleaseDate;
+      _burnUpChart.chkWeekends.selected = _lastWindowNotification.getBody() as Boolean;
+      _burnUpChart.dataProvider = _projectProxy.burnUp;
+   }
 
    private function createVelocityChart():void {
       _velocityChart = new VelocityChart();
@@ -228,6 +242,24 @@ public class ExpressPopUpManager {
       _popup.x = (_application.width / 2) - (_popup.width / 2);
       _popup.y = 80;
       showPopup(_burndownChart);
+   }
+   
+   public function showBurnUpWindow(title:String, notification:INotification):void {
+      _lastWindowNotification = notification;
+      if (!_burnUpChart) {
+         createBurnUpChart();
+      }
+      else {
+         _burnUpChart.xAxis.minimum = _projectProxy.selectedProject.startDate;
+         _burnUpChart.xAxis.maximum = _projectProxy.selectedProject.targetReleaseDate;
+         _burnUpChart.chkWeekends.selected = notification.getBody() as Boolean;
+      }
+      _popup.title = title;
+      _popup.width = 600;
+      _popup.height = 450;
+      _popup.x = (_application.width / 2) - (_popup.width / 2);
+      _popup.y = 80;
+      showPopup(_burnUpChart);
    }
 
    public function showVelocityWindow(title:String, notification:INotification):void {

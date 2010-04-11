@@ -10,7 +10,7 @@ public class Iteration
    public static const MILLIS_IN_A_DAY : int = 86400000;
    public function Iteration(id : Number = 0, title : String = null) {
       backlog = new ArrayCollection();
-      burndown = new ArrayCollection();
+      history = new ArrayCollection();
       impediments = new ArrayCollection();
       this.id = id;
       this.title = title;
@@ -37,7 +37,7 @@ public class Iteration
 
    public var backlog : ArrayCollection;
 
-   public var burndown : ArrayCollection;
+   public var history : ArrayCollection;
 
    public var impediments : ArrayCollection;
 
@@ -66,9 +66,9 @@ public class Iteration
 
    public function isOpen() : Boolean {
       var temp: Date = new Date();
-      var today : Date = new Date(temp.fullYear, temp.month, temp.day);
-      var start :Date = new Date(startDate.fullYear, startDate.month, startDate.day);
-      var end : Date = new Date(endDate.fullYear, endDate.month, endDate.day);
+      var today : Date = new Date(temp.fullYear, temp.month, temp.date);
+      var start :Date = new Date(startDate.fullYear, startDate.month, startDate.date);
+      var end : Date = new Date(endDate.fullYear, endDate.month, endDate.date);
       return today.getTime() <= end.getTime() && today.getTime() >= start.getTime();
    }
 
@@ -90,7 +90,7 @@ public class Iteration
       endDate = iteration.endDate;
       project = iteration.project;
       description = iteration.description;
-      burndown = iteration.burndown;
+      history = iteration.history;
       backlog = iteration.backlog;
       finalVelocity = iteration.finalVelocity;
       impediments = iteration.impediments;

@@ -20,14 +20,14 @@
 
 <body id="support">
 <div id="banner"></div>
-
-<div id="main" >
 	<ul class="mainNav">
    	<li>
          <a href="index.html">Home</a>
       </li>
-      <li class="selected">
-         FAQ
+      <li>
+         <div class="selectedLeft"></div>
+         <div class="selected">FAQ</div>
+         <div class="selectedRight"></div>
       </li>
       <li>
          <a href="documentation.html">Documentation</a>
@@ -36,10 +36,21 @@
          <a href="express.html">Application</a>
       </li>
    </ul>
+   <div id="main" >
    <div class="section">
       <h1>Frequently Asked Questions</h1>
 
       <div id="faqs">
+      	<h4>What prerequisites are required to install Express ?</h4>
+         <div>
+            <p>
+               Express comes as a Java war file. It can be deployed to any servlet container
+               such as Tomcat or Jetty. You can download Tomcat <a href="http://tomcat.apache.org/download-60.cgi">here</a>.
+               Express requires a relational database, and the current default database is Postgres. You can download
+               the latest version <a href="http://www.postgresql.org/download/">here</a>. Configuration details can be
+               found in the Express documentation page.
+            </p>
+         </div>
          <h4>What is the wall view ?</h4>
          <div>
             <p>

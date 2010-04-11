@@ -28,6 +28,8 @@ public class ProjectDto implements Serializable {
    
    private List<BacklogItemDto> productBacklog;
 
+   private List<DailyProjectStatusRecordDto> history;
+
    private List<AccessRequestDto> accessRequests;
 
    private List<String> actors;
@@ -112,6 +114,14 @@ public class ProjectDto implements Serializable {
 
    public void setProductBacklog(List<BacklogItemDto> productBacklog) {
       this.productBacklog = productBacklog;
+   }
+
+   public List<DailyProjectStatusRecordDto> getHistory() {
+      return history;
+   }
+
+   public void setHistory(List<DailyProjectStatusRecordDto> history) {
+      this.history = history;
    }
 
    public List<AccessRequestDto> getAccessRequests() {

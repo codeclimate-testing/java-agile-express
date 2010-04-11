@@ -28,7 +28,11 @@ public class ProjectListLoadCommand extends SimpleCommand implements IResponder 
       var proxy:ProjectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       var mediator:ProjectSummaryMediator = facade.retrieveMediator(ProjectSummaryMediator.NAME) as ProjectSummaryMediator;
       proxy.projectList = data.result as ArrayCollection;
-      if (mediator != null && proxy.selectedProject != null) {
+      if(proxy.projectList.length == 1) {
+         mediator.view.cboProjects.selectedIndex = 0;
+         mediator.handleProjectSelected(null);
+      }
+      else if (proxy.selectedProject != null) {
          mediator.view.cboProjects.selectedIndex = getIndex(proxy.projectList, proxy.selectedProject);
       }
    }

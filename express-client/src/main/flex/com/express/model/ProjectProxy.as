@@ -3,6 +3,7 @@ package com.express.model
 import com.express.model.domain.AccessRequest;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.DailyIterationStatusRecord;
+import com.express.model.domain.DailyProjectStatusRecord;
 import com.express.model.domain.Issue;
 import com.express.model.domain.Iteration;
 import com.express.model.domain.Project;
@@ -43,6 +44,7 @@ public class ProjectProxy extends Proxy
    private var _accessRequests: ArrayCollection;
    private var _defectList : ArrayCollection;
    private var _burndown : ArrayCollection;
+   private var _burnUp : ArrayCollection;
    private var _iterationDays : ArrayCollection;
    private var _themes : ArrayCollection;
 
@@ -68,6 +70,7 @@ public class ProjectProxy extends Proxy
 
       _projectWorkers = new ArrayCollection();
       _burndown = new ArrayCollection();
+      _burnUp = new ArrayCollection();
       var burndownSort : Sort = new Sort();
       burndownSort.fields = [new SortField("date")];
       burndownSort.compareFunction =  sortOnDate;
@@ -185,6 +188,7 @@ public class ProjectProxy extends Proxy
       _projectWorkers.source = project.projectWorkers.source;
       setDevelopers(project.projectWorkers);
       setProductBacklogSource(project.productBacklog);
+      setBurnUp(project);
       themes = project.themes;
    }
 
@@ -245,13 +249,36 @@ public class ProjectProxy extends Proxy
 
    public function setBurndown(iteration : Iteration) : void {
       if(iteration) {
-         _burndown.source = iteration.burndown.source.concat();
+         _burndown.source = iteration.history.source.concat();
          if(iteration.isOpen()) {
             var effort : DailyIterationStatusRecord = new DailyIterationStatusRecord();
             var temp: Date = new Date();
             effort.date = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate());
             effort.taskHoursRemaining = iteration.getTaskHoursRemaining();
             _burndown.addItem(effort);
+         }
+      }
+      else {
+         _burndown.source = [];
+      }
+      for each(var record : DailyIterationStatusRecord in _burndown) {
+            trace(record.id + ":" + record.date);
+         }
+   }
+
+   public function get burnUp() : ArrayCollection {
+      return _burnUp;
+   }
+
+   public function setBurnUp(project : Project) : void {
+      if(project.history) {
+         _burnUp.source = project.history.source.concat();
+         var finalRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(burnUp.getItemAt(_burnUp.length - 1));
+         if(finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
+            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
+            effort.date = project.targetReleaseDate;
+            effort.totalPoints = finalRecord.totalPoints;
+            _burnUp.addItem(effort);
          }
       }
       else {

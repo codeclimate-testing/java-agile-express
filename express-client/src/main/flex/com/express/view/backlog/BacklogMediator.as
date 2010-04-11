@@ -58,6 +58,10 @@ public class BacklogMediator extends Mediator {
 
       viewComp.grdProductBacklog.addEventListener(DragEvent.DRAG_ENTER, handleDragEnter);
       viewComp.grdIterationBacklog.addEventListener(DragEvent.DRAG_ENTER, handleDragEnter);
+
+      if(_proxy.selectedProject != null) {
+         handleProjectLoaded();
+      }
    }
 
    /**

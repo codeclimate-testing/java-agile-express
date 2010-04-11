@@ -10,8 +10,6 @@
 
 <body id="pricing">
 <div id="banner"></div>
-
-<div id="main" >
 	<ul class="mainNav">
    	<li>
          <a href="index.html">Home</a>
@@ -19,13 +17,16 @@
       <li>
          <a href="faq.html">FAQ</a>
       </li>
-      <li class="selected">
-         Documentation
+      <li>
+         <div class="selectedLeft"></div>
+         <div class="selected">Documentation</div>
+         <div class="selectedRight"></div>
       </li>
       <li>
          <a href="express.html">Application</a>
       </li>
    </ul>
+   <div id="main" >
    <div class="section">
          <h1>Documentation</h1>
 
@@ -34,14 +35,14 @@
                Download the latest war file and deply it to your favourite servlet container. The latest build
                is tested on Tomcat 6.0.20 but there is no reason why it would have problems on any 2.4 compliant
                servlet container.
-               Because of the way the flex aplication swf is compiled, you will need to deploy express to the root
-               of your domain. This means that if you are simply deploying to the localhost in the Tomcat webapps
+               Because of the way the flex aplication swf is compiled, you will need to deploy express to the root 
+               of your domain. This means that if you are simply deploying to the localhost in the Tomcat webapps 
                directory you will need to unzip the application war and rename it ROOT.
             </p>
             <p>
                Express requires a relational database. By default it uses postgres and was developed against 8.4.
                It will work against most relational databases as persistence is done via JPA and database management
-               through Liquibase. In order to use a different database, at this stage, you will need to add the
+               through Liquibase. In order to use a different database, at this stage, you will need to add the 
                database driver to the lib directory and change the properties accordingly (see config section below).
             </p>
             <h3>Configure</h3>
@@ -49,7 +50,7 @@
                Most configuration is done in the application.properties file which is located in the exploded war
                file under theWEB-INF/classes folder.
                At a minimum you will need to add the properties for your smtp server. Without an smtp server you cannot
-               register as express sends a confirmation email to ensure that the user has a valid email address. You
+               register as express sends a confirmation email to ensure that the user has a valid email address. You 
                will also need to change the entry for the applicationUrl to your domain name as the link in the c
                onfirmation email uses this.
             </p>
@@ -68,7 +69,7 @@
             <h4>Create a project</h4>
             <p>
                On your first login you will be directed to the project creation / access page. Here you can create a project
-               or request to join an existing one. Your request will be emailed to the project manager(s) immediately but
+               or request to join an existing one. Your request will be emailed to the project manager(s) immediately but 
                you will not actually get acess to their project until they have acted on the request. If you create a new
                project it will be setup immediately and you can go to work on it straight away.
             </p>

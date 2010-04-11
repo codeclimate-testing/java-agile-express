@@ -62,6 +62,10 @@
          <a>themes</a>
          <b>themes</b>
       </field>
+      <field>
+         <a>history</a>
+         <b>history</b>
+      </field>
       <field map-id="ProjectWorker.deep" remove-orphans="true">
          <a>projectWorkers</a>
          <b>projectWorkers</b>
@@ -94,6 +98,10 @@
       <field-exclude>
          <a>themes</a>
          <b>themes</b>
+      </field-exclude>
+      <field-exclude>
+         <a>history</a>
+         <b>history</b>
       </field-exclude>
       <field-exclude>
          <a>accessRequests</a>
@@ -205,8 +213,8 @@
          <b>backlog</b>
       </field-exclude>
       <field-exclude>
-         <a>burndown</a>
-         <b>burndown</b>
+         <a>history</a>
+         <b>history</b>
       </field-exclude>
       <field-exclude>
          <a>impediments</a>

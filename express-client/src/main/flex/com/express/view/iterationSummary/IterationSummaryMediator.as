@@ -53,6 +53,12 @@ public class IterationSummaryMediator extends Mediator {
       viewComp.btnEdit.addEventListener(MouseEvent.CLICK, handleEditIteration);
       viewComp.lnkExport.addEventListener(MouseEvent.CLICK, handleIterationBacklogExport);
       viewComp.lnkClose.addEventListener(MouseEvent.CLICK, handleClose);
+
+      setupFileReference();
+      viewComp.burndown.dataProvider = _proxy.burndown;
+   }
+
+   private function setupFileReference():void {
       _fileRef = new FileReference();
       _fileRef.addEventListener(Event.CANCEL, handleDownload);
       _fileRef.addEventListener(Event.COMPLETE, handleDownload);
