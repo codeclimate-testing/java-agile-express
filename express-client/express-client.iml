@@ -37,7 +37,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="3.3 (player 10)" jdkType="Flex SDK Type" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Maven: com.adobe.flex.framework:applicationupdater:swc:3.3.0.4852" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.adobe.flex.framework:applicationupdater_ui:swc:3.3.0.4852" level="project" />

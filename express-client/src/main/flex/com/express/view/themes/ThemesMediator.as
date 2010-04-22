@@ -61,8 +61,7 @@ public class ThemesMediator extends Mediator {
 
    private function validateThemes():Boolean {
       for each(var theme:Theme in _proxy.themes) {
-         if (theme.title == null || StringUtil.trim(theme.title) == "" ||
-             theme.description == null || StringUtil.trim(theme.description) == "") {
+         if (theme.title == null || StringUtil.trim(theme.title) == "") {
             return false;
          }
       }

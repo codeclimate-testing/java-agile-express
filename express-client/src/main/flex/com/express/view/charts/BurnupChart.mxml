@@ -59,7 +59,8 @@
       </mx:verticalAxis>
       <mx:series>
          <mx:LineSeries displayName="Points Completed" yField="completedPoints" xField="date" lineStroke="{lineStroke}"/>
-         <mx:LineSeries displayName="Points For Completion" yField="totalPoints" xField="date" lineStroke="{targetStroke}"/>
+         <mx:LineSeries displayName="Points For Completion" yField="totalPoints"
+                        xField="date" lineStroke="{targetStroke}" form="step"/>
       </mx:series>
       <!-- turn off drop shadows -->
       <mx:seriesFilters>

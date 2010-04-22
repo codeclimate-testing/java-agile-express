@@ -15,7 +15,7 @@
                   import com.express.controller.event.GridButtonEvent;
                ]]>
                </mx:Script>
-               <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20" toolTip="remove criteria"
+               <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20" toolTip="remove theme"
                   click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));"/>
             </mx:HBox>
             </mx:Component>
