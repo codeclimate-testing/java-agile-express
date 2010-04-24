@@ -110,7 +110,7 @@ public class ProjectManagerImplTest {
       projectDao.save(project);
       projectDao.save(project);
       
-      projectManager.createEffortRecords();
+      projectManager.createHistoryRecords();
    }
 
    @Test

@@ -325,7 +325,7 @@ public class ProjectManagerImpl implements ProjectManager {
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-   public void createEffortRecords() {
+   public void createHistoryRecords() {
       List<Iteration> iterations = iterationDao.findOpenIterations();
       for (Iteration iteration : iterations) {
          int completedPoints = iteration.getStoryPointsCompleted();

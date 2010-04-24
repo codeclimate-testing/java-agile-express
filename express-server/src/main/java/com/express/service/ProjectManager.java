@@ -107,7 +107,7 @@ public interface ProjectManager {
    /**
     * Service to create EffortRecords for all Iterations which are currently active
     */
-   void createEffortRecords();
+   void createHistoryRecords();
 
    /**
     * Update the list of themes for a project
