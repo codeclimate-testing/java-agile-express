@@ -71,10 +71,6 @@ public class ProjectProxy extends Proxy
       _projectWorkers = new ArrayCollection();
       _burndown = new ArrayCollection();
       _burnUp = new ArrayCollection();
-      var burndownSort : Sort = new Sort();
-      burndownSort.fields = [new SortField("date")];
-      burndownSort.compareFunction =  sortOnDate;
-      _burndown.sort = burndownSort;
       _iterationDays = new ArrayCollection();
 
       _selectedBacklog = new HierarchicalData();

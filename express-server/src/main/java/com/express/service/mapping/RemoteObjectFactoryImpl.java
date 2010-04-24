@@ -50,6 +50,9 @@ public class RemoteObjectFactoryImpl implements RemoteObjectFactory {
       if(projectDto.getIterations() != null) {
          Collections.sort(projectDto.getIterations());
       }
+      if(projectDto.getHistory() != null) {
+         Collections.sort(projectDto.getHistory());
+      }
       if(projectDto.getProjectWorkers() == null) {
          projectDto.setProjectWorkers(new ArrayList<ProjectWorkerDto>());
       }
@@ -67,6 +70,9 @@ public class RemoteObjectFactoryImpl implements RemoteObjectFactory {
                                                                IterationDto.class,
                                                                policy.getMapId(Iteration.class));
       Collections.sort(iterationDto.getBacklog());
+      if(iteration.getHistory() != null) {
+         Collections.sort(iterationDto.getHistory());
+      }
       return iterationDto;
    }
 
