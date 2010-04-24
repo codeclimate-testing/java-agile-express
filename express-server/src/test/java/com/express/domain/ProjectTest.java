@@ -1,17 +1,17 @@
 package com.express.domain;
 
 import com.express.testutils.SetterGetterInvoker;
-import static junit.framework.Assert.assertEquals;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.unitils.UnitilsJUnit4;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class ProjectTest extends UnitilsJUnit4 {
    private static final Log LOG = LogFactory.getLog(ProjectTest.class);

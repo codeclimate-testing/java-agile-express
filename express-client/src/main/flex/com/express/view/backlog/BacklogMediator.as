@@ -65,9 +65,7 @@ public class BacklogMediator extends Mediator {
    }
 
    /**
-    * Disallow draging of tasks
-    * @param event
-    * @return
+    * Disallow dragging of tasks
     */
    private function handleDragEnter(event:DragEvent):void {
       var items:Array = event.dragSource.dataForFormat('treeDataGridItems') as Array;

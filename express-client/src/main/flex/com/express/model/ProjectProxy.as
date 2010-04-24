@@ -273,13 +273,16 @@ public class ProjectProxy extends Proxy
    public function setBurnUp(project : Project) : void {
       if(project.history) {
          _burnUp.source = project.history.source.concat();
-         var finalRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(burnUp.getItemAt(_burnUp.length - 1));
-         if(finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
-            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
-            effort.date = project.targetReleaseDate;
-            effort.totalPoints = finalRecord.totalPoints;
-            _burnUp.addItem(effort);
-         }
+//         var finalRecord : DailyProjectStatusRecord;
+//         if(_burnUp.length > 0) {
+//            finalRecord = DailyProjectStatusRecord(burnUp.getItemAt(_burnUp.length - 1));
+//         }
+//         if(!finalRecord || finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
+//            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
+//            effort.date = project.targetReleaseDate;
+//            effort.totalPoints = finalRecord.totalPoints;
+//            _burnUp.addItem(effort);
+//         }
       }
       else {
          _burndown.source = [];
