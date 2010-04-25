@@ -43,10 +43,11 @@ public class ProjectProxy extends Proxy
    private var _projectWorkers : ArrayCollection;
    private var _accessRequests: ArrayCollection;
    private var _defectList : ArrayCollection;
-   private var _burndown : ArrayCollection;
-   private var _burnUp : ArrayCollection;
-   private var _iterationDays : ArrayCollection;
    private var _themes : ArrayCollection;
+   
+   private var _iterationHistory : ArrayCollection;
+   private var _iterationDays : ArrayCollection;
+   private var _projectHistory : ArrayCollection;
 
    public var newImpediment : Issue;
 
@@ -69,9 +70,10 @@ public class ProjectProxy extends Proxy
       _developers.sort = _nameSort;
 
       _projectWorkers = new ArrayCollection();
-      _burndown = new ArrayCollection();
-      _burnUp = new ArrayCollection();
+      _iterationHistory = new ArrayCollection();
       _iterationDays = new ArrayCollection();
+
+      _projectHistory = new ArrayCollection();
 
       _selectedBacklog = new HierarchicalData();
       _selectedBacklog.childrenField = "tasks";
@@ -131,11 +133,11 @@ public class ProjectProxy extends Proxy
       _selectedIteration = iteration;
       if (iteration != null) {
          _selectedBacklog.source = iteration.backlog;
-         setBurndown(iteration);
+         setIterationHistory(iteration);
       }
       else {
          _selectedBacklog.source = [];
-         _burndown.source = [];
+         _iterationHistory.source = [];
       }
    }
 
@@ -184,7 +186,6 @@ public class ProjectProxy extends Proxy
       _projectWorkers.source = project.projectWorkers.source;
       setDevelopers(project.projectWorkers);
       setProductBacklogSource(project.productBacklog);
-      setBurnUp(project);
       themes = project.themes;
    }
 
@@ -239,53 +240,44 @@ public class ProjectProxy extends Proxy
       return -1;
    }
 
-   public function get burndown() : ArrayCollection {
-      return _burndown;
+   public function get projectHistory() : ArrayCollection {
+      return _projectHistory;
    }
 
-   public function setBurndown(iteration : Iteration) : void {
+   public function setProjectHistory(project : Project) : void {
+      if(project.history && project.history.length > 0) {
+         _projectHistory.source = project.history.source.concat();
+         var finalRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(_projectHistory.getItemAt(_projectHistory.length - 1));
+         if(finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
+            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
+            effort.date = project.targetReleaseDate;
+            effort.totalPoints = finalRecord.totalPoints;
+            _projectHistory.addItem(effort);
+         }
+      }
+      else {
+         _projectHistory.source = [];
+      }
+   }
+
+   public function get iterationHistory() : ArrayCollection {
+      return _iterationHistory;
+   }
+
+   public function setIterationHistory(iteration : Iteration) : void {
       if(iteration) {
-         _burndown.source = iteration.history.source.concat();
+         _iterationHistory.source = iteration.history.source.concat();
          if(iteration.isOpen()) {
             var effort : DailyIterationStatusRecord = new DailyIterationStatusRecord();
             var temp: Date = new Date();
             effort.date = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate());
             effort.taskHoursRemaining = iteration.getTaskHoursRemaining();
-            _burndown.addItem(effort);
+            _iterationHistory.addItem(effort);
          }
       }
       else {
-         _burndown.source = [];
+         _iterationHistory.source = [];
       }
-      for each(var record : DailyIterationStatusRecord in _burndown) {
-            trace(record.id + ":" + record.date);
-         }
-   }
-
-   public function get burnUp() : ArrayCollection {
-      return _burnUp;
-   }
-
-   public function setBurnUp(project : Project) : void {
-      if(project.history) {
-         _burnUp.source = project.history.source.concat();
-//         var finalRecord : DailyProjectStatusRecord;
-//         if(_burnUp.length > 0) {
-//            finalRecord = DailyProjectStatusRecord(burnUp.getItemAt(_burnUp.length - 1));
-//         }
-//         if(!finalRecord || finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
-//            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
-//            effort.date = project.targetReleaseDate;
-//            effort.totalPoints = finalRecord.totalPoints;
-//            _burnUp.addItem(effort);
-//         }
-      }
-      else {
-         _burndown.source = [];
-      }
-      for each(var record : DailyIterationStatusRecord in _burndown) {
-            trace(record.id + ":" + record.date);
-         }
    }
 
    public function get iterationDays() : ArrayCollection {

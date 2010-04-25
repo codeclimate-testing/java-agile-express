@@ -137,9 +137,9 @@ public class Project
       }
       return Iteration(iterations.getItemAt(iterations.length-1)).endDate;
    }
-
-   public function set targetReleaseDate(value:Date):void {
-      targetReleaseDate = value;
-   }
+//
+//   public function set targetReleaseDate(value:Date):void {
+//      targetReleaseDate = value;
+//   }
 }
 }

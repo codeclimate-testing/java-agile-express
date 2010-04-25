@@ -55,7 +55,7 @@ public class IterationSummaryMediator extends Mediator {
       viewComp.lnkClose.addEventListener(MouseEvent.CLICK, handleClose);
 
       setupFileReference();
-      viewComp.burndown.dataProvider = _proxy.burndown;
+      viewComp.burndown.dataProvider = _proxy.iterationHistory;
    }
 
    private function setupFileReference():void {

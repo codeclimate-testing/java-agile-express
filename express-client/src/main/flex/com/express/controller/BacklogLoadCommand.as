@@ -49,7 +49,7 @@ public class BacklogLoadCommand extends SimpleCommand implements IResponder
       else {
          _proxy.selectedIteration.backlog.source = ArrayCollection(data.result).source;
       }
-      _proxy.setBurndown(_proxy.selectedIteration);
+      _proxy.setIterationHistory(_proxy.selectedIteration);
       _proxy.productBacklogRequest = false;
       sendNotification(ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE);
    }

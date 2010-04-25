@@ -28,7 +28,7 @@
          formatter.formatString = "DD/MM/YYYY";
          return formatter.format(labelValue);
       }
-      
+
       private function toggleWeekends(event:Event) : void {
          if(chkWeekends.selected) {
             xAxis.disabledDays = [];
