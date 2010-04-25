@@ -347,8 +347,8 @@ WallRow {
 CardGrid {
    background-color: #FFFFFF;
    backgroundAlpha:0.7;
-   horizontalGap:5px;
-   verticalGap:5px;
+   horizontalGap:3px;
+   verticalGap:3px;
 }
 
 TaskCard {

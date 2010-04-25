@@ -259,16 +259,16 @@ public class ProjectProxy extends Proxy
          var finalRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(
                _projectHistoryRequired.getItemAt(_projectHistoryRequired.length - 1));
          if(finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
-            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
-            effort.date = project.targetReleaseDate;
-            effort.totalPoints = finalRecord.totalPoints;
-            _projectHistoryRequired.addItem(effort);
+            var newLast : DailyProjectStatusRecord = new DailyProjectStatusRecord();
+            newLast.date = project.targetReleaseDate;
+            newLast.totalPoints = finalRecord.totalPoints;
+            _projectHistoryRequired.addItem(newLast);
          }
          if(firstRecord.date.getTime() > project.startDate.getTime()) {
-            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
-            effort.date = project.startDate;
-            effort.totalPoints = firstRecord.totalPoints;
-            _projectHistoryRequired.addItemAt(effort,0);
+            var newFirst : DailyProjectStatusRecord = new DailyProjectStatusRecord();
+            newFirst.date = project.startDate;
+            newFirst.totalPoints = firstRecord.totalPoints;
+            _projectHistoryRequired.addItemAt(newFirst,0);
          }
       }
       else {

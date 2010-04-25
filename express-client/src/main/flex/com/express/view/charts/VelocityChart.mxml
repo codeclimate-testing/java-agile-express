@@ -38,7 +38,7 @@
       </mx:verticalAxis>
       <mx:series>
          <mx:ColumnSeries displayName="Points Delivered" xField="title" yField="finalVelocity"
-                          fill="{colFill}" stroke="{colStroke}" labelPosition="outside" width="25" />
+                          fill="{colFill}" stroke="{colStroke}" />
       </mx:series>
 
       <mx:horizontalAxisRenderers>
