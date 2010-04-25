@@ -45,7 +45,7 @@ public class IterationMediator extends FormMediator
    override public function bindForm():void {
       view.visible = true;
       view.iterationTitle.text = _proxy.newIteration.title;
-      view.description.text = _proxy.newIteration.description;
+      view.goal.text = _proxy.newIteration.goal;
       view.startDate.selectedDate = _proxy.newIteration.startDate;
       view.endDate.selectedDate = _proxy.newIteration.endDate;
       FormUtility.clearValidationErrors(_validators);
@@ -59,7 +59,7 @@ public class IterationMediator extends FormMediator
 
    override public function bindModel():void {
       _proxy.newIteration.title = view.iterationTitle.text;
-      _proxy.newIteration.description = view.description.text;
+      _proxy.newIteration.goal = view.goal.text;
       _proxy.newIteration.startDate = view.startDate.selectedDate;
       _proxy.newIteration.endDate = view.endDate.selectedDate;
       _proxy.selectedProject.iterations.addItem(_proxy.newIteration);

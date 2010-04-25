@@ -272,7 +272,7 @@
    </changeSet>
 
    <changeSet id="9" author="adam">
-      <createTable tableName="project_status">
+      <createTable tableName="project_history">
          <column name="project_status_id" type="int8">
             <constraints nullable="false" primaryKey="true" primaryKeyName="project_status_pkey"/>
          </column>
@@ -282,17 +282,19 @@
          <column name="project_id" type="int8"/>
       </createTable>
 
-      <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_status"
+      <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="project_history"
                                constraintName="fk_proj_proj_status" deferrable="false"
                                initiallyDeferred="false" referencedColumnNames="project_id"
                                referencedTableName="project"/>
+      <renameTable oldTableName="effort" newTableName="iteration_history"/>
 
-      <addColumn tableName="effort">
+      <addColumn tableName="iteration_history">
          <column name="points_total" type="int4" />
       </addColumn>
-      <addColumn tableName="effort">
+      <addColumn tableName="iteration_history">
          <column name="points_completed" type="int4" />
       </addColumn>
+      <renameColumn tableName="iteration" oldColumnName="description" newColumnName="goal"/>
    </changeSet>
 
 </databaseChangeLog>

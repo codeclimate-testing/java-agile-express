@@ -31,28 +31,28 @@ public class Iteration implements Persistable, Comparable<Iteration> {
    private Long id;
 
    @Version
-   @Column(name = "VERSION_NO")
+   @Column(name = "version_no")
    private Long version;
 
-   @Column(name = "START_DATE")
+   @Column(name = "start_date")
    @Temporal(value = TemporalType.TIMESTAMP)
    private Calendar startDate;
 
-   @Column(name = "END_DATE")
+   @Column(name = "end_date")
    @Temporal(value = TemporalType.TIMESTAMP)
    private Calendar endDate;
 
-   @Column(name = "TITLE")
+   @Column(name = "title")
    private String title;
 
-   @Column(name = "DESCRIPTION")
-   private String description;
+   @Column(name = "goal")
+   private String goal;
 
-   @Column(name = "FINAL_VELOCITY")
+   @Column(name = "final_velocity")
    private Integer finalVelocity;
 
    @ManyToOne
-   @JoinColumn(name = "PROJECT_ID")
+   @JoinColumn(name = "project_id")
    @OptimisticLock(excluded = true)
    private Project project;
 
@@ -105,12 +105,12 @@ public class Iteration implements Persistable, Comparable<Iteration> {
       this.title = title;
    }
 
-   public String getDescription() {
-      return description;
+   public String getGoal() {
+      return goal;
    }
 
-   public void setDescription(String description) {
-      this.description = description;
+   public void setGoal(String goal) {
+      this.goal = goal;
    }
 
    public Project getProject() {
@@ -263,7 +263,7 @@ public class Iteration implements Persistable, Comparable<Iteration> {
       output.append("id=").append(id).append(",");
       output.append("version=").append(version).append(",");
       output.append("title=").append(title).append(",");
-      output.append("description=").append(description).append(",");
+      output.append("goal=").append(goal).append(",");
       output.append("startDate=").append(startDate).append(",");
       output.append("endDate=").append(endDate).append(",");
       output.append("project=").append(project).append("]");

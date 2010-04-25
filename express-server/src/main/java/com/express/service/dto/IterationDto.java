@@ -19,7 +19,7 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
    
    private String title;
    
-   private String description;
+   private String goal;
 
    private Integer finalVelocity;
    
@@ -71,12 +71,12 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
       this.title = title;
    }
 
-   public String getDescription() {
-      return description;
+   public String getGoal() {
+      return goal;
    }
 
-   public void setDescription(String description) {
-      this.description = description;
+   public void setGoal(String goal) {
+      this.goal = goal;
    }
 
    public ProjectDto getProject() {

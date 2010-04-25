@@ -178,7 +178,7 @@ public class IterationSummaryMediator extends Mediator {
          view.totalPoints.text = "" + _proxy.selectedIteration.getPoints();
          view.hrsRemaining.text = "" + _proxy.selectedIteration.getTaskHoursRemaining();
          view.daysRemaining.text = "" + _proxy.selectedIteration.getDaysRemaining();
-         view.description.text = "" + _proxy.selectedIteration.description;
+         view.goal.text = "" + _proxy.selectedIteration.goal;
          view.btnEdit.enabled = true;
          view.printPopUp.enabled = true;
          view.lnkExport.enabled = true;

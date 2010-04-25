@@ -23,7 +23,7 @@ public class Iteration
 
    public var title : String;
 
-   public var description : String;
+   public var goal : String;
 
    [Bindable]
    public var startDate : Date;
@@ -89,7 +89,7 @@ public class Iteration
       startDate = iteration.startDate;
       endDate = iteration.endDate;
       project = iteration.project;
-      description = iteration.description;
+      goal = iteration.goal;
       history = iteration.history;
       backlog = iteration.backlog;
       finalVelocity = iteration.finalVelocity;

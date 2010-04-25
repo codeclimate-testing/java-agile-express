@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  *
  */
 @Entity
-@Table(name = "effort")
+@Table(name = "iteration_history")
 public class DailyIterationStatusRecord implements Persistable, Comparable<DailyIterationStatusRecord> {
    private static final long serialVersionUID = 3358201566728092604L;
 

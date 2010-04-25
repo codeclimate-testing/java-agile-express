@@ -10,7 +10,7 @@ import java.util.Calendar;
  * @author adam boas
  */
 @Entity
-@Table(name = "project_status")
+@Table(name = "project_history")
 public class DailyProjectStatusRecord {
    @Id
    @GeneratedValue(strategy = GenerationType.TABLE, generator = "gen_proj_status_rec")

@@ -84,7 +84,7 @@ public class ProjectManagerImpl implements ProjectManager {
          throw new IllegalArgumentException("Iteration does not exist");
       }
       iteration.setTitle(iterationDto.getTitle());
-      iteration.setDescription(iterationDto.getDescription());
+      iteration.setGoal(iterationDto.getGoal());
       iteration.setStartDate(Calendar.getInstance());
       iteration.getStartDate().setTimeInMillis(iterationDto.getStartDate().getTime());
       iteration.setEndDate(Calendar.getInstance());

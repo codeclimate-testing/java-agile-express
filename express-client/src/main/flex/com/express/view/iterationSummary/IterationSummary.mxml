@@ -54,8 +54,8 @@
    </mx:HBox>
 
    <mx:HBox width="100%" styleName="panelBox">
-      <mx:Label text="Description:" fontWeight="bold" width="115"/>
-      <mx:Text id="description" width="100%"/>
+      <mx:Label text="Goal:" fontWeight="bold" width="115"/>
+      <mx:Text id="goal" width="100%"/>
    </mx:HBox>
 
    <mx:HBox styleName="buttonBox" width="100%" height="100%">
