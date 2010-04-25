@@ -47,7 +47,8 @@ public class ProjectProxy extends Proxy
    
    private var _iterationHistory : ArrayCollection;
    private var _iterationDays : ArrayCollection;
-   private var _projectHistory : ArrayCollection;
+   private var _projectHistoryRequired : ArrayCollection;
+   private var _projectHistoryCompleted : ArrayCollection;
 
    public var newImpediment : Issue;
 
@@ -73,7 +74,8 @@ public class ProjectProxy extends Proxy
       _iterationHistory = new ArrayCollection();
       _iterationDays = new ArrayCollection();
 
-      _projectHistory = new ArrayCollection();
+      _projectHistoryRequired = new ArrayCollection();
+      _projectHistoryCompleted = new ArrayCollection();
 
       _selectedBacklog = new HierarchicalData();
       _selectedBacklog.childrenField = "tasks";
@@ -240,23 +242,38 @@ public class ProjectProxy extends Proxy
       return -1;
    }
 
-   public function get projectHistory() : ArrayCollection {
-      return _projectHistory;
+   public function get projectHistoryRequired() : ArrayCollection {
+      return _projectHistoryRequired;
+   }
+
+   public function get projectHistoryCompleted() : ArrayCollection {
+      return _projectHistoryCompleted;
    }
 
    public function setProjectHistory(project : Project) : void {
       if(project.history && project.history.length > 0) {
-         _projectHistory.source = project.history.source.concat();
-         var finalRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(_projectHistory.getItemAt(_projectHistory.length - 1));
+         _projectHistoryRequired.source = project.history.source.concat();
+         _projectHistoryCompleted.source = project.history.source.concat();
+         var firstRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(
+               _projectHistoryRequired.getItemAt(0));
+         var finalRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(
+               _projectHistoryRequired.getItemAt(_projectHistoryRequired.length - 1));
          if(finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
             var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
             effort.date = project.targetReleaseDate;
             effort.totalPoints = finalRecord.totalPoints;
-            _projectHistory.addItem(effort);
+            _projectHistoryRequired.addItem(effort);
+         }
+         if(firstRecord.date.getTime() > project.startDate.getTime()) {
+            var effort : DailyProjectStatusRecord = new DailyProjectStatusRecord();
+            effort.date = project.startDate;
+            effort.totalPoints = firstRecord.totalPoints;
+            _projectHistoryRequired.addItemAt(effort,0);
          }
       }
       else {
-         _projectHistory.source = [];
+         _projectHistoryRequired.source = [];
+         _projectHistoryCompleted.source = [];
       }
    }
 

@@ -150,7 +150,8 @@ public class ExpressPopUpManager {
    private function handleBurnUpCreated(event:FlexEvent):void {
       _burnUpChart.xAxis.minimum = _projectProxy.selectedProject.startDate;
       _burnUpChart.xAxis.maximum = _projectProxy.selectedProject.targetReleaseDate;
-      _burnUpChart.dataProvider = _projectProxy.projectHistory;
+      _burnUpChart.seriesCompletedPoints.dataProvider = _projectProxy.projectHistoryCompleted;
+      _burnUpChart.seriesRequiredPoints.dataProvider = _projectProxy.projectHistoryRequired;
    }
 
    private function createVelocityChart():void {
@@ -253,7 +254,7 @@ public class ExpressPopUpManager {
          _burnUpChart.xAxis.maximum = _projectProxy.selectedProject.targetReleaseDate;
       }
       _popup.title = title;
-      _popup.width = 600;
+      _popup.width = 650;
       _popup.height = 450;
       _popup.x = (_application.width / 2) - (_popup.width / 2);
       _popup.y = 80;

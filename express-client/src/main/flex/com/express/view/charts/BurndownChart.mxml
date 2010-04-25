@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-         backgroundAlpha="1" backgroundColor="#ffffff" width="100%" height="100%" verticalGap="3">
+         width="100%" height="100%" verticalGap="3">
    <mx:Style>
       @font-face {
          src: local("Arial");
@@ -15,22 +15,20 @@
 
    <mx:Script>
       <![CDATA[
-      import com.express.view.components.*;
-
       import mx.charts.chartClasses.IAxis;
       import mx.formatters.DateFormatter;
 
       [Bindable]
-      public var dataProvider : Object;
+      public var dataProvider:Object;
 
-      private function formatDate(labelValue : Date, previousValue : Object, axis : IAxis):String {
-         var formatter : DateFormatter = new DateFormatter();
+      private function formatDate(labelValue:Date, previousValue:Object, axis:IAxis):String {
+         var formatter:DateFormatter = new DateFormatter();
          formatter.formatString = "DD/MM/YYYY";
          return formatter.format(labelValue);
       }
-      
-      private function toggleWeekends(event:Event) : void {
-         if(chkWeekends.selected) {
+
+      private function toggleWeekends(event:Event):void {
+         if (chkWeekends.selected) {
             xAxis.disabledDays = [];
          }
          else {
@@ -48,7 +46,7 @@
    <mx:Stroke id="lineStroke" color="#3679b0" weight="2" alpha="1"/>
    <mx:Stroke id="axisStroke" color="#404040" alpha=".5" weight="2"/>
    <mx:LineChart id="chart" dataProvider="{dataProvider}" styleName="lineChart" showDataTips="true"
-                 width="100%" height="100%">
+                 width="100%" height="100%" seriesFilters="[]">
       <mx:horizontalAxis>
          <mx:DateTimeAxis id="xAxis" dataUnits="days" labelUnits="days" disabledDays="[0,6]" alignLabelsToUnits="false"
                           interval="0" labelFunction="formatDate"/>
@@ -59,10 +57,6 @@
       <mx:series>
          <mx:LineSeries displayName="Effort Remaining" yField="taskHoursRemaining" xField="date" lineStroke="{lineStroke}"/>
       </mx:series>
-      <!-- turn off drop shadows -->
-      <mx:seriesFilters>
-         <mx:Array/>
-      </mx:seriesFilters>
 
       <mx:horizontalAxisRenderers>
          <mx:AxisRenderer axis="{xAxis}" labelRotation="60">

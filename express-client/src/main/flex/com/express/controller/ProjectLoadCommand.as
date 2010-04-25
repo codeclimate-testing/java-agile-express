@@ -33,6 +33,7 @@ public class ProjectLoadCommand extends SimpleCommand implements IResponder
    public function result(data:Object):void {
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       _proxy.selectedProject = data.result as Project;
+      _proxy.setProjectHistory(_proxy.selectedProject);
       var backlogItemProxy : BacklogItemProxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
       backlogItemProxy.assignToList = _proxy.developers;
       sendNotification(SUCCESS);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-         backgroundAlpha="1" backgroundColor="#ffffff" width="100%" height="100%">
+         width="100%" height="100%">
    <mx:Style>
       @font-face
       {
@@ -38,12 +38,8 @@
       </mx:verticalAxis>
       <mx:series>
          <mx:ColumnSeries displayName="Points Delivered" xField="title" yField="finalVelocity"
-                          fill="{colFill}" stroke="{colStroke}" />
+                          fill="{colFill}" stroke="{colStroke}" labelPosition="outside" width="25" />
       </mx:series>
-      <!-- turn off drop shadows -->
-      <!--<mx:seriesFilters>-->
-         <!--<mx:Array/>-->
-      <!--</mx:seriesFilters>-->
 
       <mx:horizontalAxisRenderers>
          <mx:AxisRenderer axis="{xAxis}" labelRotation="60">

@@ -1,72 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
-         backgroundAlpha="1" backgroundColor="#ffffff" width="100%" height="100%" verticalGap="3">
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+         width="100%" height="100%" verticalGap="3">
    <mx:Style>
-      @font-face {
-         src: local("Arial");
-         font-family: EmbeddedArial;
+      @font-face
+      {
+         src: local("Arial")
+      ;
+         font-family: EmbeddedArial
+      ;
       }
 
       .lineChart {
          font-family: EmbeddedArial;
-         background-color:#880000;
+         background-color: #880000;
       }
    </mx:Style>
 
    <mx:Script>
       <![CDATA[
-      import com.express.view.components.*;
-
       import mx.charts.chartClasses.IAxis;
       import mx.formatters.DateFormatter;
 
       [Bindable]
-      public var dataProvider : Object;
+      public var dataProvider:Object;
 
-      private function formatDate(labelValue : Date, previousValue : Object, axis : IAxis):String {
-         var formatter : DateFormatter = new DateFormatter();
+      private function formatDate(labelValue:Date, previousValue:Object, axis:IAxis):String {
+         var formatter:DateFormatter = new DateFormatter();
          formatter.formatString = "DD/MM/YYYY";
          return formatter.format(labelValue);
-      }
-
-      private function toggleWeekends(event:Event) : void {
-         if(chkWeekends.selected) {
-            xAxis.disabledDays = [];
-         }
-         else {
-            xAxis.disabledDays = [0,6];
-         }
       }
       ]]>
    </mx:Script>
 
-   <mx:HBox styleName="buttonBox" width="100%">
-      <mx:Label text="Show Weekends"/>
-      <mx:CheckBox id="chkWeekends" click="toggleWeekends(event)"/>
-   </mx:HBox>
-
-   <mx:Stroke id="lineStroke" color="#3679b0" weight="2" alpha="1"/>
-   <mx:Stroke id="targetStroke" color="#404040" weight="2" alpha="1"/>
+   <mx:Stroke id="lineStroke" color="#404040" weight="2" alpha="1"/>
+   <mx:Stroke id="targetStroke" color="#EF8686" weight="2" alpha="1"/>
    <mx:Stroke id="axisStroke" color="#404040" alpha=".5" weight="2"/>
    <mx:LineChart id="chart" dataProvider="{dataProvider}" styleName="lineChart" showDataTips="true"
                  width="100%" height="100%">
+      <mx:backgroundElements>
+         <mx:GridLines direction="both">
+            <mx:verticalFill>
+               <mx:SolidColor color= "haloBlue" alpha="0.2" />
+            </mx:verticalFill>
+            <mx:verticalAlternateFill>
+               <mx:SolidColor color="haloSilver" alpha="0.2" />
+            </mx:verticalAlternateFill>
+         </mx:GridLines>
+      </mx:backgroundElements>
+
       <mx:horizontalAxis>
-         <mx:DateTimeAxis id="xAxis" dataUnits="days" labelUnits="days" disabledDays="[0,6]" alignLabelsToUnits="false"
+         <mx:DateTimeAxis id="xAxis" dataUnits="weeks" labelUnits="weeks" alignLabelsToUnits="false"
                           interval="0" labelFunction="formatDate"/>
       </mx:horizontalAxis>
       <mx:verticalAxis>
-         <mx:LinearAxis id="yAxis" title="Effort Remaining"/>
+         <mx:LinearAxis id="yAxis" title="Story Points"/>
       </mx:verticalAxis>
       <mx:series>
-         <mx:LineSeries displayName="Points Completed" yField="completedPoints" xField="date" lineStroke="{lineStroke}"/>
-         <mx:LineSeries displayName="Points For Completion" yField="totalPoints"
+         <mx:LineSeries id="seriesRequiredPoints" displayName="Points Required" yField="totalPoints"
                         xField="date" lineStroke="{targetStroke}" form="step"/>
+         <mx:LineSeries id="seriesCompletedPoints" displayName="Points Completed" yField="completedPoints" xField="date"
+                        lineStroke="{lineStroke}"/>
       </mx:series>
-      <!-- turn off drop shadows -->
-      <mx:seriesFilters>
-         <mx:Array/>
-      </mx:seriesFilters>
-
       <mx:horizontalAxisRenderers>
          <mx:AxisRenderer axis="{xAxis}" labelRotation="60">
             <mx:axisStroke>{axisStroke}</mx:axisStroke>
@@ -83,4 +77,6 @@
       </mx:verticalAxisRenderers>
 
    </mx:LineChart>
-</mx:VBox>
+   <mx:Legend dataProvider="{chart}"/>
+
+</mx:HBox>

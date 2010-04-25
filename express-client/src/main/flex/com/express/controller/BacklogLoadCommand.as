@@ -45,6 +45,7 @@ public class BacklogLoadCommand extends SimpleCommand implements IResponder
       if(_proxy.productBacklogRequest) {
          _proxy.selectedProject.productBacklog = ArrayCollection(data.result);
          _proxy.setProductBacklogSource(ArrayCollection(data.result));
+         _proxy.setProjectHistory(_proxy.selectedProject);
       }
       else {
          _proxy.selectedIteration.backlog.source = ArrayCollection(data.result).source;
