@@ -250,26 +250,28 @@ public class ProjectProxy extends Proxy
       return _projectHistoryCompleted;
    }
 
+   private function addBoundaryRecordsToRequired(project:Project):void {
+      var firstRecord:DailyProjectStatusRecord = DailyProjectStatusRecord(_projectHistoryRequired.getItemAt(0));
+      var finalRecord:DailyProjectStatusRecord = DailyProjectStatusRecord(_projectHistoryRequired.getItemAt(_projectHistoryRequired.length - 1));
+      if (finalRecord.date.getTime() < project.targetReleaseDate.getTime()) {
+         var newLast:DailyProjectStatusRecord = new DailyProjectStatusRecord();
+         newLast.date = project.targetReleaseDate;
+         newLast.totalPoints = finalRecord.totalPoints;
+         _projectHistoryRequired.addItem(newLast);
+      }
+      if (firstRecord.date.getTime() > project.startDate.getTime()) {
+         var newFirst:DailyProjectStatusRecord = new DailyProjectStatusRecord();
+         newFirst.date = project.startDate;
+         newFirst.totalPoints = firstRecord.totalPoints;
+         _projectHistoryRequired.addItemAt(newFirst, 0);
+      }
+   }
+
    public function setProjectHistory(project : Project) : void {
       if(project.history && project.history.length > 0) {
          _projectHistoryRequired.source = project.history.source.concat();
          _projectHistoryCompleted.source = project.history.source.concat();
-         var firstRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(
-               _projectHistoryRequired.getItemAt(0));
-         var finalRecord : DailyProjectStatusRecord = DailyProjectStatusRecord(
-               _projectHistoryRequired.getItemAt(_projectHistoryRequired.length - 1));
-         if(finalRecord.date.getTime() < project.targetReleaseDate.getTime() ) {
-            var newLast : DailyProjectStatusRecord = new DailyProjectStatusRecord();
-            newLast.date = project.targetReleaseDate;
-            newLast.totalPoints = finalRecord.totalPoints;
-            _projectHistoryRequired.addItem(newLast);
-         }
-         if(firstRecord.date.getTime() > project.startDate.getTime()) {
-            var newFirst : DailyProjectStatusRecord = new DailyProjectStatusRecord();
-            newFirst.date = project.startDate;
-            newFirst.totalPoints = firstRecord.totalPoints;
-            _projectHistoryRequired.addItemAt(newFirst,0);
-         }
+         addBoundaryRecordsToRequired(project);
       }
       else {
          _projectHistoryRequired.source = [];

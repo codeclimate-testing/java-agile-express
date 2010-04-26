@@ -14,6 +14,7 @@ import com.express.print.BacklogPrintView;
 import com.express.service.ServiceRegistry;
 import com.express.view.backlog.BacklogMediator;
 import com.express.view.backlogItem.BacklogItemMediator;
+import com.express.view.impedimentSummary.ImpedimentSummaryMediator;
 import com.express.view.iteration.IterationMediator;
 import com.express.view.iterationSummary.IterationSummaryMediator;
 import com.express.view.login.LoginMediator;
@@ -68,6 +69,7 @@ public class ApplicationMediator extends Mediator {
       facade.registerMediator(new LoginMediator(viewComp.loginView));
       facade.registerMediator(new ProjectSummaryMediator(viewComp.projectSummary));
       facade.registerMediator(new IterationSummaryMediator(viewComp.iterationSummary));
+      facade.registerMediator(new ImpedimentSummaryMediator(viewComp.impedimentSummary));
 
       viewComp.rptMenu.dataProvider = _secureContext.menu;
 
@@ -82,6 +84,11 @@ public class ApplicationMediator extends Mediator {
       viewComp.btnLogout.addEventListener(MouseEvent.CLICK, handleLogout);
       viewComp.lnkProjectSummary.addEventListener(MouseEvent.CLICK, handleShowProjectSummary);
       viewComp.lnkIterationSummary.addEventListener(MouseEvent.CLICK, handleShowIterationSummary);
+      viewComp.lnkImpedimentSummary.addEventListener(MouseEvent.CLICK, handleShowImpedimentSummary);
+   }
+
+   private function handleShowImpedimentSummary(event:MouseEvent):void {
+      app.impedimentSummary.visible = true;
    }
 
    private function handleShowIterationSummary(event:MouseEvent):void {

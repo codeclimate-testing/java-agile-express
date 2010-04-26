@@ -4,7 +4,6 @@
                 xmlns:backlogItem="com.express.view.backlogItem.*"
                 xmlns:component="com.express.view.components.*"
                 xmlns:iteration="com.express.view.iteration.*"
-                xmlns:projectPanel="com.express.view.projectPanel.*"
                 xmlns:security="com.express.security.*"
                 width="100%" height="100%" paddingRight="0">
    <security:Authorize id="auth" roles="['role.iterationAdmin']" behaviour="collapse"

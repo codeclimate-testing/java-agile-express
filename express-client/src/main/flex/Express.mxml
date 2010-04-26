@@ -15,6 +15,7 @@
                 xmlns:scrumWall="com.express.view.scrumWall.*"
                 xmlns:projectSummary="com.express.view.projectSummary.*"
                 xmlns:iterationSummary="com.express.view.iterationSummary.*"
+                xmlns:impedimentSummary="com.express.view.impedimentSummary.*"
                 layout="absolute" horizontalAlign="left" height="100%" width="100%"
                 creationComplete="facade.startUp(this)">
 
@@ -72,6 +73,10 @@
                            icon="@Embed('/images/side-tab-iteration.png')"
                            toolTip="Iteration  Summary" rollOverColor="#FFFFFF"
                            overIcon="@Embed('/images/side-tab-iteration-over.png')"/>
+            <mx:LinkButton id="lnkImpedimentSummary" styleName="sideLink" width="35"
+                           icon="@Embed('/images/side-tab-impediments.png')"
+                           toolTip="Iteration  Summary" rollOverColor="#FFFFFF"
+                           overIcon="@Embed('/images/side-tab-impediments-over.png')"/>
          </mx:VBox>
       </mx:HBox>
    </mx:VBox>
@@ -79,4 +84,6 @@
                                   includeInLayout="false" visible="false"/>
    <iterationSummary:IterationSummary top="58" right="0" id="iterationSummary" width="350"
                                       height="550" includeInLayout="false" visible="false"/>
+   <impedimentSummary:ImpedimentSummary top="58" right="0" id="impedimentSummary" width="350"
+                                        height="550" includeInLayout="false" visible="false"/>
 </mx:Application>
