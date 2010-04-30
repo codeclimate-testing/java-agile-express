@@ -74,7 +74,7 @@ public class DomainFactoryImpl implements DomainFactory {
       }
       else {
          iteration = iterationDao.findById(dto.getId());
-         beanMapper.map(dto, iteration);
+         beanMapper.map(dto, iteration,Policy.SHALLOW.getMapId(Iteration.class));
       }
 
       return iteration;

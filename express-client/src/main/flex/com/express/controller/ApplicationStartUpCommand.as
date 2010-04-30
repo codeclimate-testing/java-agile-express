@@ -41,6 +41,7 @@ public class ApplicationStartUpCommand extends SimpleCommand {
 
       registry.registerRemoteObjectService(ApplicationFacade.USER_SERVICE, ApplicationFacade.USER_SERVICE);
       registry.registerRemoteObjectService(ApplicationFacade.PROJECT_SERVICE, ApplicationFacade.PROJECT_SERVICE);
+      registry.registerRemoteObjectService(ApplicationFacade.ITERATION_SERVICE, ApplicationFacade.ITERATION_SERVICE);
 
       return registry;
    }

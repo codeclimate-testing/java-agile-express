@@ -22,7 +22,7 @@ public class IterationUpdateCommand extends SimpleCommand implements IResponder 
    override public function execute(notification:INotification):void {
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
+      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.ITERATION_SERVICE);
       var call : Object;
       call = service.updateIteration(_proxy.newIteration);
       call.addResponder(this);

@@ -25,11 +25,7 @@ public interface ProjectManager {
     */
    ProjectDto findProject(Long id);
 
-   /**
-    * @param id of the Iteration to be found
-    * @return Fully loaded IterationDto using a deep loading policy
-    */
-   IterationDto findIteration(Long id);
+
    
    /**
     * Generates an access request for the Project(s) provided or generates a create project request
@@ -52,20 +48,6 @@ public interface ProjectManager {
     */
    ProjectDto updateProject(ProjectDto projectDto);
    
-   /**
-    * Creates a new Iteration based on the fields in the IterationDto provided.
-    * @param iterationDto with the parameters which should be used for the creation of the new Iteration.
-    * @return iterationDto which results from the completion of this create
-    */
-   IterationDto createIteration(IterationDto iterationDto);
-
-   /**
-    *
-    * @param iterationDto representing the Iteration and containing the information to be updated
-    * @return iteratioinDto base on the results of this update
-    */
-   IterationDto updateIteration(IterationDto iterationDto);
-
    /**
     * Creates a new BacklogItem based on the BacklogItemDto and type in the request provided.
     * @param request with the parameters which should be used for the creation of the new BacklogItem.

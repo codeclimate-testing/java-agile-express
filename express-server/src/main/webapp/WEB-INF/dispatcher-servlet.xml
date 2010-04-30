@@ -56,6 +56,7 @@
    <!-- Expose services for BlazeDS remoting -->
    <flex:remoting-destination ref="userManager" destination-id="userService" channels="my-amf"/>
    <flex:remoting-destination ref="projectManager" destination-id="projectService" channels="my-amf"/>
+   <flex:remoting-destination ref="iterationManager" destination-id="iterationService" channels="my-amf"/>
 
    <!--<bean id="multipartResolver"-->
          <!--class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>-->

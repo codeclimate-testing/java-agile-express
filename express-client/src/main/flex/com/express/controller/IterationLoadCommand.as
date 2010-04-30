@@ -23,7 +23,7 @@ public class IterationLoadCommand extends SimpleCommand implements IResponder
    override public function execute(notification:INotification):void {
       var id : Number = notification.getBody() as Number;
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
+      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.ITERATION_SERVICE);
       var call : Object = service.findIteration(id);
       call.addResponder(this);
    }

@@ -60,38 +60,7 @@ public class ProjectManagerImpl implements ProjectManager {
       this.notificationService = notificationService;
    }
 
-   @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-   public IterationDto createIteration(IterationDto iterationDto) {
-      Iteration iteration = domainFactory.createIteration(iterationDto);
-      Project project = projectDao.findById(iterationDto.getProject().getId());
-      project.addIteration(iteration);
-      projectDao.save(project);
-      return remoteObjectFactory.createIterationDto(
-            project.findIterationByTitle(iteration.getTitle()), Policy.DEEP);
-   }
 
-   @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-   public IterationDto updateIteration(IterationDto iterationDto) {
-      Project project = projectDao.findById(iterationDto.getProject().getId());
-      Iteration iteration = null;
-      for(Iteration existing : project.getIterations()) {
-         if(existing.getId().equals(iterationDto.getId())) {
-            iteration = existing;
-            break;
-         }
-      }
-      if(iteration == null) {
-         throw new IllegalArgumentException("Iteration does not exist");
-      }
-      iteration.setTitle(iterationDto.getTitle());
-      iteration.setGoal(iterationDto.getGoal());
-      iteration.setStartDate(Calendar.getInstance());
-      iteration.getStartDate().setTimeInMillis(iterationDto.getStartDate().getTime());
-      iteration.setEndDate(Calendar.getInstance());
-      iteration.getEndDate().setTimeInMillis(iterationDto.getEndDate().getTime());
-      projectDao.save(iteration.getProject());
-      return remoteObjectFactory.createIterationDto(iteration, Policy.DEEP);
-   }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public ProjectDto updateProject(ProjectDto projectDto) {
@@ -246,11 +215,6 @@ public class ProjectManagerImpl implements ProjectManager {
    public ProjectDto findProject(Long id) {
       Project project = projectDao.findById(id);
       return remoteObjectFactory.createProjectDto(project, Policy.DEEP);
-   }
-
-   public IterationDto findIteration(Long id) {
-      Iteration iteration = iterationDao.findById(id);
-      return remoteObjectFactory.createIterationDto(iteration, Policy.DEEP);
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)

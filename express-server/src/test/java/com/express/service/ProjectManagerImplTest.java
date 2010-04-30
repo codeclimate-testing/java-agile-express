@@ -78,25 +78,6 @@ public class ProjectManagerImplTest {
    }
  
    @Test
-   public void shouldCreateIterationFromDto() {
-      String title = "test title";
-      ProjectDto projectDto = new ProjectDto();
-      Long projectId = 1l;
-      projectDto.setId(projectId);
-      Project project = new Project();
-      IterationDto dto = new IterationDto();
-      dto.setTitle(title);
-      dto.setProject(projectDto);
-      Iteration domain = new Iteration();
-      domain.setTitle(title);
-      given(domainFactory.createIteration(dto)).willReturn(domain);
-      given(projectDao.findById(projectId)).willReturn(project);
-      projectDao.save(project);
-      given(remoteObjectFactory.createIterationDto(domain, Policy.DEEP)).willReturn(dto);
-      projectManager.createIteration(dto);
-   }
-
-   @Test
    public void shouldCreateEffortRecordsForOpenIterations() {
       Project project = new Project();
       List<Iteration> iterations = new ArrayList<Iteration>();
