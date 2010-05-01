@@ -37,6 +37,7 @@ public class ApplicationFacade extends Facade {
    public static const USER_SERVICE:String = "userService";
    public static const PROJECT_SERVICE:String = "projectService";
    public static const ITERATION_SERVICE:String = "iterationService";
+   public static const BACKLOG_ITEM_SERVICE:String = "backlogItemService";
 
    // Notification name constants application
    public static const NOTE_STARTUP:String = "startup";

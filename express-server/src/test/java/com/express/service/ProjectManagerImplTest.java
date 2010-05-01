@@ -30,8 +30,6 @@ public class ProjectManagerImplTest {
    @Mock
    private IterationDao iterationDao;
    @Mock
-   private BacklogItemDao backlogItemDao;
-   @Mock
    private UserDao userDao;
    @Mock
    private UserService userService;
@@ -54,7 +52,6 @@ public class ProjectManagerImplTest {
                                               remoteObjectFactory,
                                               domainFactory,
                                               iterationDao,
-                                              backlogItemDao,
                                               userDao,
                                               accessRequestDao,
                                               notificationService);
@@ -119,50 +116,7 @@ public class ProjectManagerImplTest {
       projectManager.findProject(ID);
    }
    
-   @Test
-   public void shouldCreateUnassignedProductBacklogItem() {
-      CreateBacklogItemRequest request = new CreateBacklogItemRequest();
-      BacklogItemDto itemDto = new BacklogItemDto();
-      request.setBacklogItem(itemDto);
-      request.setType(CreateBacklogItemRequest.PRODUCT_BACKLOG_STORY);
-      Long ID = 1l;
-      request.setParentId(ID);
-      BacklogItem item = new BacklogItem();
-      item.setReference("S-1");
-      Project project = new Project();
-
-      given(domainFactory.createBacklogItem(itemDto)).willReturn(item);
-      given(projectDao.findById(ID)).willReturn(project);
-      projectDao.save(project);
-      given(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).willReturn(new BacklogItemDto());
-      
-      projectManager.createBacklogItem(request);
-   }
-
-   @Test
-   public void shouldRemoveBacklogItem() {
-      BacklogItem item = new BacklogItem();
-      Long id = 1l;
-      Project project = new Project();
-      project.addBacklogItem(item, true);
-
-      given(backlogItemDao.findById(id)).willReturn(item);
-      projectDao.save(project);
-      
-      projectManager.removeBacklogItem(id);
-   }
-
-   @Test
-   public void shouldUpdateBacklogItem() {
-      BacklogItemDto itemDto = new BacklogItemDto();
-      BacklogItem item = new BacklogItem();
-      Project project = new Project();
-      project.addBacklogItem(item, true);
-      given(domainFactory.createBacklogItem(itemDto)).willReturn(item);
-      projectDao.save(project);
-      
-      projectManager.updateBacklogItem(itemDto);
-   }
+  
 
    @Test
    public void shouldUpdateThemes() {

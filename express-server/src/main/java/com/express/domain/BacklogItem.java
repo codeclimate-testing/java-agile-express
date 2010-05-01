@@ -195,6 +195,15 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       this.iteration = iteration;
    }
 
+   public void addToIterationIfAvailable(Issue impediment) {
+      if(this.iteration != null) {
+         this.iteration.addImpediment(impediment);
+      }
+      else if(this.parent != null && this.parent.getIteration() != null){
+         this.parent.getIteration().addImpediment(impediment);
+      }
+   }
+
    public String getAsA() {
       return asA;
    }
@@ -233,6 +242,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
 
    public void setImpediment(Issue impediment) {
       this.impediment = impediment;
+      this.addToIterationIfAvailable(impediment);
    }
 
    public String getDetailedDescription() {

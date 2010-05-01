@@ -16,7 +16,7 @@ public class BacklogItemMarkDoneCommand extends SimpleCommand implements IRespon
 {
    override public function execute(notification:INotification):void {
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
+      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.BACKLOG_ITEM_SERVICE);
       var call : Object = service.markStoryDone(notification.getBody());
       call.addResponder(this);
    }

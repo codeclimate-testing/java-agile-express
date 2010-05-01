@@ -17,7 +17,7 @@ public class BacklogItemUpdateCommand extends SimpleCommand implements IResponde
    override public function execute(notification:INotification):void {
       var item : BacklogItem = notification.getBody() as BacklogItem;
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
+      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.BACKLOG_ITEM_SERVICE);
       var call : Object = service.updateBacklogItem(item);
       call.addResponder(this);
    }

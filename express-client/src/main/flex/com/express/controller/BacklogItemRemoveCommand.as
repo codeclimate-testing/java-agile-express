@@ -19,7 +19,7 @@ public class BacklogItemRemoveCommand extends SimpleCommand implements IResponde
       var proxy : ProjectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       var item : BacklogItem = proxy.selectedBacklogItem;
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
+      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.BACKLOG_ITEM_SERVICE);
       var call : Object = service.removeBacklogItem(item.id);
       call.addResponder(this);
    }
