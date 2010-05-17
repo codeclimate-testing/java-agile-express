@@ -555,3 +555,9 @@ TitleWindow {
    backgroundAlpha:0.7;
    backgroundColor:#ffffff;
 }
+
+.impedimentList {
+   borderThickness:0px;
+   padding-top:10px;
+   padding-right:10px;
+}

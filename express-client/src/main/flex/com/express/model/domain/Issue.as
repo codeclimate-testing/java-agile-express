@@ -22,5 +22,12 @@ public class Issue {
 
    public var responsible : User;
 
+   public function get statusLabel() : String {
+      if(endDate) {
+         return "Closed";
+      }
+      return responsible ? "Assigned" : "Unassigned"
+   }
+
 }
 }

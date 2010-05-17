@@ -7,6 +7,9 @@
    <mx:StringValidator id="descriptionValidator" required="true" property="text" source="{description}"
           trigger="{btnSave}" triggerEvent="click"/>
 
+   <mx:FormItem label="Backlog Item" required="true" width="95%">
+      <mx:ComboBox id="cboItems" width="100%" />
+   </mx:FormItem>
    <mx:FormItem label="Title" required="true" width="95%">
       <mx:TextInput id="issueTitle" width="100%"/>
    </mx:FormItem>
