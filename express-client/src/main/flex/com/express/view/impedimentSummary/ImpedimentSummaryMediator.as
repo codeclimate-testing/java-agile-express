@@ -1,6 +1,7 @@
 package com.express.view.impedimentSummary {
 import com.express.ApplicationFacade;
 import com.express.controller.IterationLoadCommand;
+import com.express.controller.ProjectLoadCommand;
 import com.express.model.ProjectProxy;
 import com.express.model.domain.Issue;
 import com.express.view.backlogItem.BacklogItemProxy;
@@ -42,6 +43,21 @@ public class ImpedimentSummaryMediator extends Mediator {
 
    override public function handleNotification(notification:INotification):void {
       view.lstImpediments.dataProvider = _proxy.selectedIteration.impediments;
+      switch(notification.getName()) {
+         case IterationLoadCommand.SUCCESS :
+            view.btnAddImpediment.enabled = true;
+               _backlogItemProxy.selectedBacklog = _proxy.selectedIteration.backlog;
+            break;
+         case ProjectLoadCommand.SUCCESS :
+            if(_proxy.selectedIteration == null) {
+               view.btnAddImpediment.enabled = false;
+            }
+            else {
+               _backlogItemProxy.selectedBacklog = _proxy.selectedIteration.backlog;
+               view.btnAddImpediment.enabled = true;
+            }
+         break;
+      }
    }
 
    public function get view():ImpedimentSummary {

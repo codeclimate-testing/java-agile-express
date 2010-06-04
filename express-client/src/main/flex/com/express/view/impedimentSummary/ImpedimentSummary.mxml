@@ -17,6 +17,6 @@
       </mx:columns>
    </mx:DataGrid>
    <mx:HBox styleName="buttonBox" width="100%" height="35">
-      <mx:Button id="btnAddImpediment" label="Raise An Impediment"/>
+      <mx:Button id="btnAddImpediment" label="Raise An Impediment" enabled="false"/>
    </mx:HBox>
 </mx:VBox>

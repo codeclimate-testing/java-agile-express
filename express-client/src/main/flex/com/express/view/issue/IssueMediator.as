@@ -13,17 +13,17 @@ import mx.events.CloseEvent;
 
 import org.puremvc.as3.interfaces.INotification;
 
-public class IssueMediator extends FormMediator
-{
+public class IssueMediator extends FormMediator {
    public static const NAME:String = "IssueMediator";
    public static const CREATE:String = "IssueMediator.CREATE";
    public static const EDIT:String = "IssueMediator.EDIT";
 
-   private var _proxy : BacklogItemProxy;
+   private var _proxy:BacklogItemProxy;
 
-   public function IssueMediator(viewComp: IssueForm) {
+   public function IssueMediator(viewComp:IssueForm) {
       super(NAME, viewComp);
       _proxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
+      viewComp.cboItems.dataProvider = _proxy.selectedBacklog;
       viewComp.lstResponsible.dataProvider = _proxy.assignToList;
       viewComp.btnCancel.addEventListener(MouseEvent.CLICK, handleCancel);
       viewComp.btnSave.addEventListener(MouseEvent.CLICK, handleImpedimentSave);
@@ -37,11 +37,11 @@ public class IssueMediator extends FormMediator
 
    override public function listNotificationInterests():Array {
       return [ApplicationFacade.NOTE_EDIT_IMPEDIMENT,
-              ApplicationFacade.NOTE_CREATE_IMPEDIMENT];
+         ApplicationFacade.NOTE_CREATE_IMPEDIMENT];
    }
 
-   override public function handleNotification(notification : INotification):void {
-      switch(notification.getName()) {
+   override public function handleNotification(notification:INotification):void {
+      switch (notification.getName()) {
          case ApplicationFacade.NOTE_CREATE_IMPEDIMENT :
             _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CREATE;
             view.btnSave.label = "Save";
@@ -58,9 +58,8 @@ public class IssueMediator extends FormMediator
    override public function bindForm():void {
       view.issueTitle.text = _proxy.currentIssue.title;
       view.description.text = _proxy.currentIssue.description;
-      if(_proxy.currentIssue.responsible) {
-         view.lstResponsible.selectedIndex =
-            getSelectedUser( _proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
+      if (_proxy.currentIssue.responsible) {
+         view.lstResponsible.selectedIndex = getSelectedUser(_proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
       }
       else {
          view.lstResponsible.selectedIndex = -1;
@@ -68,9 +67,9 @@ public class IssueMediator extends FormMediator
       FormUtility.clearValidationErrors(_validators);
    }
 
-   private function getSelectedUser(id : Number, array : Array) : int {
-      for( var index : int = 0; index < array.length; index++) {
-         if(array[index].id == id) {
+   private function getSelectedUser(id:Number, array:Array):int {
+      for (var index:int = 0; index < array.length; index++) {
+         if (array[index].id == id) {
             return index;
          }
       }
@@ -83,14 +82,14 @@ public class IssueMediator extends FormMediator
       _proxy.currentIssue.responsible = view.lstResponsible.selectedItem as User;
    }
 
-   private function handleImpedimentSave(event : MouseEvent) : void {
+   private function handleImpedimentSave(event:MouseEvent):void {
       if (validate(true)) {
          bindModel();
-         if(_proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CREATE) {
-            var request : AddImpedimentRequest = new AddImpedimentRequest();
+         if (_proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CREATE) {
+            var request:AddImpedimentRequest = new AddImpedimentRequest();
             request.impediment = _proxy.currentIssue;
             request.iterationId = _proxy.currentIteration.id;
-            request.backlogItemId = _proxy.currentBacklogItem.id;
+            request.backlogItemId = view.cboItems.selectedItem.id;
             sendNotification(ApplicationFacade.NOTE_ADD_IMPEDIMENT, request);
          }
          else {
@@ -103,16 +102,15 @@ public class IssueMediator extends FormMediator
       }
    }
 
-   private function handleCancel(event : MouseEvent) : void {
+   private function handleCancel(event:MouseEvent):void {
       closeWindow();
    }
 
-   private function closeWindow() : void {
+   private function closeWindow():void {
       view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
    }
 
-   protected function get view():IssueForm
-   {
+   protected function get view():IssueForm {
       return viewComponent as IssueForm;
    }
 

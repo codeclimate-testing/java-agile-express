@@ -16,7 +16,7 @@ public class ImpedimentCreateCommand extends SimpleCommand implements IResponder
    override public function execute(notification:INotification):void {
       var request:AddImpedimentRequest = notification.getBody() as AddImpedimentRequest;
       var registry:ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var service:RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
+      var service:RemoteObject = registry.getRemoteObjectService(ApplicationFacade.BACKLOG_ITEM_SERVICE);
       var call:Object = service.addImpediment(request);
       call.addResponder(this);
    }

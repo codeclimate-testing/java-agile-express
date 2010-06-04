@@ -2,6 +2,7 @@ package com.express.controller
 {
 import com.express.ApplicationFacade;
 import com.express.model.ProjectProxy;
+import com.express.model.domain.BacklogItem;
 import com.express.model.request.LoadBacklogRequest;
 import com.express.service.ServiceRegistry;
 
@@ -49,6 +50,12 @@ public class BacklogLoadCommand extends SimpleCommand implements IResponder
       }
       else {
          _proxy.selectedIteration.backlog.source = ArrayCollection(data.result).source;
+         _proxy.selectedIteration.impediments.source = [];
+         for each(var item :BacklogItem in _proxy.selectedIteration.backlog) {
+            if(item.impediment) {
+               _proxy.selectedIteration.impediments.addItem(item.impediment);
+            }
+         }
       }
       _proxy.setIterationHistory(_proxy.selectedIteration);
       _proxy.productBacklogRequest = false;

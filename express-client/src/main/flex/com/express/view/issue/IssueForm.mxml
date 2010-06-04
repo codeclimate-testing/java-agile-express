@@ -8,7 +8,7 @@
           trigger="{btnSave}" triggerEvent="click"/>
 
    <mx:FormItem label="Backlog Item" required="true" width="95%">
-      <mx:ComboBox id="cboItems" width="100%" />
+      <mx:ComboBox id="cboItems" width="100%" labelField="titleLabel" />
    </mx:FormItem>
    <mx:FormItem label="Title" required="true" width="95%">
       <mx:TextInput id="issueTitle" width="100%"/>
