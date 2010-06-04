@@ -28,7 +28,7 @@
 
    <mx:HBox horizontalGap="10" verticalAlign="bottom" styleName="panelBox">
       <mx:Label styleName="bannerLabel" text="or"/>
-      <mx:LinkButton id="lnkProjectAccess" styleName="form" label="Create/Access a new Project"/>
+      <mx:LinkButton id="lnkProjectAccess" styleName="form" label="Request access to a project or create one"/>
    </mx:HBox>
    <mx:HBox styleName="panelBox">
       <mx:Label text="Reference:" fontWeight="bold" width="115"/>
