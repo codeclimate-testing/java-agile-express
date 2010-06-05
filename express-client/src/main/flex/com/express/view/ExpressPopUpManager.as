@@ -315,7 +315,7 @@ public class ExpressPopUpManager {
          createIssueForm();
       }
       _popup.title = title;
-      _popup.width = 450;
+      _popup.width = 500;
       _popup.height = 410;
       _popup.x = (_application.width / 2) - 225;
       _popup.y = 80;

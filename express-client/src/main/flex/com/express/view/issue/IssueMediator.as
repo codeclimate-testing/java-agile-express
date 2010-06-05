@@ -32,6 +32,7 @@ public class IssueMediator extends FormMediator {
    override public function registerValidators():void {
       _validators.push(view.titleValidator);
       _validators.push(view.descriptionValidator);
+      _validators.push(view.cboItemsValidator);
    }
 
 
