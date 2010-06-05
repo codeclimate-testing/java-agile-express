@@ -296,5 +296,13 @@
       </addColumn>
       <renameColumn tableName="iteration" oldColumnName="description" newColumnName="goal"/>
    </changeSet>
+   <changeSet id="10" author="adam">
+      <modifyColumn tableName="iteration">
+         <column name="goal" type="java.sql.Types.CLOB"/>
+      </modifyColumn>
+      <modifyColumn tableName="project">
+         <column name="description" type="java.sql.Types.CLOB"/>
+      </modifyColumn>
+   </changeSet>
 
 </databaseChangeLog>
