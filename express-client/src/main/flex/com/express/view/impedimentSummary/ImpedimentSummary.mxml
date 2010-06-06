@@ -10,7 +10,8 @@
                      overIcon="@Embed('/images/icons/right-over.png')" width="16"/>
       <mx:Label styleName="h2White" text="Impediments"/>
    </mx:HBox>
-   <mx:DataGrid id="lstImpediments" styleName="impedimentList" width="100%" height="100%">
+   <mx:DataGrid id="lstImpediments" styleName="impedimentList" width="100%" height="100%"
+                doubleClickEnabled="true">
       <mx:columns>
          <mx:DataGridColumn headerText="Title" dataField="title"/>
          <mx:DataGridColumn headerText="Status" dataField="statusLabel"/>

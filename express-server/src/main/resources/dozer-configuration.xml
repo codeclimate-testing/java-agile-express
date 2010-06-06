@@ -374,6 +374,10 @@
          <a>id</a>
          <b>id</b>
       </field>
+      <field map-id="BacklogItem.shallow">
+         <a>backlogItem</a>
+         <b>backlogItem</b>
+      </field>
       <field map-id="Iteration.shallow">
          <a>iteration</a>
          <b>iteration</b>

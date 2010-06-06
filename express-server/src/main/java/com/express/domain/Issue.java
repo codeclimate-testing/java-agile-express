@@ -37,6 +37,9 @@ public class Issue implements Persistable{
    @ManyToOne @JoinColumn(name = "iteration_id")
    private Iteration iteration;
 
+   @OneToOne(mappedBy = "impediment")
+   private BacklogItem backlogItem;
+
    @ManyToOne(cascade = CascadeType.ALL) @JoinColumn(name = "user_id")
    private User responsible;
 
@@ -78,6 +81,14 @@ public class Issue implements Persistable{
 
    public void setEndDate(Calendar endDate) {
       this.endDate = endDate;
+   }
+
+   public BacklogItem getBacklogItem() {
+      return backlogItem;
+   }
+
+   public void setBacklogItem(BacklogItem backlogItem) {
+      this.backlogItem = backlogItem;
    }
 
    public Iteration getIteration() {

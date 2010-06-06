@@ -1,5 +1,6 @@
 package com.express
 {
+import com.earthbrowser.ebutils.MacMouseWheelHandler;
 import com.express.controller.AccessRequestsLoadCommand;
 import com.express.controller.ApplicationStartUpCommand;
 import com.express.controller.ApplicationUsersLoadCommand;
@@ -151,6 +152,7 @@ public class ApplicationFacade extends Facade {
    }
 
    public function startUp(app:Express):void {
+      MacMouseWheelHandler.init(app.systemManager.stage);
       sendNotification(NOTE_STARTUP, app);
    }
 }

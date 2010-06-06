@@ -18,6 +18,8 @@ public class Issue {
 
    public var endDate : Date;
 
+   public var backlogItem : BacklogItem;
+
    public var iteration : Iteration;
 
    public var responsible : User;

@@ -30,6 +30,7 @@
 
    <mx:Script>
       <![CDATA[
+      import com.earthbrowser.ebutils.MacMouseWheelHandler;
       import com.express.ApplicationFacade;
 
       private var facade:ApplicationFacade = ApplicationFacade.getInstance();

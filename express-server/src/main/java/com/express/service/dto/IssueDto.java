@@ -19,6 +19,8 @@ public class IssueDto implements Serializable {
 
    private Date endDate;
 
+   private BacklogItemDto backlogItem;
+
    private IterationDto iteration;
 
    private UserDto responsible;
@@ -69,6 +71,14 @@ public class IssueDto implements Serializable {
 
    public void setEndDate(Date endDate) {
       this.endDate = endDate;
+   }
+
+   public BacklogItemDto getBacklogItem() {
+      return backlogItem;
+   }
+
+   public void setBacklogItem(BacklogItemDto backlogItem) {
+      this.backlogItem = backlogItem;
    }
 
    public IterationDto getIteration() {

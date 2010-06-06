@@ -65,7 +65,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    @Column(name = "task_count")
    private Integer taskCount = 0;
 
-   @ManyToOne(cascade = CascadeType.ALL)
+   @OneToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "impediment_id", referencedColumnName = "issue_id")
    private Issue impediment;
 

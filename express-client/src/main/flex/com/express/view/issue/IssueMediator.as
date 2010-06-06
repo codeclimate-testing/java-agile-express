@@ -59,8 +59,10 @@ public class IssueMediator extends FormMediator {
    override public function bindForm():void {
       view.issueTitle.text = _proxy.currentIssue.title;
       view.description.text = _proxy.currentIssue.description;
+      view.cboItems.selectedItem = _proxy.currentBacklogItem;
       if (_proxy.currentIssue.responsible) {
-         view.lstResponsible.selectedIndex = getSelectedUser(_proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
+         view.lstResponsible.selectedIndex = getSelectedUser(
+               _proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
       }
       else {
          view.lstResponsible.selectedIndex = -1;
