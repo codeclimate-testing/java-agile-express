@@ -1,12 +1,14 @@
 package com.express.view.issue {
 
 import com.express.ApplicationFacade;
+import com.express.model.domain.BacklogItem;
 import com.express.model.domain.User;
 import com.express.model.request.AddImpedimentRequest;
 import com.express.view.backlogItem.BacklogItemProxy;
 import com.express.view.form.FormMediator;
 import com.express.view.form.FormUtility;
 
+import flash.events.Event;
 import flash.events.MouseEvent;
 
 import mx.events.CloseEvent;
@@ -23,16 +25,26 @@ public class IssueMediator extends FormMediator {
    public function IssueMediator(viewComp:IssueForm) {
       super(NAME, viewComp);
       _proxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
-      viewComp.cboItems.dataProvider = _proxy.selectedBacklog;
+      viewComp.cboStories.dataProvider = _proxy.selectedBacklog;
+      viewComp.cboTasks.dataProvider = _proxy.selectedBacklogTasks;
+      viewComp.cboStories.addEventListener(Event.CHANGE, handleStorySelected);
+      viewComp.cboTasks.addEventListener(Event.CHANGE, handleTaskSelected);
       viewComp.lstResponsible.dataProvider = _proxy.assignToList;
       viewComp.btnCancel.addEventListener(MouseEvent.CLICK, handleCancel);
       viewComp.btnSave.addEventListener(MouseEvent.CLICK, handleImpedimentSave);
    }
 
+   private function handleTaskSelected(event:Event):void {
+      view.cboStories.selectedIndex = -1
+   }
+
+   private function handleStorySelected(event:Event):void {
+      view.cboTasks.selectedIndex = -1;
+   }
+
    override public function registerValidators():void {
       _validators.push(view.titleValidator);
       _validators.push(view.descriptionValidator);
-      _validators.push(view.cboItemsValidator);
    }
 
 
@@ -59,10 +71,10 @@ public class IssueMediator extends FormMediator {
    override public function bindForm():void {
       view.issueTitle.text = _proxy.currentIssue.title;
       view.description.text = _proxy.currentIssue.description;
-      view.cboItems.selectedItem = _proxy.currentBacklogItem;
+      view.cboStories.selectedItem = _proxy.currentBacklogItem;
+      view.cboTasks.selectedItem = _proxy.currentBacklogItem;
       if (_proxy.currentIssue.responsible) {
-         view.lstResponsible.selectedIndex = getSelectedUser(
-               _proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
+         view.lstResponsible.selectedIndex = getSelectedUser(_proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
       }
       else {
          view.lstResponsible.selectedIndex = -1;
@@ -86,13 +98,14 @@ public class IssueMediator extends FormMediator {
    }
 
    private function handleImpedimentSave(event:MouseEvent):void {
-      if (validate(true)) {
+      var selectedItem : BacklogItem = getSelectedBacklogItem();
+      if (validate(true) && selectedItem) {
          bindModel();
          if (_proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CREATE) {
             var request:AddImpedimentRequest = new AddImpedimentRequest();
             request.impediment = _proxy.currentIssue;
             request.iterationId = _proxy.currentIteration.id;
-            request.backlogItemId = view.cboItems.selectedItem.id;
+            request.backlogItemId = selectedItem.id;
             sendNotification(ApplicationFacade.NOTE_ADD_IMPEDIMENT, request);
          }
          else {
@@ -115,6 +128,15 @@ public class IssueMediator extends FormMediator {
 
    protected function get view():IssueForm {
       return viewComponent as IssueForm;
+   }
+
+   private function getSelectedBacklogItem():BacklogItem {
+      if (view.cboStories.selectedIndex != -1) {
+         return view.cboStories.selectedItem as BacklogItem;
+      }
+      else {
+         return view.cboTasks.selectedItem as BacklogItem;
+      }
    }
 
 }

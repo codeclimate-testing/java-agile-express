@@ -28,12 +28,14 @@ public class BacklogItemProxy extends Proxy
    private var _assignToList : ArrayCollection;
    private var _statusList : ArrayCollection;
    private var _selectedBacklog : ArrayCollection;
+   private var _selectedBacklogTasks : ArrayCollection;
 
 
    public function BacklogItemProxy(proxyName:String = NAME, data:Object = null) {
       super(proxyName, data);
       _assignToList = new ArrayCollection();
       _selectedBacklog = new ArrayCollection();
+      _selectedBacklogTasks = new ArrayCollection();
       _statusList = new ArrayCollection();
       _statusList.addItem(BacklogItem.STATUS_OPEN);
       _statusList.addItem(BacklogItem.STATUS_PROGRESS);
@@ -55,6 +57,20 @@ public class BacklogItemProxy extends Proxy
 
    public function set selectedBacklog(value:ArrayCollection):void {
       _selectedBacklog = value;
+      _selectedBacklogTasks.source = [];
+      for each(var item : BacklogItem in value) {
+         for each(var task : BacklogItem in item.tasks) {
+            _selectedBacklogTasks.addItem(task);
+         }
+      }
+   }
+
+   public function get selectedBacklogTasks():ArrayCollection {
+      return _selectedBacklogTasks;
+   }
+
+   public function set selectedBacklogTasks(value:ArrayCollection):void {
+      _selectedBacklogTasks = value;
    }
 
    public function set assignToList(assignToList : ArrayCollection) : void {

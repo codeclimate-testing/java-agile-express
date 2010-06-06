@@ -6,11 +6,12 @@
           trigger="{btnSave}" triggerEvent="click"/>
    <mx:StringValidator id="descriptionValidator" required="true" property="text" source="{description}"
           trigger="{btnSave}" triggerEvent="click"/>
-   <mx:NumberValidator id="cboItemsValidator" property="selectedIndex" source="{cboItems}"
-                       trigger="{btnSave}" triggerEvent="click" minValue="0"/>
 
-   <mx:FormItem label="Backlog Item" required="true" width="95%">
-      <mx:ComboBox id="cboItems" width="100%" labelField="titleLabel" prompt="-- Select --" />
+   <mx:FormItem label="Story" required="true" width="95%">
+      <mx:ComboBox id="cboStories" width="100%" labelField="titleLabel" prompt="-- Select --" />
+   </mx:FormItem>
+   <mx:FormItem label="or Task" required="true" width="95%">
+      <mx:ComboBox id="cboTasks" width="100%" labelField="titleLabel" prompt="-- Select --" />
    </mx:FormItem>
    <mx:FormItem label="Title" required="true" width="95%">
       <mx:TextInput id="issueTitle" width="100%"/>
