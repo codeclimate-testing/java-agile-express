@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
          xmlns:comp="com.express.view.components.*"
-         styleName="unpadded" verticalGap="10" width="100%" minHeight="445">
+         styleName="unpadded" verticalGap="10" width="100%" minHeight="435">
    <mx:WipeDown id="wipeDown" duration="200"/>
    <mx:WipeUp id="wipeUp" duration="200"/>
    <mx:StringValidator id="summaryValidator" enabled="{!businessValueItem.visible}" required="true"
@@ -47,7 +47,7 @@
       </mx:FormItem>
       <mx:FormItem id="themeItem" label="Theme(s)" showEffect="{wipeDown}" hideEffect="{wipeUp}">
          <mx:HBox verticalAlign="top">
-            <mx:List id="lstTheme" labelField="title" width="240" height="100" selectable="true"
+            <mx:List id="lstTheme" labelField="title" width="240" height="90" selectable="true"
                      allowMultipleSelection="true"/>
             <mx:VBox>
                <mx:LinkButton id="lnkClearThemes" icon=" @Embed('/images/icons/remove.png')" width="20"

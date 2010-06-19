@@ -195,7 +195,7 @@ public class ExpressPopUpManager {
       _popup.width = 825;
       _popup.height = 500;
       _popup.x = (_application.width / 2) - 405;
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(previewPanel);
    }
 
@@ -208,7 +208,7 @@ public class ExpressPopUpManager {
       _popup.width = 550;
       _popup.height = 450;
       _popup.x = (_application.width / 2) - 225;
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_projectAdminForm);
    }
 
@@ -221,7 +221,7 @@ public class ExpressPopUpManager {
       _popup.width = 450;
       _popup.height = 410;
       _popup.x = (_application.width / 2) - 225;
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_themesForm);
    }
 
@@ -240,7 +240,7 @@ public class ExpressPopUpManager {
       _popup.width = 600;
       _popup.height = 450;
       _popup.x = (_application.width / 2) - (_popup.width / 2);
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_burndownChart);
    }
    
@@ -257,7 +257,7 @@ public class ExpressPopUpManager {
       _popup.width = 650;
       _popup.height = 450;
       _popup.x = (_application.width / 2) - (_popup.width / 2);
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_burnUpChart);
    }
 
@@ -271,7 +271,7 @@ public class ExpressPopUpManager {
       _popup.width = 600;
       _popup.height = 450;
       _popup.x = (_application.width / 2) - (_popup.width / 2);
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_velocityChart);
    }
 
@@ -284,9 +284,9 @@ public class ExpressPopUpManager {
       if (!metrics) {
          metrics = new WindowMetrics();
          metrics.x = (_application.width / 2) - 450;
-         metrics.y = 80;
+         metrics.y = 40;
          metrics.width = 900;
-         metrics.height = 560;
+         metrics.height = 550;
          _secureContext.currentUser.storyWindowPreference = metrics;
       }
       _popup.width = metrics.width;
@@ -305,7 +305,7 @@ public class ExpressPopUpManager {
       _popup.width = 450;
       _popup.height = 410;
       _popup.x = (_application.width / 2) - 225;
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_iterationForm);
    }
 
@@ -318,7 +318,7 @@ public class ExpressPopUpManager {
       _popup.width = 500;
       _popup.height = 410;
       _popup.x = (_application.width / 2) - 225;
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_issueForm);
    }
 
@@ -331,7 +331,7 @@ public class ExpressPopUpManager {
       _popup.width = 450;
       _popup.height = 410;
       _popup.x = (_application.width / 2) - 225;
-      _popup.y = 80;
+      _popup.y = 40;
       showPopup(_projectForm);
    }
 
