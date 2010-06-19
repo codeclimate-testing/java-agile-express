@@ -25,8 +25,8 @@
       <mx:Repeater id="rptStories" repeatEnd="{rowContainer.height = this.height;}">
       <scrumWall:WallRow id="rows" story="{rptStories.currentItem as BacklogItem}"
                          header="{openLane}" openWidth="{openLane.width-1}"
-                         progressWidth="{progressLane.width-1}" testWidth="{testLane.width-1}"
-                         doneWidth="{doneLane.width-1}"/>
+                         progressWidth="{progressLane.width}" testWidth="{testLane.width}"
+                         doneWidth="{doneLane.width}"/>
    </mx:Repeater>
    </mx:VBox>
 </mx:VBox>
