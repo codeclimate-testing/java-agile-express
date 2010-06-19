@@ -21,7 +21,7 @@
          <plugin>
             <groupId>org.sonatype.flexmojos</groupId>
             <artifactId>flexmojos-maven-plugin</artifactId>
-            <version>3.4.0</version>
+            <version>3.7.1</version>
             <extensions>true</extensions>
             <configuration>
                <services>${project.parent.basedir}/express-server/src/main/webapp/WEB-INF/flex/services-config.xml</services>
@@ -30,7 +30,7 @@
                </locales>
                <contextRoot>/</contextRoot>
                <sourceFile>Express.mxml</sourceFile>
-               <targetPlayer>10.0.0</targetPlayer>
+               <targetPlayer>10.0.22</targetPlayer>
                <sourcePaths>
                   <sourcePath>src/main/flex</sourcePath>
                   <sourcePath>src/main/resources</sourcePath>

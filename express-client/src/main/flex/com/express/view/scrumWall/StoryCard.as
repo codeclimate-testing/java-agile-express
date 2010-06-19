@@ -55,7 +55,7 @@ public class StoryCard extends VBox {
 
       _text = new Text();
       _text.width = 205;
-      _text.height = 70;
+      _text.height = 80;
       _text.styleName = "storyText";
 
       this.addChild(headerBox);
@@ -109,6 +109,12 @@ public class StoryCard extends VBox {
          BindingUtils.bindProperty(_statusHeading, "text", value, "status");
          BindingUtils.bindProperty(_text, "text", value, "summary");
          BindingUtils.bindProperty(_text, "toolTip", value, "summary");
+      }
+      if(_story.impediment) {
+         this.styleName = "storyImpeded";
+      }
+      else {
+         this.styleName = "";
       }
 
    }

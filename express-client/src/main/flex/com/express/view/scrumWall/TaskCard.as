@@ -125,7 +125,7 @@ public class TaskCard extends VBox {
          _facade = ApplicationFacade.getInstance();
       }
       if (_task.impediment) {
-         this.styleName = "impeded";
+         this.styleName = "taskImpeded";
          _quickMenu.addItem(_VIEW_IMPEDIMENT);
          _quickMenu.addItem(_UNIMPEDED);
       }

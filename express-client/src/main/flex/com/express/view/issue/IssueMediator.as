@@ -54,18 +54,22 @@ public class IssueMediator extends FormMediator {
    }
 
    override public function handleNotification(notification:INotification):void {
+      bindForm();
+      view.focusManager.setFocus(view.issueTitle);
       switch (notification.getName()) {
          case ApplicationFacade.NOTE_CREATE_IMPEDIMENT :
             _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_CREATE;
             view.btnSave.label = "Save";
+            view.cboStories.enabled = notification.getBody() as Boolean;
+            view.cboTasks.enabled = notification.getBody() as Boolean;
             break;
          case ApplicationFacade.NOTE_EDIT_IMPEDIMENT :
             _proxy.viewAction = BacklogItemProxy.ACTION_ITEM_EDIT;
             view.btnSave.label = "Update";
+            view.cboStories.enabled = notification.getBody() as Boolean;
+            view.cboTasks.enabled = notification.getBody() as Boolean;
             break;
       }
-      bindForm();
-      view.focusManager.setFocus(view.issueTitle);
    }
 
    override public function bindForm():void {

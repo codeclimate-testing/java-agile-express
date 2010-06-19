@@ -6,8 +6,6 @@
                 xmlns:iteration="com.express.view.iteration.*"
                 xmlns:security="com.express.security.*"
                 width="100%" height="100%" paddingRight="0">
-   <security:Authorize id="auth" roles="['role.iterationAdmin']" behaviour="collapse"
-                       components="{lnkCreateIteration}" type="hasAny"/>
    <mx:VBox width="30%" height="100%" backgroundAlpha="0.7">
       <mx:HBox width="100%" verticalAlign="bottom">
          <mx:Label width="200" text="Product Backlog" styleName="h2"/>
@@ -24,6 +22,8 @@
                                        showDataTips="true" dataField="themesLabel" wordWrap="true"/>
             <mx:AdvancedDataGridColumn headerText="Title / Ref" showDataTips="true" dataField="titleLabel"/>
             <mx:AdvancedDataGridColumn headerText="Effort" dataField="effort" width="50" textAlign="center"
+                                       showDataTips="true"/>
+            <mx:AdvancedDataGridColumn headerText="Priority" dataField="businessValue" width="60" textAlign="center"
                                        showDataTips="true"/>
 
             <mx:AdvancedDataGridColumn headerText="Actions" width="65">
@@ -52,10 +52,7 @@
    </mx:VBox>
    <mx:VBox width="45%" height="100%">
       <mx:HBox width="100%" verticalAlign="bottom">
-         <mx:ComboBox id="cboIterations" prompt="Select an existing Iteration" width="230"
-                      labelField="title" enabled="{cboIterations.dataProvider.length > 0}"/>
-         <mx:LinkButton id="lnkCreateIteration" label="create iteration"
-                        styleName="form" enabled="false"/>
+         <mx:Label id="lblIterationTitle" styleName="h2"/>
          <mx:Spacer width="100%"/>
          <mx:Button id="btnCreateItem" label="Create Story" enabled="false"/>
       </mx:HBox>
@@ -70,6 +67,8 @@
                                        showDataTips="true" dataField="themesLabel" wordWrap="true"/>
             <mx:AdvancedDataGridColumn headerText="Title / Ref" showDataTips="true" dataField="titleLabel"/>
             <mx:AdvancedDataGridColumn headerText="Effort" dataField="effort" width="50" textAlign="center"
+                                       showDataTips="true"/>
+            <mx:AdvancedDataGridColumn headerText="Priority" dataField="businessValue" width="60" textAlign="center"
                                        showDataTips="true"/>
             <mx:AdvancedDataGridColumn headerText="Status" dataField="status" showDataTips="true" width="130"/>
             <mx:AdvancedDataGridColumn id="assignedToColumn" headerText="Assigned To" dataField="assignedToLabel"

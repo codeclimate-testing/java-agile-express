@@ -9,17 +9,12 @@ import com.express.controller.event.GridButtonEvent;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
-import com.express.model.domain.Iteration;
 import com.express.model.request.BacklogItemAssignRequest;
 import com.express.view.backlogItem.BacklogItemMediator;
-import com.express.view.iteration.IterationMediator;
 
-import flash.events.Event;
 import flash.events.MouseEvent;
 
-import mx.collections.ArrayCollection;
 import mx.controls.Alert;
-import mx.controls.ComboBox;
 import mx.events.CloseEvent;
 import mx.events.DragEvent;
 import mx.managers.DragManager;
@@ -38,15 +33,11 @@ public class BacklogMediator extends Mediator {
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       _secureContext = facade.retrieveProxy(SecureContextProxy.NAME) as SecureContextProxy;
 
-      viewComp.cboIterations.dataProvider = _proxy.iterationList;
       viewComp.grdIterationBacklog.dataProvider = _proxy.selectedBacklog;
       viewComp.grdProductBacklog.dataProvider = _proxy.productBacklog;
       viewComp.grdIterationBacklog.dataTipFunction = buildToolTip;
       viewComp.grdProductBacklog.dataTipFunction = buildToolTip;
-      viewComp.auth.userRoles = _secureContext.availableRoles;
 
-      viewComp.cboIterations.addEventListener(Event.CHANGE, handleIterationSelected);
-      viewComp.lnkCreateIteration.addEventListener(MouseEvent.CLICK, handleCreateIteration);
       viewComp.grdIterationBacklog.addEventListener(GridButtonEvent.CLICK, handleGridButton);
       viewComp.grdProductBacklog.addEventListener(GridButtonEvent.CLICK, handleGridButton);
       viewComp.grdIterationBacklog.addEventListener(MouseEvent.DOUBLE_CLICK, handleGridDoubleClick);
@@ -115,57 +106,25 @@ public class BacklogMediator extends Mediator {
             handleProjectLoaded();
             break;
          case IterationCreateCommand.SUCCESS :
-            var newIteration:Iteration = notification.getBody() as Iteration;
-            view.cboIterations.selectedItem = newIteration;
             view.btnCreateItem.enabled = true;
             break;
          case IterationUpdateCommand.SUCCESS :
          case IterationLoadCommand.SUCCESS :
-            var index:int = getSelectionIndex(_proxy.selectedProject.iterations, _proxy.selectedIteration);
-            view.cboIterations.selectedIndex = index;
-            _proxy.updateIterationList();
-            _proxy.newIteration = null;
             view.btnCreateItem.enabled = true;
             break;
       }
    }
 
    private function handleProjectLoaded():void {
-      view.lnkCreateIteration.enabled = true;
       view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
-
       if (!_proxy.selectedIteration && ! _proxy.selectedProject.currentIteration) {
-         view.cboIterations.selectedIndex = -1;
          view.btnCreateItem.enabled = false;
       } else if (_proxy.selectedIteration) {
-         view.cboIterations.selectedIndex = getSelectionIndex(view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);
          view.btnCreateItem.enabled = true;
       }
       else {
          sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, _proxy.selectedProject.currentIteration.id);
       }
-   }
-
-   private function getSelectionIndex(list:ArrayCollection, iteration:Iteration):int {
-      for (var index:int = 0; index < list.length; index++) {
-         if (list.getItemAt(index).id == iteration.id) {
-            return index;
-         }
-      }
-      return -1;
-   }
-
-   private function handleIterationSelected(event:Event):void {
-      var iteration:Iteration = (event.target as ComboBox).selectedItem as Iteration;
-      sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, iteration.id);
-      view.btnCreateItem.enabled = true;
-   }
-
-   public function handleCreateIteration(event:MouseEvent):void {
-      _proxy.newIteration = new Iteration();
-      _proxy.newIteration.project = _proxy.selectedProject;
-      _proxy.newIteration.title = "Iteration " + (_proxy.selectedProject.iterations.length + 1);
-      sendNotification(IterationMediator.CREATE);
    }
 
    private function handleGridButton(event:GridButtonEvent):void {

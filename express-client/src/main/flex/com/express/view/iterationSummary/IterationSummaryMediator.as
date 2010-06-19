@@ -7,6 +7,7 @@ import com.express.controller.ProjectLoadCommand;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
+import com.express.model.domain.Iteration;
 import com.express.print.BacklogPrintView;
 
 import com.express.view.iteration.IterationMediator;
@@ -22,6 +23,8 @@ import flash.events.SecurityErrorEvent;
 import flash.net.FileReference;
 import flash.net.URLRequest;
 
+import mx.collections.ArrayCollection;
+import mx.controls.ComboBox;
 import mx.controls.DateField;
 import mx.controls.TileList;
 import mx.events.FlexEvent;
@@ -53,9 +56,12 @@ public class IterationSummaryMediator extends Mediator {
       viewComp.btnEdit.addEventListener(MouseEvent.CLICK, handleEditIteration);
       viewComp.lnkExport.addEventListener(MouseEvent.CLICK, handleIterationBacklogExport);
       viewComp.lnkClose.addEventListener(MouseEvent.CLICK, handleClose);
+      viewComp.cboIterations.addEventListener(Event.CHANGE, handleIterationSelected);
+      viewComp.lnkCreateIteration.addEventListener(MouseEvent.CLICK, handleCreateIteration);
 
       setupFileReference();
       viewComp.burndown.dataProvider = _proxy.iterationHistory;
+      viewComp.cboIterations.dataProvider = _proxy.iterationList;
    }
 
    private function setupFileReference():void {
@@ -141,6 +147,18 @@ public class IterationSummaryMediator extends Mediator {
       }
       _printView.parent.visible = false;
    }
+
+   private function handleIterationSelected(event:Event):void {
+      var iteration:Iteration = (event.target as ComboBox).selectedItem as Iteration;
+      sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, iteration.id);
+   }
+
+   public function handleCreateIteration(event:MouseEvent):void {
+      _proxy.newIteration = new Iteration();
+      _proxy.newIteration.project = _proxy.selectedProject;
+      _proxy.newIteration.title = "Iteration " + (_proxy.selectedProject.iterations.length + 1);
+      sendNotification(IterationMediator.CREATE);
+   }
    
    override public function listNotificationInterests():Array {
       return [ProjectLoadCommand.SUCCESS,
@@ -155,12 +173,25 @@ public class IterationSummaryMediator extends Mediator {
          case ProjectLoadCommand.SUCCESS :
             bindIterationDisplay();
             toggleBurndownAsLink();
+            view.lnkCreateIteration.enabled = true;
+            if (!_proxy.selectedIteration && ! _proxy.selectedProject.currentIteration) {
+               view.cboIterations.selectedIndex = -1;
+            } else if (_proxy.selectedIteration) {
+               view.cboIterations.selectedIndex = getSelectionIndex(
+                     view.cboIterations.dataProvider as ArrayCollection, _proxy.selectedIteration);
+            }
             break;
          case IterationUpdateCommand.SUCCESS :
          case IterationCreateCommand.SUCCESS :
+            var newIteration:Iteration = notification.getBody() as Iteration;
+            view.cboIterations.selectedItem = newIteration;
             bindIterationDisplay();
             break;
          case IterationLoadCommand.SUCCESS :
+            var index:int = getSelectionIndex(_proxy.selectedProject.iterations, _proxy.selectedIteration);
+            view.cboIterations.selectedIndex = index;
+            _proxy.updateIterationList();
+            _proxy.newIteration = null;
             bindIterationDisplay();
             toggleBurndownAsLink();
             break;
@@ -168,6 +199,15 @@ public class IterationSummaryMediator extends Mediator {
             bindIterationDisplay();
             break;
       }
+   }
+
+   private function getSelectionIndex(list:ArrayCollection, iteration:Iteration):int {
+      for (var index:int = 0; index < list.length; index++) {
+         if (list.getItemAt(index).id == iteration.id) {
+            return index;
+         }
+      }
+      return -1;
    }
 
    public function bindIterationDisplay() : void {

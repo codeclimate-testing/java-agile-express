@@ -85,12 +85,12 @@ public class ScrumWallMediator extends Mediator {
             _backlogItemProxy.currentIssue = new Issue();
             _backlogItemProxy.currentIssue.startDate = new Date();
             _backlogItemProxy.currentIteration = _projectProxy.selectedIteration;
-            sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT);
+            sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT, false);
             break;
          case TaskCard.NOTE_VIEW_IMPEDIMENT :
             _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
             _backlogItemProxy.currentIssue = _backlogItemProxy.currentBacklogItem.impediment;
-            sendNotification(ApplicationFacade.NOTE_EDIT_IMPEDIMENT);
+            sendNotification(ApplicationFacade.NOTE_EDIT_IMPEDIMENT, false);
             break;
          case TaskCard.NOTE_UNIMPEDED :
             var unimpeded : BacklogItem = BacklogItem(notification.getBody());

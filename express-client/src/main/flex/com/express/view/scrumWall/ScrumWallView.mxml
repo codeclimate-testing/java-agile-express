@@ -8,16 +8,16 @@
       <mx:Label styleName="storyHead" text="Stories" width="225"/>
       <mx:HDividedBox id="swimLaneHeaders" width="100%">
          <mx:HBox id="openLane" height="30" styleName="wallHeader">
-            <mx:Label styleName="h2White" text="OPEN" width="100%"/>
+            <mx:Label styleName="storyHead" text="OPEN" width="100%"/>
          </mx:HBox>
          <mx:HBox id="progressLane" height="30" styleName="wallHeader">
-            <mx:Label styleName="h2White" text="IN PROGRESS" width="100%"/>
+            <mx:Label styleName="storyHead" text="IN PROGRESS" width="100%"/>
          </mx:HBox>
          <mx:HBox id="testLane" height="30" styleName="wallHeader">
-            <mx:Label styleName="h2White" text="TEST" width="100%"/>
+            <mx:Label styleName="storyHead" text="TEST" width="100%"/>
          </mx:HBox>
          <mx:HBox id="doneLane" height="30" styleName="wallHeader">
-            <mx:Label styleName="h2White" text="DONE" width="100%"/>
+            <mx:Label styleName="storyHead" text="DONE" width="100%"/>
          </mx:HBox>
       </mx:HDividedBox>
    </mx:HBox>

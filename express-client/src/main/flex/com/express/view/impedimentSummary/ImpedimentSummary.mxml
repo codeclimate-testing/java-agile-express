@@ -5,7 +5,7 @@
          showEffect="{wipeLeft}">
    <mx:WipeLeft id="wipeLeft" duration="200"/>
    <mx:WipeRight id="wipeRight" duration="200"/>
-   <mx:HBox id="openLane" height="25" width="100%" styleName="wallHeader">
+   <mx:HBox id="openLane" height="25" width="100%" styleName="panelHeader">
       <mx:LinkButton id="lnkClose" icon="@Embed('/images/icons/right.png')"
                      overIcon="@Embed('/images/icons/right-over.png')" width="16"/>
       <mx:Label styleName="h2White" text="Impediments"/>

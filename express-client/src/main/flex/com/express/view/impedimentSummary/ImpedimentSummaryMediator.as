@@ -39,7 +39,7 @@ public class ImpedimentSummaryMediator extends Mediator {
       _backlogItemProxy.currentIssue = new Issue();
       _backlogItemProxy.currentIssue.startDate = new Date();
       _backlogItemProxy.currentIteration = _proxy.selectedIteration;
-      sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT);
+      sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT, true);
    }
 
    private function handleClose(event:MouseEvent):void {
