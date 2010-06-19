@@ -107,10 +107,12 @@ public class BacklogMediator extends Mediator {
             break;
          case IterationCreateCommand.SUCCESS :
             view.btnCreateItem.enabled = true;
+            view.lblIterationTitle.text = _proxy.selectedIteration.title + " Backlog";
             break;
          case IterationUpdateCommand.SUCCESS :
          case IterationLoadCommand.SUCCESS :
             view.btnCreateItem.enabled = true;
+            view.lblIterationTitle.text = _proxy.selectedIteration.title + " Backlog";
             break;
       }
    }
