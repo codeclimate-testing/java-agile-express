@@ -21,12 +21,12 @@
                        paddingTop="2"/>
    </mx:HBox>
 
-   <mx:ComboBox id="cboIterations" prompt="Select an existing Iteration" width="230"
-                      labelField="title" enabled="{cboIterations.dataProvider.length > 0}"/>
-         <mx:LinkButton id="lnkCreateIteration" label="create iteration"
-                        styleName="form" enabled="false"/>
-         <mx:Spacer width="100%"/>
-
+   <mx:HBox styleName="panelBox">
+      <mx:ComboBox id="cboIterations" prompt="Select an existing Iteration" width="230"
+                   labelField="title" enabled="{cboIterations.dataProvider.length > 0}"/>
+      <mx:LinkButton id="lnkCreateIteration" label="create new"
+                     styleName="form" enabled="false"/>
+   </mx:HBox>
    <charts:BurndownChart id="burndown" width="100%" height="180"/>
 
    <mx:HBox styleName="panelBox">

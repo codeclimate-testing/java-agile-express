@@ -44,13 +44,13 @@ public class ScrumWallMediator extends Mediator {
               ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
               ApplicationFacade.NOTE_REMOVE_BACKLOG_ITEM,
               ProjectLoadCommand.SUCCESS,
-              StoryCard.NOTE_ADD_TASK,
-              StoryCard.NOTE_MARK_DONE,
-              TaskCard.NOTE_IMPEDED,
-              TaskCard.NOTE_VIEW_IMPEDIMENT,
-              TaskCard.NOTE_UNIMPEDED,
-              TaskCard.NOTE_UNASSIGN_TASK,
-              TaskCard.NOTE_TAKE_TASK];
+              QuickMenu.NOTE_ADD_TASK,
+              QuickMenu.NOTE_MARK_DONE,
+              QuickMenu.NOTE_IMPEDED,
+              QuickMenu.NOTE_VIEW_IMPEDIMENT,
+              QuickMenu.NOTE_UNIMPEDED,
+              QuickMenu.NOTE_UNASSIGN,
+              QuickMenu.NOTE_TAKE];
    }
 
    override public function handleNotification(notification:INotification):void {
@@ -72,36 +72,36 @@ public class ScrumWallMediator extends Mediator {
          case ProjectLoadCommand.SUCCESS :
             loadIterationBacklog();
             break;
-         case StoryCard.NOTE_MARK_DONE :
+         case QuickMenu.NOTE_MARK_DONE :
             sendNotification(ApplicationFacade.NOTE_MARK_DONE_BACKLOG_ITEM, BacklogItem(notification.getBody()).id);
             break;
-         case StoryCard.NOTE_ADD_TASK :
+         case QuickMenu.NOTE_ADD_TASK :
             var item : BacklogItem = new BacklogItem();
             item.parent = BacklogItem(notification.getBody());
             sendNotification(BacklogItemMediator.CREATE, item);
             break;
-         case TaskCard.NOTE_IMPEDED :
+         case QuickMenu.NOTE_IMPEDED :
             _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
             _backlogItemProxy.currentIssue = new Issue();
             _backlogItemProxy.currentIssue.startDate = new Date();
             _backlogItemProxy.currentIteration = _projectProxy.selectedIteration;
             sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT, false);
             break;
-         case TaskCard.NOTE_VIEW_IMPEDIMENT :
+         case QuickMenu.NOTE_VIEW_IMPEDIMENT :
             _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
             _backlogItemProxy.currentIssue = _backlogItemProxy.currentBacklogItem.impediment;
             sendNotification(ApplicationFacade.NOTE_EDIT_IMPEDIMENT, false);
             break;
-         case TaskCard.NOTE_UNIMPEDED :
+         case QuickMenu.NOTE_UNIMPEDED :
             var unimpeded : BacklogItem = BacklogItem(notification.getBody());
             sendNotification(ApplicationFacade.NOTE_REMOVE_IMPEDIMENT, unimpeded);
             break;
-         case TaskCard.NOTE_TAKE_TASK :
+         case QuickMenu.NOTE_TAKE :
             var taken : BacklogItem = BacklogItem(notification.getBody());
             taken.assignedTo = _secureContext.currentUser;
             sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, taken);
             break;
-         case TaskCard.NOTE_UNASSIGN_TASK :
+         case QuickMenu.NOTE_UNASSIGN :
             var unassigned : BacklogItem = BacklogItem(notification.getBody());
             unassigned.assignedTo = null;
             sendNotification(ApplicationFacade.NOTE_UPDATE_BACKLOG_ITEM, unassigned);

@@ -1,9 +1,6 @@
 package com.express.view.scrumWall {
 import com.express.ApplicationFacade;
-import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
-import com.express.model.domain.User;
-
 import com.express.view.backlogItem.BacklogItemMediator;
 import com.express.view.components.PopUpLabel;
 
@@ -11,7 +8,6 @@ import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 
 import mx.binding.utils.BindingUtils;
-import mx.collections.ArrayCollection;
 import mx.containers.Box;
 import mx.containers.HBox;
 import mx.containers.VBox;
@@ -23,22 +19,10 @@ import mx.managers.DragManager;
 
 public class TaskCard extends VBox {
 
-   public static const NOTE_IMPEDED:String = "Note.Impeded";
-   public static const NOTE_UNIMPEDED:String = "Note.Unimpeded";
-   public static const NOTE_VIEW_IMPEDIMENT:String = "Note.ViewImpdeiment";
-   public static const NOTE_TAKE_TASK:String = "Note.TakeTask";
-   public static const NOTE_UNASSIGN_TASK:String = "Note.UnassignTask";
-
-   private static const _IMPEDED:String = "Impeded";
-   private static const _UNIMPEDED:String = "Unimpeded";
-   private static const _VIEW_IMPEDIMENT:String = "View Impediment";
-   private static const _TAKE_TASK:String = "Take Task";
-   private static const _UNASSIGN:String = "Unassign";
-
    private static const _EFFORT_PREFIX : String = "Remaining hrs:";
 
    private var _facade:ApplicationFacade;
-   private var _quickMenu:ArrayCollection = new ArrayCollection();
+   private var _quickMenu : QuickMenu;
    private var _task:BacklogItem;
    private var _colour : int;
 
@@ -58,10 +42,11 @@ public class TaskCard extends VBox {
       _refHeading = new Label();
       _refHeading.styleName = "cardHeading";
       _refHeading.width = 95;
+      _quickMenu = new QuickMenu();
       _actionPopUp = new PopUpLabel();
-      _actionPopUp.dataProvider = _quickMenu;
+      _actionPopUp.dataProvider = _quickMenu.quickMenu;
       _actionPopUp.styleName = "storyQuickMenu";
-      _actionPopUp.addEventListener(ListEvent.ITEM_CLICK, handleQuickMenuSelection);
+      _actionPopUp.addEventListener(ListEvent.ITEM_CLICK, _quickMenu.handleQuickMenuSelection);
       headerBox.addChild(_refHeading);
       headerBox.addChild(_actionPopUp);
 
@@ -118,73 +103,33 @@ public class TaskCard extends VBox {
       newFilters.push(shadowFilter);
       this.filters = newFilters;
    }
-   
-   private function buildQuickMenu(obj:Object = null) : void {
-      _quickMenu.source = [];
-      if (!_facade) {
-         _facade = ApplicationFacade.getInstance();
-      }
-      if (_task.impediment) {
-         this.styleName = "taskImpeded";
-         _quickMenu.addItem(_VIEW_IMPEDIMENT);
-         _quickMenu.addItem(_UNIMPEDED);
-      }
-      else {
-         this.styleName = "";
-         _quickMenu.addItem(_IMPEDED);
-      }
-      if (_task.assignedTo) {
-         _quickMenu.addItem(_UNASSIGN);
-      }
-      var currentUser:User = SecureContextProxy(_facade.retrieveProxy(SecureContextProxy.NAME)).currentUser;
-      if (!(_task.assignedTo) || _task.assignedTo.id != currentUser.id) {
-         _quickMenu.addItem(_TAKE_TASK);
-      }
+
+   public function get task() : BacklogItem {
+      return _task;
    }
 
-   private function handleQuickMenuSelection(event:ListEvent):void {
-         switch (_quickMenu[event.rowIndex]) {
-            case _IMPEDED :
-               _facade.sendNotification(NOTE_IMPEDED, _task);
-               break;
-            case _UNIMPEDED :
-               _facade.sendNotification(NOTE_UNIMPEDED, _task);
-               break;
-            case _VIEW_IMPEDIMENT :
-               _facade.sendNotification(NOTE_VIEW_IMPEDIMENT, _task);
-               break;
-            case _TAKE_TASK :
-               _facade.sendNotification(NOTE_TAKE_TASK, _task);
-               break;
-            case _UNASSIGN :
-               _facade.sendNotification(NOTE_UNASSIGN_TASK, _task);
-               break;
-         }
-      }
-
    public function set task(value:BacklogItem):void {
-      _task = value;
-      BindingUtils.bindProperty(_refHeading, "text", value, "reference");
-      BindingUtils.bindProperty(_text, "text", value, "summary");
-      BindingUtils.bindProperty(_text, "toolTip", value, "summary");
-      BindingUtils.bindProperty(_assignedToLabel, "text", value, "assignedToLabel");
-      BindingUtils.bindProperty(_assignedToLabel, "text", value, "assignedToLabel");
-      BindingUtils.bindSetter(buildQuickMenu, value, "impediment");
-      BindingUtils.bindSetter(setColour, value, "colour");
+      _quickMenu.item = _task = value;
+      BindingUtils.bindProperty(_refHeading, "text", _task, "reference");
+      BindingUtils.bindProperty(_text, "text", _task, "summary");
+      BindingUtils.bindProperty(_text, "toolTip", _task, "summary");
+      BindingUtils.bindProperty(_assignedToLabel, "text", _task, "assignedToLabel");
+      BindingUtils.bindSetter(setColour, _task, "colour");
+      BindingUtils.bindSetter(setCardStyle, _task, "impediment");
       _dot.setStyle("borderColor", _colour);
       _dot.setStyle("backgroundColor", _colour);
       _effortLabel.text = _EFFORT_PREFIX + " " + _task.effort;
-      buildQuickMenu();
+      setCardStyle();
+   }
+
+   private function setCardStyle(value : Object = null) : void {
+      this.styleName = _task.impediment ? "taskImpeded" : "";
    }
 
    private function setColour(value : Object = null) : void {
       _colour = _task.colour;
       _dot.setStyle("borderColor", _colour);
       _dot.setStyle("backgroundColor", _colour);
-   }
-
-   public function get task() : BacklogItem {
-      return _task;
    }
 }
 }

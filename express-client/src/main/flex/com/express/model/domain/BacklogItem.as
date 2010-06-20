@@ -77,6 +77,10 @@ public class BacklogItem
       }
    }
 
+   public function isStory() : Boolean {
+      return parent == null;
+   }
+
    public function set assignedToLabel(value : String) : void {
       _assignedToLabel = value;
    }

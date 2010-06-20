@@ -8,7 +8,6 @@ import flash.events.MouseEvent;
 import flash.filters.DropShadowFilter;
 
 import mx.binding.utils.BindingUtils;
-import mx.collections.ArrayCollection;
 import mx.containers.HBox;
 import mx.containers.VBox;
 import mx.controls.Label;
@@ -17,14 +16,8 @@ import mx.events.ListEvent;
 
 public class StoryCard extends VBox {
 
-   public static const NOTE_ADD_TASK:String = "Note.AddTAsk";
-   public static const NOTE_MARK_DONE:String = "Note.MarkDone";
-
-   private static const _ADD_TASK:String = "Add Task";
-   private static const _MARK_DONE:String = "Mark as Done";
-
    private var _facade:ApplicationFacade;
-   private var _quickMenu:ArrayCollection = new ArrayCollection();
+   
 
    //Child visual components
    private var _refHeading:Label;
@@ -34,6 +27,8 @@ public class StoryCard extends VBox {
 
    [Bindable]
    public var _story:BacklogItem;
+
+   private var _quickMenu : QuickMenu;
 
    public function StoryCard() {
       super();
@@ -47,10 +42,11 @@ public class StoryCard extends VBox {
       _statusHeading = new Label();
       _statusHeading.percentWidth = 100;
       headerBox.addChild(_statusHeading);
+      _quickMenu = new QuickMenu();
       _actionPopUp = new PopUpLabel();
-      _actionPopUp.dataProvider = _quickMenu;
+      _actionPopUp.dataProvider = _quickMenu.quickMenu;
       _actionPopUp.styleName = "storyQuickMenu";
-      _actionPopUp.addEventListener(ListEvent.ITEM_CLICK, handleQuickMenuSelection);
+      _actionPopUp.addEventListener(ListEvent.ITEM_CLICK, _quickMenu.handleQuickMenuSelection);
       headerBox.addChild(_actionPopUp);
 
       _text = new Text();
@@ -64,7 +60,6 @@ public class StoryCard extends VBox {
       _facade = ApplicationFacade.getInstance();
       this.doubleClickEnabled = true;
       this.addEventListener(MouseEvent.DOUBLE_CLICK, handleDoubleClick);
-      buildQuickMenu();
       addDropShadow();
    }
 
@@ -72,11 +67,6 @@ public class StoryCard extends VBox {
       _facade.sendNotification(BacklogItemMediator.EDIT, _story);
    }
 
-   private function buildQuickMenu() : void {
-      _quickMenu.source = [];
-      _quickMenu.addItem(_ADD_TASK);
-      _quickMenu.addItem(_MARK_DONE);
-   }
 
    private function addDropShadow() : void {
       var newFilters : Array = [];
@@ -88,35 +78,23 @@ public class StoryCard extends VBox {
       this.filters = newFilters;
    }
 
-   private function handleQuickMenuSelection(event:ListEvent):void {
-      switch (_quickMenu[event.rowIndex]) {
-         case _ADD_TASK :
-            _facade.sendNotification(NOTE_ADD_TASK, _story);
-            break;
-         case _MARK_DONE :
-            _facade.sendNotification(NOTE_MARK_DONE, _story);
-            break;
-      }
-   }
-
    public function set story(value:BacklogItem):void {
       if(_story && _story.id == value.id) {
          _story.copyFrom(value);
       }
       else {
-         _story = value;
-         BindingUtils.bindProperty(_refHeading, "text", value, "reference");
-         BindingUtils.bindProperty(_statusHeading, "text", value, "status");
-         BindingUtils.bindProperty(_text, "text", value, "summary");
-         BindingUtils.bindProperty(_text, "toolTip", value, "summary");
+         _quickMenu.item = _story = value;
+         BindingUtils.bindProperty(_refHeading, "text", _story, "reference");
+         BindingUtils.bindProperty(_statusHeading, "text", _story, "status");
+         BindingUtils.bindProperty(_text, "text", _story, "summary");
+         BindingUtils.bindProperty(_text, "toolTip", _story, "summary");
+         BindingUtils.bindSetter(setCardStyle, _story, "impediment");
       }
-      if(_story.impediment) {
-         this.styleName = "storyImpeded";
-      }
-      else {
-         this.styleName = "";
-      }
+      setCardStyle();
+   }
 
+   private function setCardStyle(value : Object = null) : void {
+      this.styleName = _story.impediment ? "storyImpeded" : "";
    }
 }
 }

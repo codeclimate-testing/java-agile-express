@@ -49,7 +49,7 @@ public class PopUpLabel extends HBox {
    public var leftIcon:Class;
 
    private var _popup:VBox;
-   private var _rowHeight:int = 20;
+   private var _rowHeight:int = 23;
    private var _img:Image;
    private var _label:Label;
    private var _list:List;

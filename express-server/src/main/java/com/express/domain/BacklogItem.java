@@ -1,10 +1,13 @@
 package com.express.domain;
 
-import org.hibernate.annotations.OptimisticLock;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OptimisticLock;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * BacklogItem models stories and tasks which can be contained in the product backlog or assigned
@@ -33,7 +36,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    @Column(name = "title")
    private String title;
 
-    @Column(name = "as_a")
+   @Column(name = "as_a")
    private String asA;
 
    @Column(name = "i_want")
@@ -91,9 +94,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    private Set<BacklogItem> tasks;
 
    @ManyToMany
-   @JoinTable(name = "backlog_theme", joinColumns = {
-         @JoinColumn(name = "backlog_id") }, inverseJoinColumns = {
-         @JoinColumn(name = "theme_id") })
+   @JoinTable(name = "backlog_theme", joinColumns = {@JoinColumn(name = "backlog_id")}, inverseJoinColumns = {@JoinColumn(name = "theme_id")})
    private Set<Theme> themes;
 
    @OneToMany(mappedBy = "backlogItem", cascade = CascadeType.ALL)
@@ -152,7 +153,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
 
    public Integer getTaskCount() {
       //For versions before 0.7.3 taskCount will not have been maintained
-      if(taskCount == 1 && tasks.size() > 1) {
+      if (taskCount == 1 && tasks.size() > 1) {
          taskCount = tasks.size() + 1;
       }
       return taskCount;
@@ -196,10 +197,10 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    }
 
    public void addToIterationIfAvailable(Issue impediment) {
-      if(this.iteration != null) {
+      if (this.iteration != null) {
          this.iteration.addImpediment(impediment);
       }
-      else if(this.parent != null && this.parent.getIteration() != null){
+      else if (this.parent != null && this.parent.getIteration() != null) {
          this.parent.getIteration().addImpediment(impediment);
       }
    }
@@ -242,7 +243,9 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
 
    public void setImpediment(Issue impediment) {
       this.impediment = impediment;
-      this.addToIterationIfAvailable(impediment);
+      if (impediment != null) {
+         this.addToIterationIfAvailable(impediment);
+      }
    }
 
    public String getDetailedDescription() {
@@ -332,10 +335,12 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
 
    @Override
    public boolean equals(Object obj) {
-      if (obj == this)
+      if (obj == this) {
          return true;
-      if (this.id == null || !(obj instanceof BacklogItem))
+      }
+      if (this.id == null || !(obj instanceof BacklogItem)) {
          return false;
+      }
       BacklogItem backlogItem = (BacklogItem) obj;
       return this.id.equals(backlogItem.getId());
    }
@@ -420,14 +425,14 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    public String toCSV() {
       StringBuilder result = new StringBuilder();
       result.append(reference).append(",");
-      for(Theme theme : themes) {
+      for (Theme theme : themes) {
          result.append(theme.getTitle()).append(" ");
       }
       result.append(",");
       result.append(title).append(",");
       result.append(summary).append(",");
       result.append(status.getTitle()).append(",");
-      if(assignedTo == null) {
+      if (assignedTo == null) {
          result.append("unassigned,");
       }
       else {
@@ -435,7 +440,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       }
       result.append(effort).append(",");
       result.append(businessValue);
-      for(AcceptanceCriteria criteria : acceptanceCriteria) {
+      for (AcceptanceCriteria criteria : acceptanceCriteria) {
          result.append("\n");
          result.append(criteria.toCSV());
       }
