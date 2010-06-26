@@ -1,9 +1,9 @@
 package com.express.view.impedimentSummary {
 import com.express.ApplicationFacade;
+import com.express.controller.ImpedimentUpdateCommand;
 import com.express.controller.IterationLoadCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.model.ProjectProxy;
-import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Issue;
 import com.express.view.backlogItem.BacklogItemProxy;
 
@@ -47,7 +47,9 @@ public class ImpedimentSummaryMediator extends Mediator {
    }
 
    override public function listNotificationInterests():Array {
-      return [IterationLoadCommand.SUCCESS, ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE];
+      return [IterationLoadCommand.SUCCESS,
+              ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE,
+              ImpedimentUpdateCommand.SUCCESS];
    }
 
    override public function handleNotification(notification:INotification):void {
@@ -65,6 +67,9 @@ public class ImpedimentSummaryMediator extends Mediator {
                _backlogItemProxy.selectedBacklog = _proxy.selectedIteration.backlog;
                view.btnAddImpediment.enabled = true;
             }
+            break;
+         case ImpedimentUpdateCommand.SUCCESS :
+            view.lstImpediments.dataProvider.refresh();
             break;
       }
    }

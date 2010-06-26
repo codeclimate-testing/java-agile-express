@@ -2,7 +2,6 @@ package com.express.controller
 {
 import com.express.ApplicationFacade;
 import com.express.model.ProjectProxy;
-import com.express.model.domain.BacklogItem;
 import com.express.model.request.LoadBacklogRequest;
 import com.express.service.ServiceRegistry;
 
@@ -14,55 +13,41 @@ import mx.rpc.remoting.mxml.RemoteObject;
 import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.command.SimpleCommand;
 
-   /**
-    * Loads the backlog for the selected Iteration.
-    */
-public class BacklogLoadCommand extends SimpleCommand implements IResponder
-{
-   private var _proxy : ProjectProxy;
+/**
+ * Loads the backlog for the selected Iteration.
+ */
+public class BacklogLoadCommand extends SimpleCommand implements IResponder {
+   private var _proxy:ProjectProxy;
 
    public function BacklogLoadCommand() {
    }
 
    override public function execute(notification:INotification):void {
-      var request : LoadBacklogRequest = new LoadBacklogRequest();
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
-      if (_proxy.productBacklogRequest) {
-         request.type = LoadBacklogRequest.TYPE_PROJECT;
-         request.parentId = _proxy.selectedProject.id;
+      if (!_proxy.productBacklogRequest) {
+         sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, _proxy.selectedIteration.id);
+         return;
       }
-      else {
-         request.type = LoadBacklogRequest.TYPE_ITERATION;
-         request.parentId = _proxy.selectedIteration.id;
-      }
-      var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
-      var service : RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
-      var call : Object = service.loadBacklog(request);
+      var request:LoadBacklogRequest = new LoadBacklogRequest();
+      request.type = LoadBacklogRequest.TYPE_PROJECT;
+      request.parentId = _proxy.selectedProject.id;
+      var registry:ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
+      var service:RemoteObject = registry.getRemoteObjectService(ApplicationFacade.PROJECT_SERVICE);
+      var call:Object = service.loadBacklog(request);
       call.addResponder(this);
    }
 
-   public function result(data : Object) :void {
+   public function result(data:Object):void {
 
-      if(_proxy.productBacklogRequest) {
-         _proxy.selectedProject.productBacklog = ArrayCollection(data.result);
-         _proxy.setProductBacklogSource(ArrayCollection(data.result));
-         _proxy.setProjectHistory(_proxy.selectedProject);
-      }
-      else {
-         _proxy.selectedIteration.backlog.source = ArrayCollection(data.result).source;
-         _proxy.selectedIteration.impediments.source = [];
-         for each(var item :BacklogItem in _proxy.selectedIteration.backlog) {
-            if(item.impediment) {
-               _proxy.selectedIteration.impediments.addItem(item.impediment);
-            }
-         }
-      }
+      _proxy.selectedProject.productBacklog = ArrayCollection(data.result);
+      _proxy.setProductBacklogSource(ArrayCollection(data.result));
+      _proxy.setProjectHistory(_proxy.selectedProject);
       _proxy.setIterationHistory(_proxy.selectedIteration);
       _proxy.productBacklogRequest = false;
       sendNotification(ApplicationFacade.NOTE_LOAD_BACKLOG_COMPLETE);
    }
 
-   public function fault(info : Object) : void {
+   public function fault(info:Object):void {
       trace((info as FaultEvent).fault.message);
    }
 }

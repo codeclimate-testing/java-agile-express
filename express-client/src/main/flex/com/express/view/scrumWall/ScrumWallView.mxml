@@ -4,7 +4,7 @@
    <mx:Script>
    <![CDATA[ import com.express.model.domain.BacklogItem; ]]>
    </mx:Script>
-   <mx:HBox horizontalGap="0" width="100%" verticalAlign="middle">
+   <mx:HBox styleName="wallHeaders" width="100%">
       <mx:Label styleName="storyHead" text="Stories" width="225"/>
       <mx:HDividedBox id="swimLaneHeaders" width="100%">
          <mx:HBox id="openLane" height="30" styleName="wallHeader">

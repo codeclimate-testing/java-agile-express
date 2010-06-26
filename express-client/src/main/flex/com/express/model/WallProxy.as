@@ -2,6 +2,8 @@ package com.express.model
 {
 import com.express.model.domain.BacklogItem;
 
+import com.express.model.domain.Iteration;
+
 import mx.collections.ArrayCollection;
 
 import org.puremvc.as3.patterns.proxy.Proxy;
@@ -11,6 +13,7 @@ public class WallProxy extends Proxy
    public static const NAME : String = "WallProxy";
 
    public var inProgressItem : BacklogItem;
+   public var currentIteration : Iteration;
    private var _currentBacklog : ArrayCollection;
 
    public function WallProxy() {

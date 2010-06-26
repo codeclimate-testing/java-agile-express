@@ -30,6 +30,5 @@ public class Issue {
       }
       return responsible ? "Assigned" : "Unassigned"
    }
-
 }
 }

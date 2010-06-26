@@ -1,14 +1,12 @@
 package com.express.model.domain
 {
 import mx.collections.ArrayCollection;
-import mx.collections.Sort;
-import mx.collections.SortField;
 
 [RemoteClass(alias="com.express.service.dto.IterationDto")]
-public class Iteration
-{
-   public static const MILLIS_IN_A_DAY : int = 86400000;
-   public function Iteration(id : Number = 0, title : String = null) {
+public class Iteration {
+   public static const MILLIS_IN_A_DAY:int = 86400000;
+
+   public function Iteration(id:Number = 0, title:String = null) {
       backlog = new ArrayCollection();
       history = new ArrayCollection();
       impediments = new ArrayCollection();
@@ -17,72 +15,86 @@ public class Iteration
    }
 
    [Bindable]
-   public var id : Number;
+   public var id:Number;
 
-   public var version : Number;
+   public var version:Number;
 
-   public var title : String;
+   public var title:String;
 
-   public var goal : String;
-
-   [Bindable]
-   public var startDate : Date;
+   public var goal:String;
 
    [Bindable]
-   public var endDate : Date;
+   public var startDate:Date;
 
-   public var finalVelocity : Number;
+   [Bindable]
+   public var endDate:Date;
 
-   public var project : Project;
+   public var finalVelocity:Number;
 
-   public var backlog : ArrayCollection;
+   public var project:Project;
 
-   public var history : ArrayCollection;
+   public var backlog:ArrayCollection;
 
-   public var impediments : ArrayCollection;
+   public var history:ArrayCollection;
 
-   public function getPoints() : int {
-      var total : Number = 0;
-      for each(var item : BacklogItem in backlog) {
+   public var impediments:ArrayCollection;
+
+   public function getPoints():int {
+      var total:Number = 0;
+      for each(var item:BacklogItem in backlog) {
          total += item.effort;
       }
       return total;
    }
 
-   public function getDaysRemaining() : int {
-      var today: Date = new Date();
-      if(today.getTime() >= endDate.getTime()) {
+   public function getDaysRemaining():int {
+      var today:Date = new Date();
+      if (today.getTime() >= endDate.getTime()) {
          return 0;
       }
-      var millis : Number = today.getTime() < startDate.getTime() ?
-                   startDate.getTime() : today.getTime();
+      var millis:Number = today.getTime() < startDate.getTime() ? startDate.getTime() : today.getTime();
       millis = endDate.getTime() - millis;
-      var result : Number = millis / MILLIS_IN_A_DAY;
-      if(Math.floor(result) < result) {
+      var result:Number = millis / MILLIS_IN_A_DAY;
+      if (Math.floor(result) < result) {
          result ++;
       }
       return result;
    }
 
-   public function isOpen() : Boolean {
-      var temp: Date = new Date();
-      var today : Date = new Date(temp.fullYear, temp.month, temp.date);
-      var start :Date = new Date(startDate.fullYear, startDate.month, startDate.date);
-      var end : Date = new Date(endDate.fullYear, endDate.month, endDate.date);
+   public function isOpen():Boolean {
+      var temp:Date = new Date();
+      var today:Date = new Date(temp.fullYear, temp.month, temp.date);
+      var start:Date = new Date(startDate.fullYear, startDate.month, startDate.date);
+      var end:Date = new Date(endDate.fullYear, endDate.month, endDate.date);
       return today.getTime() <= end.getTime() && today.getTime() >= start.getTime();
    }
 
-   public function getTaskHoursRemaining() : int {
-      var total : Number = 0;
-      for each(var item : BacklogItem in backlog) {
-         for each (var task : BacklogItem in item.tasks) {
+   public function getTaskHoursRemaining():int {
+      var total:Number = 0;
+      for each(var item:BacklogItem in backlog) {
+         for each (var task:BacklogItem in item.tasks) {
             total += task.effort;
          }
       }
       return total;
    }
 
-   public function copyFrom(iteration : Iteration) : void {
+   public function setBacklog(backlogItems:ArrayCollection):void {
+      backlog.source = backlogItems.source;
+      impediments.source = [];
+      for each(var item:BacklogItem in backlog) {
+         if (item.impediment) {
+            impediments.addItem(item.impediment);
+         }
+         for each(var task:BacklogItem in item.tasks) {
+            if (task.impediment) {
+               impediments.addItem(task.impediment);
+            }
+         }
+      }
+   }
+
+   public function copyFrom(iteration:Iteration):void {
       id = iteration.id;
       version = iteration.version;
       title = iteration.title;

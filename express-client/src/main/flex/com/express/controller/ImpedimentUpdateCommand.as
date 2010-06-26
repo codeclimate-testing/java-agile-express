@@ -1,7 +1,6 @@
 package com.express.controller
 {
 import com.express.ApplicationFacade;
-import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Issue;
 import com.express.service.ServiceRegistry;
 
@@ -15,6 +14,8 @@ import org.puremvc.as3.patterns.command.SimpleCommand;
 
 public class ImpedimentUpdateCommand extends SimpleCommand implements IResponder
 {
+   public static const SUCCESS : String = "ImpedimentUpdateCommand.success";
+
    override public function execute(notification:INotification):void {
       var issue : Issue = notification.getBody() as Issue;
       var registry : ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
@@ -24,7 +25,7 @@ public class ImpedimentUpdateCommand extends SimpleCommand implements IResponder
    }
 
    public function result(data : Object) : void {
-      //Don't think we need to respond to this
+      sendNotification(SUCCESS);
    }
 
    public function fault(info : Object) : void {

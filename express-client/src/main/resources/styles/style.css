@@ -129,10 +129,18 @@ AdvancedDataGrid {
    alternatingItemColors:#f9f7f3,#ffffff;
 }
 
+.wallHeaders {
+   horizontalGap:0;
+   verticalAlign:middle;
+   borderSides:bottom;
+   borderThickness: 1;
+   borderColor: #B7BABC;
+   borderStyle:solid;
+}
 .wallHeader {
    border-thickness: 0;
-   horizontal-align: left;
-   vertical-align: middle;
+   horizontalAlign: left;
+   verticalAlign: middle;
    background-image:Embed(source = "/images/table-heading-bg.png");
    backgroundSize:"100%";
 }
@@ -388,9 +396,9 @@ TaskCard.taskImpeded {
 }
 
 ScrumWallView {
-   border-thickness: 1;
-   border-color: #B7BABC;
-   border-style:solid;
+   borderThickness: 1;
+   borderColor: #B7BABC;
+   borderStyle:solid;
 }
 
 .titledBorder {
