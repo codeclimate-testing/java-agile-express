@@ -6,7 +6,7 @@
       <backlogItem:BacklogItemForm id="backlogItemForm" label="details"/>
       <backlogItem:AcceptanceCriteriaView id="acceptanceCriteriaView" label="acceptance criteria" />
    </mx:TabNavigator>
-   <mx:HBox width="100%" height="30" styleName="buttonBox" paddingBottom="5">
+   <mx:HBox width="100%" height="30" styleName="buttonBox">
       <mx:Button id="btnSave" label="Save"/>
       <mx:LinkButton id="btnCancel" styleName="form" label="cancel"/>
    </mx:HBox>

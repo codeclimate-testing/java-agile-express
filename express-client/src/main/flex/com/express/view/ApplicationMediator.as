@@ -108,6 +108,9 @@ public class ApplicationMediator extends Mediator {
       return [ApplicationFacade.NOTE_DISPLAY_BURNDOWN,
          ApplicationFacade.NOTE_DISPLAY_VELOCITY,
          ApplicationFacade.NOTE_DISPLAY_BURNUP,
+         ApplicationFacade.NOTE_SHOW_FILTER_DIALOG,
+         ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER,
+         ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER,
          ApplicationFacade.NOTE_NAVIGATE,
          ApplicationFacade.NOTE_SHOW_ERROR_MSG,
          ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
@@ -163,6 +166,13 @@ public class ApplicationMediator extends Mediator {
             break;
          case ApplicationFacade.NOTE_THEMES_MANAGE :
             _popupManager.showThemesWindow(notification);
+            break;
+         case ApplicationFacade.NOTE_SHOW_FILTER_DIALOG :
+            _popupManager.showFilterPanel(notification, 80, 180);
+            break;
+         case ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER :
+         case ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER :
+            _popupManager.removeFilterPanel();
             break;
          case ApplicationFacade.NOTE_DISPLAY_BURNDOWN :
             _popupManager.showBurndownWindow(_projectProxy.selectedIteration.title + " Burndown", notification);

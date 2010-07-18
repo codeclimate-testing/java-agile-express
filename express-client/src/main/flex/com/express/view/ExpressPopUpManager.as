@@ -9,6 +9,8 @@ import com.express.view.backlogItem.BacklogItemView;
 import com.express.view.charts.BurnUpChart;
 import com.express.view.charts.BurndownChart;
 import com.express.view.charts.VelocityChart;
+import com.express.view.filter.FilterPanel;
+import com.express.view.filter.FilterPanelMediator;
 import com.express.view.issue.IssueForm;
 import com.express.view.issue.IssueMediator;
 import com.express.view.iteration.IterationForm;
@@ -43,9 +45,10 @@ public class ExpressPopUpManager {
    private var _burndownChart:BurndownChart;
    private var _burnUpChart:BurnUpChart;
    private var _velocityChart:VelocityChart;
+   private var _filterPanel : FilterPanel;
    private var _lastWindowNotification:INotification;
-   private var _popup:SizeableTitleWindow;
-   private var _popupVisible:Boolean = false;
+   private var _popUp:SizeableTitleWindow;
+   private var _popUpVisible:Boolean = false;
 
    private var _openEffect:Effect;
    private var _closeEffect:Effect;
@@ -60,24 +63,24 @@ public class ExpressPopUpManager {
       _application = application;
       _secureContext = SecureContextProxy(_facade.retrieveProxy(SecureContextProxy.NAME));
       _projectProxy = ProjectProxy(_facade.retrieveProxy(ProjectProxy.NAME));
-      _popup = new SizeableTitleWindow();
-      _popup.styleName = "mainPopup";
-      _popup.verticalScrollPolicy = "off";
-      _popup.horizontalScrollPolicy = "off";
-      _popup.showCloseButton = true;
-      _popup.addEventListener(CloseEvent.CLOSE, handleHidePopup);
+      _popUp = new SizeableTitleWindow();
+      _popUp.styleName = "mainPopup";
+      _popUp.verticalScrollPolicy = "off";
+      _popUp.horizontalScrollPolicy = "off";
+      _popUp.showCloseButton = true;
+      _popUp.addEventListener(CloseEvent.CLOSE, handleHidePopup);
       createOpenCloseEffects();
    }
 
    private function createOpenCloseEffects() : void {
-      var irisOpen : Iris = new Iris(_popup);
+      var irisOpen : Iris = new Iris(_popUp);
       irisOpen.scaleXFrom = 0;
       irisOpen.scaleYFrom = 0;
       irisOpen.scaleXTo = 1;
       irisOpen.scaleYTo = 1;
       irisOpen.duration = 200;
       _openEffect = irisOpen;
-      var irisClose : Iris = new Iris(_popup);
+      var irisClose : Iris = new Iris(_popUp);
       irisClose.scaleXFrom = 1;
       irisClose.scaleYFrom = 1;
       irisClose.scaleXTo = 0;
@@ -87,16 +90,16 @@ public class ExpressPopUpManager {
    }
 
    private function handleHidePopup(event:Event):void {
-      PopUpManager.removePopUp(_popup);
-      _popup.removeAllChildren();
+      PopUpManager.removePopUp(_popUp);
+      _popUp.removeAllChildren();
       _closeEffect.end();
       _closeEffect.play();
-      _popupVisible = false;
+      _popUpVisible = false;
       if (_lastWindowNotification && (_lastWindowNotification.getName() == BacklogItemMediator.CREATE || _lastWindowNotification.getName() == BacklogItemMediator.EDIT)) {
-         _secureContext.currentUser.storyWindowPreference.x = _popup.x;
-         _secureContext.currentUser.storyWindowPreference.y = _popup.y;
-         _secureContext.currentUser.storyWindowPreference.height = _popup.height;
-         _secureContext.currentUser.storyWindowPreference.width = _popup.width;
+         _secureContext.currentUser.storyWindowPreference.x = _popUp.x;
+         _secureContext.currentUser.storyWindowPreference.y = _popUp.y;
+         _secureContext.currentUser.storyWindowPreference.height = _popUp.height;
+         _secureContext.currentUser.storyWindowPreference.width = _popUp.width;
       }
    }
 
@@ -133,6 +136,11 @@ public class ExpressPopUpManager {
    private function createBurndownChart():void {
       _burndownChart = new BurndownChart();
       _burndownChart.addEventListener(FlexEvent.CREATION_COMPLETE, handleBurndownCreated);
+   }
+
+   private function createFilterPanel() : void {
+      _filterPanel = new FilterPanel();
+      _filterPanel.addEventListener(FlexEvent.CREATION_COMPLETE, handleFilterPanelCreated);
    }
 
    private function handleBurndownCreated(event:FlexEvent):void {
@@ -190,13 +198,19 @@ public class ExpressPopUpManager {
       mediator.handleNotification(_lastWindowNotification);
    }
 
+   private function handleFilterPanelCreated(event:FlexEvent):void {
+      var mediator:FilterPanelMediator = new FilterPanelMediator(_filterPanel);
+      _facade.registerMediator(mediator);
+      mediator.handleNotification(_lastWindowNotification);
+   }
+
    public function showPrintPreview(previewPanel:BacklogPrintView):void {
-      _popup.title = "Print Preview - Print in landscape on A4";
-      _popup.width = 825;
-      _popup.height = 500;
-      _popup.x = (_application.width / 2) - 405;
-      _popup.y = 40;
-      showPopup(previewPanel);
+      _popUp.title = "Print Preview - Print in landscape on A4";
+      _popUp.width = 825;
+      _popUp.height = 500;
+      _popUp.x = (_application.width / 2) - 405;
+      _popUp.y = 40;
+      showPopUp(previewPanel);
    }
 
    public function showProjectAdminWindow(notification:INotification):void {
@@ -204,12 +218,12 @@ public class ExpressPopUpManager {
       if (!_projectAdminForm) {
          createProjectAdmin();
       }
-      _popup.title = "Project Access Requests";
-      _popup.width = 550;
-      _popup.height = 450;
-      _popup.x = (_application.width / 2) - 225;
-      _popup.y = 40;
-      showPopup(_projectAdminForm);
+      _popUp.title = "Project Access Requests";
+      _popUp.width = 550;
+      _popUp.height = 450;
+      _popUp.x = (_application.width / 2) - 225;
+      _popUp.y = 40;
+      showPopUp(_projectAdminForm);
    }
 
    public function showThemesWindow(notification:INotification):void {
@@ -217,12 +231,12 @@ public class ExpressPopUpManager {
       if (!_themesForm) {
          createThemesForm();
       }
-      _popup.title = "Project Themes";
-      _popup.width = 450;
-      _popup.height = 410;
-      _popup.x = (_application.width / 2) - 225;
-      _popup.y = 40;
-      showPopup(_themesForm);
+      _popUp.title = "Project Themes";
+      _popUp.width = 450;
+      _popUp.height = 410;
+      _popUp.x = (_application.width / 2) - 225;
+      _popUp.y = 40;
+      showPopUp(_themesForm);
    }
 
    public function showBurndownWindow(title:String, notification:INotification):void {
@@ -236,12 +250,12 @@ public class ExpressPopUpManager {
          _burndownChart.chkWeekends.selected = notification.getBody() as Boolean;
       }
 
-      _popup.title = title;
-      _popup.width = 600;
-      _popup.height = 450;
-      _popup.x = (_application.width / 2) - (_popup.width / 2);
-      _popup.y = 40;
-      showPopup(_burndownChart);
+      _popUp.title = title;
+      _popUp.width = 600;
+      _popUp.height = 450;
+      _popUp.x = (_application.width / 2) - (_popUp.width / 2);
+      _popUp.y = 40;
+      showPopUp(_burndownChart);
    }
    
    public function showBurnUpWindow(title:String, notification:INotification):void {
@@ -253,12 +267,12 @@ public class ExpressPopUpManager {
          _burnUpChart.xAxis.minimum = _projectProxy.selectedProject.startDate;
          _burnUpChart.xAxis.maximum = _projectProxy.selectedProject.targetReleaseDate;
       }
-      _popup.title = title;
-      _popup.width = 650;
-      _popup.height = 450;
-      _popup.x = (_application.width / 2) - (_popup.width / 2);
-      _popup.y = 40;
-      showPopup(_burnUpChart);
+      _popUp.title = title;
+      _popUp.width = 650;
+      _popUp.height = 450;
+      _popUp.x = (_application.width / 2) - (_popUp.width / 2);
+      _popUp.y = 40;
+      showPopUp(_burnUpChart);
    }
 
    public function showVelocityWindow(title:String, notification:INotification):void {
@@ -267,12 +281,12 @@ public class ExpressPopUpManager {
          createVelocityChart();
       }
       _velocityChart.dataProvider = notification.getBody();
-      _popup.title = title;
-      _popup.width = 600;
-      _popup.height = 450;
-      _popup.x = (_application.width / 2) - (_popup.width / 2);
-      _popup.y = 40;
-      showPopup(_velocityChart);
+      _popUp.title = title;
+      _popUp.width = 600;
+      _popUp.height = 450;
+      _popUp.x = (_application.width / 2) - (_popUp.width / 2);
+      _popUp.y = 40;
+      showPopUp(_velocityChart);
    }
 
    public function showBacklogWindow(notification:INotification):void {
@@ -289,11 +303,11 @@ public class ExpressPopUpManager {
          metrics.height = 550;
          _secureContext.currentUser.storyWindowPreference = metrics;
       }
-      _popup.width = metrics.width;
-      _popup.height = metrics.height;
-      _popup.x = metrics.x;
-      _popup.y = metrics.y;
-      showPopup(_backlogItemView);
+      _popUp.width = metrics.width;
+      _popUp.height = metrics.height;
+      _popUp.x = metrics.x;
+      _popUp.y = metrics.y;
+      showPopUp(_backlogItemView);
    }
 
    public function showIterationWindow(title:String, notification:INotification):void {
@@ -301,12 +315,12 @@ public class ExpressPopUpManager {
       if (!_iterationForm) {
          createIterationForm();
       }
-      _popup.title = title;
-      _popup.width = 450;
-      _popup.height = 410;
-      _popup.x = (_application.width / 2) - 225;
-      _popup.y = 40;
-      showPopup(_iterationForm);
+      _popUp.title = title;
+      _popUp.width = 450;
+      _popUp.height = 410;
+      _popUp.x = (_application.width / 2) - 225;
+      _popUp.y = 40;
+      showPopUp(_iterationForm);
    }
 
    public function showIssueWindow(title:String, notification:INotification):void {
@@ -314,12 +328,12 @@ public class ExpressPopUpManager {
       if (!_issueForm) {
          createIssueForm();
       }
-      _popup.title = title;
-      _popup.width = 500;
-      _popup.height = 410;
-      _popup.x = (_application.width / 2) - 225;
-      _popup.y = 40;
-      showPopup(_issueForm);
+      _popUp.title = title;
+      _popUp.width = 500;
+      _popUp.height = 410;
+      _popUp.x = (_application.width / 2) - 225;
+      _popUp.y = 40;
+      showPopUp(_issueForm);
    }
 
    public function showProjectWindow(title:String, notification:INotification):void {
@@ -327,25 +341,39 @@ public class ExpressPopUpManager {
       if (!_projectForm) {
          createProjectForm();
       }
-      _popup.title = title;
-      _popup.width = 450;
-      _popup.height = 410;
-      _popup.x = (_application.width / 2) - 225;
-      _popup.y = 40;
-      showPopup(_projectForm);
+      _popUp.title = title;
+      _popUp.width = 450;
+      _popUp.height = 410;
+      _popUp.x = (_application.width / 2) - 225;
+      _popUp.y = 40;
+      showPopUp(_projectForm);
    }
 
-   private function showPopup(child:UIComponent):void {
-      if (_popupVisible) {
-         _popup.removeAllChildren();
+   public function showFilterPanel(notification : INotification, y : uint, x : uint) : void {
+      _lastWindowNotification = notification;
+      if (!_filterPanel) {
+         createFilterPanel();
+      }
+      PopUpManager.addPopUp(_filterPanel, _application);
+      _filterPanel.x = x;
+      _filterPanel.y = y;
+   }
+
+   public function removeFilterPanel() : void {
+      PopUpManager.removePopUp(_filterPanel);
+   }
+
+   private function showPopUp(child:UIComponent):void {
+      if (_popUpVisible) {
+         _popUp.removeAllChildren();
       }
       else {
-         PopUpManager.addPopUp(_popup, _application);
-         _popupVisible = true;
+         PopUpManager.addPopUp(_popUp, _application);
+         _popUpVisible = true;
          _openEffect.end();
          _openEffect.play();
       }
-      _popup.addChild(child);
+      _popUp.addChild(child);
    }
 }
 }

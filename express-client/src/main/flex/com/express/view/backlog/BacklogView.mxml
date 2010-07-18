@@ -8,7 +8,9 @@
                 width="100%" height="100%" paddingRight="0">
    <mx:VBox width="30%" height="100%" backgroundAlpha="0.7">
       <mx:HBox width="100%" verticalAlign="bottom">
-         <mx:Label width="200" text="Product Backlog" styleName="h2"/>
+         <mx:Label text="Product Backlog" styleName="h2"/>
+         <mx:LinkButton id="lnkProductBacklogFilter" label="filter" styleName="form" enabled="false" width="50"/>
+         <mx:LinkButton id="lnkProductBacklogRemoveFilter" label="remove filter" styleName="form" enabled="false" width="100"/>
          <mx:Spacer width="100%"/>
          <mx:Button id="btnProductCreateItem" label="Create Story" enabled="false"/>
       </mx:HBox>

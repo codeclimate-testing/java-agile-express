@@ -14,6 +14,7 @@ import com.express.model.domain.User;
 import mx.collections.ArrayCollection;
 import mx.collections.HierarchicalData;
 
+import mx.collections.IHierarchicalCollectionView;
 import mx.collections.Sort;
 import mx.collections.SortField;
 

@@ -2,22 +2,22 @@
 
 Application {
    paddingTop: 0;
-   padding-left: 0;
-   padding-right: 0;
-   padding-bottom: 0;
+   paddingLeft: 0;
+   paddingRight: 0;
+   paddingBottom: 0;
    verticalGap: 0;
-   background-color:#ffffff;
+   backgroundColor:#ffffff;
    backgroundAlpha:1.0;
 }
 
 .banner {
-   background-image: Embed(source = "/images/nav-bg.png");
+   backgroundImage: Embed(source = "/images/nav-bg.png");
    backgroundSize:"100%";
 }
 
 Label.welcome {
-   font-size: 16;
-   font-family:"News Gothic MT,Trebuchet MS";
+   fontSize: 16;
+   fontFamily:"News Gothic MT,Trebuchet MS";
    color:#ffffff;
 }
 
@@ -25,34 +25,34 @@ Label.welcome {
    horizontalAlign:right;
    verticalAlign:top;
    horizontalGap:3;
-   padding-top:2;
+   paddingTop:2;
 }
 
 .login {
    paddingTop: 0;
-   padding-left: 0;
-   padding-right: 0;
-   padding-bottom: 0;
-   font-weight: normal;
+   paddingLeft: 0;
+   paddingRight: 0;
+   paddingBottom: 0;
+   fontWeight: normal;
    text-decoration: underline;
-   font-family:"News Gothic MT,Trebuchet MS";
+   fontFamily:"News Gothic MT,Trebuchet MS";
 }
 
 .menu {
    color: #ffffff;
-   font-family:"News Gothic MT,Trebuchet MS";
+   fontFamily:"News Gothic MT,Trebuchet MS";
    disabledColor:#382d37;
    horizontalGap:0;
-   padding-top:0;
-   padding-bottom:0;
+   paddingTop:0;
+   paddingBottom:0;
 }
 
 .menuItem {
    color: #ffffff;
-   font-weight: normal;
-   font-size: 16;
+   fontWeight: normal;
+   fontSize: 16;
    cornerRadius: 0;
-   padding-top: 5;
+   paddingTop: 5;
    selectionColor: #ab9578;
    disabledColor: #4d4d4d;
 }
@@ -67,62 +67,57 @@ Label.welcome {
 }
 
 .headingBox {
-   padding-top: 15;
-   padding-right: 0;
+   paddingTop: 15;
+   paddingRight: 0;
 }
 
 .heading {
-   padding-top: 10;
-   font-size: 20;
-   font-weight: normal;
-   text-align: center;
+   paddingTop: 10;
+   fontSize: 20;
+   fontWeight: normal;
+   textAlign: center;
    color: #FFFFFF;
 }
 
 .main {
-   border-skin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
+   borderSkin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
    background-position: center, top;
-   background-image: Embed(source = "/images/main-bg.jpg");
-   background-color:#ffffff;
-   padding-right:0;
-   padding-left:10;
-   padding-bottom:5;
+   backgroundImage: Embed(source = "/images/main-bg.jpg");
+   backgroundColor:#ffffff;
+   paddingRight:0;
+   paddingLeft:10;
+   paddingBottom:5;
    horizontalGap:0;
 }
 
 Label.h1 {
-   font-size: 22;
-   font-weight: normal;
+   fontSize: 22;
+   fontWeight: normal;
 }
 
 Label.h1White {
-   font-size: 22;
+   fontSize: 22;
    color: #FFFFFF;
 }
 
 Label.h2 {
-   font-size: 16;
+   fontSize: 16;
 }
 
 Label.h3 {
-   font-size: 14;
-   font-weight: bold;
+   fontSize: 14;
+   fontWeight: bold;
 }
 
 Label.h2White {
-   font-size: 14;
+   fontSize: 14;
    color: #FFFFFF;
-   text-align:center;
-}
-
-Label.sideText {
-   text-align:justify;
-   vertical-gap: 2;
+   textAlign:center;
 }
 
 Label.storyHead {
-   font-size: 16;
-   text-align:center;
+   fontSize: 16;
+   textAlign:center;
 }
 
 AdvancedDataGrid {
@@ -138,112 +133,112 @@ AdvancedDataGrid {
    borderStyle:solid;
 }
 .wallHeader {
-   border-thickness: 0;
+   borderThickness: 0;
    horizontalAlign: left;
    verticalAlign: middle;
-   background-image:Embed(source = "/images/table-heading-bg.png");
+   backgroundImage:Embed(source = "/images/table-heading-bg.png");
    backgroundSize:"100%";
 }
 
 .panelHeader {
-   border-thickness: 0;
-   horizontal-align: left;
-   vertical-align: middle;
-   background-image:Embed(source = "/images/heading-bg.png");
+   borderThickness: 0;
+   horizontalAlign: left;
+   verticalAlign: middle;
+   backgroundImage:Embed(source = "/images/heading-bg.png");
    backgroundSize:"100%";
 }
 
 .thinBorder {
-   border-style: solid;
-   border-thickness: 1;
-   corner-radius: 2;
+   borderStyle: solid;
+   borderThickness: 1;
+   cornerRadius: 2;
 }
 
 .unpadded {
-   padding-bottom: 0;
-   padding-left: 0;
-   padding-right: 0;
-   padding-top: 0;
+   paddingBottom: 0;
+   paddingLeft: 0;
+   paddingRight: 0;
+   paddingTop: 0;
 }
 
 .titledForm {
-   padding-bottom: 10;
-   padding-left: 10;
-   padding-right: 10;
-   padding-top: 40;
-   border-color:#3679b0;
-   border-thickness:2px;
-   background-color:#ffffff;
+   paddingBottom: 10;
+   paddingLeft: 10;
+   paddingRight: 10;
+   paddingTop: 40;
+   borderColor:#3679b0;
+   borderThickness:2px;
+   backgroundColor:#ffffff;
    backgroundAlpha:0.7;
-   corner-radius:4;
+   cornerRadius:4;
 }
 
 .titledFormTitle {
-   font-weight:normal;
-   font-size:16px;
+   fontWeight:normal;
+   fontSize:16px;
    color:#382d37;
 }
 
 .navLinkBox {
-   padding-left: 10;
-   padding-top: 0;
-   padding-right: 10;
+   paddingLeft: 10;
+   paddingTop: 0;
+   paddingRight: 10;
    horizontal-align: center;
 }
 
 .messageBox {
-   border-style: solid;
-   border-thickness: 2;
-   corner-radius: 3;
-   border-color: #009900;
-   background-color: #ffffff;
-   padding-bottom: 2;
-   padding-left: 5;
-   padding-right: 5;
-   padding-top: 2;
-   font-size:12;
+   borderStyle: solid;
+   borderThickness: 2;
+   cornerRadius: 3;
+   borderColor: #009900;
+   backgroundColor: #ffffff;
+   paddingBottom: 2;
+   paddingLeft: 5;
+   paddingRight: 5;
+   paddingTop: 2;
+   fontSize:12;
 }
 
 .messageBoxError {
-   border-style: solid;
-   border-thickness: 2;
-   corner-radius: 3;
-   border-color: #990000;
-   background-color: #ffffff;
-   padding-bottom: 2;
-   padding-left: 5;
-   padding-right: 5;
-   padding-top: 2;
-   font-size:12;
+   borderStyle: solid;
+   borderThickness: 2;
+   cornerRadius: 3;
+   borderColor: #990000;
+   backgroundColor: #ffffff;
+   paddingBottom: 2;
+   paddingLeft: 5;
+   paddingRight: 5;
+   paddingTop: 2;
+   fontSize:12;
 }
 
 .messageText {
-   font-size:12;
+   fontSize:12;
 }
 
 ToolTip {
-   font-size: 12;
+   fontSize: 12;
 }
 
 .storyView {
-   padding-bottom: 0;
-   padding-left: 0;
-   padding-right: 0;
-   padding-top: 0;
-   border-style: solid;
-   border-thickness: 1;
-   border-color: #B7BABC;
-   border-sides: top, bottom;
-   horizontal-gap: 0;
-   vertical-gap: 0;
+   paddingBottom: 0;
+   paddingLeft: 0;
+   paddingRight: 0;
+   paddingTop: 0;
+   borderStyle: solid;
+   borderThickness: 1;
+   borderColor: #B7BABC;
+   borderSides: "top, bottom";
+   horizontalGap: 0;
+   verticalGap: 0;
 }
 
 Alert {
-   border-color: #3679b0;
-   background-color: #ffffff;
+   borderColor: #3679b0;
+   backgroundColor: #ffffff;
    color: #000000;
    titleStyleName: "alertTitle";
-   padding-bottom: 10;
+   paddingBottom: 10;
 }
 
 .alertTitle {
@@ -252,12 +247,12 @@ Alert {
 
 .whiteTitle {
    color: #153F63;
-   background-color:#B08136;
-   font-size:16;
+   backgroundColor:#B08136;
+   fontSize:16;
 }
 
 TextInput {
-   borderStyle: "solid";
+   borderStyle: solid;
    borderColor: #3679b0;
    cornerRadius: 1;
    focusAlpha: 0.05;
@@ -266,7 +261,7 @@ TextInput {
 }
 
 List {
-   borderStyle: "solid";
+   borderStyle: solid;
    borderColor: #3679b0;
    cornerRadius: 1;
    focusAlpha: 0.05;
@@ -275,16 +270,16 @@ List {
 }
 
 .wallHolder {
-   padding-bottom: 0;
-   padding-left: 0;
-   padding-right: 0;
-   padding-top: 0;
+   paddingBottom: 0;
+   paddingLeft: 0;
+   paddingRight: 0;
+   paddingTop: 0;
    vertical-align:top;
    horizontalGap:0;
 }
 
 TextArea {
-   borderStyle: "solid";
+   borderStyle: solid;
    borderColor: #3679b0;
    cornerRadius: 1;
    focusAlpha: 0.05;
@@ -293,106 +288,106 @@ TextArea {
 }
 
 .wallList {
-   border-thickness:0;
+   borderThickness:0;
    backgroundAlpha:0.7;
 }
 
 .cardHeading {
     paddingTop:2;
-   font-weight:bold;
-   font-size:12;
+   fontWeight:bold;
+   fontSize:12;
    horizontal-align:left;
 }
 
 .cardSummaryText {
-   font-size:10;
+   fontSize:10;
    horizontal-align:left;
-   padding-top:3px;
+   paddingTop:3px;
 }
 
 .cardText {
-   font-size:10;
+   fontSize:10;
    horizontal-align:left;
 }
 
 StoryCard {
-   border-skin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
-   background-image: Embed("/images/story-bg.png");
+   borderSkin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
+   backgroundImage: Embed("/images/story-bg.png");
    background-position: left, top;
    backgroundAlpha: 1.0;
-   padding-right:2px;
-   padding-left:10px;
-   padding-bottom:5px;
+   paddingRight:2px;
+   paddingLeft:10px;
+   paddingBottom:5px;
    verticalGap: 0;
-   border-thickness:0;
+   borderThickness:0;
 }
 
 StoryCard.storyImpeded {
-   background-image: Embed("/images/story-impeded-bg.png");
+   backgroundImage: Embed("/images/story-impeded-bg.png");
 }
 
 .storyCardHeaderBox {
-   padding-left:0;
-   padding-right:0;
-   padding-top:2;
-   padding-bottom:0;
+   paddingLeft:0;
+   paddingRight:0;
+   paddingTop:2;
+   paddingBottom:0;
    verticalAlign:middle;
    horizontalGap:0;
 }
 
 .storyText {
-   font-size:12;
-   padding-top:4px;
+   fontSize:12;
+   paddingTop:4px;
 }
 
 .storyQuickMenu {
-   padding-top:2px;
-   padding-right:0;
+   paddingTop:2px;
+   paddingRight:0;
 }
 
 WallRow {
    horizontalGap:0;
    horizontalAlign:center;
-   border-style: solid;
-   padding-top:3px;
-   padding-bottom:3px;
-   border-thickness: 1;
-   border-color: #B7BABC;
+   borderStyle: solid;
+   paddingTop:3px;
+   paddingBottom:3px;
+   borderThickness: 1;
+   borderColor: #B7BABC;
    borderSides:"top";
-   background-color:#ffffff;
+   backgroundColor:#ffffff;
    backgroundAlpha:0.7;
 }
 
 CardGrid {
-   background-color: #FFFFFF;
+   backgroundColor: #FFFFFF;
    backgroundAlpha:0.7;
    horizontalGap:3px;
    verticalGap:3px;
 }
 
 TaskCard {
-   border-skin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
-   background-image: Embed("/images/task-bg.png");
+   borderSkin: ClassReference('com.express.skin.HaloBorderWithImagePositioning');
+   backgroundImage: Embed("/images/task-bg.png");
    background-position: left, top;
    verticalGap: 0;
-   border-thickness:0;
+   borderThickness:0;
    horizontal-align:left;
-   padding-left:10px;
-   padding-right:2px;
+   paddingLeft:10px;
+   paddingRight:2px;
 }
 
 TaskCard.taskImpeded {
-   background-image: Embed("/images/task-impeded-bg.png");
+   backgroundImage: Embed("/images/task-impeded-bg.png");
 }
 
 .cardColourDot {
-   padding-bottom: 0;
-   padding-left: 0;
-   padding-right: 0;
-   padding-top: 0;
-   corner-radius: 15;
-   border-thickness: 1;
-   border-style: solid;
+   paddingBottom: 0;
+   paddingLeft: 0;
+   paddingRight: 0;
+   paddingTop: 0;
+   cornerRadius: 15;
+   borderThickness: 1;
+   borderStyle: solid;
 }
 
 ScrumWallView {
@@ -403,24 +398,24 @@ ScrumWallView {
 
 .titledBorder {
    color:#3679b0;
-   font-size:18;
+   fontSize:18;
 }
 
 .printHeading {
-   font-weight:bold;
-   font-size:24;
+   fontWeight:bold;
+   fontSize:24;
    horizontal-align:left;
 }
 
 .printTitle {
-   font-size:20;
-   font-weight:bold;
-   text-align:center;
+   fontSize:20;
+   fontWeight:bold;
+   textAlign:center;
 }
 
 .printText {
-   font-size:18;
-   text-align:left;
+   fontSize:18;
+   textAlign:left;
 }
 
 .page {
@@ -428,12 +423,12 @@ ScrumWallView {
 }
 
 .accordionHeader {
-   font-size:14;
+   fontSize:14;
 }
 
 .buttonBox {
-   padding-right:5px;
-   padding-bottom:5px;
+   paddingRight:5px;
+   paddingBottom:5px;
    horizontalAlign:right;
    verticalAlign:bottom;
 }
@@ -441,11 +436,11 @@ ScrumWallView {
 LinkButton.form {
    color:#3679b0;
    text-decoration:underline;
-   font-weight:normal;
-   font-size:14;
-   padding-bottom:0;
-   padding-left:0;
-   padding-right:0;
+   fontWeight:normal;
+   fontSize:14;
+   paddingBottom:0;
+   paddingLeft:0;
+   paddingRight:0;
 }
 
 LinkButton.logout {
@@ -453,40 +448,40 @@ LinkButton.logout {
    textRollOverColor:#aaaaaa;
    rollOverColor:#404040;
    text-decoration:underline;
-   font-weight:normal;
-   font-size:14;
-   padding-bottom:0;
-   padding-left:0;
-   padding-right:0;
+   fontWeight:normal;
+   fontSize:14;
+   paddingBottom:0;
+   paddingLeft:0;
+   paddingRight:0;
 }
 
 LinkButton.secondNav {
    color:#404040;
    text-decoration:none;
-   font-weight:normal;
-   font-size:14;
-   padding-bottom:0;
-   padding-left:0;
-   padding-right:0;
+   fontWeight:normal;
+   fontSize:14;
+   paddingBottom:0;
+   paddingLeft:0;
+   paddingRight:0;
 }
 
 .storyGrid {
-   padding-top:0;
-   padding-bottom:0;
+   paddingTop:0;
+   paddingBottom:0;
    borderThickness:1;
    backgroundAlpha:0.7;
 }
 
 .mainPopup {
-   padding-top:35;
-   padding-bottom:10;
-   padding-left:10;
-   padding-right:10;
-   border-color: #3679b0;
+   paddingTop:35;
+   paddingBottom:10;
+   paddingLeft:10;
+   paddingRight:10;
+   borderColor: #3679b0;
    title-style-name: whiteTitle;
-   border-style:outset;
+   borderStyle:outset;
    borderThickness:0;
-   corner-radius:0;
+   cornerRadius:0;
    borderSkin:Embed(source = "/images/panel-bg.png",
    scaleGridLeft=44,
    scaleGridRight=360,
@@ -504,49 +499,49 @@ TitleWindow {
 }
 
 .confirm {
-   border-color: #3679b0;
+   borderColor: #3679b0;
    borderAlpha:1.0;
    title-style-name:alertTitle;
    
 }
 
 .loginForm {
-   background-image:Embed(source = "/images/login-form-bg.png");
-   padding-left:70;
-   padding-right:70;
-   padding-top:15;
+   backgroundImage:Embed(source = "/images/login-form-bg.png");
+   paddingLeft:70;
+   paddingRight:70;
+   paddingTop:15;
 }
 
 .menuBar {
-   background-color:#f7f6f3;
-   border-style:solid;
-   border-thickness:1;
+   backgroundColor:#f7f6f3;
+   borderStyle:solid;
+   borderThickness:1;
    border-sides:bottom;
-   padding-top:2;
-   padding-right:5px;
-   padding-bottom:0;
+   paddingTop:2;
+   paddingRight:5px;
+   paddingBottom:0;
    horizontalAlign:right;
 }
 
 .themeHeader {
-   font-size:14;
+   fontSize:14;
    color:#382d37;
 }
 
 .swimLane {
    backgroundAlpha:0.7;
    horizontalAlign:center;
-   borderSides:left,right;
+   borderSides:"left,right";
    borderThickness:1;
-   border-style:solid;
+   borderStyle:solid;
 }
 
 .popupList {
-   text-align:left;
-   font-weight:normal;
-   font-size:14px;
-   padding-left:5px;
-   padding-right:5px;
+   textAlign:left;
+   fontWeight:normal;
+   fontSize:14px;
+   paddingLeft:5px;
+   paddingRight:5px;
 }
 
 .sideTabs {
@@ -556,11 +551,11 @@ TitleWindow {
 
 .sidePanel {
    backgroundAlpha:1.0;
-   background-color:#ffffff;
-   borderSides:left,top,bottom;
+   backgroundColor:#ffffff;
+   borderSides:"left,top,bottom";
    borderThickness:1;
-   border-style:solid;
-   border-color:#404040;
+   borderStyle:solid;
+   borderColor:#404040;
    verticalGap:0;
 }
 
@@ -577,6 +572,20 @@ TitleWindow {
 
 .impedimentList {
    borderThickness:0px;
-   padding-top:10px;
-   padding-right:10px;
+   paddingTop:10px;
+   paddingRight:10px;
+}
+
+FilterPanel {
+   backgroundColor:#ffffff;
+   borderColor:#3679b0;
+   borderThickness:2px;
+   borderStyle:solid;
+   paddingTop:5;
+   paddingLeft:5;
+}
+
+.filterHeading {
+   fontSize:16;
+   color:#3679b0;
 }

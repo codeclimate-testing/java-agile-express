@@ -77,6 +77,15 @@ public class BacklogItem
       }
    }
 
+   public function hasTheme(theme:Theme) : Boolean {
+      for each(var existingTheme:Theme in themes) {
+         if(theme.id == existingTheme.id) {
+            return true;
+         }
+      }
+      return false;
+   }
+
    public function isStory() : Boolean {
       return parent == null;
    }

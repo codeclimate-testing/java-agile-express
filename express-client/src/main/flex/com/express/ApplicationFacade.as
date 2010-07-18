@@ -98,6 +98,9 @@ public class ApplicationFacade extends Facade {
    public static const NOTE_SHOW_ERROR_MSG:String = "Note.ShowErrorMsg";
    public static const NOTE_SHOW_SUCCESS_MSG:String = "Note.ShowSuccessMsg";
    public static const NOTE_CLEAR_MSG:String = "Note.ClearMsg";
+   public static const NOTE_SHOW_FILTER_DIALOG:String = "Note.ShowFilterDialog";
+   public static const NOTE_APPLY_PRODUCT_BACKLOG_FILTER:String = "Note.ApplyProductBacklogFilter";
+   public static const NOTE_APPLY_ITERATION_BACKLOG_FILTER : String = "Note.ApplyIterationBacklogFilter";
 
 
    public static function getInstance():ApplicationFacade {
