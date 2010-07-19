@@ -53,23 +53,36 @@ public class BacklogMediator extends Mediator {
       viewComp.grdProductBacklog.addEventListener(DragEvent.DRAG_ENTER, handleDragEnter);
       viewComp.grdIterationBacklog.addEventListener(DragEvent.DRAG_ENTER, handleDragEnter);
 
-      viewComp.lnkProductBacklogFilter.addEventListener(MouseEvent.CLICK, handleShowFilterPanel);
-      viewComp.lnkProductBacklogRemoveFilter.addEventListener(MouseEvent.CLICK, handleRemoveFilter);
+      viewComp.lnkProductBacklogFilter.addEventListener(MouseEvent.CLICK, handleShowProductBacklogFilterPanel);
+      viewComp.lnkProductBacklogRemoveFilter.addEventListener(MouseEvent.CLICK, handleRemoveProductBacklogFilter);
+      viewComp.lnkIterationBacklogFilter.addEventListener(MouseEvent.CLICK, handleShowIterationBacklogFilterPanel);
+      viewComp.lnkIterationBacklogRemoveFilter.addEventListener(MouseEvent.CLICK, handleRemoveIterationBacklogFilter);
 
       if(_proxy.selectedProject != null) {
          handleProjectLoaded();
       }
    }
 
-   private function handleRemoveFilter(event:MouseEvent):void {
+   private function handleRemoveProductBacklogFilter(event:MouseEvent):void {
       var data:IHierarchicalCollectionView = IHierarchicalCollectionView(view.grdProductBacklog.dataProvider);
       data.filterFunction = null;
       data.refresh();
       view.lnkProductBacklogRemoveFilter.enabled = false;
    }
 
-   private function handleShowFilterPanel(event:MouseEvent):void {
-      sendNotification(ApplicationFacade.NOTE_SHOW_FILTER_DIALOG);
+   private function handleRemoveIterationBacklogFilter(event:MouseEvent):void {
+      var data:IHierarchicalCollectionView = IHierarchicalCollectionView(view.grdIterationBacklog.dataProvider);
+      data.filterFunction = null;
+      data.refresh();
+      view.lnkIterationBacklogRemoveFilter.enabled = false;
+   }
+
+   private function handleShowProductBacklogFilterPanel(event:MouseEvent):void {
+      sendNotification(ApplicationFacade.NOTE_SHOW_FILTER_DIALOG, ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER);
+   }
+
+   private function handleShowIterationBacklogFilterPanel(event:MouseEvent):void {
+      sendNotification(ApplicationFacade.NOTE_SHOW_FILTER_DIALOG, ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER);
    }
 
    /**

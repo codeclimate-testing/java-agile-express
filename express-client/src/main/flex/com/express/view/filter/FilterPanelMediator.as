@@ -16,6 +16,7 @@ import mx.managers.PopUpManager;
 public class FilterPanelMediator extends FormMediator {
    public static const NAME : String = "FilterPanelMediator";
    private var _proxy : ProjectProxy;
+   public var notificationName : String;
 
    public function FilterPanelMediator(viewComp : FilterPanel, name : String = NAME) {
       super(name, viewComp);
@@ -28,7 +29,7 @@ public class FilterPanelMediator extends FormMediator {
    private function handleApplyFilter(event:MouseEvent):void {
       var filter : BacklogFilter = new BacklogFilter();
       filter.themes = view.lstTheme.selectedItems;
-      sendNotification(ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER, filter);
+      sendNotification(notificationName, filter);
    }
 
    private function handleCancelFilter(event:MouseEvent):void {

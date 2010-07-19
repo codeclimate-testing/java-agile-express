@@ -27,9 +27,16 @@
          </url>
       </repository>
       <repository>
+         <id>jboss</id>
+         <name>JBoss Repository</name>
+         <url>http://repository.jboss.org/maven2
+         </url>
+      </repository>
+      <repository>
          <id>sun</id>
          <name>Sun Repository</name>
          <url>http://download.java.net/maven/2</url>
+         <layout>default</layout>
       </repository>
       <repository>
          <id>flexmojos</id>
@@ -83,7 +90,8 @@
    <properties>
       <javaVersion>1.5</javaVersion>
       <flexVersion>3.3.0.4852</flexVersion>
-      <springVersion>3.0.0.RC1</springVersion>
+      <springVersion>3.0.3.RELEASE</springVersion>
+      <springFlexVersion>1.0.3.RELEASE</springFlexVersion>
       <springSecurityVersion>2.0.4</springSecurityVersion>
       <blazeDSVersion>3.2</blazeDSVersion>
       <hibernateVersion>3.4.0.GA</hibernateVersion>

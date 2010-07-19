@@ -14,6 +14,7 @@ import com.express.print.BacklogPrintView;
 import com.express.service.ServiceRegistry;
 import com.express.view.backlog.BacklogMediator;
 import com.express.view.backlogItem.BacklogItemMediator;
+import com.express.view.filter.FilterPanelMediator;
 import com.express.view.impedimentSummary.ImpedimentSummaryMediator;
 import com.express.view.iteration.IterationMediator;
 import com.express.view.iterationSummary.IterationSummaryMediator;
@@ -168,6 +169,8 @@ public class ApplicationMediator extends Mediator {
             _popupManager.showThemesWindow(notification);
             break;
          case ApplicationFacade.NOTE_SHOW_FILTER_DIALOG :
+            FilterPanelMediator(facade.retrieveMediator(
+                  FilterPanelMediator.NAME)).notificationName = notification.getBody() as String;
             _popupManager.showFilterPanel(notification, 80, 180);
             break;
          case ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER :

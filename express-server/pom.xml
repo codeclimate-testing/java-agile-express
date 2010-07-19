@@ -108,85 +108,85 @@
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>core</artifactId>
+         <artifactId>spring-core</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>orm</artifactId>
+         <artifactId>spring-orm</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>oxm</artifactId>
+         <artifactId>spring-oxm</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>transaction</artifactId>
+         <artifactId>spring-tx</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>beans</artifactId>
+         <artifactId>spring-beans</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>asm</artifactId>
+         <artifactId>spring-asm</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>aop</artifactId>
+         <artifactId>spring-aop</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>aspects</artifactId>
+         <artifactId>spring-aspects</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>context</artifactId>
+         <artifactId>spring-context</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>context-support</artifactId>
+         <artifactId>spring-context-support</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>jdbc</artifactId>
+         <artifactId>spring-jdbc</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>expression</artifactId>
+         <artifactId>spring-expression</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>web</artifactId>
+         <artifactId>spring-web</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
-         <artifactId>web-servlet</artifactId>
+         <artifactId>spring-webmvc</artifactId>
          <version>${springVersion}</version>
          <scope>compile</scope>
       </dependency>
@@ -241,9 +241,9 @@
          </exclusions>
       </dependency>
       <dependency>
-         <groupId>org.springframework</groupId>
+         <groupId>org.springframework.flex</groupId>
          <artifactId>spring-flex</artifactId>
-         <version>1.0.0.RC2</version>
+         <version>${springFlexVersion}</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
@@ -259,14 +259,14 @@
       </dependency>
       <dependency>
          <groupId>javax.persistence</groupId>
-         <artifactId>ejb</artifactId>
-         <version>3.0-public_review</version>
+         <artifactId>persistence-api</artifactId>
+         <version>1.0</version>
          <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.hibernate</groupId>
          <artifactId>hibernate</artifactId>
-         <version>3.2.6.GA</version>
+         <version>3.2.7.ga</version>
       </dependency>
       <dependency>
          <groupId>org.hibernate</groupId>
@@ -301,42 +301,6 @@
          <artifactId>mysql-connector-java</artifactId>
          <version>5.1.9</version>
          <scope>compile</scope>
-      </dependency>
-      <!--<dependency>-->
-      <!--<groupId>hsqldb</groupId>-->
-      <!--<artifactId>hsqldb</artifactId>-->
-      <!--<version>1.8.0.7</version>-->
-      <!--</dependency>-->
-
-      <dependency>
-         <groupId>com.adobe</groupId>
-         <artifactId>flex-messaging-common</artifactId>
-         <version>${blazeDSVersion}</version>
-      </dependency>
-      <dependency>
-         <groupId>com.adobe</groupId>
-         <artifactId>flex-messaging-core</artifactId>
-         <version>${blazeDSVersion}</version>
-      </dependency>
-      <dependency>
-         <groupId>com.adobe</groupId>
-         <artifactId>flex-messaging-opt</artifactId>
-         <version>${blazeDSVersion}</version>
-      </dependency>
-      <dependency>
-         <groupId>com.adobe</groupId>
-         <artifactId>flex-messaging-proxy</artifactId>
-         <version>${blazeDSVersion}</version>
-      </dependency>
-      <dependency>
-         <groupId>com.adobe</groupId>
-         <artifactId>flex-messaging-remoting</artifactId>
-         <version>${blazeDSVersion}</version>
-      </dependency>
-      <dependency>
-         <groupId>backport-util-concurrent</groupId>
-         <artifactId>backport-util-concurrent</artifactId>
-         <version>3.0</version>
       </dependency>
       <dependency>
          <groupId>commons-fileupload</groupId>
@@ -382,8 +346,8 @@
       </dependency>
       <dependency>
          <groupId>org.jbehave</groupId>
-         <artifactId>jbehave</artifactId>
-         <version>2.3.2</version>
+         <artifactId>jbehave-core</artifactId>
+         <version>2.5.9</version>
          <scope>test</scope>
       </dependency>
       <dependency>
@@ -408,7 +372,7 @@
          <version>1.9.1</version>
       </dependency>
       <dependency>
-         <groupId>quartz</groupId>
+         <groupId>org.opensymphony.quartz</groupId>
          <artifactId>quartz</artifactId>
          <version>1.6.5</version>
       </dependency>

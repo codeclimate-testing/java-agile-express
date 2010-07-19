@@ -55,6 +55,10 @@
    <mx:VBox width="45%" height="100%">
       <mx:HBox width="100%" verticalAlign="bottom">
          <mx:Label id="lblIterationTitle" styleName="h2"/>
+         <mx:LinkButton id="lnkIterationBacklogFilter" label="filter" styleName="form"
+                        enabled="false" width="50"/>
+         <mx:LinkButton id="lnkIterationBacklogRemoveFilter" label="remove filter" styleName="form"
+                        enabled="false" width="100"/>
          <mx:Spacer width="100%"/>
          <mx:Button id="btnCreateItem" label="Create Story" enabled="false"/>
       </mx:HBox>
