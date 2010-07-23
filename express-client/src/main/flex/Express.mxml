@@ -57,7 +57,7 @@
          </mx:HBox>
       </mx:HBox>
 
-      <mx:HBox width="100%" styleName="main">
+      <mx:HBox id="main" width="100%" styleName="main">
          <mx:ViewStack id="views" width="100%" minHeight="{this.height - 65}">
             <login:LoginView id="loginView" width="100%" label=""/>
             <backlog:BacklogView id="backlogView" label="Backlog" width="100%" height="100%"/>

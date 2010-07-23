@@ -6,11 +6,13 @@
                 xmlns:iteration="com.express.view.iteration.*"
                 xmlns:security="com.express.security.*"
                 width="100%" height="100%" paddingRight="0">
-   <mx:VBox width="30%" height="100%" backgroundAlpha="0.7">
+   <mx:VBox styleName="productGridBox" width="30%" height="100%" backgroundAlpha="0.7">
       <mx:HBox width="100%" verticalAlign="bottom">
-         <mx:Label text="Product Backlog" styleName="h2"/>
-         <mx:LinkButton id="lnkProductBacklogFilter" label="filter" styleName="form" enabled="false" width="50"/>
-         <mx:LinkButton id="lnkProductBacklogRemoveFilter" label="remove filter" styleName="form" enabled="false" width="100"/>
+         <mx:Label text="Product Backlog" styleName="backlogTitle"/>
+         <mx:HBox id="productFilters" visible="{btnProductCreateItem.enabled}">
+            <mx:LinkButton id="lnkProductBacklogFilter" label="filter" styleName="form" enabled="false" width="50"/>
+            <mx:LinkButton id="lnkProductBacklogRemoveFilter" label="remove filter" styleName="form" enabled="false" width="100"/>
+         </mx:HBox>
          <mx:Spacer width="100%"/>
          <mx:Button id="btnProductCreateItem" label="Create Story" enabled="false"/>
       </mx:HBox>
@@ -52,13 +54,15 @@
          </mx:columns>
       </mx:AdvancedDataGrid>
    </mx:VBox>
-   <mx:VBox width="45%" height="100%">
+   <mx:VBox styleName="iterationGridBox" width="45%" height="100%">
       <mx:HBox width="100%" verticalAlign="bottom">
-         <mx:Label id="lblIterationTitle" styleName="h2"/>
-         <mx:LinkButton id="lnkIterationBacklogFilter" label="filter" styleName="form"
-                        enabled="false" width="50"/>
-         <mx:LinkButton id="lnkIterationBacklogRemoveFilter" label="remove filter" styleName="form"
-                        enabled="false" width="100"/>
+         <mx:Label id="lblIterationTitle" styleName="backlogTitle"/>
+         <mx:HBox id="iterationFilters" visible="{btnCreateItem.enabled}">
+            <mx:LinkButton id="lnkIterationBacklogFilter" label="filter" styleName="form"
+                           enabled="false" width="50"/>
+            <mx:LinkButton id="lnkIterationBacklogRemoveFilter" label="remove filter" styleName="form"
+                           enabled="false" width="100"/>
+         </mx:HBox>
          <mx:Spacer width="100%"/>
          <mx:Button id="btnCreateItem" label="Create Story" enabled="false"/>
       </mx:HBox>

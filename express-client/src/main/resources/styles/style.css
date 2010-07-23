@@ -90,6 +90,14 @@ Label.welcome {
    horizontalGap:0;
 }
 
+.mainLoggedIn {
+   backgroundColor:#ffffff;
+   paddingRight:0;
+   paddingLeft:10;
+   paddingBottom:5;
+   horizontalGap:0;
+}
+
 Label.h1 {
    fontSize: 22;
    fontWeight: normal;
@@ -120,8 +128,21 @@ Label.storyHead {
    textAlign:center;
 }
 
+Label.backlogTitle {
+   font-size:18;
+}
+
 AdvancedDataGrid {
    alternatingItemColors:#f9f7f3,#ffffff;
+}
+
+.productGridBox {
+   paddingLeft:5;
+   paddingRight:10;
+}
+
+.iterationGridBox {
+   paddingLeft:10;
 }
 
 .wallHeaders {
@@ -168,8 +189,6 @@ AdvancedDataGrid {
    paddingTop: 40;
    borderColor:#3679b0;
    borderThickness:2px;
-   backgroundColor:#ffffff;
-   backgroundAlpha:0.7;
    cornerRadius:4;
 }
 
@@ -289,7 +308,6 @@ TextArea {
 
 .wallList {
    borderThickness:0;
-   backgroundAlpha:0.7;
 }
 
 .cardHeading {
@@ -353,14 +371,10 @@ WallRow {
    paddingBottom:3px;
    borderThickness: 1;
    borderColor: #B7BABC;
-   borderSides:"top";
-   backgroundColor:#ffffff;
-   backgroundAlpha:0.7;
+   borderSides:"bottom";
 }
 
 CardGrid {
-   backgroundColor: #FFFFFF;
-   backgroundAlpha:0.7;
    horizontalGap:3px;
    verticalGap:3px;
 }
@@ -469,7 +483,6 @@ LinkButton.secondNav {
    paddingTop:0;
    paddingBottom:0;
    borderThickness:1;
-   backgroundAlpha:0.7;
 }
 
 .mainPopup {
@@ -529,7 +542,6 @@ TitleWindow {
 }
 
 .swimLane {
-   backgroundAlpha:0.7;
    horizontalAlign:center;
    borderSides:"left,right";
    borderThickness:1;
@@ -563,11 +575,6 @@ TitleWindow {
    paddingLeft:10px;
    paddingTop:8px;
    horizontalGap:5px;
-}
-
-.loggedInViewStack {
-   backgroundAlpha:0.7;
-   backgroundColor:#ffffff;
 }
 
 .impedimentList {

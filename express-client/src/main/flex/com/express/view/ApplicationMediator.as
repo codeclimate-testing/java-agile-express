@@ -287,9 +287,9 @@ public class ApplicationMediator extends Mediator {
       else {
          navigate(new MenuItem(ACCESS_HEAD, ACCESS_VIEW, null));
       }
-      app.views.styleName = "loggedInViewStack"
       app.menu.visible = true;
       app.sideTabs.visible = true;
+      app.main.styleName = "mainLoggedIn";
    }
 
    public function logout():void {
@@ -299,7 +299,7 @@ public class ApplicationMediator extends Mediator {
       app.topBox.visible = false;
       app.menu.visible = false;
       app.sideTabs.visible = false;
-      app.views.styleName = "";
+      app.main.styleName = "main";
    }
 
    public function get app():Express {
