@@ -9,10 +9,15 @@
 <dataset>
    <PROJECT_WORKER/>
    <BACKLOG/>
+   <THEME/>
+   <BACKLOG_THEME/>
    <EXPRESS_USER/>
-   <EFFORT/>
+   <ITERATION_HISTORY/>
    <PROJECT/>
+   <PROJECT_HISTORY/>
+   <PROJECT_WORKER/>
    <ITERATION/>
    <ACCESS_REQUEST/>
    <PERMISSIONS/>
+   <CRITERIA/>
 </dataset>

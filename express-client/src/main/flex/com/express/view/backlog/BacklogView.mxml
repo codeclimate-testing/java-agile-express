@@ -9,10 +9,10 @@
    <mx:VBox styleName="productGridBox" width="30%" height="100%" backgroundAlpha="0.7">
       <mx:HBox width="100%" verticalAlign="bottom">
          <mx:Label text="Product Backlog" styleName="backlogTitle"/>
-         <mx:HBox id="productFilters" visible="{btnProductCreateItem.enabled}">
-            <mx:LinkButton id="lnkProductBacklogFilter" label="filter" styleName="form" enabled="false" width="50"/>
-            <mx:LinkButton id="lnkProductBacklogRemoveFilter" label="remove filter" styleName="form" enabled="false" width="100"/>
-         </mx:HBox>
+         <mx:LinkButton id="lnkProductBacklogFilter" label="filter" styleName="form"
+                        enabled="false" width="50" visible="{btnProductCreateItem.enabled}"/>
+         <mx:LinkButton id="lnkRemoveProductBacklogFilter" label="remove filter" styleName="form"
+                        enabled="false" width="100" visible="{btnProductCreateItem.enabled}"/>
          <mx:Spacer width="100%"/>
          <mx:Button id="btnProductCreateItem" label="Create Story" enabled="false"/>
       </mx:HBox>
@@ -57,12 +57,10 @@
    <mx:VBox styleName="iterationGridBox" width="45%" height="100%">
       <mx:HBox width="100%" verticalAlign="bottom">
          <mx:Label id="lblIterationTitle" styleName="backlogTitle"/>
-         <mx:HBox id="iterationFilters" visible="{btnCreateItem.enabled}">
-            <mx:LinkButton id="lnkIterationBacklogFilter" label="filter" styleName="form"
-                           enabled="false" width="50"/>
-            <mx:LinkButton id="lnkIterationBacklogRemoveFilter" label="remove filter" styleName="form"
-                           enabled="false" width="100"/>
-         </mx:HBox>
+         <mx:LinkButton id="lnkIterationBacklogFilter" label="filter" styleName="form"
+                        width="50" visible="{btnCreateItem.enabled}"/>
+         <mx:LinkButton id="lnkRemoveIterationBacklogFilter" label="remove filter" styleName="form"
+                        enabled="false" width="100" visible="{btnCreateItem.enabled}"/>
          <mx:Spacer width="100%"/>
          <mx:Button id="btnCreateItem" label="Create Story" enabled="false"/>
       </mx:HBox>

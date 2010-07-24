@@ -58,6 +58,7 @@ public class ProjectProxy extends Proxy
    public var newIteration : Iteration;
    public var colourGroupings : ArrayCollection;
    public var productBacklogRequest : Boolean = false;
+   public var filterNotificationName : String;
 
    public function ProjectProxy()
    {

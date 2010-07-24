@@ -17,6 +17,7 @@ import com.express.view.backlogItem.BacklogItemMediator;
 import flash.events.MouseEvent;
 
 import mx.collections.IHierarchicalCollectionView;
+import mx.controls.AdvancedDataGrid;
 import mx.controls.Alert;
 import mx.events.CloseEvent;
 import mx.events.DragEvent;
@@ -54,35 +55,31 @@ public class BacklogMediator extends Mediator {
       viewComp.grdIterationBacklog.addEventListener(DragEvent.DRAG_ENTER, handleDragEnter);
 
       viewComp.lnkProductBacklogFilter.addEventListener(MouseEvent.CLICK, handleShowProductBacklogFilterPanel);
-      viewComp.lnkProductBacklogRemoveFilter.addEventListener(MouseEvent.CLICK, handleRemoveProductBacklogFilter);
+      viewComp.lnkRemoveProductBacklogFilter.addEventListener(MouseEvent.CLICK, handleRemoveProductBacklogFilter);
       viewComp.lnkIterationBacklogFilter.addEventListener(MouseEvent.CLICK, handleShowIterationBacklogFilterPanel);
-      viewComp.lnkIterationBacklogRemoveFilter.addEventListener(MouseEvent.CLICK, handleRemoveIterationBacklogFilter);
+      viewComp.lnkRemoveIterationBacklogFilter.addEventListener(MouseEvent.CLICK, handleRemoveIterationBacklogFilter);
 
-      if(_proxy.selectedProject != null) {
-         handleProjectLoaded();
+      if (_proxy.selectedProject != null) {
+         projectLoaded();
       }
    }
 
    private function handleRemoveProductBacklogFilter(event:MouseEvent):void {
-      var data:IHierarchicalCollectionView = IHierarchicalCollectionView(view.grdProductBacklog.dataProvider);
-      data.filterFunction = null;
-      data.refresh();
-      view.lnkProductBacklogRemoveFilter.enabled = false;
+      removeGridFilter(view.grdProductBacklog);
+      view.lnkRemoveProductBacklogFilter.enabled = false;
    }
 
    private function handleRemoveIterationBacklogFilter(event:MouseEvent):void {
-      var data:IHierarchicalCollectionView = IHierarchicalCollectionView(view.grdIterationBacklog.dataProvider);
-      data.filterFunction = null;
-      data.refresh();
-      view.lnkIterationBacklogRemoveFilter.enabled = false;
+      removeGridFilter(view.grdIterationBacklog);
+      view.lnkRemoveIterationBacklogFilter.enabled = false;
    }
 
    private function handleShowProductBacklogFilterPanel(event:MouseEvent):void {
-      sendNotification(ApplicationFacade.NOTE_SHOW_FILTER_DIALOG, ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER);
+      sendNotification(ApplicationFacade.NOTE_SHOW_FILTER_DIALOG, event, ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER);
    }
 
    private function handleShowIterationBacklogFilterPanel(event:MouseEvent):void {
-      sendNotification(ApplicationFacade.NOTE_SHOW_FILTER_DIALOG, ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER);
+      sendNotification(ApplicationFacade.NOTE_SHOW_FILTER_DIALOG, event, ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER);
    }
 
    /**
@@ -128,51 +125,35 @@ public class BacklogMediator extends Mediator {
          IterationCreateCommand.SUCCESS,
          IterationUpdateCommand.SUCCESS,
          IterationLoadCommand.SUCCESS,
-         ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER];
+         ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER,
+         ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER];
    }
 
    override public function handleNotification(notification:INotification):void {
       switch (notification.getName()) {
          case ProjectLoadCommand.SUCCESS :
-            handleProjectLoaded();
+            projectLoaded();
             break;
          case IterationCreateCommand.SUCCESS :
             view.btnCreateItem.enabled = true;
             view.lblIterationTitle.text = _proxy.selectedIteration.title + " Backlog";
             break;
-         case IterationUpdateCommand.SUCCESS :
          case IterationLoadCommand.SUCCESS :
+            removeGridFilter(view.grdIterationBacklog);
+            view.lnkRemoveIterationBacklogFilter.enabled = false;
+            // Fall through
+         case IterationUpdateCommand.SUCCESS :
             view.btnCreateItem.enabled = true;
             view.lblIterationTitle.text = _proxy.selectedIteration.title + " Backlog";
             break;
          case ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER :
-            var filter : BacklogFilter = BacklogFilter(notification.getBody());
-            var data : IHierarchicalCollectionView = IHierarchicalCollectionView(view.grdProductBacklog.dataProvider);
-            data.filterFunction = function(object:Object):Boolean{
-               var item :BacklogItem = BacklogItem(object);
-               for each(var theme: Theme in filter.themes) {
-                  if(item.hasTheme(theme)) {
-                     return true;
-                  }
-               }
-               return false;
-            };
-            data.refresh();
-            view.lnkProductBacklogRemoveFilter.enabled = true;
+            filterGrid(BacklogFilter(notification.getBody()), view.grdProductBacklog);
+            view.lnkRemoveProductBacklogFilter.enabled = true;
             break;
-      }
-   }
-
-   private function handleProjectLoaded():void {
-      view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
-      view.lnkProductBacklogFilter.enabled = _proxy.selectedProject != null;
-      if (!_proxy.selectedIteration && ! _proxy.selectedProject.currentIteration) {
-         view.btnCreateItem.enabled = false;
-      } else if (_proxy.selectedIteration) {
-         view.btnCreateItem.enabled = true;
-      }
-      else {
-         sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, _proxy.selectedProject.currentIteration.id);
+         case ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER :
+            filterGrid(BacklogFilter(notification.getBody()), view.grdIterationBacklog);
+            view.lnkRemoveIterationBacklogFilter.enabled = true;
+            break;
       }
    }
 
@@ -193,7 +174,7 @@ public class BacklogMediator extends Mediator {
 
    private function handleGridDoubleClick(event:MouseEvent):void {
       var item:BacklogItem = event.currentTarget.selectedItem as BacklogItem;
-      if(item) {
+      if (item) {
          sendNotification(BacklogItemMediator.EDIT, item);
       }
    }
@@ -219,6 +200,47 @@ public class BacklogMediator extends Mediator {
       story.project = _proxy.selectedProject;
       _proxy.productBacklogRequest = true;
       sendNotification(BacklogItemMediator.CREATE, story);
+   }
+
+   private function filterGrid(filter:BacklogFilter, grid:AdvancedDataGrid):void {
+      var data:IHierarchicalCollectionView = IHierarchicalCollectionView(grid.dataProvider);
+      data.filterFunction = function(object:Object):Boolean {
+         var item:BacklogItem = BacklogItem(object);
+         for each(var theme:Theme in filter.themes) {
+            if (item.hasTheme(theme)) {
+               return true;
+            }
+         }
+         return false;
+      };
+      data.refresh();
+   }
+
+   private function removeGridFilter(grid : AdvancedDataGrid) : void {
+      var data:IHierarchicalCollectionView = IHierarchicalCollectionView(grid.dataProvider);
+      if(data) {
+         data.filterFunction = null;
+         data.refresh();
+      }
+   }
+
+   private function projectLoaded():void {
+      if (!_proxy.selectedIteration && ! _proxy.selectedProject.currentIteration) {
+         view.btnCreateItem.enabled = false;
+      }
+      else {
+         if (_proxy.selectedIteration) {
+            view.btnCreateItem.enabled = true;
+         }
+         else {
+            sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, _proxy.selectedProject.currentIteration.id);
+         }
+      }
+      view.btnProductCreateItem.enabled = _proxy.selectedProject != null;
+      view.lnkProductBacklogFilter.enabled = _proxy.selectedProject != null;
+      view.lnkRemoveProductBacklogFilter.enabled = false;
+      removeGridFilter(view.grdProductBacklog);
+      removeGridFilter(view.grdIterationBacklog);
    }
 
    private function buildToolTip(row:Object):String {

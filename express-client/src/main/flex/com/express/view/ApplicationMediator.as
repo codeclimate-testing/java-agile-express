@@ -14,7 +14,6 @@ import com.express.print.BacklogPrintView;
 import com.express.service.ServiceRegistry;
 import com.express.view.backlog.BacklogMediator;
 import com.express.view.backlogItem.BacklogItemMediator;
-import com.express.view.filter.FilterPanelMediator;
 import com.express.view.impedimentSummary.ImpedimentSummaryMediator;
 import com.express.view.iteration.IterationMediator;
 import com.express.view.iterationSummary.IterationSummaryMediator;
@@ -112,6 +111,7 @@ public class ApplicationMediator extends Mediator {
          ApplicationFacade.NOTE_SHOW_FILTER_DIALOG,
          ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER,
          ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER,
+         ApplicationFacade.NOTE_CANCEL_BACKLOG_FILTER,
          ApplicationFacade.NOTE_NAVIGATE,
          ApplicationFacade.NOTE_SHOW_ERROR_MSG,
          ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
@@ -169,12 +169,14 @@ public class ApplicationMediator extends Mediator {
             _popupManager.showThemesWindow(notification);
             break;
          case ApplicationFacade.NOTE_SHOW_FILTER_DIALOG :
-            FilterPanelMediator(facade.retrieveMediator(
-                  FilterPanelMediator.NAME)).notificationName = notification.getBody() as String;
-            _popupManager.showFilterPanel(notification, 80, 180);
+            var type:String = notification.getType();
+            var source:MouseEvent = notification.getBody() as MouseEvent;
+            ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME)).filterNotificationName = type;
+            _popupManager.showFilterPanel(notification, source.stageY, source.stageX);
             break;
          case ApplicationFacade.NOTE_APPLY_PRODUCT_BACKLOG_FILTER :
          case ApplicationFacade.NOTE_APPLY_ITERATION_BACKLOG_FILTER :
+         case ApplicationFacade.NOTE_CANCEL_BACKLOG_FILTER :
             _popupManager.removeFilterPanel();
             break;
          case ApplicationFacade.NOTE_DISPLAY_BURNDOWN :
@@ -206,16 +208,12 @@ public class ApplicationMediator extends Mediator {
             app.lblUser.text = _secureContext.currentUser.fullName;
             break;
          case RegisterConfirmCommand.SUCCESS :
-            sendNotification(ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
-                             "Your registration has now been confirmed and you can access express using the " +
-                             "email address and password you provided.");
+            sendNotification(ApplicationFacade.NOTE_SHOW_SUCCESS_MSG, "Your registration has now been confirmed and you can access express using the " + "email address and password you provided.");
             app.loginView.reponseText.visible = true;
             app.loginView.reponseText.includeInLayout = true;
             break;
          case RegisterConfirmCommand.FAILURE :
-            sendNotification(ApplicationFacade.NOTE_SHOW_ERROR_MSG,
-                             "Unfortunately we were unable to comfirm your  registration. If you have used the " +
-                             "link on the email we sent you please contact the administrator and report this problem");
+            sendNotification(ApplicationFacade.NOTE_SHOW_ERROR_MSG, "Unfortunately we were unable to comfirm your  registration. If you have used the " + "link on the email we sent you please contact the administrator and report this problem");
             app.loginView.reponseText.visible = false;
             app.loginView.reponseText.includeInLayout = false;
             break;

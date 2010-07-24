@@ -101,6 +101,7 @@ public class ApplicationFacade extends Facade {
    public static const NOTE_SHOW_FILTER_DIALOG:String = "Note.ShowFilterDialog";
    public static const NOTE_APPLY_PRODUCT_BACKLOG_FILTER:String = "Note.ApplyProductBacklogFilter";
    public static const NOTE_APPLY_ITERATION_BACKLOG_FILTER : String = "Note.ApplyIterationBacklogFilter";
+   public static const NOTE_CANCEL_BACKLOG_FILTER : String = "Note.CancelBacklogFilter";
 
 
    public static function getInstance():ApplicationFacade {
