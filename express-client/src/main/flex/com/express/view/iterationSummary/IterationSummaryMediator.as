@@ -9,9 +9,7 @@ import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Iteration;
 import com.express.print.BacklogPrintView;
-
 import com.express.view.iteration.IterationMediator;
-
 import com.express.view.renderer.CardPrintRenderer;
 
 import flash.events.Event;
@@ -24,13 +22,11 @@ import flash.net.FileReference;
 import flash.net.URLRequest;
 
 import mx.collections.ArrayCollection;
-import mx.controls.ComboBox;
 import mx.controls.DateField;
 import mx.controls.TileList;
 import mx.events.FlexEvent;
 import mx.events.ListEvent;
 import mx.messaging.config.ServerConfig;
-
 import mx.printing.FlexPrintJob;
 import mx.printing.FlexPrintJobScaleType;
 
@@ -148,8 +144,8 @@ public class IterationSummaryMediator extends Mediator {
       _printView.parent.visible = false;
    }
 
-   private function handleIterationSelected(event:Event):void {
-      var iteration:Iteration = (event.target as ComboBox).selectedItem as Iteration;
+   public function handleIterationSelected(event:Event):void {
+      var iteration:Iteration = view.cboIterations.selectedItem as Iteration;
       sendNotification(ApplicationFacade.NOTE_LOAD_ITERATION, iteration.id);
    }
 

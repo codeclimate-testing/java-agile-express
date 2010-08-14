@@ -187,6 +187,7 @@ AdvancedDataGrid {
    paddingLeft: 10;
    paddingRight: 10;
    paddingTop: 40;
+   backgroundColor:#ffffff;
    borderColor:#3679b0;
    borderThickness:2px;
    cornerRadius:4;

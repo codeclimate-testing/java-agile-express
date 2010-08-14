@@ -4,6 +4,7 @@ import com.express.ApplicationFacade;
 import com.express.model.ProfileProxy;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
+import com.express.model.RequestParameterProxy;
 import com.express.service.ServiceRegistry;
 import com.express.view.ApplicationMediator;
 import com.express.view.backlogItem.BacklogItemProxy;
@@ -17,10 +18,15 @@ import org.puremvc.as3.interfaces.*;
 import org.puremvc.as3.patterns.command.*;
 
 public class ApplicationStartUpCommand extends SimpleCommand {
+   private var _requestParameterProxy:RequestParameterProxy;
+
    override public function execute(note:INotification):void {
       var registry:ServiceRegistry = createServiceRegistry();
+      var browserManager:IBrowserManager = BrowserManager.getInstance();
+      browserManager.init();
+      browserManager.setTitle("Express | Agile Project Management");
+      _requestParameterProxy = new RequestParameterProxy(browserManager.fragment);
       registerProxies(registry);
-
       var app:Express = note.getBody() as Express;
       var appMediator:ApplicationMediator = new ApplicationMediator(app);
       facade.registerMediator(appMediator);
@@ -33,6 +39,7 @@ public class ApplicationStartUpCommand extends SimpleCommand {
       facade.registerProxy(new ProfileProxy());
       facade.registerProxy(new BacklogItemProxy());
       facade.registerProxy(registry);
+      facade.registerProxy(_requestParameterProxy);
    }
 
    protected function createServiceRegistry():ServiceRegistry {
@@ -48,14 +55,11 @@ public class ApplicationStartUpCommand extends SimpleCommand {
    }
 
    private function checkRegistrationConfirmation():void {
-      var browserManager:IBrowserManager = BrowserManager.getInstance();
-      browserManager.init();
-      browserManager.setTitle("Express | Agile Project Management");
-      var exp:RegExp = /registerId=(\d*)/g;
-      if (browserManager.fragment.search(exp) != -1) {
-         var userId:Number = exp.exec(browserManager.fragment)[1];
+      if (_requestParameterProxy.hasValue("registerId")) {
+         var userId:Number = new Number(_requestParameterProxy.getValue("registerId"));
          sendNotification(ApplicationFacade.NOTE_REGISTER_CONFIRM, userId);
       }
    }
+
 }
 }

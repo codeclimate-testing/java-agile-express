@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
          xmlns:component="com.express.view.components.*"
          horizontalAlign="center" paddingTop="100" width="100%" height="100%">
 
    <mx:EmailValidator id="userNameValidator" required="true" source="{userName}" property="text"/>
    <mx:StringValidator id="passwordValidator" required="true" source="{password}" property="text"/>
+
+   <mx:VBox id="responseText" paddingTop="35" visible="false" includeInLayout="false">
+      <component:TitledBorderBox layout="vertical" styleName="titledForm"
+         width="400" title="Registration Complete" titleStyleName="titledFormTitle">
+         <mx:Text width="100%"
+                  text="Thank you for registering to use the Express agile development tool. You now need to request access to an existing project or request the creation of a project of your own. To do so just login and you will be directed to the Project creation / access screen."/>
+         <mx:Text width="100%"
+                  text="We hope you enjoy using Express and look forward to receiving your feedback."/>
+      </component:TitledBorderBox>
+   </mx:VBox>
 
    <mx:Form width="500" height="265" styleName="loginForm" verticalGap="4" defaultButton="{btnLogin}">
       <mx:Label styleName="h1White" text="Login" width="100%" textAlign="center"/>
@@ -33,14 +43,4 @@
          <mx:LinkButton id="btnRegister" styleName="form" label="register"/>
       </mx:HBox>
    </mx:Form>
-
-   <mx:VBox id="reponseText" paddingTop="35" visible="false" includeInLayout="false">
-      <component:TitledBorderBox layout="vertical" styleName="titledForm"
-         width="400" title="Registration Complete" titleStyleName="titledFormTitle">
-         <mx:Text width="100%"
-                  text="Thank you for registering to use the Express agile development tool. You now need to request access to an existing project or request the creation of a project of your own. To do so just login and you will be directed to the Project creation / access screen."/>
-         <mx:Text width="100%"
-                  text="We hope you enjoy using Express and look forward to receiving your feedback."/>
-      </component:TitledBorderBox>
-   </mx:VBox>
-</mx:HBox>
+</mx:VBox>

@@ -2,6 +2,7 @@ package com.express.view.login
 {
 import com.express.ApplicationFacade;
 import com.express.controller.LoginCommand;
+import com.express.controller.RegisterConfirmCommand;
 import com.express.model.PersistentLoginDetails;
 import com.express.model.request.LoginRequest;
 import com.express.navigation.MenuItem;
@@ -37,7 +38,8 @@ public class LoginMediator extends Mediator
    }
 
    override public function listNotificationInterests():Array {
-      return [LoginCommand.FAILURE, LoginCommand.EMAIL_SUCCESS];
+      return [RegisterConfirmCommand.SUCCESS,
+              RegisterConfirmCommand.FAILURE,LoginCommand.FAILURE, LoginCommand.EMAIL_SUCCESS];
    }
 
    override public function handleNotification(notification : INotification):void {
@@ -47,6 +49,22 @@ public class LoginMediator extends Mediator
             break;
          case LoginCommand.FAILURE :
             handleLoginFailure();
+            break;
+         case RegisterConfirmCommand.SUCCESS :
+            sendNotification(ApplicationFacade.NOTE_SHOW_SUCCESS_MSG,
+                             "Your registration has now been confirmed and you can access express" +
+                             " using the email address and password you provided.");
+            view.responseText.visible = true;
+            view.responseText.includeInLayout = true;
+            view.setStyle("paddingTop", "0");
+            break;
+         case RegisterConfirmCommand.FAILURE :
+            sendNotification(ApplicationFacade.NOTE_SHOW_ERROR_MSG,
+                             "Unfortunately we were unable to comfirm your  registration. If you" +
+                             " have used the link on the email we sent you please contact the " +
+                             "administrator and report this problem");
+            view.responseText.visible = false;
+            view.responseText.includeInLayout = false;
             break;
       }
    }

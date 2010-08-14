@@ -1,8 +1,7 @@
-package com.express.controller
-{
+package com.express.controller {
 import com.express.ApplicationFacade;
 import com.express.model.ProjectProxy;
-import com.express.model.domain.Project;
+import com.express.model.RequestParameterProxy;
 import com.express.service.ServiceRegistry;
 import com.express.view.projectSummary.ProjectSummaryMediator;
 
@@ -16,6 +15,9 @@ import org.puremvc.as3.interfaces.INotification;
 import org.puremvc.as3.patterns.command.SimpleCommand;
 
 public class ProjectListLoadCommand extends SimpleCommand implements IResponder {
+   private var _projectProxy:ProjectProxy;
+   private var _parameterProxy:RequestParameterProxy;
+   private var _mediator:ProjectSummaryMediator;
 
    override public function execute(notification:INotification):void {
       var registry:ServiceRegistry = facade.retrieveProxy(ServiceRegistry.NAME) as ServiceRegistry;
@@ -25,22 +27,34 @@ public class ProjectListLoadCommand extends SimpleCommand implements IResponder 
    }
 
    public function result(data:Object):void {
-      var proxy:ProjectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
-      var mediator:ProjectSummaryMediator = facade.retrieveMediator(ProjectSummaryMediator.NAME) as ProjectSummaryMediator;
-      proxy.projectList = data.result as ArrayCollection;
-      if(proxy.projectList.length == 1) {
-         mediator.view.cboProjects.selectedIndex = 0;
-         mediator.handleProjectSelected(null);
+      _projectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
+      _parameterProxy = RequestParameterProxy(facade.retrieveProxy(RequestParameterProxy.NAME));
+      _mediator = facade.retrieveMediator(ProjectSummaryMediator.NAME) as ProjectSummaryMediator;
+
+      _projectProxy.projectList = data.result as ArrayCollection;
+      if (_projectProxy.selectedProject != null) {
+         _mediator.view.cboProjects.selectedIndex = getIndex(_projectProxy.projectList, _projectProxy.selectedProject.id);
       }
-      else if (proxy.selectedProject != null) {
-         mediator.view.cboProjects.selectedIndex = getIndex(proxy.projectList, proxy.selectedProject);
+      else if (!loadFromPermalink() && _projectProxy.projectList.length == 1) {
+         _mediator.view.cboProjects.selectedIndex = 0;
+         _mediator.handleProjectSelected(null);
       }
    }
 
-   private function getIndex(list:ArrayCollection, project:Project):int {
+   private function loadFromPermalink():Boolean {
+      if (_parameterProxy.hasValue('projectId')) {
+         _mediator.view.cboProjects.selectedIndex =
+               getIndex(_projectProxy.projectList, new Number(_parameterProxy.getValue('projectId')));
+         _mediator.handleProjectSelected(null);
+         return true;
+      }
+      return false;
+   }
+
+   private function getIndex(list:ArrayCollection, id:Number):int {
       var index:int = 0;
-      for each(var listProject:Project in list) {
-         if (listProject.title == project.title) {
+      for each(var object:Object in list) {
+         if (object.id == id) {
             return index;
          }
          index++;

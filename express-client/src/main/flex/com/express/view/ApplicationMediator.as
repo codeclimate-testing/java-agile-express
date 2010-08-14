@@ -3,7 +3,6 @@ package com.express.view
 import com.express.ApplicationFacade;
 import com.express.controller.LoginCommand;
 import com.express.controller.ProjectLoadCommand;
-import com.express.controller.RegisterConfirmCommand;
 import com.express.controller.UpdateUserCommand;
 import com.express.model.ProjectProxy;
 import com.express.model.SecureContextProxy;
@@ -125,8 +124,6 @@ public class ApplicationMediator extends Mediator {
          BacklogItemMediator.EDIT,
          IterationSummaryMediator.SHOW_PRINT_PREVIEW,
          UpdateUserCommand.SUCCESS,
-         RegisterConfirmCommand.SUCCESS,
-         RegisterConfirmCommand.FAILURE,
          UpdateUserCommand.SUCCESS,
          IterationMediator.CREATE,
          IterationMediator.EDIT,
@@ -207,16 +204,6 @@ public class ApplicationMediator extends Mediator {
          case UpdateUserCommand.SUCCESS :
             app.lblUser.text = _secureContext.currentUser.fullName;
             break;
-         case RegisterConfirmCommand.SUCCESS :
-            sendNotification(ApplicationFacade.NOTE_SHOW_SUCCESS_MSG, "Your registration has now been confirmed and you can access express using the " + "email address and password you provided.");
-            app.loginView.reponseText.visible = true;
-            app.loginView.reponseText.includeInLayout = true;
-            break;
-         case RegisterConfirmCommand.FAILURE :
-            sendNotification(ApplicationFacade.NOTE_SHOW_ERROR_MSG, "Unfortunately we were unable to comfirm your  registration. If you have used the " + "link on the email we sent you please contact the administrator and report this problem");
-            app.loginView.reponseText.visible = false;
-            app.loginView.reponseText.includeInLayout = false;
-            break;
       }
    }
 
@@ -275,16 +262,8 @@ public class ApplicationMediator extends Mediator {
 
    public function login():void {
       var user:User = _secureContext.currentUser;
-      sendNotification(ApplicationFacade.NOTE_LOAD_PROJECT_LIST);
-
       app.lblUser.text = user.fullName;
       app.topBox.visible = true;
-      if (user.hasProjects) {
-         navigate(new MenuItem(PROJECT_HEAD, BACKLOG_VIEW, null));
-      }
-      else {
-         navigate(new MenuItem(ACCESS_HEAD, ACCESS_VIEW, null));
-      }
       app.menu.visible = true;
       app.sideTabs.visible = true;
       app.main.styleName = "mainLoggedIn";

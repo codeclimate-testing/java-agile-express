@@ -9,9 +9,6 @@
       <path-element>express-client/src/main/flex</path-element>
       <path-element>express-client/src/main/resources</path-element>
     </source-path>
-    <external-library-path append="true">
-      <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/playerglobal/3.3.0.4852/playerglobal-3.3.0.4852-10.swc</path-element>
-    </external-library-path>
     <library-path append="true">
       <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/applicationupdater/3.3.0.4852/applicationupdater-3.3.0.4852.swc</path-element>
       <path-element>/Users/adam/.m2/repository/com/adobe/flex/framework/applicationupdater_ui/3.3.0.4852/applicationupdater_ui-3.3.0.4852.swc</path-element>
