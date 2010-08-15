@@ -94,6 +94,15 @@ public class Iteration {
       }
    }
 
+   public function getBacklogItemById(id : Number) : BacklogItem {
+      for each(var item : BacklogItem in backlog) {
+         if(item.id == id) {
+            return item;
+         }
+      }
+      return null;
+   }
+
    public function copyFrom(iteration:Iteration):void {
       id = iteration.id;
       version = iteration.version;

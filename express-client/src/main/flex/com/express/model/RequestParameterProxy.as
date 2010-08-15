@@ -22,8 +22,10 @@ public class RequestParameterProxy extends Proxy{
       return _parameters[key] != null;
    }
 
-   public function getValue(key : String) : String {
-      return _parameters[key]
+   public function getAndRemoveValue(key : String) : String {
+      var value : String = _parameters[key];
+      _parameters[key] = null;
+      return value;
    }
 }
 }

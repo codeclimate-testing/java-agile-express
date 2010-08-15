@@ -56,7 +56,7 @@
    </mx:VBox>
    <mx:VBox styleName="iterationGridBox" width="45%" height="100%">
       <mx:HBox width="100%" verticalAlign="bottom">
-         <mx:Label id="lblIterationTitle" styleName="backlogTitle"/>
+         <mx:Label id="lblIterationTitle" styleName="backlogTitle" visible="{btnCreateItem.enabled}"/>
          <mx:LinkButton id="lnkIterationBacklogFilter" label="filter" styleName="form"
                         width="50" visible="{btnCreateItem.enabled}"/>
          <mx:LinkButton id="lnkRemoveIterationBacklogFilter" label="remove filter" styleName="form"

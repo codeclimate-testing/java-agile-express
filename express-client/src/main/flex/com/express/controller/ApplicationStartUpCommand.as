@@ -56,7 +56,7 @@ public class ApplicationStartUpCommand extends SimpleCommand {
 
    private function checkRegistrationConfirmation():void {
       if (_requestParameterProxy.hasValue("registerId")) {
-         var userId:Number = new Number(_requestParameterProxy.getValue("registerId"));
+         var userId:Number = new Number(_requestParameterProxy.getAndRemoveValue("registerId"));
          sendNotification(ApplicationFacade.NOTE_REGISTER_CONFIRM, userId);
       }
    }

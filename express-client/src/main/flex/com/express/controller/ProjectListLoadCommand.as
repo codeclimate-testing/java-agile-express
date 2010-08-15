@@ -44,7 +44,7 @@ public class ProjectListLoadCommand extends SimpleCommand implements IResponder 
    private function loadFromPermalink():Boolean {
       if (_parameterProxy.hasValue('projectId')) {
          _mediator.view.cboProjects.selectedIndex =
-               getIndex(_projectProxy.projectList, new Number(_parameterProxy.getValue('projectId')));
+               getIndex(_projectProxy.projectList, new Number(_parameterProxy.getAndRemoveValue('projectId')));
          _mediator.handleProjectSelected(null);
          return true;
       }

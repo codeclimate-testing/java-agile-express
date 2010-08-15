@@ -50,7 +50,7 @@ public class ProjectLoadCommand extends SimpleCommand implements IResponder {
    private function loadFromPermalink():void {
       if (_parameterProxy.hasValue('iterationId')) {
          var iterationMediator:IterationSummaryMediator = IterationSummaryMediator(facade.retrieveMediator(IterationSummaryMediator.NAME));
-         iterationMediator.view.cboIterations.selectedIndex = getIndex(_proxy.iterationList, new Number(_parameterProxy.getValue('iterationId')));
+         iterationMediator.view.cboIterations.selectedIndex = getIndex(_proxy.iterationList, new Number(_parameterProxy.getAndRemoveValue('iterationId')));
          iterationMediator.handleIterationSelected(null);
       }
    }
