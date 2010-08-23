@@ -5,6 +5,7 @@ import com.express.controller.LoginCommand;
 import com.express.controller.ProjectLoadCommand;
 import com.express.controller.UpdateUserCommand;
 import com.express.model.ProjectProxy;
+import com.express.model.RequestParameterProxy;
 import com.express.model.SecureContextProxy;
 import com.express.model.WallProxy;
 import com.express.model.domain.User;
@@ -56,6 +57,7 @@ public class ApplicationMediator extends Mediator {
    private var _loginView:LoginView;
    private var _secureContext:SecureContextProxy;
    private var _projectProxy:ProjectProxy;
+   private var _parameterProxy : RequestParameterProxy;
    private var _popupManager:ExpressPopUpManager;
 
 
@@ -64,6 +66,7 @@ public class ApplicationMediator extends Mediator {
 
       _secureContext = SecureContextProxy(facade.retrieveProxy(SecureContextProxy.NAME));
       _projectProxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
+      _parameterProxy = RequestParameterProxy(facade.retrieveProxy(RequestParameterProxy.NAME));
       _popupManager = new ExpressPopUpManager(facade, viewComp);
       facade.registerMediator(new LoginMediator(viewComp.loginView));
       facade.registerMediator(new ProjectSummaryMediator(viewComp.projectSummary));
@@ -137,6 +140,7 @@ public class ApplicationMediator extends Mediator {
          case BacklogItemMediator.CREATE :
          case BacklogItemMediator.EDIT :
             _popupManager.showBacklogWindow(notification);
+            _parameterProxy.setParameter(RequestParameterProxy.BACKLOG_ITEM_ID_PARAM, notification.getBody().id);
             break;
          case IterationMediator.CREATE :
             _popupManager.showIterationWindow("Create Iteration", notification);

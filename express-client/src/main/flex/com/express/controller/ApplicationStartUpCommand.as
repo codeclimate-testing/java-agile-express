@@ -25,7 +25,7 @@ public class ApplicationStartUpCommand extends SimpleCommand {
       var browserManager:IBrowserManager = BrowserManager.getInstance();
       browserManager.init();
       browserManager.setTitle("Express | Agile Project Management");
-      _requestParameterProxy = new RequestParameterProxy(browserManager.fragment);
+      _requestParameterProxy = new RequestParameterProxy(browserManager);
       registerProxies(registry);
       var app:Express = note.getBody() as Express;
       var appMediator:ApplicationMediator = new ApplicationMediator(app);

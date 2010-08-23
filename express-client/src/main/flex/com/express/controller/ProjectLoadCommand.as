@@ -39,6 +39,7 @@ public class ProjectLoadCommand extends SimpleCommand implements IResponder {
       var backlogItemProxy:BacklogItemProxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
       backlogItemProxy.assignToList = _proxy.developers;
       loadFromPermalink();
+      _parameterProxy.setParameter(RequestParameterProxy.PROJECT_ID_PARAM, _proxy.selectedProject.id.toString());
       sendNotification(SUCCESS);
    }
 
@@ -48,9 +49,9 @@ public class ProjectLoadCommand extends SimpleCommand implements IResponder {
    }
 
    private function loadFromPermalink():void {
-      if (_parameterProxy.hasValue('iterationId')) {
+      if (_parameterProxy.hasValue(RequestParameterProxy.ITERATION_ID_PARAM)) {
          var iterationMediator:IterationSummaryMediator = IterationSummaryMediator(facade.retrieveMediator(IterationSummaryMediator.NAME));
-         iterationMediator.view.cboIterations.selectedIndex = getIndex(_proxy.iterationList, new Number(_parameterProxy.getAndRemoveValue('iterationId')));
+         iterationMediator.view.cboIterations.selectedIndex = getIndex(_proxy.iterationList, new Number(_parameterProxy.getAndRemoveValue(RequestParameterProxy.ITERATION_ID_PARAM)));
          iterationMediator.handleIterationSelected(null);
       }
    }

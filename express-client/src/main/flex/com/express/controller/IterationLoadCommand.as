@@ -35,7 +35,8 @@ public class IterationLoadCommand extends SimpleCommand implements IResponder {
       _proxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
       var iteration:Iteration = data.result as Iteration;
       _proxy.selectedIteration = iteration;
-      loadFromPermalink()
+      loadFromPermalink();
+      _parameterProxy.setParameter(RequestParameterProxy.ITERATION_ID_PARAM, iteration.id.toString());
       sendNotification(SUCCESS, iteration);
    }
 
@@ -45,9 +46,9 @@ public class IterationLoadCommand extends SimpleCommand implements IResponder {
    }
 
    private function loadFromPermalink():void {
-      if (_parameterProxy.hasValue('backlogItemId')) {
+      if (_parameterProxy.hasValue(RequestParameterProxy.BACKLOG_ITEM_ID_PARAM)) {
          var item:BacklogItem = _proxy.selectedIteration.getBacklogItemById(
-                                             new Number(_parameterProxy.getAndRemoveValue('backlogItemId')));
+                  new Number(_parameterProxy.getAndRemoveValue(RequestParameterProxy.BACKLOG_ITEM_ID_PARAM)));
          if (item) {
             sendNotification(BacklogItemMediator.EDIT, item);
          }
