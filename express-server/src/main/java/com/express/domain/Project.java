@@ -41,7 +41,7 @@ public class Project implements Persistable {
    @Column(name = "TITLE")
    private String title;
 
-   @Column(name = "DESCRIPTION")
+   @Column(name = "DESCRIPTION") @Lob
    private String description;
 
    @Column(name = "REFERENCE")

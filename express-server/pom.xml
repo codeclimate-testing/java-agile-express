@@ -303,6 +303,12 @@
          <scope>compile</scope>
       </dependency>
       <dependency>
+         <groupId>org.hsqldb</groupId>
+         <artifactId>hsqldb</artifactId>
+         <version>2.0.0</version>
+      </dependency>
+
+      <dependency>
          <groupId>commons-fileupload</groupId>
          <artifactId>commons-fileupload</artifactId>
          <version>1.2</version>
@@ -369,7 +375,7 @@
       <dependency>
          <groupId>org.liquibase</groupId>
          <artifactId>liquibase-core</artifactId>
-         <version>1.9.1</version>
+         <version>1.9.5</version>
       </dependency>
       <dependency>
          <groupId>org.opensymphony.quartz</groupId>

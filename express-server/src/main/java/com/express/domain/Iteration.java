@@ -45,7 +45,7 @@ public class Iteration implements Persistable, Comparable<Iteration> {
    @Column(name = "title")
    private String title;
 
-   @Column(name = "goal")
+   @Column(name = "goal") @Lob
    private String goal;
 
    @Column(name = "final_velocity")

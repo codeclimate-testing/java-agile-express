@@ -16,7 +16,7 @@
         <option name="USE_FACET_COMPILE_OUTPUT_PATH" value="true" />
         <option name="FACET_COMPILE_OUTPUT_PATH" value="$MODULE_DIR$/../express-server/target/express-server-0.8-SNAPSHOT" />
         <option name="INCLUDE_RESOURCE_FILES_IN_SWC" value="false" />
-        <option name="TARGET_PLAYER_VERSION" value="10.0.22" />
+        <option name="TARGET_PLAYER_VERSION" value="10.0.0" />
         <option name="STATIC_LINK_RUNTIME_SHARED_LIBRARIES" value="true" />
         <option name="USE_LOCALE_SETTINGS" value="true" />
         <option name="LOCALE" value="en_US" />

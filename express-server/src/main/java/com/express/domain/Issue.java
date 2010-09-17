@@ -24,8 +24,7 @@ public class Issue implements Persistable{
    @Column(name = "title")
    private String title;
 
-   @Lob
-   @Column(name = "description", length = 2147483647)
+   @Column(name = "description") @Lob
    private String description;
 
    @Column(name = "start_date")
