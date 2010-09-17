@@ -35,7 +35,8 @@ public class TaskCard extends VBox {
    private var _effortLabel : Label;
 
    public function TaskCard() {
-      super();
+      super()
+      _facade = ApplicationFacade.getInstance();
       var headerBox:HBox = new HBox();
       headerBox.styleName = "storyCardHeaderBox";
       headerBox.percentWidth = 100;
