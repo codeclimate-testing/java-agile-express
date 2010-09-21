@@ -34,7 +34,8 @@ public class WallRow extends HBox {
       _openGrid = new CardGrid();
       _openGrid.gridStatus = BacklogItem.STATUS_OPEN;
       _openGrid.percentHeight = 100;
-//      _openGrid.setStyle("backgroundColor", "#990000");
+      _openGrid.percentWidth = 100;
+      _openGrid.setStyle("backgroundColor", "#ffffff");
       this.addChild(_openGrid);
 
       spacer = new Spacer();
@@ -44,7 +45,8 @@ public class WallRow extends HBox {
       _progressGrid = new CardGrid();
       _progressGrid.gridStatus = BacklogItem.STATUS_PROGRESS;
       _progressGrid.percentHeight = 100;
-//      _progressGrid.setStyle("backgroundColor", "#009900");
+      _progressGrid.percentWidth = 100;
+      _progressGrid.setStyle("backgroundColor", "#ffffff");
       this.addChild(_progressGrid);
 
       spacer = new Spacer();
@@ -54,7 +56,8 @@ public class WallRow extends HBox {
       _testGrid = new CardGrid();
       _testGrid.gridStatus = BacklogItem.STATUS_TEST;
       _testGrid.percentHeight = 100;
-//      _testGrid.setStyle("backgroundColor", "#000099");
+      _testGrid.percentWidth = 100;
+      _testGrid.setStyle("backgroundColor", "#ffffff");
       this.addChild(_testGrid);
 
       spacer = new Spacer();
@@ -64,7 +67,8 @@ public class WallRow extends HBox {
       _doneGrid = new CardGrid();
       _doneGrid.gridStatus = BacklogItem.STATUS_DONE;
       _doneGrid.percentHeight = 100;
-//      _doneGrid.setStyle("backgroundColor", "#009999");
+      _doneGrid.percentWidth = 100;
+      _doneGrid.setStyle("backgroundColor", "#ffffff");
       this.addChild(_doneGrid);
       _allGrids = [_openGrid, _progressGrid, _testGrid, _doneGrid];
 
