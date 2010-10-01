@@ -13,8 +13,13 @@ import java.util.*;
  * @author adam boas
  */
 @Entity
-@Table(name = "PROJECT")
-@NamedQueries({@NamedQuery(name = "Project.findAll", query = "SELECT P FROM Project P"), @NamedQuery(name = "Project.findNotWorkingOn", query = "SELECT DISTINCT P FROM Project P WHERE P NOT IN(SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1)"), @NamedQuery(name = "Project.findWorkingOn", query = "SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1")})
+@Table(name = "project")
+@NamedQueries({
+      @NamedQuery(name = "Project.findAll", query = "SELECT P FROM Project P"),
+      @NamedQuery(name = "Project.findNotWorkingOn",
+            query = "SELECT DISTINCT P FROM Project P WHERE P NOT IN(SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1)"),
+      @NamedQuery(name = "Project.findWorkingOn", query = "SELECT P FROM Project P JOIN P.projectWorkers PW WHERE PW.worker = ?1")})
+
 public class Project implements Persistable {
    private static final long serialVersionUID = 5917736851219902630L;
 
@@ -23,31 +28,31 @@ public class Project implements Persistable {
    public static final String QUERY_FIND_NOT_WORKING_ON = "Project.findNotWorkingOn";
 
    @Id
-   @GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_PROJECT")
-   @TableGenerator(name = "GEN_PROJECT", table = "SEQUENCE_LIST", pkColumnName = "NAME",
-         valueColumnName = "NEXT_VALUE", allocationSize = 1, initialValue = 100,
-         pkColumnValue = "PROJECT")
-   @Column(name = "PROJECT_ID")
+   @GeneratedValue(strategy = GenerationType.TABLE, generator = "gen_project")
+   @TableGenerator(name = "gen_project", table = "sequence_list", pkColumnName = "name",
+         valueColumnName = "next_value", allocationSize = 1, initialValue = 100,
+         pkColumnValue = "project")
+   @Column(name = "project_id")
    private Long id;
 
    @Version
-   @Column(name = "VERSION_NO")
+   @Column(name = "version_no")
    private Long version;
 
-   @Column(name = "START_DATE")
+   @Column(name = "start_date")
    @Temporal(value = TemporalType.TIMESTAMP)
    private Calendar startDate;
 
-   @Column(name = "TITLE")
+   @Column(name = "title")
    private String title;
 
-   @Column(name = "DESCRIPTION") @Lob
+   @Column(name = "description") @Lob
    private String description;
 
-   @Column(name = "REFERENCE")
+   @Column(name = "reference")
    private String reference;
 
-   @Column(name = "EFFORT_UNIT")
+   @Column(name = "effort_unit")
    private String effortUnit;
 
    @Column(name = "story_count")

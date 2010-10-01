@@ -27,9 +27,9 @@ public class DailyIterationStatusRecord implements Persistable, Comparable<Daily
    private static final long serialVersionUID = 3358201566728092604L;
 
    @Id @GeneratedValue(strategy = GenerationType.TABLE, generator = "gen_it_status_rec")
-   @TableGenerator(name = "gen_it_status_rec", table = "SEQUENCE_LIST", pkColumnName = "NAME",
-            valueColumnName = "NEXT_VALUE", allocationSize = 1, initialValue = 100, 
-            pkColumnValue = "EFFORT")
+   @TableGenerator(name = "gen_it_status_rec", table = "sequence_list", pkColumnName = "name",
+            valueColumnName = "next_value", allocationSize = 1, initialValue = 100,
+            pkColumnValue = "effort")
    @Column(name="effort_rec_id")
    private Long id;
    

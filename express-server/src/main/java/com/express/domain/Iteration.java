@@ -12,7 +12,7 @@ import java.util.*;
  * @author adam boas
  */
 @Entity
-@Table(name = "ITERATION")
+@Table(name = "iteration")
 @NamedQueries({
       @NamedQuery(name = "Iteration.findOpen", query = "SELECT I FROM Iteration I WHERE I.startDate <= :date AND I.endDate >= :date")
 })
@@ -23,11 +23,11 @@ public class Iteration implements Persistable, Comparable<Iteration> {
    public static final String QUERY_FIND_OPEN = "Iteration.findOpen";
 
    @Id
-   @GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_ITERATION")
-   @TableGenerator(name = "GEN_ITERATION", table = "SEQUENCE_LIST", pkColumnName = "NAME",
-         valueColumnName = "NEXT_VALUE", allocationSize = 1, initialValue = 100,
-         pkColumnValue = "ITERATION")
-   @Column(name = "ITERATION_ID")
+   @GeneratedValue(strategy = GenerationType.TABLE, generator = "gen_iteration")
+   @TableGenerator(name = "gen_iteration", table = "sequence_list", pkColumnName = "name",
+         valueColumnName = "next_value", allocationSize = 1, initialValue = 100,
+         pkColumnValue = "iteration")
+   @Column(name = "iteration_id")
    private Long id;
 
    @Version

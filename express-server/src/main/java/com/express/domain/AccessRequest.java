@@ -9,7 +9,7 @@ import java.util.Calendar;
  * stop Users making multiple requests to access a project.
  */
 @Entity
-@Table(name = "ACCESS_REQUEST")
+@Table(name = "access_request")
 public class AccessRequest implements Persistable, Comparable<AccessRequest> {
    private static final long serialVersionUID = 5229139735357304608L;
 
@@ -18,34 +18,34 @@ public class AccessRequest implements Persistable, Comparable<AccessRequest> {
    public static final Integer REJECTED = 2;
 
    @Id
-   @GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_REQUEST")
-   @TableGenerator(name = "GEN_REQUEST", table = "SEQUENCE_LIST", pkColumnName = "NAME",
-            valueColumnName = "NEXT_VALUE", allocationSize = 1, initialValue = 100,
-            pkColumnValue = "BACKLOG")
-   @Column(name="REQUEST_ID")
+   @GeneratedValue(strategy = GenerationType.TABLE, generator = "gen_request")
+   @TableGenerator(name = "gen_request", table = "sequence_list", pkColumnName = "name",
+            valueColumnName = "next_value", allocationSize = 1, initialValue = 100,
+            pkColumnValue = "backlog")
+   @Column(name="request_id")
    private Long id;
 
-   @Version @Column(name="VERSION_NO")
+   @Version @Column(name="version_no")
    private Long version;
 
-   @ManyToOne @JoinColumn(name = "USER_ID")
+   @ManyToOne @JoinColumn(name = "user_id")
    private User requestor;
 
-   @Column(name = "REQUEST_DATE")
+   @Column(name = "request_date")
    @Temporal(value = TemporalType.TIMESTAMP)
    private Calendar requestDate;
 
-   @Column(name = "RESOLVED_DATE")
+   @Column(name = "resolved_date")
    @Temporal(value = TemporalType.TIMESTAMP)
    private Calendar resolvedtDate;
 
-   @Column(name = "STATUS")
+   @Column(name = "status")
    private Integer status;
 
-   @Column(name = "REASON")
+   @Column(name = "reason")
    private String reason;
 
-   @ManyToOne @JoinColumn(name = "PROJECT_ID")
+   @ManyToOne @JoinColumn(name = "project_id")
    private Project project;
 
    public Long getId() {

@@ -9,30 +9,30 @@ import java.util.Calendar;
  * @author adam boas
  */
 @Entity
-@Table(name = "PROJECT_WORKER")
+@Table(name = "project_worker")
 public class ProjectWorker implements Persistable, Comparable<ProjectWorker> {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_WORKER")
-   @TableGenerator(name = "GEN_WORKER", table = "SEQUENCE_LIST", pkColumnName = "NAME",
-            valueColumnName = "NEXT_VALUE", allocationSize = 1, initialValue = 100,
-            pkColumnValue = "WORKER")
-   @Column(name="WORKER_ID")
+   @GeneratedValue(strategy = GenerationType.TABLE, generator = "gen_worker")
+   @TableGenerator(name = "gen_worker", table = "sequence_list", pkColumnName = "name",
+            valueColumnName = "next_value", allocationSize = 1, initialValue = 100,
+            pkColumnValue = "worker")
+   @Column(name="worker_id")
    private Long id;
 
-   @Version @Column(name="VERSION_NO")
+   @Version @Column(name="version_no")
    private Long version;
 
-   @Column(name="CREATED_DATE") @Temporal(value = TemporalType.TIMESTAMP)
+   @Column(name="created_date") @Temporal(value = TemporalType.TIMESTAMP)
    private Calendar createdDate;
 
-   @ManyToOne @JoinColumn(name = "PROJECT_ID")
+   @ManyToOne @JoinColumn(name = "project_id")
    private Project project;
 
-   @ManyToOne @JoinColumn(name = "USER_ID")
+   @ManyToOne @JoinColumn(name = "user_id")
    private User worker;
 
-   @OneToOne(cascade=CascadeType.ALL) @JoinColumn(name = "PERMISSIONS_ID")
+   @OneToOne(cascade=CascadeType.ALL) @JoinColumn(name = "permissions_id")
    private Permissions permissions;
 
    public ProjectWorker() {

@@ -296,6 +296,7 @@
       </addColumn>
       <renameColumn tableName="iteration" oldColumnName="description" newColumnName="goal"/>
    </changeSet>
+
    <changeSet id="10" author="adam">
       <modifyColumn tableName="iteration">
          <column name="goal" type="java.sql.Types.CLOB"/>
@@ -303,6 +304,13 @@
       <modifyColumn tableName="project">
          <column name="description" type="java.sql.Types.CLOB"/>
       </modifyColumn>
+   </changeSet>
+
+   <changeSet id="11" author="adam">
+      <sql>
+         delete from sequence_list where name = 'BACKLOG';
+         update sequence_list set name = lower(name);
+      </sql>
    </changeSet>
 
 </databaseChangeLog>

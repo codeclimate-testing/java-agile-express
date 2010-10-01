@@ -8,24 +8,24 @@ import javax.persistence.*;
  * @author adam boas
  */
 @Entity
-@Table(name = "PERMISSIONS")
+@Table(name = "permissions")
 public class Permissions implements Persistable {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.TABLE, generator = "GEN_PERMISSIONS")
-   @TableGenerator(name = "GEN_PERMISSIONS", table = "SEQUENCE_LIST", pkColumnName = "NAME",
-            valueColumnName = "NEXT_VALUE", allocationSize = 1, initialValue = 3000,
-            pkColumnValue = "PERMISSIONS")
-   @Column(name="PERMISSIONS_ID")
+   @GeneratedValue(strategy = GenerationType.TABLE, generator = "gen_permissions")
+   @TableGenerator(name = "gen_permissions", table = "sequence_list", pkColumnName = "name",
+            valueColumnName = "next_value", allocationSize = 1, initialValue = 3000,
+            pkColumnValue = "permissions")
+   @Column(name="permissions_id")
    private Long id;
 
-   @Version @Column(name="VERSION_NO")
+   @Version @Column(name="version_no")
    private Long version;
 
-   @Column(name = "PROJECT_ADMIN")
+   @Column(name = "project_admin")
    private Boolean projectAdmin = Boolean.FALSE;
 
-   @Column(name = "ITERATION_ADMIN")
+   @Column(name = "iteration_admin")
    private Boolean iterationAdmin = Boolean.FALSE;
    private static final long serialVersionUID = 2241450015771645982L;
 
