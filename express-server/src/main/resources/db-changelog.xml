@@ -223,7 +223,7 @@
       </addColumn>
    </changeSet>
 
-    <changeSet id="6" author="adam">
+   <changeSet id="6" author="adam">
       <addColumn tableName="backlog">
          <column name="final_velocity" type="int4"/>
       </addColumn>
@@ -289,10 +289,10 @@
       <renameTable oldTableName="effort" newTableName="iteration_history"/>
 
       <addColumn tableName="iteration_history">
-         <column name="points_total" type="int4" />
+         <column name="points_total" type="int4"/>
       </addColumn>
       <addColumn tableName="iteration_history">
-         <column name="points_completed" type="int4" />
+         <column name="points_completed" type="int4"/>
       </addColumn>
       <renameColumn tableName="iteration" oldColumnName="description" newColumnName="goal"/>
    </changeSet>
@@ -311,6 +311,11 @@
          delete from sequence_list where name = 'BACKLOG';
          update sequence_list set name = lower(name);
       </sql>
+   </changeSet>
+   <changeSet id="12" author="adam">
+      <modifyColumn tableName="backlog">
+         <column name="summary" type="java.sql.Types.CLOB"/>
+      </modifyColumn>
    </changeSet>
 
 </databaseChangeLog>

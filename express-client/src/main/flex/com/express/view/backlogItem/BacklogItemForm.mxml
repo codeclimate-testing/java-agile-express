@@ -24,19 +24,19 @@
 
    <mx:Form id="mainForm" styleName="unpadded" showEffect="{wipeUp}" width="400" height="100%" verticalGap="6">
       <mx:FormItem id="asItem" required="true" label="As">
-         <comp:AutoCompleteTextInput id="asA" width="280"/>
+         <comp:AutoCompleteTextInput id="asA" width="280" maxChars="255"/>
       </mx:FormItem>
       <mx:FormItem id="iWantItem" required="true" label="I want">
-         <mx:TextArea id="iWant" width="280" height="70"/>
+         <mx:TextArea id="iWant" width="280" height="70" maxChars="255"/>
       </mx:FormItem>
       <mx:FormItem id="soThatItem" required="true" label="So that">
-         <mx:TextArea id="soThat" width="280" height="70"/>
+         <mx:TextArea id="soThat" width="280" height="70" maxChars="255"/>
       </mx:FormItem>
       <mx:FormItem id="summaryItem" label="Summary:" required="true">
          <mx:TextArea id="summary" width="280" height="150"/>
       </mx:FormItem>
       <mx:FormItem id="titleItem" label="Title">
-         <mx:TextInput id="title" width="280"/>
+         <mx:TextInput id="title" width="280" maxChars="255"/>
       </mx:FormItem>
       <mx:FormItem id="newThemeItem" label="New Theme" visible="false" includeInLayout="false">
          <mx:HBox>
