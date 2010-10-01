@@ -75,9 +75,9 @@ public class ScrumWallMediator extends Mediator {
             sendNotification(BacklogItemMediator.CREATE, item);
             break;
          case QuickMenu.NOTE_IMPEDED :
-            _backlogItemProxy.currentBacklogItem = BacklogItem(notification.getBody());
             _backlogItemProxy.currentIssue = new Issue();
             _backlogItemProxy.currentIssue.startDate = new Date();
+            _backlogItemProxy.currentIssue.backlogItem = BacklogItem(notification.getBody());
             _backlogItemProxy.currentIteration = _projectProxy.selectedIteration;
             sendNotification(ApplicationFacade.NOTE_CREATE_IMPEDIMENT, false);
             break;

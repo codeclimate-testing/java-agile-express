@@ -45,7 +45,8 @@ public class ProjectProxy extends Proxy
    private var _accessRequests: ArrayCollection;
    private var _defectList : ArrayCollection;
    private var _themes : ArrayCollection;
-   
+   private var _impediments : ArrayCollection;
+
    private var _iterationHistory : ArrayCollection;
    private var _iterationDays : ArrayCollection;
    private var _projectHistoryRequired : ArrayCollection;
@@ -87,6 +88,7 @@ public class ProjectProxy extends Proxy
 
       _defectList = new ArrayCollection();
       _themes = new ArrayCollection();
+      _impediments = new ArrayCollection();
 
       colourGroupings = new ArrayCollection();
       colourGroupings.addItem(DEVELOPER);
@@ -138,10 +140,12 @@ public class ProjectProxy extends Proxy
       if (iteration != null) {
          _selectedBacklog.source = iteration.backlog;
          setIterationHistory(iteration);
+         _impediments.source = iteration.impediments.source;
       }
       else {
          _selectedBacklog.source = [];
          _iterationHistory.source = [];
+         _impediments.source = [];
       }
    }
 
@@ -203,6 +207,10 @@ public class ProjectProxy extends Proxy
 
    public function setProductBacklogSource(backlog : ArrayCollection) : void {
       _productBacklog.source = backlog;
+   }
+
+   public function get impedimentList() : ArrayCollection {
+      return _impediments;
    }
 
    public function get accessRequests() : ArrayCollection {

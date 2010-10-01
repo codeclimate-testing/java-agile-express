@@ -2,6 +2,7 @@ package com.express.view.issue {
 
 import com.express.ApplicationFacade;
 import com.express.model.domain.BacklogItem;
+import com.express.model.domain.Issue;
 import com.express.model.domain.User;
 import com.express.model.request.AddImpedimentRequest;
 import com.express.view.backlogItem.BacklogItemProxy;
@@ -73,17 +74,29 @@ public class IssueMediator extends FormMediator {
    }
 
    override public function bindForm():void {
-      view.issueTitle.text = _proxy.currentIssue.title;
-      view.description.text = _proxy.currentIssue.description;
-      view.cboStories.selectedItem = _proxy.currentBacklogItem;
-      view.cboTasks.selectedItem = _proxy.currentBacklogItem;
-      if (_proxy.currentIssue.responsible) {
-         view.lstResponsible.selectedIndex = getSelectedUser(_proxy.currentIssue.responsible.id, view.lstResponsible.dataProvider.source);
+      var issue : Issue = _proxy.currentIssue;
+      view.issueTitle.text = issue.title;
+      view.description.text = issue.description;
+      view.cboStories.selectedItem = getSelectedStory(issue.backlogItem);
+      view.cboTasks.selectedItem = getSelectedTask(issue.backlogItem);
+      if (issue.responsible) {
+         view.lstResponsible.selectedIndex = getSelectedUser(issue.responsible.id, view.lstResponsible.dataProvider.source);
       }
       else {
          view.lstResponsible.selectedIndex = -1;
       }
       FormUtility.clearValidationErrors(_validators);
+   }
+
+   private function getSelectedStory(item : BacklogItem) : BacklogItem {
+      if(!item) {
+         return null;
+      }
+      return item.isStory() ? item : item.parent;
+   }
+
+   private function getSelectedTask(item : BacklogItem) : BacklogItem {
+      return !item || item.isStory() ? null : item;
    }
 
    private function getSelectedUser(id:Number, array:Array):int {

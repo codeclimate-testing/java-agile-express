@@ -23,6 +23,7 @@ public class ImpedimentSummaryMediator extends Mediator {
       super(mediatorName, viewComp);
       _proxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
       _backlogItemProxy = BacklogItemProxy(facade.retrieveProxy(BacklogItemProxy.NAME));
+      view.lstImpediments.dataProvider = _proxy.impedimentList;
       viewComp.lstImpediments.addEventListener(MouseEvent.DOUBLE_CLICK, handleEditImpediment);
       viewComp.lnkClose.addEventListener(MouseEvent.CLICK, handleClose);
       viewComp.btnAddImpediment.addEventListener(MouseEvent.CLICK, handleAddImpedimentRequest);
@@ -30,7 +31,6 @@ public class ImpedimentSummaryMediator extends Mediator {
 
    private function handleEditImpediment(event:MouseEvent):void {
       var issue:Issue = Issue(view.lstImpediments.selectedItem);
-      _backlogItemProxy.currentBacklogItem = issue.backlogItem;
       _backlogItemProxy.currentIssue = issue;
       sendNotification(ApplicationFacade.NOTE_EDIT_IMPEDIMENT);
    }
@@ -53,7 +53,6 @@ public class ImpedimentSummaryMediator extends Mediator {
    }
 
    override public function handleNotification(notification:INotification):void {
-      view.lstImpediments.dataProvider = _proxy.selectedIteration.impediments;
       switch (notification.getName()) {
          case IterationLoadCommand.SUCCESS :
             view.btnAddImpediment.enabled = true;
