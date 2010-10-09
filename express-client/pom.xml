@@ -7,7 +7,7 @@
    <parent>
       <artifactId>express</artifactId>
       <groupId>com.express</groupId>
-      <version>0.8-SNAPSHOT</version>
+      <version>0.8-RC1</version>
    </parent>
 
    <artifactId>express-client</artifactId>

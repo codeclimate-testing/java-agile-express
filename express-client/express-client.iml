@@ -7,14 +7,14 @@
         <option name="OUTPUT_TYPE" value="Application" />
         <option name="USE_DEFAULT_SDK_CONFIG_FILE" value="true" />
         <option name="USE_CUSTOM_CONFIG_FILE" value="false" />
-        <option name="CUSTOM_CONFIG_FILE" value="$MODULE_DIR$/target/express-client-0.8-SNAPSHOT-config-report.xml" />
+        <option name="CUSTOM_CONFIG_FILE" value="$MODULE_DIR$/target/express-client-0.8-RC1-config-report.xml" />
         <option name="USE_CUSTOM_CONFIG_FILE_FOR_TESTS" value="false" />
         <option name="CUSTOM_CONFIG_FILE_FOR_TESTS" value="" />
         <option name="APPLICATION_ENTRY_POINT" value="" />
         <option name="MAIN_CLASS" value="Express" />
-        <option name="OUTPUT_FILE_NAME" value="express-client-0.8-SNAPSHOT.swf" />
+        <option name="OUTPUT_FILE_NAME" value="express-client-0.8-RC1.swf" />
         <option name="USE_FACET_COMPILE_OUTPUT_PATH" value="true" />
-        <option name="FACET_COMPILE_OUTPUT_PATH" value="$MODULE_DIR$/../express-server/target/express-server-0.8-SNAPSHOT" />
+        <option name="FACET_COMPILE_OUTPUT_PATH" value="$MODULE_DIR$/../express-server/target/" />
         <option name="INCLUDE_RESOURCE_FILES_IN_SWC" value="false" />
         <option name="TARGET_PLAYER_VERSION" value="10.0.0" />
         <option name="STATIC_LINK_RUNTIME_SHARED_LIBRARIES" value="true" />
