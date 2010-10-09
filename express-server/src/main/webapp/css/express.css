@@ -132,6 +132,7 @@ table.front td {
    text-align: right;
    width:250px;
    padding-right:25px;
+   clear:both;
 }
 
 #faqs {
