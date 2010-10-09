@@ -12,6 +12,7 @@ import com.express.view.form.FormUtility;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
+import mx.collections.ArrayCollection;
 import mx.events.CloseEvent;
 
 import org.puremvc.as3.interfaces.INotification;
@@ -77,31 +78,26 @@ public class IssueMediator extends FormMediator {
       var issue : Issue = _proxy.currentIssue;
       view.issueTitle.text = issue.title;
       view.description.text = issue.description;
-      view.cboStories.selectedItem = getSelectedStory(issue.backlogItem);
-      view.cboTasks.selectedItem = getSelectedTask(issue.backlogItem);
-      if (issue.responsible) {
-         view.lstResponsible.selectedIndex = getSelectedUser(issue.responsible.id, view.lstResponsible.dataProvider.source);
-      }
-      else {
-         view.lstResponsible.selectedIndex = -1;
-      }
+      view.cboStories.selectedIndex = getSelectionIndex(getSelectedStoryId(issue.backlogItem), ArrayCollection(view.cboStories.dataProvider));
+      view.cboTasks.selectedIndex = getSelectionIndex(getSelectedTaskId(issue.backlogItem), ArrayCollection(view.cboTasks.dataProvider));
+      issue.responsible ? view.lstResponsible.selectedIndex = getSelectionIndex(issue.responsible.id, ArrayCollection(view.lstResponsible.dataProvider)) : -1;
       FormUtility.clearValidationErrors(_validators);
    }
 
-   private function getSelectedStory(item : BacklogItem) : BacklogItem {
+   private function getSelectedStoryId(item : BacklogItem) : int {
       if(!item) {
-         return null;
+         return -1;
       }
-      return item.isStory() ? item : item.parent;
+      return item.isStory() ? item.id : item.parent.id;
    }
 
-   private function getSelectedTask(item : BacklogItem) : BacklogItem {
-      return !item || item.isStory() ? null : item;
+   private function getSelectedTaskId(item : BacklogItem) : int {
+      return !item || item.isStory() ? -1 : item.id;
    }
 
-   private function getSelectedUser(id:Number, array:Array):int {
-      for (var index:int = 0; index < array.length; index++) {
-         if (array[index].id == id) {
+   private function getSelectionIndex(id:Number, collection:ArrayCollection):int {
+      for (var index:int = 0; index < collection.length; index++) {
+         if (collection.getItemAt(index).id == id) {
             return index;
          }
       }

@@ -1,5 +1,4 @@
-package com.express.view.backlogItem
-{
+package com.express.view.backlogItem {
 import com.express.ApplicationFacade;
 import com.express.controller.event.GridButtonEvent;
 import com.express.model.ProjectProxy;
@@ -125,13 +124,15 @@ public class BacklogItemMediator extends FormMediator {
                request.type = CreateBacklogItemRequest.UNCOMMITED_STORY;
                request.parentId = request.backlogItem.project.id;
             }
-            else if (request.backlogItem.iteration != null) {
-               request.type = CreateBacklogItemRequest.STORY;
-               request.parentId = request.backlogItem.iteration.id;
-            }
             else {
-               request.type = CreateBacklogItemRequest.TASK;
-               request.parentId = request.backlogItem.parent.id;
+               if (request.backlogItem.iteration != null) {
+                  request.type = CreateBacklogItemRequest.STORY;
+                  request.parentId = request.backlogItem.iteration.id;
+               }
+               else {
+                  request.type = CreateBacklogItemRequest.TASK;
+                  request.parentId = request.backlogItem.parent.id;
+               }
             }
             _projectProxy.productBacklogRequest = request.backlogItem.inProductBacklog();
             sendNotification(ApplicationFacade.NOTE_CREATE_BACKLOG_ITEM, request);
@@ -180,28 +181,26 @@ public class BacklogItemMediator extends FormMediator {
    public override function bindForm():void {
       view.backlogItemForm.asA.dataProvider = _projectProxy.selectedProject.actors;
       view.acceptanceCriteriaView.grdCriteria.dataProvider = _proxy.currentBacklogItem.acceptanceCriteria;
-      if (_proxy.currentBacklogItem != null) {
-         view.backlogItemForm.title.text = _proxy.currentBacklogItem.title;
-         view.backlogItemForm.itemStatus.selectedItem = _proxy.currentBacklogItem.status;
-         view.backlogItemForm.effort.text = _proxy.currentBacklogItem.effort.toString();
-         view.backlogItemForm.businessValue.text = _proxy.currentBacklogItem.businessValue.toString();
-         view.backlogItemForm.cboAssignedTo.dataProvider = _projectProxy.developers;
-         view.backlogItemForm.cboAssignedTo.selectedIndex = _projectProxy.getDeveloperIndex(_proxy.currentBacklogItem.assignedTo);
-         view.backlogItemForm.descriptionEditor.textArea.htmlText = _proxy.currentBacklogItem.detailedDescription;
-         if (_proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CHILD_CREATE || _proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CHILD_EDIT) {
-            view.backlogItemForm.summary.text = _proxy.currentBacklogItem.summary;
-            view.backlogItemForm.focusManager.setFocus(view.backlogItemForm.summary);
-         }
-         else {
-            view.backlogItemForm.asA.text = _proxy.currentBacklogItem.asA;
-            view.backlogItemForm.iWant.text = _proxy.currentBacklogItem.want;
-            view.backlogItemForm.soThat.text = _proxy.currentBacklogItem.soThat;
-            view.backlogItemForm.lstTheme.selectedIndices = getSelectedThemeIndices(_proxy.currentBacklogItem.themes.source);
-            view.backlogItemForm.focusManager.setFocus(view.backlogItemForm.asA);
-         }
-         resetValidation();
-         view.tbViews.selectedIndex = 0;
+      view.backlogItemForm.title.text = _proxy.currentBacklogItem.title;
+      view.backlogItemForm.itemStatus.selectedItem = _proxy.currentBacklogItem.status;
+      view.backlogItemForm.effort.text = _proxy.currentBacklogItem.effort.toString();
+      view.backlogItemForm.businessValue.text = _proxy.currentBacklogItem.businessValue.toString();
+      view.backlogItemForm.cboAssignedTo.dataProvider = _projectProxy.developers;
+      view.backlogItemForm.cboAssignedTo.selectedIndex = _projectProxy.getDeveloperIndex(_proxy.currentBacklogItem.assignedTo);
+      view.backlogItemForm.descriptionEditor.textArea.htmlText = _proxy.currentBacklogItem.detailedDescription;
+      if (_proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CHILD_CREATE || _proxy.viewAction == BacklogItemProxy.ACTION_ITEM_CHILD_EDIT) {
+         view.backlogItemForm.summary.text = _proxy.currentBacklogItem.summary;
+         view.backlogItemForm.focusManager.setFocus(view.backlogItemForm.summary);
       }
+      else {
+         view.backlogItemForm.asA.text = _proxy.currentBacklogItem.asA;
+         view.backlogItemForm.iWant.text = _proxy.currentBacklogItem.want;
+         view.backlogItemForm.soThat.text = _proxy.currentBacklogItem.soThat;
+         view.backlogItemForm.lstTheme.selectedIndices = getSelectedThemeIndices(_proxy.currentBacklogItem.themes.source);
+         view.backlogItemForm.focusManager.setFocus(view.backlogItemForm.asA);
+      }
+      resetValidation();
+      view.tbViews.selectedIndex = 0;
    }
 
    private function handleWindowClose(event:Event):void {
@@ -238,7 +237,7 @@ public class BacklogItemMediator extends FormMediator {
 
    public override function handleNotification(notification:INotification):void {
       TitleWindow(view.parent).addEventListener(CloseEvent.CLOSE, handleWindowClose);
-      _proxy.currentBacklogItem = notification.getBody() as BacklogItem;
+      _proxy.currentBacklogItem = BacklogItem(notification.getBody());
       switch (notification.getName()) {
          case CREATE :
             if (_proxy.currentBacklogItem.parent == null) {

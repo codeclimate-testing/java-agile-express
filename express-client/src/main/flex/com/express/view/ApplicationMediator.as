@@ -1,5 +1,4 @@
-package com.express.view
-{
+package com.express.view {
 import com.express.ApplicationFacade;
 import com.express.controller.LoginCommand;
 import com.express.controller.ProjectLoadCommand;
@@ -57,7 +56,7 @@ public class ApplicationMediator extends Mediator {
    private var _loginView:LoginView;
    private var _secureContext:SecureContextProxy;
    private var _projectProxy:ProjectProxy;
-   private var _parameterProxy : RequestParameterProxy;
+   private var _parameterProxy:RequestParameterProxy;
    private var _popupManager:ExpressPopUpManager;
 
 
@@ -137,10 +136,10 @@ public class ApplicationMediator extends Mediator {
 
    override public function handleNotification(notification:INotification):void {
       switch (notification.getName()) {
-         case BacklogItemMediator.CREATE :
          case BacklogItemMediator.EDIT :
-            _popupManager.showBacklogWindow(notification);
             _parameterProxy.setParameter(RequestParameterProxy.BACKLOG_ITEM_ID_PARAM, notification.getBody().id);
+         case BacklogItemMediator.CREATE :
+            _popupManager.showBacklogWindow(notification);
             break;
          case IterationMediator.CREATE :
             _popupManager.showIterationWindow("Create Iteration", notification);
