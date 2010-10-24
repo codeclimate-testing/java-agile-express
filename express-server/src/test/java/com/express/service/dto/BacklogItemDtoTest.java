@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class BacklogItemDtoTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<BacklogItemDto> setterGetterInvoker = new SetterGetterInvoker<BacklogItemDto>(new BacklogItemDto());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class BacklogItemDtoTest {      private BacklogItemDto item;      @Before   public void setUp() {      item = new BacklogItemDto();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(item, hasValidSettersAndGettersExcluding());   }}

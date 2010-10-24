@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class ProjectWorkerDtoTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<ProjectWorkerDto> setterGetterInvoker = new SetterGetterInvoker<ProjectWorkerDto>(new ProjectWorkerDto());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class ProjectWorkerDtoTest {   private ProjectWorkerDto worker;      @Before   public void setUp() {      worker = new ProjectWorkerDto();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(worker, hasValidSettersAndGettersExcluding());   }}

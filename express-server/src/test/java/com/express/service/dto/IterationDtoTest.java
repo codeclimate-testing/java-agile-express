@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class IterationDtoTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-//       SetterGetterInvoker<IterationDto> setterGetterInvoker = new SetterGetterInvoker<IterationDto>(new IterationDto());
-//       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class IterationDtoTest {   private IterationDto iteration;      @Before   public void setUp() {      iteration = new IterationDto();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(iteration, hasValidSettersAndGettersExcluding("history"));   }}

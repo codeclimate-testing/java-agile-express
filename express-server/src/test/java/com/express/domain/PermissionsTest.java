@@ -1,22 +1,1 @@
-package com.express.domain;
-
-import com.express.testutils.SetterGetterInvoker;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.Test;
-
-/**
- * @author Adam Boas
- *         Created on Mar 28, 2009
- */
-public class PermissionsTest {
-   private static final Log LOG = LogFactory.getLog(PermissionsTest.class);
-
-   @Test
-   public void shouldSetAndGetProperties() {
-      Permissions perm = new Permissions();
-      SetterGetterInvoker<Permissions> setterGetterInvoker = new SetterGetterInvoker<Permissions>(perm);
-      setterGetterInvoker.invokeSettersAndGetters();
-      LOG.info(perm);
-   }
-}
+package com.express.domain;import org.apache.commons.logging.Log;import org.apache.commons.logging.LogFactory;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static com.express.matcher.BeanMatchers.usesPersistableEqualityStrategy;import static com.express.matcher.BeanMatchers.usesPersistableHashCodeStrategy;import static com.express.matcher.BeanMatchers.usesReflectionToStringBuilder;import static org.hamcrest.MatcherAssert.assertThat;/** * @author Adam Boas *         Created on Mar 28, 2009 */public class PermissionsTest {   private static final Log LOG = LogFactory.getLog(PermissionsTest.class);      private Permissions perm;   @Before   public void setUp() {      perm = new Permissions();   }      @Test   public void shouldSetAndGetProperties() {      assertThat(perm, hasValidSettersAndGettersExcluding("equalityStrategy", "version"));   }   @Test   public void shouldBaseEqualityOnThePersistableEqualityStrategy() {      assertThat(perm, usesPersistableEqualityStrategy());   }   @Test   public void shouldBaseHashCodeOnThePersistableEqualityStrategy() {      assertThat(perm, usesPersistableHashCodeStrategy());   }   @Test   public void shouldUseReflectionToStringBuilder() {      assertThat(perm, usesReflectionToStringBuilder());   }}

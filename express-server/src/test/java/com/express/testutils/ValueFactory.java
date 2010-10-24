@@ -1,65 +1,1 @@
-package com.express.testutils;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.HashMap;
-import java.util.Map;
-
-
-public class ValueFactory {
-
-   private Map<Class<?>, Object> typeValues;
-
-   /**
-    * Constructor.
-    */
-   public ValueFactory() {
-      typeValues = new HashMap<Class<?>, Object>();
-      typeValues.put(String.class, "test");
-      typeValues.put(Long.class, new Long(42));
-      typeValues.put(Long.TYPE, new Long(42));
-      typeValues.put(Integer.class, Integer.valueOf(21));
-      typeValues.put(Integer.TYPE, Integer.valueOf(21));
-      typeValues.put(Boolean.class, Boolean.TRUE);
-      typeValues.put(Boolean.TYPE, Boolean.TRUE);
-      
-   }
-
-   /**
-    * Create a test value.
-    * @param type Desired type of value.
-    * @return Created value.
-    */
-   public Object createValue(Class<?> type) {
-      Object value = null;
-      if (typeValues.containsKey(type)) {
-         value = typeValues.get(type);
-      } else if (type.isInterface()) {
-         value = Proxy.newProxyInstance(type.getClassLoader(), new Class[] {type},
-               new TestInvocationHandler(type.getName()));
-      }
-      return value;
-   }
-
-   private static class TestInvocationHandler implements InvocationHandler {
-      
-      private String name;
-      
-      
-      public TestInvocationHandler(String name) {
-         super();
-         this.name = name;
-      }
-
-      
-      public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-         Object result = null;
-         if ("toString".equals(method.getName())) {
-            result = "proxy for " + name;
-         }
-         return result;
-      }
-      
-   }
-}
+package com.express.testutils;import java.lang.reflect.Modifier;import java.util.HashMap;import java.util.Map;import static org.mockito.Mockito.mock;public class ValueFactory {   private static final int A_NUMBER = 42;   private static final int HALF_A_NUMBER = 21;   private Map<Class<?>, Object> typeValues;   public ValueFactory() {      typeValues = new HashMap<Class<?>, Object>();      typeValues.put(String.class, "test");      typeValues.put(Long.class, new Long(A_NUMBER));      typeValues.put(Long.TYPE, new Long(A_NUMBER));      typeValues.put(Integer.class, Integer.valueOf(HALF_A_NUMBER));      typeValues.put(Integer.TYPE, Integer.valueOf(HALF_A_NUMBER));      typeValues.put(Boolean.class, Boolean.TRUE);      typeValues.put(Boolean.TYPE, Boolean.TRUE);      typeValues.put(Long[].class, new Long[0]);      typeValues.put(Integer[].class, new Integer[0]);      typeValues.put(String[].class, new String[0]);      typeValues.put(Boolean[].class, new Boolean[0]);   }   public Object createValue(Class<?> type) {      if(Modifier.isFinal(type.getModifiers())) {         return typeValues.get(type);      }      return mock(type);   }}

@@ -1,18 +1,1 @@
-package com.express.domain;
-
-import org.unitils.UnitilsJUnit4;
-import org.junit.Test;
-import com.express.testutils.SetterGetterInvoker;
-
-/**
- * @author Adam Boas
- *         Created on Mar 22, 2009
- */
-public class AccessRequestTest extends UnitilsJUnit4 {
-
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<AccessRequest> setterGetterInvoker = new SetterGetterInvoker<AccessRequest>(new AccessRequest());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-}
+package com.express.domain;import org.junit.Before;import org.junit.Test;import org.unitils.UnitilsJUnit4;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static com.express.matcher.BeanMatchers.usesPersistableEqualityStrategy;import static com.express.matcher.BeanMatchers.usesPersistableHashCodeStrategy;import static com.express.matcher.BeanMatchers.usesReflectionToStringBuilder;import static org.hamcrest.MatcherAssert.assertThat;/** * @author Adam Boas *         Created on Mar 22, 2009 */public class AccessRequestTest extends UnitilsJUnit4 {      private AccessRequest accessRequest;      @Before   public void setUup() {      accessRequest = new AccessRequest();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(accessRequest, hasValidSettersAndGettersExcluding("equalityStrategy", "version"));   }   @Test   public void shouldBaseEqualityOnThePersistableEqualityStrategy() {      assertThat(accessRequest, usesPersistableEqualityStrategy());   }   @Test   public void shouldBaseHashCodeOnThePersistableEqualityStrategy() {      assertThat(accessRequest, usesPersistableHashCodeStrategy());   }   @Test   public void shouldUseReflectionToStringBuilder() {      assertThat(accessRequest, usesReflectionToStringBuilder());   }}

@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class LoginRequestTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<LoginRequest> setterGetterInvoker = new SetterGetterInvoker<LoginRequest>(new LoginRequest());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class LoginRequestTest {   private LoginRequest request;   @Before   public void setUp() {      request = new LoginRequest();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(request, hasValidSettersAndGettersExcluding());   }}

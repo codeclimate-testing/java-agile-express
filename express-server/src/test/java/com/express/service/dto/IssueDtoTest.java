@@ -1,17 +1,1 @@
-package com.express.service.dto;
-
-import com.express.testutils.SetterGetterInvoker;
-import org.junit.Test;
-
-/**
- * @author Adam Boas
- *         Created on Mar 23, 2009
- */
-public class IssueDtoTest {
-
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<IssueDto> setterGetterInvoker = new SetterGetterInvoker<IssueDto>(new IssueDto());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;/** * @author Adam Boas *         Created on Mar 23, 2009 */public class IssueDtoTest {   private IssueDto issue;      @Before   public void setUp() {      issue = new IssueDto();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(issue, hasValidSettersAndGettersExcluding());   }}

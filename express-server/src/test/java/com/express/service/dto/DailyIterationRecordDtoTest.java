@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class DailyIterationRecordDtoTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<DailyIterationStatusRecordDto> setterGetterInvoker = new SetterGetterInvoker<DailyIterationStatusRecordDto>(new DailyIterationStatusRecordDto());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class DailyIterationRecordDtoTest {   private DailyIterationStatusRecordDto record;      @Before   public void setUp() {      record = new DailyIterationStatusRecordDto();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(record, hasValidSettersAndGettersExcluding());   }}

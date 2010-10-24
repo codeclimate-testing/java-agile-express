@@ -1,28 +1,1 @@
-package com.express.domain;
-
-import org.junit.Test;
-import org.unitils.UnitilsJUnit4;
-
-import java.util.Calendar;
-
-import static org.junit.Assert.assertEquals;
-
-/**
- * @author Adam Boas
- *         Created on Mar 23, 2009
- */
-public class DailyProjectStatusRecordTest extends UnitilsJUnit4 {
-   private static final Calendar CAL = Calendar.getInstance();
-   private static final Project PROJECT = new Project();
-   private static final Integer TOTAL_POINTS = 2;
-   private static final Integer COMPLETED_POINTS = 3;
-
-   @Test
-   public void testConstructorSetsFields() {
-       DailyProjectStatusRecord record = new DailyProjectStatusRecord(CAL, TOTAL_POINTS, COMPLETED_POINTS, PROJECT);
-      assertEquals(CAL, record.getDate());
-      assertEquals(TOTAL_POINTS, record.getTotalPoints());
-      assertEquals(COMPLETED_POINTS, record.getCompletedPoints());
-      assertEquals(PROJECT, record.getProject());
-   }
-}
+package com.express.domain;import org.junit.Before;import org.junit.Test;import org.unitils.UnitilsJUnit4;import java.util.Calendar;import static com.express.matcher.BeanMatchers.usesPersistableEqualityStrategy;import static com.express.matcher.BeanMatchers.usesPersistableHashCodeStrategy;import static com.express.matcher.BeanMatchers.usesReflectionToStringBuilder;import static org.hamcrest.MatcherAssert.assertThat;import static org.hamcrest.Matchers.equalTo;/** * @author Adam Boas *         Created on Mar 23, 2009 */public class DailyProjectStatusRecordTest extends UnitilsJUnit4 {   private static final Calendar CAL = Calendar.getInstance();   private static final Project PROJECT = new Project();   private static final Integer TOTAL_POINTS = 2;   private static final Integer COMPLETED_POINTS = 3;      private DailyProjectStatusRecord record;      @Before   public void setUp() {       record = new DailyProjectStatusRecord(CAL, TOTAL_POINTS, COMPLETED_POINTS, PROJECT);   }   @Test   public void testConstructorSetsFields() {      assertThat(CAL, equalTo(record.getDate()));      assertThat(TOTAL_POINTS, equalTo(record.getTotalPoints()));      assertThat(COMPLETED_POINTS, equalTo(record.getCompletedPoints()));      assertThat(PROJECT, equalTo(record.getProject()));   }      @Test   public void shouldBaseEqualityOnThePersistableEqualityStrategy() {      assertThat(record, usesPersistableEqualityStrategy());   }   @Test   public void shouldBaseHashCodeOnThePersistableEqualityStrategy() {      assertThat(record, usesPersistableHashCodeStrategy());   }   @Test   public void shouldUseReflectionToStringBuilder() {      assertThat(record, usesReflectionToStringBuilder());   }}

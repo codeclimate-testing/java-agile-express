@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class ProjectAccessDataTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<ProjectAccessData> setterGetterInvoker = new SetterGetterInvoker<ProjectAccessData>(new ProjectAccessData());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class ProjectAccessDataTest {   private ProjectAccessData data;      @Before   public void setUp() {      data = new ProjectAccessData();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(data, hasValidSettersAndGettersExcluding());   }}

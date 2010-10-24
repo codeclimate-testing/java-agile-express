@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class PermissionsDtoTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<PermissionsDto> setterGetterInvoker = new SetterGetterInvoker<PermissionsDto>(new PermissionsDto());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class PermissionsDtoTest {   private PermissionsDto permission;      @Before   public void setUp() {      permission = new PermissionsDto();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(permission, hasValidSettersAndGettersExcluding());   }}

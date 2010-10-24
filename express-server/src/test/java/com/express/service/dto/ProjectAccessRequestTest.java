@@ -1,14 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-
-import com.express.testutils.SetterGetterInvoker;
-
-public class ProjectAccessRequestTest {
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<ProjectAccessRequest> setterGetterInvoker = new SetterGetterInvoker<ProjectAccessRequest>(new ProjectAccessRequest());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;public class ProjectAccessRequestTest {   private ProjectAccessRequest request;   @Before   public void setUp() {      request = new ProjectAccessRequest();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(request, hasValidSettersAndGettersExcluding());   }}

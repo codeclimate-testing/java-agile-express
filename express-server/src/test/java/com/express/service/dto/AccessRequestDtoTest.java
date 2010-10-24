@@ -1,17 +1,1 @@
-package com.express.service.dto;
-
-import org.junit.Test;
-import com.express.testutils.SetterGetterInvoker;
-
-/**
- * @author Adam Boas
- *         Created on Mar 23, 2009
- */
-public class AccessRequestDtoTest {
-
-   @Test
-   public void shouldSetAndGetProperties() {
-       SetterGetterInvoker<AccessRequestDto> setterGetterInvoker = new SetterGetterInvoker<AccessRequestDto>(new AccessRequestDto());
-       setterGetterInvoker.invokeSettersAndGetters();
-   }
-}
+package com.express.service.dto;import org.junit.Before;import org.junit.Test;import static com.express.matcher.BeanMatchers.hasValidSettersAndGettersExcluding;import static org.hamcrest.MatcherAssert.assertThat;/** * @author Adam Boas *         Created on Mar 23, 2009 */public class AccessRequestDtoTest {      private AccessRequestDto request;   @Before   public void setUp() {      request = new AccessRequestDto();   }   @Test   public void shouldSetAndGetProperties() {      assertThat(request, hasValidSettersAndGettersExcluding());   }}
