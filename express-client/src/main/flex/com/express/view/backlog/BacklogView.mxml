@@ -43,7 +43,7 @@
                         <mx:LinkButton icon="@Embed('/images/icons/add.png')" width="20"
                                        toolTip="add task"
                                        click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_ADD_CHILD));"
-                                       visible="{data.parent == null}"/>
+                                       visible="{data.canAddTask}"/>
                         <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20"
                                        toolTip="remove item"
                                        click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));"/>
@@ -93,7 +93,7 @@
                         </mx:Script>
                         <mx:LinkButton icon="@Embed('/images/icons/add.png')" width="20" toolTip="add task"
                                        click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_ADD_CHILD));"
-                                       visible="{data.parent == null}"/>
+                                       visible="{data.canAddTask}"/>
                         <mx:LinkButton icon="@Embed('/images/icons/remove.png')" width="20" toolTip="remove item"
                                        click="dispatchEvent(new GridButtonEvent(true, true, data, GridButtonEvent.ACTION_REMOVE));"/>
                      </mx:HBox>
