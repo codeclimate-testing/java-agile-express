@@ -146,6 +146,7 @@ public class ProjectSummaryMediator extends Mediator{
    private function bindDisplay() : void {
       if(_proxy.selectedProject) {
          view.reference.text = _proxy.selectedProject.reference;
+         view.methodology.text = _proxy.selectedProject.methodology;
          view.effortUnit.text = _proxy.selectedProject.effortUnit;
          view.startDate.text = DateField.dateToString(_proxy.selectedProject.startDate, "DD/MM/YYYY");
          view.description.text = _proxy.selectedProject.description;

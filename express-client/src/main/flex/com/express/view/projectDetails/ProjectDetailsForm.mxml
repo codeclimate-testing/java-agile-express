@@ -13,8 +13,11 @@
    <mx:FormItem required="true" label="Reference">
       <mx:TextInput id="reference" width="250"/>
    </mx:FormItem>
+   <mx:FormItem required="true" label="Methodology">
+      <mx:ComboBox id="methodology" width="90"/>
+   </mx:FormItem>
    <mx:FormItem required="true" label="Effort Unit">
-      <mx:ComboBox id="effortUnit" width="80"/>
+      <mx:ComboBox id="effortUnit" width="90"/>
    </mx:FormItem>
    <mx:FormItem required="true" label="Start Date">
       <mx:DateField id="startDate" formatString="DD/MM/YYYY"/>

@@ -36,6 +36,7 @@ public class ProjectAccessMediator extends Mediator
       viewComp.existingProjectButton.addEventListener(MouseEvent.CLICK, handleSelectExistingProject);
 
       viewComp.newProjectForm.effortUnit.dataProvider = Project.EFFORT_UNITS;
+      viewComp.newProjectForm.methodology.dataProvider = Project.METHODOLOGIES;
       viewComp.newProjectForm.btnSave.label = "Create";
       viewComp.newProjectForm.btnSave.addEventListener(MouseEvent.CLICK, handleRequestNewProject);
       viewComp.newProjectForm.btnCancel.addEventListener(MouseEvent.CLICK, handleCancelButton);

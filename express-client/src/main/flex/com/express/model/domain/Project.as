@@ -9,7 +9,11 @@ public class Project
    public static const EFFORT_DAYS : String = "days";
    public static const EFFORT_STORY_PTS : String = "pts";
 
-   public static const EFFORT_UNITS : Array = new Array(EFFORT_STORY_PTS, EFFORT_DAYS, EFFORT_HOURS);
+   public static const METHODOLOGY_SCRUM : String = "Scrum";
+   public static const METHODOLOGY_XP : String = "XP";
+
+   public static const EFFORT_UNITS : Array = [EFFORT_STORY_PTS, EFFORT_DAYS, EFFORT_HOURS];
+   public static const METHODOLOGIES : Array = [METHODOLOGY_SCRUM, METHODOLOGY_XP];
 
    public function Project() {
       iterations = new ArrayCollection();
@@ -34,6 +38,8 @@ public class Project
    public var effortUnit : String = EFFORT_STORY_PTS;
 
    public var startDate : Date;
+
+   public var methodology : String;
 
    private var _targetReleaseDate : Date;
 

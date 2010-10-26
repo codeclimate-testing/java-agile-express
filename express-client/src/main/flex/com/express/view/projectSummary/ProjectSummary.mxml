@@ -35,6 +35,10 @@
       <mx:Label id="reference"/>
    </mx:HBox>
    <mx:HBox styleName="panelBox">
+      <mx:Label text="Methodology" fontWeight="bold" width="115"/>
+      <mx:Label id="methodology"/>
+   </mx:HBox>
+   <mx:HBox styleName="panelBox">
       <mx:Label text="Effort Unit" fontWeight="bold" width="115"/>
       <mx:Label id="effortUnit"/>
    </mx:HBox>

@@ -20,7 +20,8 @@ public class ProjectDetailsMediator extends FormMediator{
    public function ProjectDetailsMediator(viewComp : ProjectDetailsForm, mediatorName : String = NAME) {
       super(mediatorName, viewComp);
       _proxy = ProjectProxy(facade.retrieveProxy(ProjectProxy.NAME));
-      viewComp.effortUnit.dataProvider = Project.EFFORT_UNITS;
+      viewComp.effortUnit.dataProvider =  Project.EFFORT_UNITS;
+      viewComp.methodology.dataProvider = Project.METHODOLOGIES;
       viewComp.btnSave.label = "Update";
       viewComp.btnSave.addEventListener(MouseEvent.CLICK, handleUpdateButton);
       viewComp.btnCancel.addEventListener(MouseEvent.CLICK, handleCancelButton);
@@ -37,6 +38,7 @@ public class ProjectDetailsMediator extends FormMediator{
       view.reference.text = _proxy.selectedProject.reference;
       view.description.text = _proxy.selectedProject.description;
       view.effortUnit.selectedItem = _proxy.selectedProject.effortUnit;
+      view.methodology.selectedItem = _proxy.selectedProject.methodology;
       view.startDate.selectedDate = _proxy.selectedProject.startDate;
       view.focusManager.setFocus(view.title);
    }
@@ -45,6 +47,7 @@ public class ProjectDetailsMediator extends FormMediator{
       _proxy.selectedProject.title = view.title.text;
       _proxy.selectedProject.reference = view.reference.text;
       _proxy.selectedProject.effortUnit = view.effortUnit.text;
+      _proxy.selectedProject.methodology = view.methodology.text;
       _proxy.selectedProject.description = view.description.text;
       _proxy.selectedProject.startDate = view.startDate.selectedDate;
    }
