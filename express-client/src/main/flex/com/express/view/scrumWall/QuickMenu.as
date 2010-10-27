@@ -2,6 +2,7 @@ package com.express.view.scrumWall {
 import com.express.ApplicationFacade;
 import com.express.model.SecureContextProxy;
 import com.express.model.domain.BacklogItem;
+import com.express.model.domain.Project;
 import com.express.model.domain.User;
 
 import mx.binding.utils.BindingUtils;
@@ -48,7 +49,7 @@ public class QuickMenu {
 
    private function buildMenu(obj:Object = null):void {
       _quickMenu.source = [];
-      if (_item.isStory()) {
+      if (_item.canAddTask) {
          _quickMenu.addItem(_ADD_TASK);
          _quickMenu.addItem(_MARK_DONE);
       }
