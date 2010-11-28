@@ -57,14 +57,12 @@ public class ProjectManagerImpl implements ProjectManager {
    }
 
 
-
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public ProjectDto updateProject(ProjectDto projectDto) {
       Project project = domainFactory.createProject(projectDto, Policy.SHALLOW);
       projectDao.save(project);
       return remoteObjectFactory.createProjectDto(project, Policy.DEEP);
    }
-
 
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -85,26 +83,9 @@ public class ProjectManagerImpl implements ProjectManager {
    public ProjectAccessData findAccessRequestData() {
       User user = userService.getAuthenticatedUser();
       ProjectAccessData data = new ProjectAccessData();
-
-      List<ProjectDto> pending = new ArrayList<ProjectDto>();
-      for (AccessRequest request : user.getAccessRequests()) {
-         pending.add(remoteObjectFactory.createProjectDto(request.getProject(), Policy.SHALLOW));
-      }
-      data.setPendingList(pending);
-
-      List<ProjectDto> available = new ArrayList<ProjectDto>();
-      for (Project project : projectDao.findAvailable(user)) {
-         if (!user.hasPendingRequest(project)) {
-            available.add(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW));
-         }
-      }
-      data.setAvailableList(available);
-
-      List<ProjectDto> granted = new ArrayList<ProjectDto>();
-      for (Project project : projectDao.findAll(user)) {
-         granted.add(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW));
-      }
-      data.setGrantedList(granted);
+      addPendingAccessRequests(data, user);
+      addAvailableAccessRequests(user, data);
+      addGrantedAccessRequests(user, data);
       return data;
    }
 
@@ -118,25 +99,13 @@ public class ProjectManagerImpl implements ProjectManager {
       User user = userService.getAuthenticatedUser();
       if (request.getNewProject() != null) {
          Project project = domainFactory.createProject(request.getNewProject(), Policy.DEEP);
-         ProjectWorker worker = new ProjectWorker();
-         worker.getPermissions().setProjectAdmin(Boolean.TRUE);
-         worker.getPermissions().setIterationAdmin(Boolean.TRUE);
-         project.addProjectWorker(worker);
-         worker.setWorker(user);
+         setProjectAdmin(project, user);
          projectDao.save(project);
          return;
       }
-      List<ProjectDto> projects = request.getExistingProjects();
-      for (ProjectDto projectDto : projects) {
+      for (ProjectDto projectDto : request.getExistingProjects()) {
          Project project = projectDao.findById(projectDto.getId());
-         AccessRequest newRequest = new AccessRequest();
-         newRequest.setRequestDate(Calendar.getInstance());
-         newRequest.setStatus(AccessRequest.UNRESOLVED);
-         user.addAccessRequest(newRequest);
-         project.addAccessRequest(newRequest);
-         for (User manager : project.getProjectManagers()) {
-            notificationService.sendProjectAccessRequestNotification(newRequest, manager);
-         }
+         addAccessRequest(project, user);
          projectDao.save(project);
       }
    }
@@ -144,26 +113,24 @@ public class ProjectManagerImpl implements ProjectManager {
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void projectAccessResponse(Long id, Boolean response) {
       AccessRequest request = accessRequestDao.findById(id);
-      User requestor = request.getRequestor();
-      if (request.getProject().isManager(userService.getAuthenticatedUser())) {
-         Project project = request.getProject();
-         if (response) {
-            ProjectWorker worker = new ProjectWorker();
-            worker.setWorker(requestor);
-            project.addProjectWorker(worker);
-            notificationService.sendProjectAccessAccept(request);
-         }
-         else {
-            notificationService.sendProjectAccessReject(request);
-         }
-         requestor.removeAccessRequest(request);
-         project.removeAccessRequest(request);
-         projectDao.save(project);
-         userDao.save(requestor);
-      }
-      else {
+      if (!request.getProject().isManager(userService.getAuthenticatedUser())) {
          throw new RemoteAccessException("You are not authorized to approve requests");
       }
+      User requestor = request.getRequestor();
+      Project project = request.getProject();
+      if (response) {
+         ProjectWorker worker = new ProjectWorker();
+         worker.setWorker(requestor);
+         project.addProjectWorker(worker);
+         notificationService.sendProjectAccessAccept(request);
+      }
+      else {
+         notificationService.sendProjectAccessReject(request);
+      }
+      requestor.removeAccessRequest(request);
+      project.removeAccessRequest(request);
+      projectDao.save(project);
+      userDao.save(requestor);
    }
 
    public List<BacklogItemDto> loadBacklog(LoadBacklogRequest request) {
@@ -190,20 +157,20 @@ public class ProjectManagerImpl implements ProjectManager {
       for (Iteration iteration : iterations) {
          int completedPoints = iteration.getStoryPointsCompleted();
          DailyIterationStatusRecord record = new DailyIterationStatusRecord(Calendar.getInstance(),
-                                                                            iteration.getTaskEffortRemaining(),
-                                                                            iteration.getStoryPoints(),
-                                                                            completedPoints,
-                                                                            iteration);
+               iteration.getTaskEffortRemaining(),
+               iteration.getStoryPoints(),
+               completedPoints,
+               iteration);
          iteration.setFinalVelocity(completedPoints);
          iteration.addHistoryRecord(record);
          projectDao.save(iteration.getProject());
       }
       List<Project> projects = projectDao.findAll();
-      for(Project project : projects) {
+      for (Project project : projects) {
          DailyProjectStatusRecord record = new DailyProjectStatusRecord(Calendar.getInstance(),
-                                                                        project.getStoryPoints(),
-                                                                        project.getStoryPointsCompleted(),
-                                                                        project);
+               project.getStoryPoints(),
+               project.getStoryPointsCompleted(),
+               project);
          project.addHistoryRecord(record);
          projectDao.save(project);
       }
@@ -213,7 +180,7 @@ public class ProjectManagerImpl implements ProjectManager {
    public void updateThemes(ThemesUpdateRequest request) {
       Project project = projectDao.findById(request.getProjectId());
       project.clearThemes();
-      for(ThemeDto themeDto : request.getThemes()) {
+      for (ThemeDto themeDto : request.getThemes()) {
          project.addTheme(domainFactory.createTheme(themeDto));
       }
       projectDao.save(project);
@@ -222,7 +189,7 @@ public class ProjectManagerImpl implements ProjectManager {
    public List<ThemeDto> loadThemes(Long projectId) {
       Project project = projectDao.findById(projectId);
       List<ThemeDto> themeDtos = new ArrayList<ThemeDto>();
-      for(Theme theme : project.getThemes()) {
+      for (Theme theme : project.getThemes()) {
          themeDtos.add(remoteObjectFactory.createThemeDto(theme));
       }
       Collections.sort(themeDtos);
@@ -233,14 +200,14 @@ public class ProjectManagerImpl implements ProjectManager {
    public void updateProjectWorkers(ProjectWorkersUpdateRequest request) {
       Project project = projectDao.findById(request.getProjectId());
       project.getProjectWorkers().clear();
-      for(ProjectWorkerDto workerDto : request.getWorkers()) {
+      for (ProjectWorkerDto workerDto : request.getWorkers()) {
          project.addProjectWorker(domainFactory.createProjectWorker(workerDto));
       }
       projectDao.save(project);
    }
 
    public String getCSV(CSVRequest request) {
-      if(CSVRequest.TYPE_ITERATION_BACKLOG == request.getType()) {
+      if (CSVRequest.TYPE_ITERATION_BACKLOG == request.getType()) {
          return iterationDao.findById(request.getId()).getBacklogAsCSV();
       }
       else {
@@ -251,9 +218,54 @@ public class ProjectManagerImpl implements ProjectManager {
    public List<AccessRequestDto> loadAccessRequests(Long projectId) {
       Project project = projectDao.findById(projectId);
       List<AccessRequestDto> requests = new ArrayList<AccessRequestDto>();
-      for(AccessRequest request : project.getAccessRequests()) {
+      for (AccessRequest request : project.getAccessRequests()) {
          requests.add(remoteObjectFactory.createAccessRequestDto(request));
       }
       return requests;
+   }
+
+   private void setProjectAdmin(Project project, User user) {
+      ProjectWorker worker = new ProjectWorker();
+      worker.setWorker(user);
+      worker.getPermissions().setProjectAdmin(Boolean.TRUE);
+      worker.getPermissions().setIterationAdmin(Boolean.TRUE);
+      project.addProjectWorker(worker);
+   }
+
+   private void addAccessRequest(Project project, User user) {
+      AccessRequest newRequest = new AccessRequest();
+      newRequest.setRequestDate(Calendar.getInstance());
+      newRequest.setStatus(AccessRequest.UNRESOLVED);
+      user.addAccessRequest(newRequest);
+      project.addAccessRequest(newRequest);
+      for (User manager : project.getProjectManagers()) {
+         notificationService.sendProjectAccessRequestNotification(newRequest, manager);
+      }
+   }
+
+   private void addGrantedAccessRequests(User user, ProjectAccessData data) {
+      List<ProjectDto> granted = new ArrayList<ProjectDto>();
+      for (Project project : projectDao.findAll(user)) {
+         granted.add(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW));
+      }
+      data.setGrantedList(granted);
+   }
+
+   private void addAvailableAccessRequests(User user, ProjectAccessData data) {
+      List<ProjectDto> available = new ArrayList<ProjectDto>();
+      for (Project project : projectDao.findAvailable(user)) {
+         if (!user.hasPendingRequest(project)) {
+            available.add(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW));
+         }
+      }
+      data.setAvailableList(available);
+   }
+
+   private void addPendingAccessRequests(ProjectAccessData data, User user) {
+      List<ProjectDto> pending = new ArrayList<ProjectDto>();
+      for (AccessRequest request : user.getAccessRequests()) {
+         pending.add(remoteObjectFactory.createProjectDto(request.getProject(), Policy.SHALLOW));
+      }
+      data.setPendingList(pending);
    }
 }

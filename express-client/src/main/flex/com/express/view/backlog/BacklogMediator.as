@@ -113,6 +113,7 @@ public class BacklogMediator extends Mediator {
 
    private function createAssignmentrequest(items:Array):BacklogItemAssignRequest {
       var assignmentRequest:BacklogItemAssignRequest = new BacklogItemAssignRequest();
+      assignmentRequest.projectId = _proxy.selectedProject.id;
       var length:int = items.length;
       for (var index:int; index < length; index++) {
          assignmentRequest.itemIds.push(items[index].id);

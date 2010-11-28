@@ -7,9 +7,9 @@ public class CreateBacklogItemRequest implements Serializable {
 
    private static final long serialVersionUID = -6979146785438719380L;
    
-   public static final Integer PRODUCT_BACKLOG_STORY = 0;
-   public static final Integer STORY = 1;
-   public static final Integer TASK = 2;
+   public static final int PRODUCT_BACKLOG_STORY = 0;
+   public static final int STORY = 1;
+   public static final int TASK = 2;
    
    private Integer type;
    
@@ -18,12 +18,12 @@ public class CreateBacklogItemRequest implements Serializable {
    private  BacklogItemDto backlogItem;
 
 
-   public Integer getType() {
+   public int getType() {
       return type;
    }
 
    
-   public void setType(Integer type) {
+   public void setType(int type) {
       this.type = type;
    }
 

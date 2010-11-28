@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 
+import static com.express.service.matchers.IsNullOrZeroMatcher.isNullOrZero;
+
 /**
  *
  */
@@ -39,12 +41,12 @@ public class BacklogItemManagerImpl implements BacklogItemManager {
    private final RemoteObjectFactory remoteObjectFactory;
 
    @Autowired
-   public BacklogItemManagerImpl(@Qualifier("projectDao")ProjectDao projectDao,
-                                 @Qualifier("userDao")UserDao userDao,
-                                 @Qualifier("backlogItemDao")BacklogItemDao backlogItemDao,
-                                 @Qualifier("iterationDao")IterationDao iterationDao,
-                                 @Qualifier("domainFactory")DomainFactory domainFactory,
-                                 @Qualifier("remoteObjectFactory")RemoteObjectFactory remoteObjectFactory) {
+   public BacklogItemManagerImpl(@Qualifier("projectDao") ProjectDao projectDao,
+                                 @Qualifier("userDao") UserDao userDao,
+                                 @Qualifier("backlogItemDao") BacklogItemDao backlogItemDao,
+                                 @Qualifier("iterationDao") IterationDao iterationDao,
+                                 @Qualifier("domainFactory") DomainFactory domainFactory,
+                                 @Qualifier("remoteObjectFactory") RemoteObjectFactory remoteObjectFactory) {
       this.projectDao = projectDao;
       this.userDao = userDao;
       this.iterationDao = iterationDao;
@@ -59,43 +61,25 @@ public class BacklogItemManagerImpl implements BacklogItemManager {
       if (request.getBacklogItem().getAssignedTo() != null) {
          item.setAssignedTo(userDao.findById(request.getBacklogItem().getAssignedTo().getId()));
       }
-      item.makeStatusConsitent();
-      Project project = null;
-      if (CreateBacklogItemRequest.PRODUCT_BACKLOG_STORY.equals(request.getType())) {
-         project = projectDao.findById(request.getParentId());
-         project.addBacklogItem(item, true);
-      }
-      else if (CreateBacklogItemRequest.STORY.equals(request.getType())) {
-         Iteration iteration = iterationDao.findById(request.getParentId());
-         iteration.addBacklogItem(item, true);
-         project = iteration.getProject();
-      }
-      else if (CreateBacklogItemRequest.TASK.equals(request.getType())) {
-         BacklogItem parent = backlogItemDao.findById(request.getParentId());
-         parent.addTask(item);
-         project = parent.getProject();
-      }
+      item.makeStatusConsistent();
+      Project project = getProjectWithItemInsertedByType(request.getType(),request.getParentId(), item);
       item.createReference();
       projectDao.save(project);
-      return remoteObjectFactory.createBacklogItemDto(
-            project.findBacklogItemByReference(item.getReference()), Policy.DEEP);
+      return remoteObjectFactory.createBacklogItemDto(project.findBacklogItemByReference(item.getReference()),
+                                                      Policy.DEEP);
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void updateBacklogItem(BacklogItemDto backlogItemDto) {
       BacklogItem backlogItem = domainFactory.createBacklogItem(backlogItemDto);
-      backlogItem.makeStatusConsitent();
+      backlogItem.makeStatusConsistent();
       projectDao.save(backlogItem.getProject());
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void markStoryDone(Long id) {
       BacklogItem story = backlogItemDao.findById(id);
-      for(BacklogItem task : story.getTasks()) {
-         task.setStatus(Status.DONE);
-         task.setEffort(0);
-      }
-      story.setStatus(Status.DONE);
+      story.setDone();
       projectDao.save(story.getProject());
    }
 
@@ -119,36 +103,17 @@ public class BacklogItemManagerImpl implements BacklogItemManager {
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public void backlogItemAssignmentRequest(BacklogItemAssignRequest request) {
-      Project project = null;
+      Project project = projectDao.findById(request.getProjectId());
+      BacklogContainer from = getAssignmentSource(request);
+      BacklogContainer to = getAssignmentTarget(request);
+      int initialItemCount = to.getBacklog().size();
       for (Long itemId : request.getItemIds()) {
          BacklogItem item = backlogItemDao.findById(itemId);
-         project = item.getProject();
-         if (request.getIterationFromId() != null && request.getIterationFromId() != 0) {
-            Iteration from = item.getIteration();
-            if (from.getId().longValue() != request.getIterationFromId().longValue()) {
-               throw new IllegalArgumentException("IterationFromId was not the current owner of " +
-                     "the backlogItem you are trying to assign");
-            }
-            if (!from.removeBacklogItem(item)) {
-               throw new IllegalArgumentException("The backlogItem you are trying to assign " +
-                     "was not contained in Iteration indicated by your iterationFromId");
-            }
-         }
-         else {
-            if (!project.removeBacklogItem(item)) {
-               throw new IllegalArgumentException("The backlogItem you are trying to assign " +
-                     "was not contained in it's Project's uncommitedBacklog");
-            }
-         }
-         if (request.getIterationToId() != null && request.getIterationToId() != 0) {
-            Iteration to = iterationDao.findById(request.getIterationToId());
-            to.addBacklogItem(item, false);
-         }
-         else {
-            project.addBacklogItem(item, false);
-         }
+         to.addBacklogItem(from.removeBacklogItem(item), false);
       }
-
+      if(to.getBacklog().size() !=  initialItemCount + request.getItemIds().length) {
+         throw new IllegalArgumentException("Unable to assign all backlog items in request");
+      }
       projectDao.save(project);
    }
 
@@ -167,5 +132,40 @@ public class BacklogItemManagerImpl implements BacklogItemManager {
       impediment.setEndDate(Calendar.getInstance());
       item.setImpediment(null);
       projectDao.save(item.getProject());
+   }
+
+   private BacklogContainer getAssignmentSource(BacklogItemAssignRequest request) {
+      if (!isNullOrZero(request.getIterationFromId())) {
+         return iterationDao.findById(request.getIterationFromId());
+      }
+      return projectDao.findById(request.getProjectId());
+   }
+
+   private BacklogContainer getAssignmentTarget(BacklogItemAssignRequest request) {
+      if (!isNullOrZero(request.getIterationToId())) {
+         return iterationDao.findById(request.getIterationToId());
+      }
+      return projectDao.findById(request.getProjectId());
+   }
+
+   private Project getProjectWithItemInsertedByType(int type, Long id, BacklogItem item) {
+      Project project = null;
+      switch (type) {
+         case CreateBacklogItemRequest.PRODUCT_BACKLOG_STORY:
+            project = projectDao.findById(id);
+            project.addBacklogItem(item, true);
+            break;
+         case CreateBacklogItemRequest.STORY:
+            Iteration iteration = iterationDao.findById(id);
+            iteration.addBacklogItem(item, true);
+            project = iteration.getProject();
+            break;
+         case CreateBacklogItemRequest.TASK:
+            BacklogItem parent = backlogItemDao.findById(id);
+            parent.addTask(item);
+            project = parent.getProject();
+            break;
+      }
+      return project;
    }
 }

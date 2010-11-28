@@ -6,6 +6,7 @@ import com.express.dao.ProjectDao;
 import com.express.dao.UserDao;
 import com.express.domain.*;
 import com.express.service.dto.AddImpedimentRequest;
+import com.express.service.dto.BacklogItemAssignRequest;
 import com.express.service.dto.BacklogItemDto;
 import com.express.service.dto.CreateBacklogItemRequest;
 import com.express.service.mapping.DomainFactory;
@@ -16,8 +17,14 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -138,4 +145,20 @@ public class BacklogItemManagerImplTest {
       projectDao.save(project);
       backlogItemManager.addImpediment(request);
    }
+
+   @Test
+   public void shouldRemoveImpedimentFromBacklogItem() {
+      BacklogItemDto dto = new BacklogItemDto();
+      dto.setId(2l);
+      BacklogItem item = mock(BacklogItem.class);
+      when(backlogItemDao.findById(2l)).thenReturn(item);
+      Issue impediment = mock(Issue.class);
+      when(item.getImpediment()).thenReturn(impediment);
+      Project project = mock(Project.class);
+      when(item.getProject()).thenReturn(project);
+      backlogItemManager.removeImpediment(dto);
+      verify(item).setImpediment(null);
+      verify(projectDao).save(project);
+   }
+
 }
