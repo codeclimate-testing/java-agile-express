@@ -49,10 +49,12 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    @Column(name = "so_that")
    private String soThat;
 
-   @Column(name = "summary") @Lob
+   @Column(name = "summary")
+   @Lob
    private String summary;
 
-   @Column(name = "description") @Lob
+   @Column(name = "description")
+   @Lob
    private String detailedDescription;
 
    @Enumerated(EnumType.ORDINAL)
@@ -369,9 +371,20 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
          parent.makeStatusConsistent();
          return;
       }
-      else if (tasks.size() == 0) {
-         return;
+      if (tasks.size() > 0) {
+         Map<Status, Integer> counts = countTasks();
+         if (counts.get(Status.IN_PROGRESS) > 0) {
+            status = Status.IN_PROGRESS;
+         }
+         for (Status key : counts.keySet()) {
+            if (tasks.size() == counts.get(key)) {
+               status = key;
+            }
+         }
       }
+   }
+
+   private Map<Status, Integer> countTasks() {
       Map<Status, Integer> counts = new HashMap<Status, Integer>();
       counts.put(Status.OPEN, 0);
       counts.put(Status.IN_PROGRESS, 0);
@@ -380,18 +393,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       for (BacklogItem task : tasks) {
          counts.put(task.getStatus(), counts.get(task.getStatus()) + 1);
       }
-      if (counts.get(Status.OPEN) == tasks.size()) {
-         status = Status.OPEN;
-      }
-      else if (counts.get(Status.IN_PROGRESS) > 0) {
-         status = Status.IN_PROGRESS;
-      }
-      else if (counts.get(Status.TEST) == tasks.size()) {
-         status = Status.TEST;
-      }
-      else if (counts.get(Status.DONE) == tasks.size()) {
-         status = Status.DONE;
-      }
+      return counts;
    }
 
    public BacklogItem findTaskByReference(String ref) {
@@ -433,7 +435,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
    }
 
    public void setDone() {
-      for(BacklogItem task : tasks) {
+      for (BacklogItem task : tasks) {
          task.setStatus(Status.DONE);
          task.setEffort(0);
       }

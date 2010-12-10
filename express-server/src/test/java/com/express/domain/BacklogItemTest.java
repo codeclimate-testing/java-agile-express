@@ -14,12 +14,13 @@ import static com.express.matcher.BeanMatchers.usesPersistableEqualityStrategy;
 import static com.express.matcher.BeanMatchers.usesPersistableHashCodeStrategy;
 import static com.express.matcher.BeanMatchers.usesReflectionToStringBuilder;
 import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class BacklogTest extends UnitilsJUnit4 {
-   private static final Log LOG = LogFactory.getLog(BacklogTest.class);
+public class BacklogItemTest extends UnitilsJUnit4 {
+   private static final Log LOG = LogFactory.getLog(BacklogItemTest.class);
    static final String REF = "ref-1";
    static final Theme THEME = new Theme();
    static final String THEME_TITLE = "test";
@@ -84,6 +85,61 @@ public class BacklogTest extends UnitilsJUnit4 {
       item.addTask(task);
       item.setDone();
       verify(task).setStatus(Status.DONE);
+   }
+
+   @Test
+   public void makeStatusConsistentShouldCallUpToParentIfItemHasOne() {
+      BacklogItem parent = mock(BacklogItem.class);
+      item.setParent(parent);
+      item.makeStatusConsistent();
+      verify(parent).makeStatusConsistent();
+   }
+
+   @Test
+   public void makeStatusShouldLeaveStatusUnchangedIfItemContainsNoTasks() {
+      item.setStatus(Status.TEST);
+      item.makeStatusConsistent();
+      assertThat(item.getStatus(), is(Status.TEST));
+   }
+
+   @Test
+   public void makeStatusConsistentShouldSetStatusToInProgressIfAnyTaskInProgress() {
+      item.setStatus(Status.TEST);
+      addTasksWithStatuses(Status.IN_PROGRESS, Status.TEST);
+      item.makeStatusConsistent();
+      assertThat(item.getStatus(), is(Status.IN_PROGRESS));
+   }
+
+   @Test
+   public void makeStatusConsistentShouldSetStatusToOpenWhenAllTasksDone() {
+      item.setStatus(Status.TEST);
+      addTasksWithStatuses(Status.OPEN, Status.OPEN);
+      item.makeStatusConsistent();
+      assertThat(item.getStatus(), is(Status.OPEN));
+   }
+
+   @Test
+   public void makeStatusConsistentShouldSetStatusToTestWhenAllTasksDone() {
+      item.setStatus(Status.OPEN);
+      addTasksWithStatuses(Status.TEST, Status.TEST);
+      item.makeStatusConsistent();
+      assertThat(item.getStatus(), is(Status.TEST));
+   }
+
+   @Test
+   public void makeStatusConsistentShouldSetStatusToDoneWhenAllTasksDone() {
+      item.setStatus(Status.TEST);
+      addTasksWithStatuses(Status.DONE, Status.DONE);
+      item.makeStatusConsistent();
+      assertThat(item.getStatus(), is(Status.DONE));
+   }
+
+   private void addTasksWithStatuses(Status... statuses) {
+      for(Status status : statuses) {
+         BacklogItem task = new BacklogItem();
+         task.setStatus(status);
+         item.addTask(task);
+      }
    }
 
 }

@@ -43,13 +43,13 @@
                <dependency>
                   <groupId>com.adobe.flex</groupId>
                   <artifactId>compiler</artifactId>
-                  <version>${flexVersion}</version>
+                  <version>${flex.version}</version>
                   <type>pom</type>
                </dependency>
                <dependency>
                   <groupId>com.adobe.flex</groupId>
                   <artifactId>license</artifactId>
-                  <version>${flexVersion}</version>
+                  <version>${flex.version}</version>
                </dependency>
             </dependencies>
          </plugin>
@@ -60,7 +60,7 @@
       <dependency>
          <groupId>com.adobe.flex.framework</groupId>
          <artifactId>flex-framework</artifactId>
-         <version>${flexVersion}</version>
+         <version>${flex.version}</version>
          <type>pom</type>
          <exclusions>
             <exclusion>
@@ -73,7 +73,7 @@
       <dependency>
          <groupId>com.adobe.flex.framework</groupId>
          <artifactId>playerglobal</artifactId>
-         <version>${flexVersion}</version>
+         <version>${flex.version}</version>
          <classifier>10</classifier>
          <type>swc</type>
       </dependency>
@@ -88,14 +88,14 @@
       <dependency>
          <groupId>com.adobe.flex</groupId>
          <artifactId>datavisualization</artifactId>
-         <version>${flexVersion}</version>
+         <version>${flex.version}</version>
          <type>swc</type>
       </dependency>
 
       <dependency>
          <groupId>com.adobe.flex</groupId>
          <artifactId>datavisualization</artifactId>
-         <version>${flexVersion}</version>
+         <version>${flex.version}</version>
          <type>rb.swc</type>
       </dependency>
 
