@@ -420,17 +420,11 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       result.append(title).append(",");
       result.append(summary).append(",");
       result.append(status.getTitle()).append(",");
-      if (assignedTo == null) {
-         result.append("unassigned,");
-      }
-      else {
-         result.append(assignedTo.getFullName()).append(",");
-      }
+      result.append(assignedTo == null ? "unassigned" : assignedTo.getFullName()).append(",");
       result.append(effort).append(",");
       result.append(businessValue);
       for (AcceptanceCriteria criteria : acceptanceCriteria) {
-         result.append("\n");
-         result.append(criteria.toCSV());
+         result.append("\n").append(criteria.toCSV());
       }
       return result.toString();
    }
