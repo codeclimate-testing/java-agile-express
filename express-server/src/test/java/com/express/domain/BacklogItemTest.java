@@ -133,6 +133,20 @@ public class BacklogItemTest extends UnitilsJUnit4 {
       item.makeStatusConsistent();
       assertThat(item.getStatus(), is(Status.DONE));
    }
+   
+   @Test
+   public void shouldAddTasksShouldIncrementTaskCount() {
+      addTasksWithStatuses(Status.OPEN, Status.OPEN);
+      assertThat(item.getTaskCount(), is(2));
+   }
+
+   @Test
+   public void shouldRemoveTasksShouldDecrementTaskCount() {
+      BacklogItem task = new BacklogItem();
+      item.addTask(task);
+      item.removeTask(task);
+      assertThat(item.getTaskCount(), is(0));
+   }
 
    private void addTasksWithStatuses(Status... statuses) {
       for(Status status : statuses) {

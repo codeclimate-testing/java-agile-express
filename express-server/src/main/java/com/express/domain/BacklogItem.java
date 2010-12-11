@@ -201,15 +201,6 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       this.iteration = iteration;
    }
 
-   public void addToIterationIfAvailable(Issue impediment) {
-      if (this.iteration != null) {
-         this.iteration.addImpediment(impediment);
-      }
-      else if (this.parent != null && this.parent.getIteration() != null) {
-         this.parent.getIteration().addImpediment(impediment);
-      }
-   }
-
    public String getAsA() {
       return asA;
    }
@@ -261,7 +252,6 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       this.detailedDescription = detailedDescription;
    }
 
-
    public BacklogItem getParent() {
       return parent;
    }
@@ -281,6 +271,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       this.tasks = tasks;
    }
 
+
    public void addTask(BacklogItem task) {
       this.tasks.add(task);
       task.setParent(this);
@@ -291,6 +282,7 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       boolean result = this.tasks.remove(task);
       if (result) {
          task.setParent(null);
+         taskCount--;
       }
       return result;
    }
@@ -338,21 +330,6 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       return this.businessValue.compareTo(item.getBusinessValue());
    }
 
-   @Override
-   public boolean equals(Object obj) {
-      return equalityStrategy.entityEquals(obj);
-   }
-
-   @Override
-   public int hashCode() {
-      return equalityStrategy.entityHashCode(super.hashCode());
-   }
-
-   @Override
-   public String toString() {
-      return new ReflectionToStringBuilder(this).toString();
-   }
-
    /**
     * Retrieves the hours remaining in all tasks for this User Story.
     *
@@ -384,6 +361,34 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       }
    }
 
+   public BacklogItem findTaskByReference(String ref) {
+      for (BacklogItem task : tasks) {
+         if (task.getReference().equals(ref)) {
+            return task;
+         }
+      }
+      return null;
+   }
+
+   public static String getCSVTitleLine() {
+      return "Reference," + "Themes," + "Title," + "Summary," + "Status," + "Assigned To," + "Effort," + "Business Value";
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+      return equalityStrategy.entityEquals(obj);
+   }
+
+   @Override
+   public int hashCode() {
+      return equalityStrategy.entityHashCode(super.hashCode());
+   }
+
+   @Override
+   public String toString() {
+      return new ReflectionToStringBuilder(this).toString();
+   }
+
    private Map<Status, Integer> countTasks() {
       Map<Status, Integer> counts = new HashMap<Status, Integer>();
       counts.put(Status.OPEN, 0);
@@ -396,17 +401,13 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       return counts;
    }
 
-   public BacklogItem findTaskByReference(String ref) {
-      for (BacklogItem task : tasks) {
-         if (task.getReference().equals(ref)) {
-            return task;
-         }
+   private void addToIterationIfAvailable(Issue impediment) {
+      if (this.iteration != null) {
+         this.iteration.addImpediment(impediment);
       }
-      return null;
-   }
-
-   public static String getCSVTitleLine() {
-      return "Reference," + "Themes," + "Title," + "Summary," + "Status," + "Assigned To," + "Effort," + "Business Value";
+      else if (this.parent != null && this.parent.getIteration() != null) {
+         this.parent.getIteration().addImpediment(impediment);
+      }
    }
 
    public String toCSV() {

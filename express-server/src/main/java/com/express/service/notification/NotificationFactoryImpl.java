@@ -1,15 +1,14 @@
 package com.express.service.notification;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.express.domain.Project;
+import com.express.domain.User;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.util.Assert;
 
-import com.express.domain.User;
-import com.express.domain.Project;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NotificationFactoryImpl implements InitializingBean, NotificationFactory {
    private VelocityEngine velocityEngine;
@@ -83,9 +82,7 @@ public class NotificationFactoryImpl implements InitializingBean, NotificationFa
    }
 
    public Notification createConfirmationNotification(User user, String url) {
-      Map<String, String> model = new HashMap<String, String>();
-      model.put("headerImage", mailheaderImage);
-      model.put("name", user.getFullName());
+      Map<String, String> model = createModelWithCommonItems(user.getFullName());
       model.put("emailAddress", user.getEmail());
       model.put("url", url);
       model.put("adminEmail", from);
@@ -95,9 +92,7 @@ public class NotificationFactoryImpl implements InitializingBean, NotificationFa
    }
 
    public Notification createPasswordReminderNotification(User user) {
-      Map<String, String> model = new HashMap<String, String>();
-      model.put("headerImage", mailheaderImage);
-      model.put("name", user.getFullName());
+      Map<String, String> model = createModelWithCommonItems(user.getFullName());
       model.put("passwordHint", user.getPasswordHint());
       model.put("adminEmail", from);
       String message = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, passwordReminderHtmlTemplate, model);
@@ -106,9 +101,7 @@ public class NotificationFactoryImpl implements InitializingBean, NotificationFa
    }
 
    public Notification createProjectAccessRequestNotification(User applicant, Project project, User manager) {
-      Map<String, String> model = new HashMap<String, String>();
-      model.put("headerImage", mailheaderImage);
-      model.put("name",manager.getFullName());
+      Map<String, String> model = createModelWithCommonItems(manager.getFullName());
       model.put("applicantName", applicant.getFullName());
       model.put("projectName", project.getTitle());
       String message = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, projectAccessRequestHtmlTemplate, model);
@@ -116,20 +109,23 @@ public class NotificationFactoryImpl implements InitializingBean, NotificationFa
    }
 
    public Notification createProjectAccessRejectNotification(User applicant, Project project) {
-      Map<String, String> model = new HashMap<String, String>();
-      model.put("headerImage", mailheaderImage);
-      model.put("name", applicant.getFullName());
+      Map<String, String> model = createModelWithCommonItems(applicant.getFullName());
       model.put("projectName", project.getTitle());
       String message = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, projectAccessRejectHtmlTemplate, model);
       return new Notification(from, applicant.getEmail(), projectAccessRejectSubject, message);
    }
 
    public Notification createProjectAccessAcceptNotification(User applicant, Project project) {
-      Map<String, String> model = new HashMap<String, String>();
-      model.put("headerImage", mailheaderImage);
-      model.put("name", applicant.getFullName());
+      Map<String, String> model = createModelWithCommonItems(applicant.getFullName());
       model.put("projectName", project.getTitle());
       String message = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, projectAccessAcceptHtmlTemplate, model);
       return new Notification(from, applicant.getEmail(), projectAccessAcceptSubject, message);
+   }
+
+   private Map<String, String> createModelWithCommonItems(String fullName) {
+      Map<String, String> model = new HashMap<String, String>();
+      model.put("headerImage", mailheaderImage);
+      model.put("name", fullName);
+      return model;
    }
 }

@@ -52,7 +52,7 @@ public class UserManagerImpl implements UserManager {
       }
       catch(ObjectRetrievalFailureException e) {
          LOG.info("Invalid login attempt principle does not exist: [username:" + 
-                  request.getUsername() + "]");
+                  request.getUsername() + "]", e);
          throw new RemoteAccessException("Invalid username or password");
       }
       if(request.isPasswordReminderRequest()) {
