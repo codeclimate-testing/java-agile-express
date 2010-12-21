@@ -1,1 +1,110 @@
-package com.express.service.mapping;import com.express.dao.BacklogItemDao;import com.express.dao.IssueDao;import com.express.dao.IterationDao;import com.express.dao.ProjectDao;import com.express.dao.ProjectWorkerDao;import com.express.dao.ThemeDao;import com.express.dao.UserDao;import com.express.domain.BacklogItem;import com.express.domain.Issue;import com.express.domain.Iteration;import com.express.domain.Project;import com.express.domain.ProjectWorker;import com.express.domain.Theme;import com.express.domain.User;import com.express.service.dto.BacklogItemDto;import com.express.service.dto.IssueDto;import com.express.service.dto.IterationDto;import com.express.service.dto.ProjectDto;import com.express.service.dto.ProjectWorkerDto;import com.express.service.dto.ThemeDto;import com.express.service.dto.UserDto;import org.dozer.Mapper;import org.springframework.beans.factory.annotation.Autowired;import org.springframework.beans.factory.annotation.Qualifier;import org.springframework.stereotype.Service;import java.util.Calendar;@Service("domainFactory")public class DomainFactoryImpl implements DomainFactory {   private final Mapper beanMapper;   private final UserDao userDao;   private final ProjectDao projectDao;   private final IterationDao iterationDao;   private final BacklogItemDao backlogItemDao;   private final ThemeDao themeDao;   private final IssueDao issueDao;   private final ProjectWorkerDao projectWorkerDao;   @Autowired   public DomainFactoryImpl(@Qualifier("beanMapper") Mapper beanMapper,                            @Qualifier("userDao") UserDao userDao,                            @Qualifier("projectDao") ProjectDao projectDao,                            @Qualifier("iterationDao") IterationDao iterationDao,                            @Qualifier("backlogItemDao") BacklogItemDao backlogItemDao,                            @Qualifier("themeDao") ThemeDao themeDao,                            @Qualifier("issueDao") IssueDao issueDao,                            @Qualifier("projectWorkerDao") ProjectWorkerDao projectWorkerDao) {      this.beanMapper = beanMapper;      this.userDao = userDao;      this.projectDao = projectDao;      this.iterationDao = iterationDao;      this.backlogItemDao = backlogItemDao;      this.themeDao = themeDao;      this.issueDao = issueDao;      this.projectWorkerDao = projectWorkerDao;   }   public User createUser(UserDto dto) {      User user;      if (dto.getId() == null || dto.getId() == 0) {         user =  beanMapper.map(dto, User.class, Policy.DEEP.getMapId(User.class));         user.setCreatedDate(Calendar.getInstance());      }      else {         user = userDao.findById(dto.getId());         beanMapper.map(dto, user, Policy.DEEP.getMapId(User.class));      }      return user;   }   public Project createProject(ProjectDto dto, Policy policy) {      Project project;      if (dto.getId() == null || dto.getId() == 0) {         project =  beanMapper.map(dto, Project.class, policy.getMapId(Project.class));      }      else {         project = projectDao.findById(dto.getId());         beanMapper.map(dto, project, policy.getMapId(Project.class));      }      return project;   }   public Iteration createIteration(IterationDto dto) {      Iteration iteration;      if (dto.getId() == null || dto.getId() == 0) {         iteration =  beanMapper.map(dto, Iteration.class, Policy.SHALLOW.getMapId(Iteration.class));      }      else {         iteration = iterationDao.findById(dto.getId());         beanMapper.map(dto, iteration,Policy.SHALLOW.getMapId(Iteration.class));      }      return iteration;   }   public BacklogItem createBacklogItem(BacklogItemDto dto) {      BacklogItem backlogItem;      if (dto.getId() == null || dto.getId() == 0) {         backlogItem =  beanMapper.map(dto, BacklogItem.class, Policy.SHALLOW.getMapId(BacklogItem.class));      }      else {         backlogItem = backlogItemDao.findById(dto.getId());         boolean assignedToChanged = detectAssignmentChange(dto, backlogItem);         beanMapper.map(dto, backlogItem, Policy.SHALLOW.getMapId(BacklogItem.class));         if (assignedToChanged) {            if (dto.getAssignedTo() != null) {               backlogItem.setAssignedTo(userDao.findById(dto.getAssignedTo().getId()));            }            else {               backlogItem.setAssignedTo(null);            }         }         if (dto.getImpediment() != null && dto.getImpediment().getResponsible() != null) {            backlogItem.getImpediment().setResponsible(userDao.findById(dto.getImpediment().getResponsible().getId()));         }      }      return backlogItem;   }   public Theme createTheme(ThemeDto dto) {      Theme theme;      if (dto.getId() == null || dto.getId() == 0) {         theme =  beanMapper.map(dto, Theme.class);      }      else {         theme = themeDao.findById(dto.getId());         beanMapper.map(dto, theme);      }      return theme;   }   public ProjectWorker createProjectWorker(ProjectWorkerDto workerDto) {      ProjectWorker projectWorker;      if (workerDto.getId() == null || workerDto.getId() == 0) {         projectWorker = beanMapper.map(workerDto, ProjectWorker.class, Policy.SHALLOW.getMapId(ProjectWorker.class));      }      else {         projectWorker = projectWorkerDao.findById(workerDto.getId());         beanMapper.map(workerDto, projectWorker, Policy.SHALLOW.getMapId(ProjectWorker.class));      }      return projectWorker;   }   public Issue createIssue(IssueDto dto) {      Issue issue;      if(dto.getId() == null || dto.getId() == 0) {         issue =  beanMapper.map(dto, Issue.class);         if(dto.getResponsible() != null) {            issue.setResponsible(userDao.findById(dto.getResponsible().getId()));         }      }      else {         issue = issueDao.findById(dto.getId());         boolean responsibleChanged = detectResponsibleChange(dto, issue);         if(responsibleChanged) {            Long id = dto.getResponsible().getId();            dto.setResponsible(null);            beanMapper.map(dto, issue);            issue.setResponsible(userDao.findById(id));         }         else {            beanMapper.map(dto, issue);         }      }      return issue;   }   private boolean detectAssignmentChange(BacklogItemDto dto, BacklogItem item) {      return !(dto.getAssignedTo() == null && item.getAssignedTo() == null) && (dto.getAssignedTo() == null            || item.getAssignedTo() == null || !(dto.getAssignedTo().getId().equals(item.getAssignedTo().getId())));   }   private boolean detectResponsibleChange(IssueDto dto, Issue issue) {      return !(dto.getResponsible() == null && issue.getResponsible() == null) && (dto.getResponsible() == null            || issue.getResponsible() == null || !(dto.getResponsible().getId().equals(issue.getResponsible().getId())));   }}
+package com.express.service.mapping;
+
+import com.express.dao.BacklogItemDao;
+import com.express.dao.IssueDao;
+import com.express.dao.IterationDao;
+import com.express.dao.ProjectDao;
+import com.express.dao.ProjectWorkerDao;
+import com.express.dao.ThemeDao;
+import com.express.dao.UserDao;
+import com.express.domain.BacklogItem;
+import com.express.domain.Issue;
+import com.express.domain.Iteration;
+import com.express.domain.Project;
+import com.express.domain.ProjectWorker;
+import com.express.domain.Theme;
+import com.express.domain.User;
+import com.express.service.dto.BacklogItemDto;
+import com.express.service.dto.IssueDto;
+import com.express.service.dto.IterationDto;
+import com.express.service.dto.ProjectDto;
+import com.express.service.dto.ProjectWorkerDto;
+import com.express.service.dto.ThemeDto;
+import com.express.service.dto.UserDto;
+import com.googlecode.simpleobjectassembler.ObjectAssembler;
+import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
+
+@Service("domainFactory")
+public class DomainFactoryImpl implements DomainFactory {
+   private final Mapper beanMapper;
+   private final ObjectAssembler objectAssembler;
+
+   private final UserDao userDao;
+   private final ProjectDao projectDao;
+   private final IterationDao iterationDao;
+   private final BacklogItemDao backlogItemDao;
+   private final ThemeDao themeDao;
+   private final IssueDao issueDao;
+   private final ProjectWorkerDao projectWorkerDao;
+
+   @Autowired
+   public DomainFactoryImpl(@Qualifier("beanMapper") Mapper beanMapper,
+                            @Qualifier("userDao") UserDao userDao,
+                            @Qualifier("projectDao") ProjectDao projectDao,
+                            @Qualifier("iterationDao") IterationDao iterationDao,
+                            @Qualifier("backlogItemDao") BacklogItemDao backlogItemDao,
+                            @Qualifier("themeDao") ThemeDao themeDao,
+                            @Qualifier("issueDao") IssueDao issueDao,
+                            @Qualifier("projectWorkerDao") ProjectWorkerDao projectWorkerDao,
+                            ObjectAssembler objectAssembler) {
+      this.beanMapper = beanMapper;
+      this.userDao = userDao;
+      this.projectDao = projectDao;
+      this.iterationDao = iterationDao;
+      this.backlogItemDao = backlogItemDao;
+      this.themeDao = themeDao;
+      this.issueDao = issueDao;
+      this.projectWorkerDao = projectWorkerDao;
+      this.objectAssembler = objectAssembler;
+   }
+
+   public User createUser(UserDto dto) {
+      User user = objectAssembler.assemble(dto, User.class);
+      if(user.getId() == null) {
+         user.setCreatedDate(Calendar.getInstance());
+      }
+      return user;
+   }
+
+   public Project createProject(ProjectDto dto) {
+      Project project = objectAssembler.assemble(dto, Project.class, "accessRequests", "iterations", "history",
+            "productBacklog", "projectWorkers", "themes");
+      return project;
+   }
+
+   public Iteration createIteration(IterationDto dto) {
+      Iteration iteration = objectAssembler.assemble(dto, Iteration.class, "backlog", "history", "impediments",
+            "project");
+      return iteration;
+   }
+
+   public BacklogItem createBacklogItem(BacklogItemDto dto) {
+      return objectAssembler.assemble(dto, BacklogItem.class, "acceptanceCriteria", "assignedTo.accessRequests",
+            "assignedTo.colour", "assignedTo.email", "assignedTo.firstName", "assignedTo.lastName",
+            "assignedTo.password", "assignedTo.passwordHint", "assignedTo.phone1", "assignedTo.phone2",
+            "assignedTo.version", "impediment", "iteration", "parent", "project", "tasks", "themes");
+   }
+
+   public Theme createTheme(ThemeDto dto) {
+      return objectAssembler.assemble(dto, Theme.class);
+   }
+
+   public ProjectWorker createProjectWorker(ProjectWorkerDto dto) {
+      return objectAssembler.assemble(dto, ProjectWorker.class, "permissions", "worker.accessRequests",
+            "worker.colour", "worker.email", "worker.firstName",
+            "worker.lastName", "worker.password", "worker.passwordHint", "worker.phone1",
+            "worker.phone2", "worker.version");
+   }
+
+   public Issue createIssue(IssueDto dto) {
+      return objectAssembler.assemble(dto, Issue.class, "backlogItem", "iteration", "responsible.accessRequests",
+            "responsible.colour", "responsible.email", "responsible.firstName",
+            "responsible.lastName", "responsible.password", "responsible.passwordHint", "responsible.phone1",
+            "responsible.phone2", "responsible.version");
+   }
+}

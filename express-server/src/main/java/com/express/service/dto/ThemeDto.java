@@ -1,7 +1,10 @@
 package com.express.service.dto;
 
+import com.googlecode.simpleobjectassembler.annotation.EntityDto;
+
 import java.io.Serializable;
 
+@EntityDto(id = "id")
 public class ThemeDto implements Serializable, Comparable<ThemeDto> {
    private static final long serialVersionUID = 1961279296068639742L;
 

@@ -1,11 +1,11 @@
 package com.express.service.dto;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.googlecode.simpleobjectassembler.annotation.EntityDto;
 
-/**
- *
- */
+import java.io.Serializable;
+import java.util.Calendar;
+
+@EntityDto(id = "id")
 public class IssueDto implements Serializable {
    private Long id;
 
@@ -15,9 +15,9 @@ public class IssueDto implements Serializable {
 
    private String description;
 
-   private Date startDate;
+   private Calendar startDate;
 
-   private Date endDate;
+   private Calendar endDate;
 
    private BacklogItemDto backlogItem;
 
@@ -57,19 +57,19 @@ public class IssueDto implements Serializable {
       this.description = description;
    }
 
-   public Date getStartDate() {
+   public Calendar getStartDate() {
       return startDate;
    }
 
-   public void setStartDate(Date startDate) {
+   public void setStartDate(Calendar startDate) {
       this.startDate = startDate;
    }
 
-   public Date getEndDate() {
+   public Calendar getEndDate() {
       return endDate;
    }
 
-   public void setEndDate(Date endDate) {
+   public void setEndDate(Calendar endDate) {
       this.endDate = endDate;
    }
 

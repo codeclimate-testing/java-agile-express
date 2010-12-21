@@ -15,7 +15,7 @@ import com.express.domain.User;
 import com.express.domain.ProjectWorker;
 
 
-@DataSet({"/DataRemovalDataSet.xml", "/JpaProjectDaoTest.xml"})
+@DataSet({"/datasets/DataRemovalDataSet.xml", "/datasets/JpaProjectDaoTest.xml"})
 public class JpaProjectDaoTest extends AbstractUnitilsTestBase {
    private static final Long USER_WITHOUT_PROJECT_ID = 104l;
    private static final Long EXISTING_USER_ID = 102l;

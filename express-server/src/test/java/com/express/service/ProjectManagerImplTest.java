@@ -68,7 +68,7 @@ public class ProjectManagerImplTest {
    public void shouldCreateProjectFromDto() {
       ProjectDto dto = new ProjectDto();
       Project domain = new Project();
-      given(domainFactory.createProject(dto,Policy.SHALLOW)).willReturn(domain);
+      given(domainFactory.createProject(dto)).willReturn(domain);
       projectDao.save(domain);
       given(remoteObjectFactory.createProjectDto(domain, Policy.DEEP)).willReturn(dto);
       projectManager.updateProject(dto);

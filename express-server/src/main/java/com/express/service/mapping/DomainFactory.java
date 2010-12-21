@@ -7,7 +7,7 @@ public interface DomainFactory {
    
    User createUser(UserDto dto);
    
-   Project createProject(ProjectDto dto, Policy policy);
+   Project createProject(ProjectDto dto);
    
    Iteration createIteration(IterationDto dto);
    

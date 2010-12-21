@@ -9,6 +9,10 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+        </sourceRoots>
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
@@ -110,6 +114,8 @@
     <orderEntry type="library" name="Maven: xerces:xercesImpl:2.2.1" level="project" />
     <orderEntry type="library" name="Maven: xalan:xalan:2.7.0" level="project" />
     <orderEntry type="library" name="Maven: net.sf.dozer:dozer:5.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode:simpleobjectassembler:0.5.5" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.dbunit:dbunit:2.2.3" level="project" />
     <orderEntry type="library" name="Maven: junit-addons:junit-addons:1.4" level="project" />
     <orderEntry type="library" name="Maven: xerces:xmlParserAPIs:2.6.2" level="project" />

@@ -1,5 +1,7 @@
 package com.express.service.dto;
 
+import com.googlecode.simpleobjectassembler.annotation.EntityDto;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +9,7 @@ import java.util.Date;
  * @author Adam Boas
  *         Created on Apr 1, 2009
  */
+@EntityDto(id = "id")
 public class ProjectWorkerDto implements Serializable {
 
    private Long id;

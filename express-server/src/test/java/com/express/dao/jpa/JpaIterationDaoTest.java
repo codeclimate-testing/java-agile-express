@@ -6,19 +6,17 @@ import com.express.domain.Project;
 import com.express.dao.IterationDao;
 import com.express.dao.ProjectDao;
 import org.junit.Test;
-import org.junit.Before;
 import org.unitils.spring.annotation.SpringBeanByName;
 import org.unitils.dbunit.annotation.DataSet;
 
 import java.util.Calendar;
-import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
 /**
  * @author Adam Boas
  */
-@DataSet({"/DataRemovalDataSet.xml", "/JpaIterationDaoTest.xml"})
+@DataSet({"/datasets/DataRemovalDataSet.xml", "/datasets/JpaIterationDaoTest.xml"})
 public class JpaIterationDaoTest extends AbstractUnitilsTestBase {
    private static final Long ID = 10l;
 

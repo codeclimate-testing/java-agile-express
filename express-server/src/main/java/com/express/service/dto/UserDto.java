@@ -1,8 +1,11 @@
 package com.express.service.dto;
 
+import com.googlecode.simpleobjectassembler.annotation.EntityDto;
+
 import java.io.Serializable;
 import java.util.List;
 
+@EntityDto(id = "id")
 public class UserDto implements Serializable{
    private static final long serialVersionUID = 1837756627356308380L;
    

@@ -1,9 +1,11 @@
 package com.express.service.dto;
 
+import com.googlecode.simpleobjectassembler.annotation.EntityDto;
+
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
+@EntityDto(id = "id")
 public class BacklogItemDto implements Serializable, Comparable<BacklogItemDto> {
    private static final long serialVersionUID = -3941782566908593188L;
    

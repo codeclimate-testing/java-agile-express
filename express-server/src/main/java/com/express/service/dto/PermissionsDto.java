@@ -1,11 +1,14 @@
 package com.express.service.dto;
 
+import com.googlecode.simpleobjectassembler.annotation.EntityDto;
+
 import java.io.Serializable;
 
 /**
  * @author Adam Boas
  *         Created on Apr 1, 2009
  */
+@EntityDto(id = "id")
 public class PermissionsDto implements Serializable{
 
    private Long id;

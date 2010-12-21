@@ -1,10 +1,13 @@
 package com.express.service.dto;
 
+import com.googlecode.simpleobjectassembler.annotation.EntityDto;
+
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
+@EntityDto(id = "id")
 public class IterationDto implements Serializable, Comparable<IterationDto> {
    
    private static final long serialVersionUID = -1846071747249767308L;
@@ -13,9 +16,9 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
    
    private Long version;
    
-   private Date startDate;
+   private Calendar startDate;
    
-   private Date endDate;
+   private Calendar endDate;
    
    private String title;
    
@@ -47,19 +50,19 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
       this.version = version;
    }
 
-   public Date getStartDate() {
+   public Calendar getStartDate() {
       return startDate;
    }
 
-   public void setStartDate(Date startDate) {
+   public void setStartDate(Calendar startDate) {
       this.startDate = startDate;
    }
 
-   public Date getEndDate() {
+   public Calendar getEndDate() {
       return endDate;
    }
 
-   public void setEndDate(Date endDate) {
+   public void setEndDate(Calendar endDate) {
       this.endDate = endDate;
    }
 

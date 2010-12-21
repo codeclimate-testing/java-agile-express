@@ -59,7 +59,9 @@ public class ProjectManagerImpl implements ProjectManager {
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public ProjectDto updateProject(ProjectDto projectDto) {
-      Project project = domainFactory.createProject(projectDto, Policy.SHALLOW);
+      Project project = domainFactory.createProject(projectDto);
+      //TODO: sort this out based on new mapping strategy
+//      Project project = domainFactory.createProject(projectDto, Policy.SHALLOW);
       projectDao.save(project);
       return remoteObjectFactory.createProjectDto(project, Policy.DEEP);
    }
@@ -98,7 +100,9 @@ public class ProjectManagerImpl implements ProjectManager {
    public void projectAccessRequest(ProjectAccessRequest request) {
       User user = userService.getAuthenticatedUser();
       if (request.getNewProject() != null) {
-         Project project = domainFactory.createProject(request.getNewProject(), Policy.DEEP);
+         Project project = domainFactory.createProject(request.getNewProject());
+         //TODO: sort this out base on new mapping strategy
+//         Project project = domainFactory.createProject(request.getNewProject(), Policy.DEEP);
          setProjectAdmin(project, user);
          projectDao.save(project);
          return;

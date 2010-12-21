@@ -17,7 +17,7 @@ import com.express.domain.User;
  * @author Adam Boas
  *
  */
-@DataSet("/DataRemovalDataSet.xml")
+@DataSet("/datasets/DataRemovalDataSet.xml")
 public class JpaUserDaoTest extends AbstractUnitilsTestBase
 {
    @SpringBeanByName
