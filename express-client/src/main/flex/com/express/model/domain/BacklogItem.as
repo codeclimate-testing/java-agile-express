@@ -185,7 +185,6 @@ public class BacklogItem
       _colour = value;
    }
 
-   [Bindable]
    public function get canAddTask() : Boolean {
       return this.parent == null && this.project.methodology == Project.METHODOLOGY_SCRUM;
    }

@@ -61,6 +61,14 @@ public class AccessRequest implements Persistable, Comparable<AccessRequest> {
       this.id = id;
    }
 
+   public Long getVersion() {
+      return version;
+   }
+
+   public void setVersion(Long version) {
+      this.version = version;
+   }
+
    public User getRequestor() {
       return requestor;
    }

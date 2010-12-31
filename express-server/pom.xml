@@ -117,20 +117,20 @@
                <rulesets>
                   <ruleset>${build.testOutputDirectory}/pmd.xml</ruleset>
                </rulesets>
-               <includeTests>true</includeTests>
+               <includeTests>false</includeTests>
                <excludes>
                   <exclude>com.aconex.directory.testutils.*</exclude>
                </excludes>
             </configuration>
-            <executions>
-               <execution>
-                  <phase>verify</phase>
-                  <goals>
-                     <goal>check</goal>
-                     <goal>cpd-check</goal>
-                  </goals>
-               </execution>
-            </executions>
+            <!--<executions>-->
+               <!--<execution>-->
+                  <!--<phase>verify</phase>-->
+                  <!--<goals>-->
+                     <!--<goal>check</goal>-->
+                     <!--<goal>cpd-check</goal>-->
+                  <!--</goals>-->
+               <!--</execution>-->
+            <!--</executions>-->
          </plugin>
          <!--<plugin>-->
          <!--<groupId>org.apache.maven.plugins</groupId>-->

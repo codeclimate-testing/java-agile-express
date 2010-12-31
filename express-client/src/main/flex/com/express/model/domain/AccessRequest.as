@@ -18,7 +18,7 @@ public class AccessRequest {
 
    public var requestDate : Date;
 
-   public var resolvedtDate : Date;
+   public var resolvedDate : Date;
 
    public var status : int;
 

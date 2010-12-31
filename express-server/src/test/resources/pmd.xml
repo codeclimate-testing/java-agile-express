@@ -270,7 +270,7 @@
   <rule ref="rulesets/codesize.xml/NcssMethodCount">
     <priority>3</priority>
     <properties>
-      <property name="minimum" value="15"/>
+      <property name="minimum" value="20"/>
     </properties>
   </rule>
   <rule ref="rulesets/codesize.xml/ExcessiveParameterList">

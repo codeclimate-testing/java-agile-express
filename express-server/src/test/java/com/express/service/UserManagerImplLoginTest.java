@@ -5,7 +5,6 @@ import com.express.domain.User;
 import com.express.service.dto.LoginRequest;
 import com.express.service.dto.UserDto;
 import com.express.service.mapping.DomainFactory;
-import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import com.express.service.notification.NotificationService;
 import org.junit.Before;
