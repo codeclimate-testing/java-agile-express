@@ -61,10 +61,10 @@ public class BacklogItemManagerImpl implements BacklogItemManager {
          item.setAssignedTo(userDao.findById(request.getBacklogItem().getAssignedTo().getId()));
       }
       item.makeStatusConsistent();
-      Project project = getProjectWithItemInsertedByType(request.getType(),request.getParentId(), item);
+      addBacklogItemByType(request.getType(), request.getParentId(), item);
       item.createReference();
-      projectDao.save(project);
-      return remoteObjectFactory.createBacklogItemDto(project.findBacklogItemByReference(item.getReference()));
+      backlogItemDao.save(item);
+      return remoteObjectFactory.createBacklogItemDto(item);
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -146,24 +146,20 @@ public class BacklogItemManagerImpl implements BacklogItemManager {
       return projectDao.findById(request.getProjectId());
    }
 
-   private Project getProjectWithItemInsertedByType(int type, Long id, BacklogItem item) {
-      Project project = null;
+   private void addBacklogItemByType(int type, Long id, BacklogItem item) {
       switch (type) {
          case CreateBacklogItemRequest.PRODUCT_BACKLOG_STORY:
-            project = projectDao.findById(id);
+            Project project = projectDao.findById(id);
             project.addBacklogItem(item, true);
             break;
          case CreateBacklogItemRequest.STORY:
             Iteration iteration = iterationDao.findById(id);
             iteration.addBacklogItem(item, true);
-            project = iteration.getProject();
             break;
          case CreateBacklogItemRequest.TASK:
             BacklogItem parent = backlogItemDao.findById(id);
             parent.addTask(item);
-            project = parent.getProject();
             break;
       }
-      return project;
    }
 }

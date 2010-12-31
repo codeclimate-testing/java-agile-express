@@ -348,26 +348,6 @@ public class Project implements Persistable, BacklogContainer {
       return new ReflectionToStringBuilder(this).toString();
    }
 
-   public BacklogItem findBacklogItemByReference(String ref) {
-      for (BacklogItem item : productBacklog) {
-         if (item.getReference().equals(ref)) {
-            return item;
-         }
-         BacklogItem task = item.findTaskByReference(ref);
-         if (task != null) {
-            return task;
-         }
-      }
-      BacklogItem item = null;
-      for (Iteration iteration : iterations) {
-         item = iteration.findBacklogItemByReference(ref);
-         if (item != null) {
-            return item;
-         }
-      }
-      return item;
-   }
-
    public Iteration findIterationByTitle(String title) {
       for (Iteration iteration : iterations) {
          if (iteration.getTitle().equals(title)) {

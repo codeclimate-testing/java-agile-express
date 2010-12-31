@@ -7,4 +7,6 @@ public interface BacklogItemDao {
    
    BacklogItem findById(Long id);
 
+   void save(BacklogItem item);
+
 }
