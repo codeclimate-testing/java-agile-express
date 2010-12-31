@@ -144,12 +144,8 @@ public class IssueMediator extends FormMediator {
    }
 
    private function getSelectedBacklogItem():BacklogItem {
-      if (view.cboStories.selectedIndex != -1) {
-         return view.cboStories.selectedItem as BacklogItem;
-      }
-      else {
-         return view.cboTasks.selectedItem as BacklogItem;
-      }
+      return view.cboTasks.selectedItem ? view.cboTasks.selectedItem as BacklogItem :
+                                          view.cboStories.selectedItem as BacklogItem;
    }
 
 }
