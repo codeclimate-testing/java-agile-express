@@ -2,6 +2,7 @@ package com.express.service.mapping;
 
 import com.express.AbstractUnitilsTestBase;
 import com.express.domain.Theme;
+import com.express.service.dto.ProjectDto;
 import com.express.service.dto.ThemeDto;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,5 +64,11 @@ public class DomainFactoryImplCreateThemeTest extends AbstractUnitilsTestBase {
    @Test
    public void shouldMapDescriptionField() {
       assertThat(domainFactory.createTheme(dto).getDescription(), is(equalTo(DESCRIPTION)));
+   }
+
+   @Test
+   public void shouldNotMapProjectFields() {
+      dto.setProject(new ProjectDto());
+      assertThat(domainFactory.createTheme(dto).getProject(), is(nullValue()));
    }
 }

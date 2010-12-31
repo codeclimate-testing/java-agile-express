@@ -87,7 +87,7 @@ public class DomainFactoryImpl implements DomainFactory {
    }
 
    public Theme createTheme(ThemeDto dto) {
-      return objectAssembler.assemble(dto, Theme.class);
+      return objectAssembler.assemble(dto, Theme.class, "project");
    }
 
    public ProjectWorker createProjectWorker(ProjectWorkerDto dto) {
