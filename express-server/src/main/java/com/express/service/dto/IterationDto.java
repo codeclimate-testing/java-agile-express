@@ -3,6 +3,7 @@ package com.express.service.dto;
 import com.googlecode.simpleobjectassembler.annotation.EntityDto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +13,7 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
    
    private static final long serialVersionUID = -1846071747249767308L;
 
-   private Long id;
+   private long id;
    
    private Long version;
    
@@ -34,11 +35,17 @@ public class IterationDto implements Serializable, Comparable<IterationDto> {
 
    private List<IssueDto> impediments;
 
-   public Long getId() {
+   public IterationDto() {
+      this.backlog = new ArrayList<BacklogItemDto>();
+      this.history = new ArrayList<DailyIterationStatusRecordDto>();
+      this.impediments = new ArrayList<IssueDto>();
+   }
+
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

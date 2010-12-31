@@ -6,7 +6,6 @@ import com.express.service.dto.ChangePasswordRequest;
 import com.express.service.dto.LoginRequest;
 import com.express.service.dto.UserDto;
 import com.express.service.mapping.DomainFactory;
-import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import com.express.service.notification.NotificationService;
 import org.apache.commons.logging.Log;
@@ -69,7 +68,7 @@ public class UserManagerImpl implements UserManager {
                   request.getUsername() + "]");
          throw new RemoteAccessException("Invalid login attempt");
       }
-      return remoteObjectFactory.createUserDto(user, Policy.DEEP);
+      return remoteObjectFactory.createUserDto(user);
    }
    
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -101,7 +100,7 @@ public class UserManagerImpl implements UserManager {
       if(passwordEncoder.isPasswordValid(user.getPassword(), request.getOldPassword(), user.getEmail())) {
          user.setPassword(passwordEncoder.encodePassword(request.getNewPassword(), user.getEmail()));
          userDao.save(user);
-         return remoteObjectFactory.createUserDto(user, Policy.DEEP);
+         return remoteObjectFactory.createUserDto(user);
       }
       throw new RemoteAccessException("Invalid password provided");
    }
@@ -110,7 +109,7 @@ public class UserManagerImpl implements UserManager {
    public UserDto updateUserDetails(UserDto dto) {
       User user = domainFactory.createUser(dto);
       userDao.save(user);
-      return remoteObjectFactory.createUserDto(user, Policy.DEEP);
+      return remoteObjectFactory.createUserDto(user);
    }
 
    public UserDto resetPassword(Long userId) {

@@ -62,6 +62,12 @@ public class DomainFactoryImplCreateUserTest extends AbstractUnitilsTestBase {
    }
 
    @Test
+   public void shouldsetCreatedAtWhenCreatingNewUser() throws Exception {
+      User user = domainFactory.createUser(dto);
+      assertThat(user.getCreatedDate(), not(nullValue()));
+   }
+
+   @Test
    public void shouldLoadUserFromDBIfDtoHasId() throws Exception {
       dto.setId(EXISTING_USER_ID);
       User user = domainFactory.createUser(dto);

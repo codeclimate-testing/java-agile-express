@@ -22,7 +22,6 @@ import com.express.service.dto.ProjectWorkerDto;
 import com.express.service.dto.ThemeDto;
 import com.express.service.dto.UserDto;
 import com.googlecode.simpleobjectassembler.ObjectAssembler;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,6 @@ import java.util.Calendar;
 
 @Service("domainFactory")
 public class DomainFactoryImpl implements DomainFactory {
-   private final Mapper beanMapper;
    private final ObjectAssembler objectAssembler;
 
    private final UserDao userDao;
@@ -43,8 +41,7 @@ public class DomainFactoryImpl implements DomainFactory {
    private final ProjectWorkerDao projectWorkerDao;
 
    @Autowired
-   public DomainFactoryImpl(@Qualifier("beanMapper") Mapper beanMapper,
-                            @Qualifier("userDao") UserDao userDao,
+   public DomainFactoryImpl(@Qualifier("userDao") UserDao userDao,
                             @Qualifier("projectDao") ProjectDao projectDao,
                             @Qualifier("iterationDao") IterationDao iterationDao,
                             @Qualifier("backlogItemDao") BacklogItemDao backlogItemDao,
@@ -52,7 +49,6 @@ public class DomainFactoryImpl implements DomainFactory {
                             @Qualifier("issueDao") IssueDao issueDao,
                             @Qualifier("projectWorkerDao") ProjectWorkerDao projectWorkerDao,
                             ObjectAssembler objectAssembler) {
-      this.beanMapper = beanMapper;
       this.userDao = userDao;
       this.projectDao = projectDao;
       this.iterationDao = iterationDao;

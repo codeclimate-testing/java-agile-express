@@ -13,7 +13,7 @@ public class CreateBacklogItemRequest implements Serializable {
    
    private Integer type;
    
-   private Long parentId;
+   private long parentId;
    
    private  BacklogItemDto backlogItem;
 
@@ -28,12 +28,12 @@ public class CreateBacklogItemRequest implements Serializable {
    }
 
    
-   public Long getParentId() {
+   public long getParentId() {
       return parentId;
    }
 
    
-   public void setParentId(Long parentId) {
+   public void setParentId(long parentId) {
       this.parentId = parentId;
    }
 

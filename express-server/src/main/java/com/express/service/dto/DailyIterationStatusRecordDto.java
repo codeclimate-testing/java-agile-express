@@ -7,7 +7,7 @@ public class DailyIterationStatusRecordDto implements Serializable, Comparable<D
 
    private static final long serialVersionUID = -2430698032474395774L;
    
-   private Long id;
+   private long id;
    
    private Date date;
    
@@ -17,11 +17,11 @@ public class DailyIterationStatusRecordDto implements Serializable, Comparable<D
 
    private Integer completedPoints;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

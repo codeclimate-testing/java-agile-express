@@ -120,6 +120,14 @@ public class BacklogItem implements Persistable, Comparable<BacklogItem> {
       this.id = id;
    }
 
+   public Long getVersion() {
+      return version;
+   }
+
+   public void setVersion(Long version) {
+      this.version = version;
+   }
+
    public String getTitle() {
       return title;
    }

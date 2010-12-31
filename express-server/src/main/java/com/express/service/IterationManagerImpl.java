@@ -6,7 +6,6 @@ import com.express.domain.Iteration;
 import com.express.domain.Project;
 import com.express.service.dto.IterationDto;
 import com.express.service.mapping.DomainFactory;
-import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,7 +41,7 @@ public class IterationManagerImpl implements IterationManager {
    @Transactional(readOnly = true)
    public IterationDto findIteration(Long id) {
       Iteration iteration = iterationDao.findById(id);
-      return remoteObjectFactory.createIterationDto(iteration, Policy.DEEP);
+      return remoteObjectFactory.createIterationDto(iteration);
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -52,13 +51,13 @@ public class IterationManagerImpl implements IterationManager {
       project.addIteration(iteration);
       projectDao.save(project);
       return remoteObjectFactory.createIterationDto(
-            project.findIterationByTitle(iteration.getTitle()), Policy.DEEP);
+            project.findIterationByTitle(iteration.getTitle()));
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
    public IterationDto updateIteration(IterationDto iterationDto) {
       Iteration iteration = domainFactory.createIteration(iterationDto);
       projectDao.save(iteration.getProject());
-      return remoteObjectFactory.createIterationDto(iteration, Policy.DEEP);
+      return remoteObjectFactory.createIterationDto(iteration);
    }
 }

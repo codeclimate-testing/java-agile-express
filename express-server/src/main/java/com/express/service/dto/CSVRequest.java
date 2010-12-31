@@ -9,15 +9,15 @@ public class CSVRequest {
 
    public static final int TYPE_PRODUCT_BACKLOG = 2;
 
-   private Long id;
+   private long id;
 
    private int type;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

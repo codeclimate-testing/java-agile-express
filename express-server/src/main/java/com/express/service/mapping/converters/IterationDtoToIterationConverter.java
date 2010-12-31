@@ -19,6 +19,15 @@ public class IterationDtoToIterationConverter extends AbstractObjectConverter<It
 
    @Override
    public Iteration createDestinationObject(IterationDto dto) {
-      return dto.getId() == null ? new Iteration() : iterationDao.findById(dto.getId());
+      return dto.getId() == 0 ? new Iteration() : iterationDao.findById(dto.getId());
+   }
+
+   @Override
+   public void convert(IterationDto iterationDto, Iteration iteration) {
+      super.convert(iterationDto, iteration);
+      if(iteration.getId() == 0) {
+         iteration.setId(null);
+         iteration.setVersion(null);
+      }
    }
 }

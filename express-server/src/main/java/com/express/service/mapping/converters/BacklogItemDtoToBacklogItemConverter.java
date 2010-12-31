@@ -19,6 +19,15 @@ public class BacklogItemDtoToBacklogItemConverter extends AbstractObjectConverte
 
    @Override
    public BacklogItem createDestinationObject(BacklogItemDto dto) {
-      return dto.getId() == null ? new BacklogItem() : backlogItemDao.findById(dto.getId());
+      return dto.getId() == 0 ? new BacklogItem() : backlogItemDao.findById(dto.getId());
+   }
+
+   @Override
+   public void convert(BacklogItemDto backlogItemDto, BacklogItem backlogItem) {
+      super.convert(backlogItemDto, backlogItem);
+      if(backlogItem.getId() == 0) {
+         backlogItem.setId(null);
+         backlogItem.setVersion(null);
+      }
    }
 }

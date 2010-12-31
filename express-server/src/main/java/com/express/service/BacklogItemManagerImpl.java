@@ -65,8 +65,7 @@ public class BacklogItemManagerImpl implements BacklogItemManager {
       Project project = getProjectWithItemInsertedByType(request.getType(),request.getParentId(), item);
       item.createReference();
       projectDao.save(project);
-      return remoteObjectFactory.createBacklogItemDto(project.findBacklogItemByReference(item.getReference()),
-                                                      Policy.DEEP);
+      return remoteObjectFactory.createBacklogItemDto(project.findBacklogItemByReference(item.getReference()));
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)

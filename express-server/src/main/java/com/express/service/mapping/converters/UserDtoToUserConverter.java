@@ -19,6 +19,15 @@ public class UserDtoToUserConverter extends AbstractObjectConverter<UserDto, Use
 
    @Override
    public User createDestinationObject(UserDto dto) {
-      return dto.getId() == null ? new User() : userDao.findById(dto.getId());
+      return dto.getId() == 0 ? new User() : userDao.findById(dto.getId());
+   }
+
+   @Override
+   public void convert(UserDto userDto, User user) {
+      super.convert(userDto, user);
+      if(user.getId() == 0) {
+         user.setId(null);
+         user.setVersion(null);
+      }
    }
 }

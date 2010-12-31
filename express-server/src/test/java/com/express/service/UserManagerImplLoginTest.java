@@ -55,7 +55,7 @@ public class UserManagerImplLoginTest extends UnitilsJUnit4 {
       user.setActive(true);
       given(mockUserDao.findByUsername(USERNAME)).willReturn(user);
       given(mockPasswordEncoder.isPasswordValid(PASSWORD, PASSWORD, USERNAME)).willReturn(Boolean.TRUE);
-      given(mockRemoteObjectFactory.createUserDto(user, Policy.DEEP)).willReturn(new UserDto());
+      given(mockRemoteObjectFactory.createUserDto(user)).willReturn(new UserDto());
       
       
       userManager.login(request);

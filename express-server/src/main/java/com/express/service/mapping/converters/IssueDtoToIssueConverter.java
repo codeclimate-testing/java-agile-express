@@ -19,6 +19,15 @@ public class IssueDtoToIssueConverter extends AbstractObjectConverter<IssueDto, 
 
    @Override
    public Issue createDestinationObject(IssueDto dto) {
-      return dto.getId() == null ? new Issue() : issueDao.findById(dto.getId());
+      return dto.getId() == 0 ? new Issue() : issueDao.findById(dto.getId());
+   }
+
+   @Override
+   public void convert(IssueDto issueDto, Issue issue) {
+      super.convert(issueDto, issue);
+      if(issue.getId() == 0) {
+         issue.setId(null);
+         issue.setVersion(null);
+      }
    }
 }

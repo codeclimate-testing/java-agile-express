@@ -63,7 +63,7 @@ public class ProjectManagerImpl implements ProjectManager {
       //TODO: sort this out based on new mapping strategy
 //      Project project = domainFactory.createProject(projectDto, Policy.SHALLOW);
       projectDao.save(project);
-      return remoteObjectFactory.createProjectDto(project, Policy.DEEP);
+      return remoteObjectFactory.createProjectDtoDeep(project);
    }
 
 
@@ -77,7 +77,7 @@ public class ProjectManagerImpl implements ProjectManager {
       List<Project> projects = projectDao.findAll(userService.getAuthenticatedUser());
       List<ProjectDto> dtos = new ArrayList<ProjectDto>();
       for (Project project : projects) {
-         dtos.add(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW));
+         dtos.add(remoteObjectFactory.createProjectDtoShallow(project));
       }
       return dtos;
    }
@@ -93,7 +93,7 @@ public class ProjectManagerImpl implements ProjectManager {
 
    public ProjectDto findProject(Long id) {
       Project project = projectDao.findById(id);
-      return remoteObjectFactory.createProjectDto(project, Policy.DEEP);
+      return remoteObjectFactory.createProjectDtoDeep(project);
    }
 
    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -149,7 +149,7 @@ public class ProjectManagerImpl implements ProjectManager {
          backlog = project.getProductBacklog();
       }
       for (BacklogItem item : backlog) {
-         backlogDtos.add(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP));
+         backlogDtos.add(remoteObjectFactory.createBacklogItemDto(item));
       }
       Collections.sort(backlogDtos);
       return backlogDtos;
@@ -250,7 +250,7 @@ public class ProjectManagerImpl implements ProjectManager {
    private void addGrantedAccessRequests(User user, ProjectAccessData data) {
       List<ProjectDto> granted = new ArrayList<ProjectDto>();
       for (Project project : projectDao.findAll(user)) {
-         granted.add(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW));
+         granted.add(remoteObjectFactory.createProjectDtoShallow(project));
       }
       data.setGrantedList(granted);
    }
@@ -259,7 +259,7 @@ public class ProjectManagerImpl implements ProjectManager {
       List<ProjectDto> available = new ArrayList<ProjectDto>();
       for (Project project : projectDao.findAvailable(user)) {
          if (!user.hasPendingRequest(project)) {
-            available.add(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW));
+            available.add(remoteObjectFactory.createProjectDtoShallow(project));
          }
       }
       data.setAvailableList(available);
@@ -268,7 +268,7 @@ public class ProjectManagerImpl implements ProjectManager {
    private void addPendingAccessRequests(ProjectAccessData data, User user) {
       List<ProjectDto> pending = new ArrayList<ProjectDto>();
       for (AccessRequest request : user.getAccessRequests()) {
-         pending.add(remoteObjectFactory.createProjectDto(request.getProject(), Policy.SHALLOW));
+         pending.add(remoteObjectFactory.createProjectDtoShallow(request.getProject()));
       }
       data.setPendingList(pending);
    }

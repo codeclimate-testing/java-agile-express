@@ -19,6 +19,15 @@ public class ThemeDtoToThemeConverter extends AbstractObjectConverter<ThemeDto, 
 
    @Override
    public Theme createDestinationObject(ThemeDto dto) {
-      return dto.getId() == null ? new Theme() : themeDao.findById(dto.getId());
+      return dto.getId() == 0 ? new Theme() : themeDao.findById(dto.getId());
+   }
+
+   @Override
+   public void convert(ThemeDto themeDto, Theme theme) {
+      super.convert(themeDto, theme);
+      if(theme.getId() == 0) {
+         theme.setId(null);
+         theme.setVersion(null);
+      }
    }
 }

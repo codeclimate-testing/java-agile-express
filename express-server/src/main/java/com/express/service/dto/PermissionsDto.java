@@ -11,17 +11,17 @@ import java.io.Serializable;
 @EntityDto(id = "id")
 public class PermissionsDto implements Serializable{
 
-   private Long id;
+   private long id;
    private Long version;
    private Boolean iterationAdmin;
    private Boolean projectAdmin;
    private static final long serialVersionUID = 4182366610220431019L;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

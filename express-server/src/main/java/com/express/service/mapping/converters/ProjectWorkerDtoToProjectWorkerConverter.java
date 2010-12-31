@@ -20,12 +20,16 @@ public class ProjectWorkerDtoToProjectWorkerConverter extends AbstractObjectConv
 
    @Override
    public ProjectWorker createDestinationObject(ProjectWorkerDto dto) {
-      return dto.getId() == null ? new ProjectWorker() : projectWorkerDao.findById(dto.getId());
+      return dto.getId() == 0 ? new ProjectWorker() : projectWorkerDao.findById(dto.getId());
    }
 
    @Override
    public void convert(ProjectWorkerDto projectWorkerDto, ProjectWorker projectWorker) {
       super.convert(projectWorkerDto, projectWorker);
+      if(projectWorker.getId() == 0) {
+         projectWorker.setId(null);
+         projectWorker.setVersion(null);
+      }
       if(projectWorker.getPermissions() == null) {
          projectWorker.setPermissions(new Permissions());
       }

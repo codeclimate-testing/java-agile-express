@@ -9,7 +9,7 @@ import java.util.List;
 public class UserDto implements Serializable{
    private static final long serialVersionUID = 1837756627356308380L;
    
-   private Long id;
+   private long id;
    private Long version;
    private String email;
    private String firstName;
@@ -22,10 +22,10 @@ public class UserDto implements Serializable{
    private Integer colour;
    private List<AccessRequestDto> accessRequests;
    
-   public Long getId() {
+   public long getId() {
       return id;
    }
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
    public Long getVersion() {

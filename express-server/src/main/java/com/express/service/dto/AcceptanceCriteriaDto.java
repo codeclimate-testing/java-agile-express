@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class AcceptanceCriteriaDto implements Serializable {
 
-   private Long id;
+   private long id;
 
    private Long version;
 
@@ -18,11 +18,11 @@ public class AcceptanceCriteriaDto implements Serializable {
 
    private BacklogItemDto backlogItem;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

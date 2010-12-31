@@ -7,7 +7,7 @@ public class LoadBacklogRequest {
 
    private Integer type;
 
-   private Long parentId;
+   private long parentId;
 
    
    public Integer getType() {
@@ -20,12 +20,12 @@ public class LoadBacklogRequest {
    }
 
    
-   public Long getParentId() {
+   public long getParentId() {
       return parentId;
    }
 
    
-   public void setParentId(Long parentId) {
+   public void setParentId(long parentId) {
       this.parentId = parentId;
    }
 

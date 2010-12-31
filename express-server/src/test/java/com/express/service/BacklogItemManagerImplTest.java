@@ -4,21 +4,20 @@ import com.express.dao.BacklogItemDao;
 import com.express.dao.IterationDao;
 import com.express.dao.ProjectDao;
 import com.express.dao.UserDao;
-import com.express.domain.*;
+import com.express.domain.BacklogItem;
+import com.express.domain.Issue;
+import com.express.domain.Iteration;
+import com.express.domain.Project;
+import com.express.domain.Status;
 import com.express.service.dto.AddImpedimentRequest;
-import com.express.service.dto.BacklogItemAssignRequest;
 import com.express.service.dto.BacklogItemDto;
 import com.express.service.dto.CreateBacklogItemRequest;
 import com.express.service.mapping.DomainFactory;
-import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
@@ -26,9 +25,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- *
- */
 public class BacklogItemManagerImplTest {
 
    @Mock
@@ -68,7 +64,7 @@ public class BacklogItemManagerImplTest {
       given(domainFactory.createBacklogItem(itemDto)).willReturn(item);
       given(projectDao.findById(ID)).willReturn(project);
       projectDao.save(project);
-      given(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).willReturn(new BacklogItemDto());
+      given(remoteObjectFactory.createBacklogItemDto(item)).willReturn(new BacklogItemDto());
 
       backlogItemManager.createBacklogItem(request);
    }

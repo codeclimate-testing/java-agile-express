@@ -3,6 +3,7 @@ package com.express.service.dto;
 import com.googlecode.simpleobjectassembler.annotation.EntityDto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class ProjectDto implements Serializable {
    
    private static final long serialVersionUID = 1266194346173201343L;
 
-   private Long id;
+   private long id;
    
    private Long version;
    
@@ -41,15 +42,25 @@ public class ProjectDto implements Serializable {
 
    private List<ThemeDto> themes;
 
-   public Long getId() {
+   public ProjectDto() {
+      this.accessRequests = new ArrayList<AccessRequestDto>();
+      this.projectWorkers = new ArrayList<ProjectWorkerDto>();
+      this.iterations = new ArrayList<IterationDto>();
+      this.productBacklog = new ArrayList<BacklogItemDto>();
+      this.history = new ArrayList<DailyProjectStatusRecordDto>();
+      this.actors = new ArrayList<String>();
+      this.themes = new ArrayList<ThemeDto>();
+   }
+
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 
-   public Long getVersion() {
+   public long getVersion() {
       return version;
    }
 

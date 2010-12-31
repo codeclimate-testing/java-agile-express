@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class ThemesUpdateRequest implements Serializable {
    private static final long serialVersionUID = 1258448753201038039L;
 
-   private Long projectId;
+   private long projectId;
    
    private List<ThemeDto> themes;
 
@@ -15,11 +15,11 @@ public class ThemesUpdateRequest implements Serializable {
       themes = new ArrayList<ThemeDto>();
    }
 
-   public Long getProjectId() {
+   public long getProjectId() {
       return projectId;
    }
 
-   public void setProjectId(Long projectId) {
+   public void setProjectId(long projectId) {
       this.projectId = projectId;
    }
 

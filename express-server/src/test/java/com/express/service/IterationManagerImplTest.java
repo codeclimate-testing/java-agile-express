@@ -7,7 +7,6 @@ import com.express.domain.Project;
 import com.express.service.dto.IterationDto;
 import com.express.service.dto.ProjectDto;
 import com.express.service.mapping.DomainFactory;
-import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +53,7 @@ public class IterationManagerImplTest {
       given(domainFactory.createIteration(dto)).willReturn(domain);
       given(projectDao.findById(projectId)).willReturn(project);
       projectDao.save(project);
-      given(remoteObjectFactory.createIterationDto(domain, Policy.DEEP)).willReturn(dto);
+      given(remoteObjectFactory.createIterationDto(domain)).willReturn(dto);
       iterationManager.createIteration(dto);
    }
 
@@ -62,7 +61,7 @@ public class IterationManagerImplTest {
    public void shouldFindExistingIterationById() {
       Iteration iteration = new Iteration();
       given(iterationDao.findById(1l)).willReturn(iteration);
-      given(remoteObjectFactory.createIterationDto(iteration, Policy.DEEP)).willReturn(new IterationDto());
+      given(remoteObjectFactory.createIterationDto(iteration)).willReturn(new IterationDto());
       iterationManager.findIteration(1l);
    }
 

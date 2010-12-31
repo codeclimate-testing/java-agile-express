@@ -47,7 +47,8 @@ public class ProjectDetailsMediator extends FormMediator{
       _proxy.selectedProject.title = view.title.text;
       _proxy.selectedProject.reference = view.reference.text;
       _proxy.selectedProject.effortUnit = view.effortUnit.text;
-      _proxy.selectedProject.methodology = view.methodology.text;
+      trace(view.methodology.selectedItem.toString());
+      _proxy.selectedProject.methodology = view.methodology.selectedItem.toString();
       _proxy.selectedProject.description = view.description.text;
       _proxy.selectedProject.startDate = view.startDate.selectedDate;
    }

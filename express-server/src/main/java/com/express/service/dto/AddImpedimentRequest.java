@@ -5,25 +5,25 @@ package com.express.service.dto;
  */
 public class AddImpedimentRequest {
 
-   Long backlogItemId;
+   long backlogItemId;
 
-   Long iterationId;
+   long iterationId;
 
    IssueDto impediment;
 
-   public Long getBacklogItemId() {
+   public long getBacklogItemId() {
       return backlogItemId;
    }
 
-   public void setBacklogItemId(Long backlogItemId) {
+   public void setBacklogItemId(long backlogItemId) {
       this.backlogItemId = backlogItemId;
    }
 
-   public Long getIterationId() {
+   public long getIterationId() {
       return iterationId;
    }
 
-   public void setIterationId(Long iterationId) {
+   public void setIterationId(long iterationId) {
       this.iterationId = iterationId;
    }
 

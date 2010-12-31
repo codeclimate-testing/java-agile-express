@@ -10,7 +10,7 @@ public class ProjectWorkersUpdateRequest implements Serializable {
 
    private List<ProjectWorkerDto> workers;
 
-   private Long projectId;
+   private long projectId;
 
    public List<ProjectWorkerDto> getWorkers() {
       return workers;
@@ -20,11 +20,11 @@ public class ProjectWorkersUpdateRequest implements Serializable {
       this.workers = workers;
    }
 
-   public Long getProjectId() {
+   public long getProjectId() {
       return projectId;
    }
 
-   public void setProjectId(Long projectId) {
+   public void setProjectId(long projectId) {
       this.projectId = projectId;
    }
 }

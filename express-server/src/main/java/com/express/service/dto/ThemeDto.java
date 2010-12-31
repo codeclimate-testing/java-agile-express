@@ -8,17 +8,17 @@ import java.io.Serializable;
 public class ThemeDto implements Serializable, Comparable<ThemeDto> {
    private static final long serialVersionUID = 1961279296068639742L;
 
-   private Long id;
+   private long id;
    private Long version;
    private String title;
    private String description;
    private ProjectDto project;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

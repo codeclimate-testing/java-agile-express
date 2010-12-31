@@ -85,6 +85,14 @@ public class Iteration implements Persistable, Comparable<Iteration>, BacklogCon
       this.id = id;
    }
 
+   public Long getVersion() {
+      return version;
+   }
+
+   public void setVersion(Long version) {
+      this.version = version;
+   }
+
    public Calendar getStartDate() {
       return startDate;
    }

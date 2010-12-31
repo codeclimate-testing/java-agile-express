@@ -108,6 +108,14 @@ public class Project implements Persistable, BacklogContainer {
       this.id = id;
    }
 
+   public Long getVersion() {
+      return version;
+   }
+
+   public void setVersion(Long version) {
+      this.version = version;
+   }
+
    public Calendar getStartDate() {
       return startDate;
    }

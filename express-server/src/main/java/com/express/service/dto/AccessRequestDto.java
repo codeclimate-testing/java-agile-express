@@ -1,15 +1,12 @@
 package com.express.service.dto;
 
-import com.express.domain.Project;
-import com.express.domain.User;
-
-import java.util.Date;
 import java.io.Serializable;
+import java.util.Date;
 
 public class AccessRequestDto implements Serializable {
    private static final long serialVersionUID = -1531630899821683796L;
 
-   private Long id;
+   private long id;
 
    private Long version;
 
@@ -25,11 +22,11 @@ public class AccessRequestDto implements Serializable {
 
    private ProjectDto project;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

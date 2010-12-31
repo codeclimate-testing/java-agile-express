@@ -1,11 +1,27 @@
 package com.express.service;
 
-import com.express.dao.*;
-import com.express.domain.*;
-import com.express.service.dto.*;
+import com.express.dao.AccessRequestDao;
+import com.express.dao.IterationDao;
+import com.express.dao.ProjectDao;
+import com.express.dao.UserDao;
+import com.express.domain.AccessRequest;
+import com.express.domain.BacklogItem;
+import com.express.domain.Iteration;
+import com.express.domain.Project;
+import com.express.domain.ProjectWorker;
+import com.express.domain.Theme;
+import com.express.domain.User;
+import com.express.service.dto.AccessRequestDto;
+import com.express.service.dto.BacklogItemDto;
+import com.express.service.dto.CSVRequest;
+import com.express.service.dto.LoadBacklogRequest;
+import com.express.service.dto.ProjectDto;
+import com.express.service.dto.ProjectWorkerDto;
+import com.express.service.dto.ProjectWorkersUpdateRequest;
+import com.express.service.dto.ThemeDto;
+import com.express.service.dto.ThemesUpdateRequest;
 import com.express.service.internal.UserService;
 import com.express.service.mapping.DomainFactory;
-import com.express.service.mapping.Policy;
 import com.express.service.mapping.RemoteObjectFactory;
 import com.express.service.notification.NotificationService;
 import org.junit.Before;
@@ -70,7 +86,7 @@ public class ProjectManagerImplTest {
       Project domain = new Project();
       given(domainFactory.createProject(dto)).willReturn(domain);
       projectDao.save(domain);
-      given(remoteObjectFactory.createProjectDto(domain, Policy.DEEP)).willReturn(dto);
+      given(remoteObjectFactory.createProjectDtoDeep(domain)).willReturn(dto);
       projectManager.updateProject(dto);
    }
  
@@ -101,7 +117,7 @@ public class ProjectManagerImplTest {
       user.setId(ID);
       given(userService.getAuthenticatedUser()).willReturn(user);
       given(projectDao.findAll(user)).willReturn(projects);
-      given(remoteObjectFactory.createProjectDto(project, Policy.SHALLOW)).willReturn(new ProjectDto());
+      given(remoteObjectFactory.createProjectDtoShallow(project)).willReturn(new ProjectDto());
       
       List<ProjectDto> dtos = projectManager.findAllProjects();
       assertEquals(projects.size(), dtos.size());
@@ -111,7 +127,7 @@ public class ProjectManagerImplTest {
    public void shouldFindProjectById() {
       Project project = new Project();
       given(projectDao.findById(ID)).willReturn(project);
-      given(remoteObjectFactory.createProjectDto(project, Policy.DEEP)).willReturn(new ProjectDto());
+      given(remoteObjectFactory.createProjectDtoDeep(project)).willReturn(new ProjectDto());
       
       projectManager.findProject(ID);
    }
@@ -154,7 +170,7 @@ public class ProjectManagerImplTest {
       request.setType(LoadBacklogRequest.TYPE_PROJECT);
       request.setParentId(projectId);
       given(projectDao.findById(projectId)).willReturn(project);
-      given(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).willReturn(new BacklogItemDto());
+      given(remoteObjectFactory.createBacklogItemDto(item)).willReturn(new BacklogItemDto());
       assertEquals(1, projectManager.loadBacklog(request).size());
    }
 
@@ -170,7 +186,7 @@ public class ProjectManagerImplTest {
       request.setType(LoadBacklogRequest.TYPE_ITERATION);
       request.setParentId(iterationId);
       given(iterationDao.findById(iterationId)).willReturn(iteration);
-      given(remoteObjectFactory.createBacklogItemDto(item, Policy.DEEP)).willReturn(new BacklogItemDto());
+      given(remoteObjectFactory.createBacklogItemDto(item)).willReturn(new BacklogItemDto());
       assertEquals(1, projectManager.loadBacklog(request).size());
    }
 

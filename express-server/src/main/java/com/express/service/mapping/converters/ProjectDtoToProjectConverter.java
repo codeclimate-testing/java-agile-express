@@ -19,6 +19,15 @@ public class ProjectDtoToProjectConverter extends AbstractObjectConverter<Projec
 
    @Override
    public Project createDestinationObject(ProjectDto dto) {
-      return dto.getId() == null ? new Project() : projectDao.findById(dto.getId());
+      return dto.getId() == 0 ? new Project() : projectDao.findById(dto.getId());
+   }
+
+   @Override
+   public void convert(ProjectDto projectDto, Project project) {
+      super.convert(projectDto, project);
+      if(project.getId() == 0) {
+         project.setId(null);
+         project.setVersion(null);
+      }
    }
 }

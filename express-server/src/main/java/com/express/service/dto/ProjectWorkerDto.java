@@ -12,7 +12,7 @@ import java.util.Date;
 @EntityDto(id = "id")
 public class ProjectWorkerDto implements Serializable {
 
-   private Long id;
+   private long id;
    private Long version;
    private Date createdDate;
    private ProjectDto project;
@@ -20,11 +20,11 @@ public class ProjectWorkerDto implements Serializable {
    private PermissionsDto permissions;
    private static final long serialVersionUID = 8326902224838584802L;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

@@ -20,7 +20,6 @@ import org.mockito.MockitoAnnotations;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Matchers.isNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -63,7 +62,7 @@ public class BacklogItemManagerImpleBacklogItemAssignmentTest {
    public void shouldRemoveFromIterationBacklogWhenIterationFromIdProvided() {
       request.setIterationFromId(1l);
       request.setIterationToId(2l);
-      request.setItemIds(new Long[]{5l});
+      request.setItemIds(new long[]{5l});
 
       when(projectDao.findById(11l)).thenReturn(new Project());
       Iteration from = mock(Iteration.class);
@@ -81,7 +80,7 @@ public class BacklogItemManagerImpleBacklogItemAssignmentTest {
    public void shouldRemoveFromProjectVBacklogWhenIterationFromIdNotProvided() {
       request.setProjectId(11l);
       request.setIterationToId(2l);
-      request.setItemIds(new Long[]{5l});
+      request.setItemIds(new long[]{5l});
 
       Iteration to = new Iteration();
       when(iterationDao.findById(2l)).thenReturn(to);
@@ -96,7 +95,7 @@ public class BacklogItemManagerImpleBacklogItemAssignmentTest {
    public void shouldAddToToIterationBacklogWhenIterationToIdProvided() {
       request.setIterationFromId(1l);
       request.setIterationToId(2l);
-      request.setItemIds(new Long[]{5l});
+      request.setItemIds(new long[]{5l});
 
       when(projectDao.findById(11l)).thenReturn(new Project());
       Iteration from = mock(Iteration.class);

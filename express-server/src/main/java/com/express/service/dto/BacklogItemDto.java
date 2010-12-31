@@ -9,7 +9,7 @@ import java.util.List;
 public class BacklogItemDto implements Serializable, Comparable<BacklogItemDto> {
    private static final long serialVersionUID = -3941782566908593188L;
    
-   private Long id;
+   private long id;
    
    private Long version;
    
@@ -49,11 +49,11 @@ public class BacklogItemDto implements Serializable, Comparable<BacklogItemDto> 
 
    private List<AcceptanceCriteriaDto> acceptanceCriteria;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

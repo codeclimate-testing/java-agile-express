@@ -7,7 +7,7 @@ import java.util.Calendar;
 
 @EntityDto(id = "id")
 public class IssueDto implements Serializable {
-   private Long id;
+   private long id;
 
    private Long version;
 
@@ -25,11 +25,11 @@ public class IssueDto implements Serializable {
 
    private UserDto responsible;
 
-   public Long getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(Long id) {
+   public void setId(long id) {
       this.id = id;
    }
 

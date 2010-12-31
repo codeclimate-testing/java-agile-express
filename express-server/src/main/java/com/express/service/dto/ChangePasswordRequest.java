@@ -6,19 +6,19 @@ import java.io.Serializable;
 public class ChangePasswordRequest implements Serializable {
    private static final long serialVersionUID = -1042427196078479892L;
 
-   private Long userId;
+   private long userId;
    
    private String oldPassword;
    
    private String newPassword;
 
    
-   public Long getUserId() {
+   public long getUserId() {
       return userId;
    }
 
    
-   public void setUserId(Long userId) {
+   public void setUserId(long userId) {
       this.userId = userId;
    }
 

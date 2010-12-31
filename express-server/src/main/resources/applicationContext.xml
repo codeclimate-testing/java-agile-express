@@ -28,27 +28,9 @@
 
    <tx:annotation-driven transaction-manager="transactionManager"/>
 
-   <bean id="beanMapper" class="org.dozer.DozerBeanMapper">
-      <property name="mappingFiles">
-         <list>
-            <value>dozer-configuration.xml</value>
-         </list>
-      </property>
-      <!--      <property name="customConvertersWithId">-->
-      <!--         <map>-->
-      <!--            <entry key="advertisementsConverter" value-ref="advertisementsConverter" />-->
-      <!--         </map>-->
-      <!--      </property>-->
-   </bean>
-
    <bean id="objectAssembler" class="com.googlecode.simpleobjectassembler.SimpleObjectAssembler"
-         p:automapWhenNoConverterFound="true">
-      <property name="entityDao">
-         <bean class="com.googlecode.simpleobjectassembler.converter.dao.JpaEntityDao">
-            <property name="entityManagerFactory" ref="entityManagerFactory"/>
-         </bean>
-      </property>
-   </bean>
+         p:automapWhenNoConverterFound="true"/>
+
 
    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
          p:configLocation="classpath:ehcache.xml"/>
