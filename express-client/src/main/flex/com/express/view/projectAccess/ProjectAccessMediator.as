@@ -127,6 +127,7 @@ public class ProjectAccessMediator extends Mediator
       _profileProxy.projectAccessRequest.newProject.reference = view.newProjectForm.reference.text;
       _profileProxy.projectAccessRequest.newProject.description = view.newProjectForm.description.text;
       _profileProxy.projectAccessRequest.newProject.effortUnit = view.newProjectForm.effortUnit.text;
+      _profileProxy.projectAccessRequest.newProject.methodology = view.newProjectForm.methodology.selectedItem as String;
       _profileProxy.projectAccessRequest.newProject.startDate = view.newProjectForm.startDate.selectedDate;
    }
 
