@@ -58,7 +58,7 @@ public class AccessRequestDto implements Serializable {
       return resolvedDate;
    }
 
-   public void setResolvedtDate(Calendar resolvedCalendar) {
+   public void setResolvedDate(Calendar resolvedCalendar) {
       this.resolvedDate = resolvedCalendar;
    }
 
