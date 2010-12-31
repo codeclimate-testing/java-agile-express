@@ -1,7 +1,7 @@
 package com.express.service.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 public class AccessRequestDto implements Serializable {
    private static final long serialVersionUID = -1531630899821683796L;
@@ -12,9 +12,9 @@ public class AccessRequestDto implements Serializable {
 
    private UserDto requestor;
 
-   private Date requestDate;
+   private Calendar requestDate;
 
-   private Date resolvedtDate;
+   private Calendar resolvedDate;
 
    private Integer status;
 
@@ -46,20 +46,20 @@ public class AccessRequestDto implements Serializable {
       this.requestor = requestor;
    }
 
-   public Date getRequestDate() {
+   public Calendar getRequestDate() {
       return requestDate;
    }
 
-   public void setRequestDate(Date requestDate) {
-      this.requestDate = requestDate;
+   public void setRequestDate(Calendar requestCalendar) {
+      this.requestDate = requestCalendar;
    }
 
-   public Date getResolvedtDate() {
-      return resolvedtDate;
+   public Calendar getResolvedDate() {
+      return resolvedDate;
    }
 
-   public void setResolvedtDate(Date resolvedtDate) {
-      this.resolvedtDate = resolvedtDate;
+   public void setResolvedtDate(Calendar resolvedCalendar) {
+      this.resolvedDate = resolvedCalendar;
    }
 
    public Integer getStatus() {
