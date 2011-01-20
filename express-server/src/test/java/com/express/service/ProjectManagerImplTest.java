@@ -6,6 +6,7 @@ import com.express.dao.ProjectDao;
 import com.express.dao.UserDao;
 import com.express.domain.AccessRequest;
 import com.express.domain.BacklogItem;
+import com.express.domain.Issue;
 import com.express.domain.Iteration;
 import com.express.domain.Project;
 import com.express.domain.ProjectWorker;
@@ -14,6 +15,7 @@ import com.express.domain.User;
 import com.express.service.dto.AccessRequestDto;
 import com.express.service.dto.BacklogItemDto;
 import com.express.service.dto.CSVRequest;
+import com.express.service.dto.IssueDto;
 import com.express.service.dto.LoadBacklogRequest;
 import com.express.service.dto.ProjectDto;
 import com.express.service.dto.ProjectWorkerDto;
@@ -37,6 +39,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ProjectManagerImplTest {
 
@@ -235,5 +240,19 @@ public class ProjectManagerImplTest {
       request.setType(CSVRequest.TYPE_PRODUCT_BACKLOG);
       given(projectDao.findById(id)).willReturn(new Project());
       projectManager.getCSV(request);
+   }
+
+   @Test
+   public void shouldUpdateImpediment() {
+      IssueDto issueDto = new IssueDto();
+      Issue issue = mock(Issue.class);
+      Iteration iteration = mock(Iteration.class);
+      when(issue.getIteration()).thenReturn(iteration);
+      Project project = mock(Project.class);
+      when(iteration.getProject()).thenReturn(project);
+      when(domainFactory.createIssue(issueDto)).thenReturn(issue);
+      projectManager.updateImpediment(issueDto);
+      verify(domainFactory).createIssue(issueDto);
+      verify(projectDao).save(project);
    }
 }

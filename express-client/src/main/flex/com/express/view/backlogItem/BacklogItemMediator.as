@@ -2,6 +2,7 @@ package com.express.view.backlogItem {
 import com.express.ApplicationFacade;
 import com.express.controller.event.GridButtonEvent;
 import com.express.model.ProjectProxy;
+import com.express.model.RequestParameterProxy;
 import com.express.model.domain.AcceptanceCriteria;
 import com.express.model.domain.BacklogItem;
 import com.express.model.domain.Project;
@@ -27,11 +28,13 @@ public class BacklogItemMediator extends FormMediator {
 
    private var _proxy:BacklogItemProxy;
    private var _projectProxy:ProjectProxy;
+   private var _parameterProxy:RequestParameterProxy;
 
    public function BacklogItemMediator(viewComp:BacklogItemView, mediatorName:String = NAME) {
       super(mediatorName, viewComp);
       _proxy = facade.retrieveProxy(BacklogItemProxy.NAME) as BacklogItemProxy;
       _projectProxy = facade.retrieveProxy(ProjectProxy.NAME) as ProjectProxy;
+      _parameterProxy = facade.retrieveProxy(RequestParameterProxy.NAME) as RequestParameterProxy;
       viewComp.backlogItemForm.itemStatus.dataProvider = _proxy.statusList;
       viewComp.backlogItemForm.lstTheme.dataProvider = _projectProxy.themes;
 
@@ -153,6 +156,7 @@ public class BacklogItemMediator extends FormMediator {
       clearAndHideThemeTitle();
       TitleWindow(view.parent).removeEventListener(CloseEvent.CLOSE, handleWindowClose);
       view.parent.dispatchEvent(new CloseEvent(CloseEvent.CLOSE));
+      _parameterProxy.removeValue(RequestParameterProxy.BACKLOG_ITEM_ID_PARAM);
    }
 
    public override function bindModel():void {
@@ -205,6 +209,7 @@ public class BacklogItemMediator extends FormMediator {
 
    private function handleWindowClose(event:Event):void {
       removeUnsavedAcceptanceCriteria();
+      _parameterProxy.removeValue(RequestParameterProxy.BACKLOG_ITEM_ID_PARAM);
    }
 
    private function removeUnsavedAcceptanceCriteria():void {

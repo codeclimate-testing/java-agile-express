@@ -4,6 +4,7 @@ import com.express.AbstractUnitilsTestBase;
 import com.express.domain.Issue;
 import com.express.domain.User;
 import com.express.service.dto.IssueDto;
+import com.express.service.dto.IterationDto;
 import com.express.service.dto.UserDto;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,6 +80,12 @@ public class DomainFactoryImplCreateIssueTest extends AbstractUnitilsTestBase {
    @Test
    public void shouldMapDescriptionField() {
       assertThat(domainFactory.createIssue(dto).getDescription(), is(equalTo(DESCRIPTION)));
+   }
+
+   @Test
+   public void shouldNotMapIteration() {
+      dto.setIteration(new IterationDto());
+      assertThat(domainFactory.createIssue(dto).getIteration(), is(nullValue()));
    }
 
    @Test

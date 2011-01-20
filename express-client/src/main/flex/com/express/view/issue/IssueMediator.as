@@ -70,6 +70,7 @@ public class IssueMediator extends FormMediator {
             view.btnSave.label = "Update";
             view.cboStories.enabled = notification.getBody() as Boolean;
             view.cboTasks.enabled = notification.getBody() as Boolean;
+            checkIssueClosed();
             break;
       }
    }
@@ -82,6 +83,17 @@ public class IssueMediator extends FormMediator {
       view.cboTasks.selectedIndex = getSelectionIndex(getSelectedTaskId(issue.backlogItem), ArrayCollection(view.cboTasks.dataProvider));
       issue.responsible ? view.lstResponsible.selectedIndex = getSelectionIndex(issue.responsible.id, ArrayCollection(view.lstResponsible.dataProvider)) : -1;
       FormUtility.clearValidationErrors(_validators);
+   }
+
+   private function checkIssueClosed() : void {
+      if(_proxy.currentIssue.statusLabel == "Closed") {
+         view.btnSave.enabled = false;
+         view.btnCancel.label = "Close";
+      }
+      else {
+         view.btnSave.enabled = true;
+         view.btnCancel.label = "Cancel";
+      }
    }
 
    private function getSelectedStoryId(item : BacklogItem) : int {
@@ -122,7 +134,7 @@ public class IssueMediator extends FormMediator {
             sendNotification(ApplicationFacade.NOTE_ADD_IMPEDIMENT, request);
          }
          else {
-            sendNotification(ApplicationFacade.NOTE_UPDATE_IMPEDIMENT, _proxy.currentBacklogItem.impediment);
+            sendNotification(ApplicationFacade.NOTE_UPDATE_IMPEDIMENT, _proxy.currentIssue);
          }
          closeWindow();
       }

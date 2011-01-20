@@ -14,6 +14,7 @@ public class RequestParameterProxy extends Proxy{
    private var _initialParameters : Dictionary;
    private var _urlParameters : Dictionary;
    private var _browserManager : IBrowserManager;
+   private var _indexedParameterNames : Array;
 
    public function RequestParameterProxy(browserManager : IBrowserManager) {
       super(NAME);
@@ -25,6 +26,10 @@ public class RequestParameterProxy extends Proxy{
          var splitPair:Array = pair.split("=");
          _initialParameters[splitPair[0]] = splitPair[1];
       }
+      _indexedParameterNames = [];
+      _indexedParameterNames[0] = PROJECT_ID_PARAM;
+      _indexedParameterNames[1] = ITERATION_ID_PARAM;
+      _indexedParameterNames[2] = BACKLOG_ITEM_ID_PARAM;
    }
 
    public function hasValue(key : String) : Boolean {
@@ -33,12 +38,18 @@ public class RequestParameterProxy extends Proxy{
 
    public function getAndRemoveValue(key : String) : String {
       var value : String = _initialParameters[key];
-      _initialParameters[key] = null;
+      delete _initialParameters[key];
       return value;
+   }
+
+   public function removeValue(key : String) : void {
+      delete _urlParameters[key];
+      setParametersInUrl();
    }
 
    public function setParameter(key : String, value : String) : void {
       _urlParameters[key] = value;
+      removeRedundantParameters(key);
       setParametersInUrl();
    }
 
@@ -51,6 +62,12 @@ public class RequestParameterProxy extends Proxy{
          fragment += key + "=" + _urlParameters[key];
       }
       _browserManager.setFragment(fragment);
+   }
+
+   private function removeRedundantParameters(key : String) : void {
+      for(var index : int = _indexedParameterNames.indexOf(key) + 1; index < _indexedParameterNames.length; index++) {
+         delete _urlParameters[_indexedParameterNames[index]];
+      }
    }
 }
 }
