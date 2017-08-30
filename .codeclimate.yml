@@ -1,0 +1,15 @@
+engines:
+  structure:
+    enabled: true
+    channel: java
+  duplication:
+    enabled: true
+    channel: java
+    config:
+      languages:
+        - java
+exclude_paths:
+  - "**.py"
+  - "**.rb"
+  - "**.js"
+  - "**.jsx"
