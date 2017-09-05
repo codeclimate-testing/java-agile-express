@@ -4,7 +4,6 @@ engines:
     channel: java
   duplication:
     enabled: true
-    channel: java
     config:
       languages:
         - java
